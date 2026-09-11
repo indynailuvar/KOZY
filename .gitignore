@@ -1,0 +1,16 @@
+# Python
+venv/
+env/
+__pycache__/
+*.py[cod]
+.env
+
+# DATA MENTAH & HASIL SCRAPING — BERISI DATA PRIBADI (TELEPON) — DILARANG DIPUSH (UU PDP)
+data/raw/
+data/processed/
+scrapers/*.json
+scrapers/*.html
+
+# Sistem & editor
+.DS_Store
+Thumbs.db
