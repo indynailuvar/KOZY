@@ -14,3 +14,8 @@ scrapers/*.html
 # Sistem & editor
 .DS_Store
 Thumbs.db
+# Data master mengandung data pribadi (telepon) - hanya lokal / kanal privat tim
+data_kos_surabaya.csv
+data_kos_surabaya.json
+data_kos_surabaya_enriched.csv
+queue_lengkapi_manual.csv
