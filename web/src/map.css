@@ -1,0 +1,242 @@
+/* =========================================================
+   Peta (Leaflet)
+   ========================================================= */
+.kmap {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--r);
+  background: #eef2f7;
+  isolation: isolate;
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.kmap-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.map-xs {
+  height: 140px;
+}
+.map-sm {
+  height: 200px;
+}
+.map-md {
+  height: 320px;
+}
+.map-lg {
+  height: 52vh;
+  min-height: 340px;
+}
+.leaflet-container {
+  font-family: inherit;
+  background: #eef2f7;
+}
+/* peta dibuat kalem supaya pin biru menonjol */
+.kmap .leaflet-tile-pane {
+  filter: grayscale(0.7) brightness(1.05) contrast(0.9);
+}
+.leaflet-control-attribution {
+  font-size: 10px;
+  background: rgba(255, 255, 255, 0.8) !important;
+}
+.leaflet-bar {
+  border: 0 !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+  box-shadow: var(--shadow) !important;
+}
+.leaflet-bar a {
+  width: 36px !important;
+  height: 36px !important;
+  line-height: 36px !important;
+  color: var(--ink) !important;
+}
+.leaflet-top.leaflet-right .leaflet-control {
+  margin: 12px 12px 0 0;
+}
+.kmk {
+  background: none !important;
+  border: 0 !important;
+}
+
+/* pin harga kos */
+.mk-price {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  transform: translate(-50%, calc(-100% - 8px));
+  padding: 7px 10px;
+  border-radius: 99px;
+  background: #fff;
+  color: var(--ink);
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.22), 0 0 0 1px rgba(15, 23, 42, 0.05);
+  transition: transform 0.15s, background 0.15s, color 0.15s;
+}
+.mk-price::after,
+.mk-area::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -4px;
+  width: 9px;
+  height: 9px;
+  background: inherit;
+  transform: translateX(-50%) rotate(45deg);
+}
+.mk-price:hover {
+  transform: translate(-50%, calc(-100% - 8px)) scale(1.06);
+}
+.mk-price.is-sel {
+  background: var(--blue);
+  color: #fff;
+  transform: translate(-50%, calc(-100% - 8px)) scale(1.12);
+}
+
+/* pin terkunci */
+.mk-lock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translate(-50%, -58px);
+  cursor: pointer;
+}
+.mk-lock-ic {
+  position: relative;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--blue);
+  color: #fff;
+  box-shadow: 0 0 0 4px #fff, 0 10px 20px -6px rgba(37, 99, 235, 0.6);
+}
+.mk-lock-ic::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid var(--blue);
+  animation: pulse 1.8s ease-out infinite;
+}
+.mk-lock-ic::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -11px;
+  transform: translateX(-50%);
+  border: 7px solid transparent;
+  border-top: 9px solid var(--blue);
+}
+.mk-lock.is-open .mk-lock-ic::before {
+  display: none;
+}
+.mk-lock b {
+  margin-top: 16px;
+  padding: 3px 10px;
+  border-radius: 99px;
+  background: #fff;
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.18);
+}
+
+/* pin lokasi kos (cek harga) */
+.mk-pin {
+  transform: translate(-21px, -50px);
+}
+.mk-pin span {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 50% 50% 50% 0;
+  border: 3px solid #fff;
+  background: var(--blue);
+  transform: rotate(-45deg);
+  box-shadow: 0 8px 16px -6px rgba(37, 99, 235, 0.6);
+}
+.mk-pin svg {
+  color: #fff;
+  transform: rotate(45deg);
+}
+
+/* pin kawasan */
+.mk-area {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transform: translate(-50%, calc(-100% - 7px));
+  padding: 8px 11px;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--ink);
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.2);
+}
+.mk-area.is-sel {
+  background: var(--blue);
+  color: #fff;
+}
+
+/* penanda tujuan (kampus, RS, kantor, …) */
+.mk-place {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transform: translate(-18px, -50%);
+}
+.mk-place span {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  color: var(--blue);
+  box-shadow: 0 0 0 3px var(--blue-100), 0 4px 10px rgba(15, 23, 42, 0.18);
+}
+.mk-place b {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--blue-600);
+  white-space: nowrap;
+  text-shadow: 0 0 3px #fff, 0 0 3px #fff, 0 0 4px #fff;
+}
+
+@keyframes pulse {
+  from {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  to {
+    transform: scale(1.7);
+    opacity: 0;
+  }
+}
+
+@media (min-width: 960px) {
+  .map-sm {
+    height: 240px;
+  }
+  .map-lg {
+    height: calc(100vh - var(--top) - 140px);
+    min-height: 520px;
+  }
+  .ins-map .map-md {
+    height: calc(100vh - var(--top) - 150px);
+    min-height: 460px;
+  }
+}
