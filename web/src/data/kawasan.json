@@ -1,0 +1,596 @@
+{
+ "meta": {
+  "n": 65,
+  "kecamatan": 16,
+  "minimal_titik": 3,
+  "dibuang": 11,
+  "catatan": "Kelurahan dan titik tengahnya berasal dari koordinat kos yang benar-benar terdata, bukan tulisan tangan."
+ },
+ "kawasan": [
+  {
+   "id": "kandangan",
+   "nama": "Kandangan",
+   "kec": "Benowo",
+   "lat": -7.25227,
+   "lng": 112.65064,
+   "titik": 22,
+   "berharga": 0
+  },
+  {
+   "id": "sememi",
+   "nama": "Sememi",
+   "kec": "Benowo",
+   "lat": -7.25278,
+   "lng": 112.63886,
+   "titik": 25,
+   "berharga": 0
+  },
+  {
+   "id": "dukuh-menanggal",
+   "nama": "Dukuh Menanggal",
+   "kec": "Gayungan",
+   "lat": -7.34178,
+   "lng": 112.73273,
+   "titik": 5,
+   "berharga": 0
+  },
+  {
+   "id": "gayungan",
+   "nama": "Gayungan",
+   "kec": "Gayungan",
+   "lat": -7.33327,
+   "lng": 112.72586,
+   "titik": 30,
+   "berharga": 1
+  },
+  {
+   "id": "ketintang",
+   "nama": "Ketintang",
+   "kec": "Gayungan",
+   "lat": -7.31519,
+   "lng": 112.7296,
+   "titik": 47,
+   "berharga": 2
+  },
+  {
+   "id": "menanggal",
+   "nama": "Menanggal",
+   "kec": "Gayungan",
+   "lat": -7.33938,
+   "lng": 112.72211,
+   "titik": 3,
+   "berharga": 0
+  },
+  {
+   "id": "airlangga",
+   "nama": "Airlangga",
+   "kec": "Gubeng",
+   "lat": -7.27631,
+   "lng": 112.75662,
+   "titik": 23,
+   "berharga": 3
+  },
+  {
+   "id": "baratajaya",
+   "nama": "Baratajaya",
+   "kec": "Gubeng",
+   "lat": -7.29214,
+   "lng": 112.76149,
+   "titik": 13,
+   "berharga": 2
+  },
+  {
+   "id": "gubeng",
+   "nama": "Gubeng",
+   "kec": "Gubeng",
+   "lat": -7.27411,
+   "lng": 112.7521,
+   "titik": 13,
+   "berharga": 1
+  },
+  {
+   "id": "kertajaya",
+   "nama": "Kertajaya",
+   "kec": "Gubeng",
+   "lat": -7.28031,
+   "lng": 112.75825,
+   "titik": 11,
+   "berharga": 0
+  },
+  {
+   "id": "mojo",
+   "nama": "Mojo",
+   "kec": "Gubeng",
+   "lat": -7.27124,
+   "lng": 112.76385,
+   "titik": 9,
+   "berharga": 0
+  },
+  {
+   "id": "pucang",
+   "nama": "Pucang Sewu",
+   "kec": "Gubeng",
+   "lat": -7.28979,
+   "lng": 112.75654,
+   "titik": 9,
+   "berharga": 0
+  },
+  {
+   "id": "gunung-anyar",
+   "nama": "Gunung Anyar",
+   "kec": "Gunung Anyar",
+   "lat": -7.33755,
+   "lng": 112.78453,
+   "titik": 54,
+   "berharga": 0
+  },
+  {
+   "id": "gunung-anyar-tambak",
+   "nama": "Gunung Anyar Tambak",
+   "kec": "Gunung Anyar",
+   "lat": -7.33544,
+   "lng": 112.8047,
+   "titik": 3,
+   "berharga": 1
+  },
+  {
+   "id": "rungkut-menanggal",
+   "nama": "Rungkut Menanggal",
+   "kec": "Gunung Anyar",
+   "lat": -7.3362,
+   "lng": 112.77719,
+   "titik": 4,
+   "berharga": 3
+  },
+  {
+   "id": "jambangan",
+   "nama": "Jambangan",
+   "kec": "Jambangan",
+   "lat": -7.31887,
+   "lng": 112.71424,
+   "titik": 20,
+   "berharga": 0
+  },
+  {
+   "id": "karah",
+   "nama": "Karah",
+   "kec": "Jambangan",
+   "lat": -7.31399,
+   "lng": 112.72101,
+   "titik": 25,
+   "berharga": 0
+  },
+  {
+   "id": "kebonsari",
+   "nama": "Kebonsari",
+   "kec": "Jambangan",
+   "lat": -7.32605,
+   "lng": 112.71269,
+   "titik": 9,
+   "berharga": 0
+  },
+  {
+   "id": "pagesangan",
+   "nama": "Pagesangan",
+   "kec": "Jambangan",
+   "lat": -7.3347,
+   "lng": 112.71267,
+   "titik": 3,
+   "berharga": 0
+  },
+  {
+   "id": "jeruk",
+   "nama": "Jeruk",
+   "kec": "Lakarsantri",
+   "lat": -7.30392,
+   "lng": 112.64673,
+   "titik": 5,
+   "berharga": 2
+  },
+  {
+   "id": "lakarsantri",
+   "nama": "Lakarsantri",
+   "kec": "Lakarsantri",
+   "lat": -7.30142,
+   "lng": 112.63528,
+   "titik": 6,
+   "berharga": 0
+  },
+  {
+   "id": "lidah-kulon",
+   "nama": "Lidah Kulon",
+   "kec": "Lakarsantri",
+   "lat": -7.30339,
+   "lng": 112.66013,
+   "titik": 16,
+   "berharga": 0
+  },
+  {
+   "id": "lidah-wetan",
+   "nama": "Lidah Wetan",
+   "kec": "Lakarsantri",
+   "lat": -7.30439,
+   "lng": 112.66778,
+   "titik": 32,
+   "berharga": 0
+  },
+  {
+   "id": "dukuh-sutorejo",
+   "nama": "Dukuh Sutorejo",
+   "kec": "Mulyorejo",
+   "lat": -7.26843,
+   "lng": 112.79294,
+   "titik": 10,
+   "berharga": 0
+  },
+  {
+   "id": "kalijudan",
+   "nama": "Kalijudan",
+   "kec": "Mulyorejo",
+   "lat": -7.26077,
+   "lng": 112.77956,
+   "titik": 3,
+   "berharga": 0
+  },
+  {
+   "id": "kalisari",
+   "nama": "Kalisari",
+   "kec": "Mulyorejo",
+   "lat": -7.26459,
+   "lng": 112.79763,
+   "titik": 6,
+   "berharga": 2
+  },
+  {
+   "id": "kejawen-putih-tambak",
+   "nama": "Kejawen Putih Tambak",
+   "kec": "Mulyorejo",
+   "lat": -7.27545,
+   "lng": 112.79339,
+   "titik": 3,
+   "berharga": 0
+  },
+  {
+   "id": "mulyorejo",
+   "nama": "Mulyorejo",
+   "kec": "Mulyorejo",
+   "lat": -7.26771,
+   "lng": 112.77958,
+   "titik": 30,
+   "berharga": 0
+  },
+  {
+   "id": "babat-jerawat",
+   "nama": "Babat Jerawat",
+   "kec": "Pakal",
+   "lat": -7.2373,
+   "lng": 112.62831,
+   "titik": 3,
+   "berharga": 0
+  },
+  {
+   "id": "benowo",
+   "nama": "Benowo",
+   "kec": "Pakal",
+   "lat": -7.23517,
+   "lng": 112.60829,
+   "titik": 4,
+   "berharga": 0
+  },
+  {
+   "id": "kali-rungkut",
+   "nama": "Kali Rungkut",
+   "kec": "Rungkut",
+   "lat": -7.32341,
+   "lng": 112.76923,
+   "titik": 23,
+   "berharga": 3
+  },
+  {
+   "id": "kedung-baruk",
+   "nama": "Kedung Baruk",
+   "kec": "Rungkut",
+   "lat": -7.31499,
+   "lng": 112.77783,
+   "titik": 14,
+   "berharga": 1
+  },
+  {
+   "id": "medokan-ayu",
+   "nama": "Medokan Ayu",
+   "kec": "Rungkut",
+   "lat": -7.32785,
+   "lng": 112.79642,
+   "titik": 6,
+   "berharga": 3
+  },
+  {
+   "id": "penjaringan-sari",
+   "nama": "Penjaringan Sari",
+   "kec": "Rungkut",
+   "lat": -7.31883,
+   "lng": 112.78569,
+   "titik": 10,
+   "berharga": 1
+  },
+  {
+   "id": "rungkut-kidul",
+   "nama": "Rungkut Kidul",
+   "kec": "Rungkut",
+   "lat": -7.32939,
+   "lng": 112.77629,
+   "titik": 8,
+   "berharga": 0
+  },
+  {
+   "id": "banyu-urip",
+   "nama": "Banyu Urip",
+   "kec": "Sawahan",
+   "lat": -7.27728,
+   "lng": 112.72341,
+   "titik": 5,
+   "berharga": 0
+  },
+  {
+   "id": "kupang-krajan",
+   "nama": "Kupang Krajan",
+   "kec": "Sawahan",
+   "lat": -7.27161,
+   "lng": 112.72383,
+   "titik": 9,
+   "berharga": 2
+  },
+  {
+   "id": "pakis",
+   "nama": "Pakis",
+   "kec": "Sawahan",
+   "lat": -7.28286,
+   "lng": 112.71876,
+   "titik": 8,
+   "berharga": 0
+  },
+  {
+   "id": "petemon",
+   "nama": "Petemon",
+   "kec": "Sawahan",
+   "lat": -7.26295,
+   "lng": 112.72101,
+   "titik": 16,
+   "berharga": 1
+  },
+  {
+   "id": "putat-jaya",
+   "nama": "Putat Jaya",
+   "kec": "Sawahan",
+   "lat": -7.27993,
+   "lng": 112.72381,
+   "titik": 6,
+   "berharga": 0
+  },
+  {
+   "id": "sawahan",
+   "nama": "Sawahan",
+   "kec": "Sawahan",
+   "lat": -7.25932,
+   "lng": 112.7276,
+   "titik": 5,
+   "berharga": 0
+  },
+  {
+   "id": "gebang",
+   "nama": "Gebang Putih",
+   "kec": "Sukolilo",
+   "lat": -7.2827,
+   "lng": 112.78706,
+   "titik": 4,
+   "berharga": 0
+  },
+  {
+   "id": "keputih",
+   "nama": "Keputih",
+   "kec": "Sukolilo",
+   "lat": -7.29086,
+   "lng": 112.80181,
+   "titik": 57,
+   "berharga": 0
+  },
+  {
+   "id": "klampis",
+   "nama": "Klampis Ngasem",
+   "kec": "Sukolilo",
+   "lat": -7.28787,
+   "lng": 112.77792,
+   "titik": 5,
+   "berharga": 1
+  },
+  {
+   "id": "medokan",
+   "nama": "Medokan Semampir",
+   "kec": "Sukolilo",
+   "lat": -7.30808,
+   "lng": 112.78192,
+   "titik": 8,
+   "berharga": 1
+  },
+  {
+   "id": "menur",
+   "nama": "Menur Pumpungan",
+   "kec": "Sukolilo",
+   "lat": -7.2982,
+   "lng": 112.7695,
+   "titik": 20,
+   "berharga": 11
+  },
+  {
+   "id": "ngiden-jangkungan",
+   "nama": "Ngiden Jangkungan",
+   "kec": "Sukolilo",
+   "lat": -7.3022,
+   "lng": 112.76698,
+   "titik": 3,
+   "berharga": 2
+  },
+  {
+   "id": "semolowaru",
+   "nama": "Semolowaru",
+   "kec": "Sukolilo",
+   "lat": -7.30312,
+   "lng": 112.77783,
+   "titik": 19,
+   "berharga": 1
+  },
+  {
+   "id": "pacar-kembang",
+   "nama": "Pacar Kembang",
+   "kec": "Tambaksari",
+   "lat": -7.25957,
+   "lng": 112.7714,
+   "titik": 4,
+   "berharga": 4
+  },
+  {
+   "id": "dr-sutomo",
+   "nama": "Dr. Sutomo",
+   "kec": "Tegalsari",
+   "lat": -7.27739,
+   "lng": 112.73342,
+   "titik": 4,
+   "berharga": 1
+  },
+  {
+   "id": "kedungdoro",
+   "nama": "Kedungdoro",
+   "kec": "Tegalsari",
+   "lat": -7.26322,
+   "lng": 112.73557,
+   "titik": 15,
+   "berharga": 0
+  },
+  {
+   "id": "keputran",
+   "nama": "Keputran",
+   "kec": "Tegalsari",
+   "lat": -7.28328,
+   "lng": 112.74341,
+   "titik": 13,
+   "berharga": 0
+  },
+  {
+   "id": "tegalsari",
+   "nama": "Tegalsari",
+   "kec": "Tegalsari",
+   "lat": -7.27243,
+   "lng": 112.737,
+   "titik": 9,
+   "berharga": 0
+  },
+  {
+   "id": "wonorejo",
+   "nama": "Wonorejo",
+   "kec": "Tegalsari",
+   "lat": -7.26868,
+   "lng": 112.73072,
+   "titik": 17,
+   "berharga": 0
+  },
+  {
+   "id": "kutisari",
+   "nama": "Kutisari",
+   "kec": "Tenggilis Mejoyo",
+   "lat": -7.33727,
+   "lng": 112.74972,
+   "titik": 5,
+   "berharga": 5
+  },
+  {
+   "id": "tenggilis",
+   "nama": "Tenggilis Mejoyo",
+   "kec": "Tenggilis Mejoyo",
+   "lat": -7.32274,
+   "lng": 112.75984,
+   "titik": 3,
+   "berharga": 3
+  },
+  {
+   "id": "babatan",
+   "nama": "Babatan",
+   "kec": "Wiyung",
+   "lat": -7.30885,
+   "lng": 112.68153,
+   "titik": 31,
+   "berharga": 0
+  },
+  {
+   "id": "jajar-tunggal",
+   "nama": "Jajar Tunggal",
+   "kec": "Wiyung",
+   "lat": -7.31252,
+   "lng": 112.70146,
+   "titik": 9,
+   "berharga": 0
+  },
+  {
+   "id": "wiyung",
+   "nama": "Wiyung",
+   "kec": "Wiyung",
+   "lat": -7.31349,
+   "lng": 112.69352,
+   "titik": 17,
+   "berharga": 0
+  },
+  {
+   "id": "darmo",
+   "nama": "Darmo",
+   "kec": "Wonokromo",
+   "lat": -7.29408,
+   "lng": 112.73589,
+   "titik": 4,
+   "berharga": 0
+  },
+  {
+   "id": "jagir",
+   "nama": "Jagir",
+   "kec": "Wonokromo",
+   "lat": -7.30563,
+   "lng": 112.74154,
+   "titik": 10,
+   "berharga": 1
+  },
+  {
+   "id": "ngagel",
+   "nama": "Ngagel",
+   "kec": "Wonokromo",
+   "lat": -7.28186,
+   "lng": 112.74722,
+   "titik": 11,
+   "berharga": 0
+  },
+  {
+   "id": "ngagelrejo",
+   "nama": "Ngagelrejo",
+   "kec": "Wonokromo",
+   "lat": -7.29695,
+   "lng": 112.74951,
+   "titik": 27,
+   "berharga": 0
+  },
+  {
+   "id": "sawunggaling",
+   "nama": "Sawunggaling",
+   "kec": "Wonokromo",
+   "lat": -7.29766,
+   "lng": 112.72169,
+   "titik": 5,
+   "berharga": 0
+  },
+  {
+   "id": "wonokromo",
+   "nama": "Wonokromo",
+   "kec": "Wonokromo",
+   "lat": -7.30607,
+   "lng": 112.72993,
+   "titik": 40,
+   "berharga": 0
+  }
+ ]
+}

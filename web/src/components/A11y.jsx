@@ -70,21 +70,44 @@ export function PengaturanAkses({ onChange }) {
 export function MenuAkses() {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
+  const btn = useRef(null);
   const { state } = useStore();
   const aktif = state.pengaturan.suara || state.pengaturan.teksBesar;
   useEffect(() => {
     if (!open) return;
+    ref.current?.querySelector('.a11y-pop input')?.focus();
     const close = (e) => !ref.current?.contains(e.target) && setOpen(false);
+    const onKey = (e) => {
+      if (e.key !== 'Escape') return;
+      setOpen(false);
+      btn.current?.focus();
+    };
+    const onFocus = (e) => !ref.current?.contains(e.target) && setOpen(false);
     document.addEventListener('pointerdown', close);
-    return () => document.removeEventListener('pointerdown', close);
+    document.addEventListener('keydown', onKey);
+    document.addEventListener('focusin', onFocus);
+    return () => {
+      document.removeEventListener('pointerdown', close);
+      document.removeEventListener('keydown', onKey);
+      document.removeEventListener('focusin', onFocus);
+    };
   }, [open]);
   return (
     <div className="a11y-menu" ref={ref}>
-      <button type="button" className={`icon-btn ${aktif ? 'is-active' : ''}`} aria-label="Aksesibilitas" aria-expanded={open} onClick={() => setOpen((o) => !o)}>
+      <button
+        ref={btn}
+        type="button"
+        className={`icon-btn ${aktif ? 'is-active' : ''}`}
+        aria-label="Pengaturan aksesibilitas"
+        aria-haspopup="dialog"
+        aria-expanded={open}
+        aria-controls="menu-akses"
+        onClick={() => setOpen((o) => !o)}
+      >
         <Icon name="access" size={22} />
       </button>
       {open && (
-        <div className="a11y-pop">
+        <div className="a11y-pop" id="menu-akses" role="dialog" aria-label="Pengaturan aksesibilitas">
           <b>Aksesibilitas</b>
           <PengaturanAkses />
         </div>

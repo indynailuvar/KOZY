@@ -46,9 +46,9 @@
   box-shadow: var(--shadow) !important;
 }
 .leaflet-bar a {
-  width: 36px !important;
-  height: 36px !important;
-  line-height: 36px !important;
+  width: 44px !important;
+  height: 44px !important;
+  line-height: 44px !important;
   color: var(--ink) !important;
 }
 .leaflet-top.leaflet-right .leaflet-control {
@@ -95,6 +95,29 @@
   background: var(--blue);
   color: #fff;
   transform: translate(-50%, calc(-100% - 8px)) scale(1.12);
+}
+
+/* pin perkiraan: titik Google Maps yang harganya belum ada, hanya hasil hitungan model */
+.mk-est {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  transform: translate(-50%, calc(-100% - 8px));
+  padding: 6px 9px;
+  border-radius: 99px;
+  background: #fff;
+  color: var(--blue-600);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 0 0 1.5px var(--blue-200), 0 2px 6px rgba(15, 23, 42, 0.16);
+}
+.mk-est.is-sel {
+  background: var(--blue-600);
+  color: #fff;
+  box-shadow: 0 0 0 1.5px var(--blue-600), 0 2px 8px rgba(15, 23, 42, 0.22);
 }
 
 /* pin terkunci */

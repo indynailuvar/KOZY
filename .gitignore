@@ -19,3 +19,8 @@ data_kos_surabaya.csv
 data_kos_surabaya.json
 data_kos_surabaya_enriched.csv
 queue_lengkapi_manual.csv
+
+node_modules/
+web/node_modules/
+web/dist/
+web/.vite/

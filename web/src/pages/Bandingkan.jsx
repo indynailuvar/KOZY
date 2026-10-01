@@ -13,7 +13,6 @@ const OPSI_PRIORITAS = [
   { id: 'hemat', label: 'Paling hemat', sub: 'Harga sewa paling ringan', icon: 'wallet' },
   { id: 'dekat', label: 'Paling dekat', sub: 'Jarak ke tujuan paling pendek', icon: 'pin' },
   { id: 'fasilitas', label: 'Fasilitas lengkap', sub: 'Kamar paling nyaman', icon: 'sofa' },
-  { id: 'aman', label: 'Paling aman', sub: 'Lingkungan yang dinilai aman', icon: 'shieldc' },
 ];
 
 const kosong = () => ({ nama: '', harga: '', jarak: '', fasilitas: [] });
@@ -21,10 +20,10 @@ const namaAtau = (k, cadangan) => k.nama.trim() || cadangan;
 
 function keKos(k, cadangan) {
   const km = parseFloat(String(k.jarak).replace(',', '.'));
-  return { id: cadangan, nama: namaAtau(k, cadangan), harga: angkaDariTeks(k.harga), jarak: Number.isFinite(km) ? km : null, fasilitas: k.fasilitas, aman: 3 };
+  return { id: cadangan, nama: namaAtau(k, cadangan), harga: angkaDariTeks(k.harga), jarak: Number.isFinite(km) ? km : null, fasilitas: k.fasilitas };
 }
 
-function IsiKos({ k, huruf, onChange }) {
+function IsiKos({ k, huruf, onChange, invalid }) {
   const ubah = (patch) => onChange({ ...k, ...patch });
   return (
     <div className="line-stack">
@@ -37,6 +36,7 @@ function IsiKos({ k, huruf, onChange }) {
         value={k.harga ? angkaDariTeks(k.harga).toLocaleString('id-ID') : ''}
         onChange={(v) => ubah({ harga: String(Math.min(20_000_000, angkaDariTeks(v))) })}
         placeholder="0"
+        invalid={invalid}
       />
       <LineInput
         id={`jarak-${huruf}`}
@@ -116,7 +116,7 @@ function Hasil({ hasil, pasangan, onUlang, onUbah }) {
       </section>
 
       <div className="stack">
-        <Accordion title="Cek juga saat survei" icon="list">
+        <Accordion title="Cek sendiri saat lihat kosnya" icon="list">
           <ul className="dot-list">
             {hasil.cek.map((c) => (
               <li key={c}>{c}</li>
@@ -185,7 +185,7 @@ export default function Bandingkan() {
   if (hasil) return <Hasil hasil={hasil} pasangan={pasangan} onUlang={ulang} onUbah={() => setHasil(null)} />;
 
   const langkahPrioritas = dariMatch ? 1 : 5;
-  const opsi = dariMatch ? OPSI_PRIORITAS : OPSI_PRIORITAS.filter((o) => o.id !== 'aman');
+  const opsi = OPSI_PRIORITAS;
   const err = coba ? galat[step] : null;
   const namaA = namaAtau(a, 'Kos A');
   const namaB = namaAtau(b, 'Kos B');
@@ -205,7 +205,7 @@ export default function Bandingkan() {
       {!dariMatch && step === 1 && (
         <>
           <Question judul="Kos pertama" sub="Isi nama dan harga sewanya." />
-          <IsiKos k={a} huruf="A" onChange={setA} />
+          <IsiKos k={a} huruf="A" onChange={setA} invalid={!!err} />
         </>
       )}
       {!dariMatch && step === 2 && (
@@ -217,7 +217,7 @@ export default function Bandingkan() {
       {!dariMatch && step === 3 && (
         <>
           <Question judul="Kos kedua" sub="Isi nama dan harga sewanya." />
-          <IsiKos k={b} huruf="B" onChange={setB} />
+          <IsiKos k={b} huruf="B" onChange={setB} invalid={!!err} />
         </>
       )}
       {!dariMatch && step === 4 && (
@@ -248,7 +248,7 @@ export default function Bandingkan() {
         </>
       )}
       {err && (
-        <p className="err" role="alert">
+        <p className="err" id="wz-err" role="alert">
           {err}
         </p>
       )}

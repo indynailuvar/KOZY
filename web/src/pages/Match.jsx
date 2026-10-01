@@ -1,11 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Icon from '../components/Icon.jsx';
+import Kamar360 from '../components/Kamar360.jsx';
+import TanyaAI from '../components/TanyaAI.jsx';
 import KozyMap from '../components/KozyMap.jsx';
-import { SpeakButton } from '../components/A11y.jsx';
-import { Button, EmptyState, InfoTip, PageHead, ScoreRing, Sheet, StatusBadge } from '../components/ui.jsx';
-import { HARGA_MATCH, Paywall, VerifiedCard } from '../components/Sheets.jsx';
-import { fasilitasById, hitungArea, jenisById, kawasanById, kebutuhanById, kozyMatch, labelFasilitas, tujuanById } from '../api/kozy.js';
+import { SpeakButton, useBacaOtomatis } from '../components/A11y.jsx';
+import { Button, EmptyState, InfoTip, PageHead, ScoreRing, StatusBadge } from '../components/ui.jsx';
+import { HARGA_MATCH, Paywall } from '../components/Sheets.jsx';
+import { fasilitasById, hitungArea, jenisById, jumlahKosCocok, kawasanById, kebutuhanById, kosPetaDekat, kozyMatch, labelFasilitas, tujuanById } from '../api/kozy.js';
 import { daftar, jarak, persen, rp, rpSingkat, rpSuara } from '../lib/format.js';
+import { catat } from '../lib/jejak.js';
 import { useStore } from '../store.jsx';
 import { go } from '../router.js';
 
@@ -18,11 +21,11 @@ function konteksDari(state, dari) {
       key: `${c.id}:${c.pilih.id}:${c.input.fasilitas.join()}`,
       purchaseId: c.id,
       judul: `Kos di ${c.pilih.nama}`,
-      sub: area ? `Estimasi ${rpSingkat(area.estimasi[0])} – ${rpSingkat(area.estimasi[1])} · ${area.n} kos pembanding` : `Maks. ${rp(c.input.budgetMax)}`,
+      sub: area ? `Harga kos di sini ${rpSingkat(area.estimasi[0])} – ${rpSingkat(area.estimasi[1])}` : `Maks. ${rp(c.input.budgetMax)}`,
       kembali: '/kawasan',
       tujuan,
       pusat: kawasanById(c.pilih.id),
-      args: { kawasanIds: [c.pilih.id], fasilitas: c.input.fasilitas, budgetMax: c.input.budgetMax, jenis: c.input.jenis, disabilitas: c.input.disabilitas, tujuan, seed: c.id },
+      args: { kawasanIds: [c.pilih.id], fasilitas: c.input.fasilitas, budgetMax: c.input.budgetMax, jenis: c.input.jenis, tujuan, seed: c.id },
     };
   }
   if (dari === 'cek' && state.cek?.faktor) {
@@ -45,19 +48,27 @@ function konteksDari(state, dari) {
 
 const markerTujuan = (t) => (t ? [{ kind: 'place', lat: t.lat, lng: t.lng, label: t.singkat, icon: kebutuhanById(t.jenis)?.icon || 'pin' }] : []);
 
-function KosDetail({ k, tujuan, terbuka, dibanding, onClose, onBuka, onTawar, onBanding }) {
+const cariIklan = (k) => `https://www.google.com/search?q=${encodeURIComponent(`site:mamikos.com ${k.nama} Surabaya`)}`;
+
+function KosDetail({ k, tujuan, dibanding, onClose, onTawar, onBanding }) {
   const [skor, setSkor] = useState(false);
-  useEffect(() => setSkor(false), [k.id]);
+  useEffect(() => {
+    setSkor(false);
+  }, [k.id]);
   const jenis = jenisById(k.jenis);
-  const waText = encodeURIComponent(`Halo, saya lihat ${k.nama} (${k.kawasan.nama}) di KOZY. Apakah kamarnya masih tersedia?`);
-  const suara = `${k.nama}, kos ${jenis.label.toLowerCase()} di ${k.kawasan.nama}. Harga ${rpSuara(k.harga)} per bulan. Fasilitas: ${daftar(labelFasilitas(k.fasilitas))}.${
-    k.aksesibel ? ` Akses disabilitas: ${k.fiturAkses.join(', ')}.` : ''
-  }`;
+  const suara = `${k.nama}, kos ${jenis.label.toLowerCase()} di Kecamatan ${k.kec}. Harga ${rpSuara(k.harga)} per bulan. Fasilitas: ${daftar(labelFasilitas(k.fasilitas))}.`;
+  useBacaOtomatis(suara, k.id);
+  const judulRef = useRef(null);
+  useEffect(() => {
+    judulRef.current?.focus({ preventScroll: true });
+  }, [k.id]);
   return (
-    <div className="kos-detail" role="dialog" aria-label={`Detail ${k.nama}`}>
+    <section className="kos-detail" aria-label={`Detail ${k.nama}`}>
       <div className="kd-head">
         <div>
-          <h3>{k.nama}</h3>
+          <h3 ref={judulRef} tabIndex={-1}>
+            {k.nama}
+          </h3>
           <p>
             {k.kawasan.nama} · {jarak(k.jarak)} dari {tujuan ? tujuan.singkat : 'pusat aktivitas'}
           </p>
@@ -67,14 +78,35 @@ function KosDetail({ k, tujuan, terbuka, dibanding, onClose, onBuka, onTawar, on
         </button>
       </div>
 
+      {k.foto && <Kamar360 foto={k.foto} nama={`kamar di ${k.nama}`} tinggi="sm" />}
+
       <div className="kd-price">
         <b>{rp(k.harga)}</b>
         <span>/bulan</span>
         <StatusBadge status={k.status} size="sm" />
       </div>
       <p className="note">
-        Harga wajar {rp(k.harga_wajar)} ({persen(k.selisih_persen)}) · Kos {jenis.label.toLowerCase()} · {k.luas} m²
+        Harga wajar {rp(k.harga_wajar)} ({persen(k.selisih_persen)}) · Kos {jenis.label.toLowerCase()}
+        {k.rating ? ` · ★ ${k.rating}` : ''}
+        {k.dilihat ? ` · dilihat ${k.dilihat}×` : ''}
       </p>
+      {/* Ketersediaan kamar hanya ada di iklan Papikost; kalau kosong tidak dikarang. */}
+      {k.sisaKamar != null && (
+        <p className={`kd-sisa ${k.sisaKamar <= 2 ? 'is-tipis' : ''}`}>
+          <Icon name="door" size={16} />
+          {k.sisaKamar > 0 ? (
+            <>
+              <b>
+                {k.sisaKamar} kamar
+              </b>{' '}
+              masih kosong{k.sisaKamar <= 2 ? ' — tinggal sedikit' : ''}
+            </>
+          ) : (
+            <b>Kamar sedang penuh</b>
+          )}
+          <small>menurut iklan {k.sumber}</small>
+        </p>
+      )}
 
       <p className="kd-label">Fasilitas</p>
       <ul className="kd-grid">
@@ -89,19 +121,9 @@ function KosDetail({ k, tujuan, terbuka, dibanding, onClose, onBuka, onTawar, on
         })}
       </ul>
 
-      {k.aksesibel && (
-        <>
-          <p className="kd-label">Akses disabilitas</p>
-          <ul className="kd-grid one">
-            {k.fiturAkses.map((x) => (
-              <li key={x}>
-                <Icon name="check" size={16} strokeWidth={2.6} />
-                {x}
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
+      <p className="note kd-sumber">
+        Iklan {k.sumber} · titik di peta adalah perkiraan area, bukan alamat persis.
+      </p>
 
       <div className="kd-score">
         <ScoreRing value={k.skor.total} size={36} label="Skor kecocokan" />
@@ -133,16 +155,10 @@ function KosDetail({ k, tujuan, terbuka, dibanding, onClose, onBuka, onTawar, on
       )}
 
       <div className="kd-actions">
-        {terbuka ? (
-          <a className="btn btn-primary btn-sm" href={`https://wa.me/?text=${waText}`} target="_blank" rel="noopener noreferrer">
-            <Icon name="chat" size={16} />
-            <span>Chat pemilik</span>
-          </a>
-        ) : (
-          <Button size="sm" icon="phone" onClick={onBuka}>
-            Buka Nomor
-          </Button>
-        )}
+        <a className="btn btn-primary btn-sm" href={cariIklan(k)} target="_blank" rel="noopener noreferrer" onClick={() => catat('iklan_dibuka', { kec: k.kec, harga: k.harga })}>
+          <Icon name="external" size={16} />
+          <span>Lihat iklannya</span>
+        </a>
         <Button size="sm" variant="secondary" icon="file" onClick={onTawar}>
           Kartu Tawar
         </Button>
@@ -151,7 +167,7 @@ function KosDetail({ k, tujuan, terbuka, dibanding, onClose, onBuka, onTawar, on
         <input type="checkbox" checked={dibanding} onChange={onBanding} />
         Pilih untuk dibandingkan
       </label>
-    </div>
+    </section>
   );
 }
 
@@ -162,6 +178,7 @@ function Terkunci({ ktx, onBuka }) {
       <section className="card lock-card">
         <KozyMap
           className="map-md"
+          label={`Peta ${ktx.pusat.nama}. Lokasi tiap kos terkunci sampai KOZY Match dibuka.`}
           center={[ktx.pusat.lat, ktx.pusat.lng]}
           zoom={15}
           interactive={false}
@@ -171,16 +188,18 @@ function Terkunci({ ktx, onBuka }) {
           onSelect={onBuka}
         />
         <div className="lock-body">
-          <h2>5 kos cocok di {ktx.pusat.nama}</h2>
-          <p>Buka untuk melihat lokasi tiap kos, fasilitas, jenis kos, dan kontak pemilik.</p>
+          <h2>
+            {ktx.jumlah} kos cocok di Kec. {ktx.pusat.kec}
+          </h2>
+          <p>Buka untuk melihat nama kos, fasilitas, jenis kos, dan kontak pemilik.</p>
           <ul className="check-list">
             <li>
               <Icon name="check" size={16} strokeWidth={2.6} />
-              Semua harganya sudah dicek wajar
+              Diambil dari iklan asli, harganya sudah dicek wajar
             </li>
             <li>
               <Icon name="check" size={16} strokeWidth={2.6} />
-              Kontak pemilik terverifikasi
+              Nama kos, fasilitas, dan tautan ke iklan aslinya
             </li>
             <li>
               <Icon name="check" size={16} strokeWidth={2.6} />
@@ -199,11 +218,11 @@ function Terkunci({ ktx, onBuka }) {
 export default function Match({ query }) {
   const { state, set, toast } = useStore();
   const dari = query.dari || 'cek';
-  const ktx = useMemo(() => konteksDari(state, dari), [state.cari, state.cek, dari]); // eslint-disable-line react-hooks/exhaustive-deps
+  const ktx0 = useMemo(() => konteksDari(state, dari), [state.cari, state.cek, dari]); // eslint-disable-line react-hooks/exhaustive-deps
+  const ktx = ktx0 && { ...ktx0, jumlah: jumlahKosCocok(ktx0.args) };
   const [list, setList] = useState(state.match?.key === ktx?.key ? state.match.list : null);
   const [pilih, setPilih] = useState(null);
   const [bayar, setBayar] = useState(false);
-  const [konfirmasi, setKonfirmasi] = useState(null);
   const mapRef = useRef(null);
   const paid = ktx && state.paid[ktx.purchaseId];
 
@@ -232,16 +251,25 @@ export default function Match({ query }) {
   if (!paid)
     return (
       <>
-        <Terkunci ktx={ktx} onBuka={() => setBayar(true)} />
+        <Terkunci
+          ktx={ktx}
+          onBuka={() => {
+            catat('match_dikunci', { dari, kec: ktx.pusat.kec });
+            setBayar(true);
+          }}
+        />
         <Paywall open={bayar} purchaseId={ktx.purchaseId} onClose={() => setBayar(false)} onPaid={() => setBayar(false)} />
       </>
     );
 
   const kos = list?.find((k) => k.id === pilih);
+  // titik Google Maps di sekitar area ini: lokasinya asli, harganya masih perkiraan model
+  const sekitar = kosPetaDekat(ktx.pusat, 1.5, 6);
   const bandingIds = state.bandingkan.map((k) => k.id);
   const markers = [
     ...markerTujuan(ktx.tujuan),
     ...(list || []).map((k) => ({ id: k.id, kind: 'price', lat: k.lat, lng: k.lng, label: rpSingkat(k.harga).replace(/^Rp\s/, ''), selected: k.id === pilih, title: k.nama })),
+    ...sekitar.map((g) => ({ id: g.id, kind: 'est', lat: g.lat, lng: g.lng, label: `≈ ${rpSingkat(g.estimasi).replace(/^Rp\s/, '')}`, selected: g.id === pilih, title: `${g.nama} · perkiraan` })),
   ];
   const pilihKos = (id) => {
     setPilih(id);
@@ -253,6 +281,7 @@ export default function Match({ query }) {
       return { bandingkan: ada ? s.bandingkan.filter((x) => x.id !== k.id) : [...s.bandingkan.filter((x) => list.some((l) => l.id === x.id)), k].slice(-2) };
     });
   const buatTawar = (k) => {
+    catat('kartu_tawar', { status: k.status, kec: k.kec });
     set({
       tawar: {
         purchaseId: ktx.purchaseId,
@@ -266,7 +295,7 @@ export default function Match({ query }) {
         status: k.status,
         persentil: k.persentil,
         n: k.n,
-        radius: k.n >= 15 ? '800 m' : '1,5 km',
+        kec: k.kec,
         updated_at: state.cek?.meta?.updated_at || state.cari?.updated_at || '2026-09-12',
       },
     });
@@ -278,7 +307,7 @@ export default function Match({ query }) {
     <div className="page match">
       <PageHead
         judul={ktx.judul}
-        sub={list ? `${list.length} kos lolos cek harga · kontak terverifikasi` : 'Memuat…'}
+        sub={list ? `${list.length} kos dari iklan ${[...new Set(list.map((k) => k.sumber))].join(' + ')} · harganya sudah dicek` : 'Memuat…'}
         onBack={() => go(ktx.kembali)}
         aksi={<InfoTip label="Tentang skor kecocokan">Skor 0–100 dari harga (40%), jarak (25%), fasilitas (25%), dan keyakinan data (10%).</InfoTip>}
       />
@@ -287,6 +316,7 @@ export default function Match({ query }) {
         <div className="match-map" ref={mapRef}>
           <KozyMap
             className="map-lg"
+            label="Peta lokasi kos. Semua kos juga tercantum di daftar."
             center={[ktx.pusat.lat, ktx.pusat.lng]}
             zoom={15}
             markers={markers}
@@ -299,10 +329,8 @@ export default function Match({ query }) {
             <KosDetail
               k={kos}
               tujuan={ktx.tujuan}
-              terbuka={!!state.kontakDibuka[kos.id]}
               dibanding={bandingIds.includes(kos.id)}
               onClose={() => setPilih(null)}
-              onBuka={() => setKonfirmasi(kos)}
               onTawar={() => buatTawar(kos)}
               onBanding={() => toggleBanding(kos)}
             />
@@ -325,7 +353,6 @@ export default function Match({ query }) {
                   <b>{k.nama}</b>
                   <small>
                     Kos {jenisById(k.jenis).label.toLowerCase()} · {jarak(k.jarak)}
-                    {k.aksesibel && ' · ramah disabilitas'}
                   </small>
                 </span>
                 <span className="kr-p">
@@ -336,7 +363,42 @@ export default function Match({ query }) {
               </button>
             ))
           )}
-          <VerifiedCard />
+          {sekitar.length > 0 && (
+            <section className="sekitar">
+              <p className="sec-label">Kos lain di sekitar · Google Maps</p>
+              <p className="note">Harga kos ini belum ada di sumbernya. Angka di bawah adalah perkiraan model untuk kos dengan fasilitas rata-rata di kecamatan ini, bukan harga dari pemilik.</p>
+              {sekitar.map((g) => (
+                <a key={g.id} className={`kos-row is-est ${g.id === pilih ? 'is-on' : ''}`} href={g.link || '#'} target="_blank" rel="noopener noreferrer" onClick={() => catat('gmaps_dibuka', { kec: g.kec })}>
+                  <span className="kr-t">
+                    <b>{g.nama}</b>
+                    <small>
+                      {jarak(g.jarak)}
+                      {g.rating ? ` · ★ ${g.rating}` : ''}
+                      {g.keyakinan === 'rendah' ? ' · perkiraan kasar' : ''}
+                    </small>
+                  </span>
+                  <span className="kr-p">
+                    <b>
+                      ≈ {rpSingkat(g.rendah)} – {rpSingkat(g.tinggi)}
+                    </b>
+                    <em className="tag-est">perkiraan</em>
+                  </span>
+                </a>
+              ))}
+            </section>
+          )}
+
+          {list?.length > 0 && (
+          <TanyaAI
+            dari="match"
+            judul="Bingung pilih yang mana?"
+            saran={[
+              list.length >= 2 ? `Bantu pilih antara ${list[0].nama} dan ${list[1].nama}` : 'Bantu pilih kos yang paling cocok',
+              'Apa saja yang wajib dicek saat lihat kos?',
+              'Cara nawar harga kos ke pemilik',
+            ]}
+          />
+          )}
         </div>
       </div>
 
@@ -349,26 +411,6 @@ export default function Match({ query }) {
         </div>
       )}
 
-      <Sheet open={!!konfirmasi} onClose={() => setKonfirmasi(null)} label="Buka nomor pemilik">
-        {konfirmasi && (
-          <div className="sheet-body">
-            <h2 className="h2">Buka nomor pemilik {konfirmasi.nama}?</h2>
-            <p className="muted">Nomor akan tercatat di akunmu. Gunakan untuk menanyakan kamar, bukan untuk promosi.</p>
-            <Button
-              block
-              onClick={() => {
-                set((s) => ({ kontakDibuka: { ...s.kontakDibuka, [konfirmasi.id]: true } }));
-                setKonfirmasi(null);
-              }}
-            >
-              Buka Nomor
-            </Button>
-            <Button variant="ghost" block onClick={() => setKonfirmasi(null)}>
-              Batal
-            </Button>
-          </div>
-        )}
-      </Sheet>
     </div>
   );
 }

@@ -16,7 +16,6 @@ const STATUS = {
   KEMAHALAN: { cls: 'st-kem', icon: 'alert', teks: 'Kemahalan' },
   WAJAR: { cls: 'st-waj', icon: 'checkc', teks: 'Wajar' },
   MURAH: { cls: 'st-mur', icon: 'tag', teks: 'Murah' },
-  CEK: { cls: 'st-cek', icon: 'alert', teks: 'Perlu dicek' },
 };
 
 export function StatusBadge({ status, size }) {
@@ -47,7 +46,10 @@ export function Wizard({ judul, langkah, total, onBack, children, footer }) {
   }, []);
   useEffect(() => {
     window.scrollTo(0, 0);
-    bodyRef.current?.querySelector('input:not([type]):not([data-noauto])')?.focus({ preventScroll: true });
+    const body = bodyRef.current;
+    const isian = body?.querySelector('input:not([type]):not([data-noauto])');
+    const judul = body?.querySelector('h1');
+    (isian || judul)?.focus({ preventScroll: true });
   }, [langkah]);
   return (
     <div className="wz">
@@ -70,7 +72,15 @@ export function Wizard({ judul, langkah, total, onBack, children, footer }) {
           </div>
         </div>
         {total > 1 && (
-          <div className="wz-progress" role="progressbar" aria-label="Kemajuan" aria-valuemin={1} aria-valuemax={total} aria-valuenow={langkah}>
+          <div
+            className="wz-progress"
+            role="progressbar"
+            aria-label="Kemajuan"
+            aria-valuemin={1}
+            aria-valuemax={total}
+            aria-valuenow={langkah}
+            aria-valuetext={`Langkah ${langkah} dari ${total}`}
+          >
             <i style={{ width: `${(langkah / total) * 100}%` }} />
           </div>
         )}
@@ -86,7 +96,7 @@ export function Wizard({ judul, langkah, total, onBack, children, footer }) {
 export function Question({ judul, sub }) {
   return (
     <div className="wz-q">
-      <h1>{judul}</h1>
+      <h1 tabIndex={-1}>{judul}</h1>
       {sub && <p>{sub}</p>}
     </div>
   );
@@ -94,12 +104,32 @@ export function Question({ judul, sub }) {
 
 // Pilihan tunggal berbentuk baris besar
 export function Options({ value, onChange, options, label }) {
+  const refs = useRef([]);
+  const aktif = Math.max(0, options.findIndex((o) => o.id === value));
+  const onKeyDown = (e) => {
+    const maju = e.key === 'ArrowDown' || e.key === 'ArrowRight';
+    const mundur = e.key === 'ArrowUp' || e.key === 'ArrowLeft';
+    if (!maju && !mundur) return;
+    e.preventDefault();
+    const i = (aktif + (maju ? 1 : -1) + options.length) % options.length;
+    onChange(options[i].id);
+    refs.current[i]?.focus();
+  };
   return (
-    <div className="opts" role="radiogroup" aria-label={label}>
-      {options.map((o) => {
+    <div className="opts" role="radiogroup" aria-label={label} onKeyDown={onKeyDown}>
+      {options.map((o, i) => {
         const on = value === o.id;
         return (
-          <button key={o.id} type="button" role="radio" aria-checked={on} className={`opt ${on ? 'is-on' : ''}`} onClick={() => onChange(o.id)}>
+          <button
+            key={o.id}
+            ref={(el) => (refs.current[i] = el)}
+            type="button"
+            role="radio"
+            aria-checked={on}
+            tabIndex={i === aktif ? 0 : -1}
+            className={`opt ${on ? 'is-on' : ''}`}
+            onClick={() => onChange(o.id)}
+          >
             {o.icon && (
               <span className="ic-circle">
                 <Icon name={o.icon} size={20} />
@@ -138,7 +168,7 @@ export function Tiles({ values, onToggle, options, label }) {
 }
 
 // Input nominal besar bergaris bawah (gaya SS1)
-export function AmountInput({ id, value, onChange, prefix, suffix, placeholder, label, max = 20_000_000 }) {
+export function AmountInput({ id, value, onChange, prefix, suffix, placeholder, label, max = 20_000_000, invalid = false }) {
   return (
     <label className="amount" htmlFor={id}>
       {prefix && <span className="amount-pre">{prefix}</span>}
@@ -150,6 +180,8 @@ export function AmountInput({ id, value, onChange, prefix, suffix, placeholder, 
         onChange={(e) => onChange(Math.min(max, Number(e.target.value.replace(/[^0-9]/g, '')) || 0))}
         placeholder={placeholder}
         aria-label={label}
+        aria-invalid={invalid || undefined}
+        aria-describedby={invalid ? 'wz-err' : undefined}
       />
       {suffix && <span className="amount-suf">{suffix}</span>}
     </label>
@@ -157,7 +189,7 @@ export function AmountInput({ id, value, onChange, prefix, suffix, placeholder, 
 }
 
 // Isian bergaris bawah untuk langkah yang punya beberapa isian
-export function LineInput({ id, label, hint, value, onChange, prefix, suffix, placeholder, inputMode, autoFocus }) {
+export function LineInput({ id, label, hint, value, onChange, prefix, suffix, placeholder, inputMode, autoFocus, invalid = false, noAuto = false }) {
   return (
     <div className="line-f">
       <label htmlFor={id}>
@@ -166,7 +198,18 @@ export function LineInput({ id, label, hint, value, onChange, prefix, suffix, pl
       </label>
       <div className="line-in">
         {prefix && <span className="line-pre">{prefix}</span>}
-        <input id={id} value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} inputMode={inputMode} autoComplete="off" autoFocus={autoFocus} />
+        <input
+          id={id}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder={placeholder}
+          inputMode={inputMode}
+          autoComplete="off"
+          autoFocus={autoFocus}
+          data-noauto={noAuto ? '' : undefined}
+          aria-invalid={invalid || undefined}
+          aria-describedby={invalid ? 'wz-err' : undefined}
+        />
         {suffix && <span className="line-suf">{suffix}</span>}
       </div>
     </div>
@@ -175,9 +218,9 @@ export function LineInput({ id, label, hint, value, onChange, prefix, suffix, pl
 
 export function Segmented({ value, onChange, options, label }) {
   return (
-    <div className="seg" role="tablist" aria-label={label}>
+    <div className="seg" role="group" aria-label={label}>
       {options.map((o) => (
-        <button key={o.id} type="button" role="tab" aria-selected={value === o.id} className={value === o.id ? 'is-on' : ''} onClick={() => onChange(o.id)}>
+        <button key={o.id} type="button" aria-pressed={value === o.id} className={value === o.id ? 'is-on' : ''} onClick={() => onChange(o.id)}>
           {o.icon && <Icon name={o.icon} size={16} />}
           {o.label}
         </button>
@@ -221,7 +264,7 @@ export function Switch({ checked, onChange, label, sub }) {
         {label}
         {sub && <small>{sub}</small>}
       </span>
-      <input type="checkbox" className="switch" checked={checked} onChange={(e) => onChange(e.target.checked)} />
+      <input type="checkbox" role="switch" className="switch" checked={checked} onChange={(e) => onChange(e.target.checked)} />
     </label>
   );
 }
@@ -234,7 +277,20 @@ export function Sheet({ open, onClose, children, label, dismissable = true, clas
     if (!open) return;
     const prev = document.activeElement;
     ref.current?.focus();
-    const onKey = (e) => e.key === 'Escape' && latest.current.dismissable && latest.current.onClose?.();
+    const onKey = (e) => {
+      if (e.key === 'Escape' && latest.current.dismissable) latest.current.onClose?.();
+      if (e.key !== 'Tab' || !ref.current) return;
+      const bisa = [...ref.current.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), textarea, select, [tabindex]:not([tabindex="-1"])')];
+      if (!bisa.length) return;
+      const [awal, akhir] = [bisa[0], bisa[bisa.length - 1]];
+      if (e.shiftKey && (document.activeElement === awal || document.activeElement === ref.current)) {
+        e.preventDefault();
+        akhir.focus();
+      } else if (!e.shiftKey && document.activeElement === akhir) {
+        e.preventDefault();
+        awal.focus();
+      }
+    };
     document.addEventListener('keydown', onKey);
     document.body.classList.add('no-scroll');
     return () => {
@@ -285,6 +341,7 @@ export function Accordion({ title, icon, children, defaultOpen = false }) {
 export function InfoTip({ label = 'Info', children }) {
   const [pos, setPos] = useState(null);
   const btn = useRef(null);
+  const tipId = useId();
   const open = () => {
     const r = btn.current.getBoundingClientRect();
     const w = Math.min(260, window.innerWidth - 24);
@@ -307,11 +364,11 @@ export function InfoTip({ label = 'Info', children }) {
   }, [pos]);
   return (
     <span className="tip" onMouseEnter={open} onMouseLeave={close}>
-      <button ref={btn} type="button" className="tip-btn" aria-label={label} aria-expanded={!!pos} onClick={open} onBlur={close} onKeyDown={(e) => e.key === 'Escape' && close()}>
+      <button ref={btn} type="button" className="tip-btn" aria-label={label} aria-expanded={!!pos} aria-describedby={pos ? tipId : undefined} onClick={open} onBlur={close} onKeyDown={(e) => e.key === 'Escape' && close()}>
         <Icon name="info" size={15} />
       </button>
       {pos && (
-        <span className="tip-pop" role="tooltip" style={pos}>
+        <span className="tip-pop" role="tooltip" id={tipId} style={pos}>
           {children}
         </span>
       )}

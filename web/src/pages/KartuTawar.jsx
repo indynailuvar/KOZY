@@ -2,25 +2,10 @@ import { useState } from 'react';
 import Icon from '../components/Icon.jsx';
 import { Button, EmptyState, ListRow, PageHead, StatusBadge } from '../components/ui.jsx';
 import { Paywall } from '../components/Sheets.jsx';
-import { bulat10rb, persen, rp, tanggal } from '../lib/format.js';
+import { kalimatTawar } from '../api/ai.js';
+import { persen, rp, tanggal } from '../lib/format.js';
 import { useStore } from '../store.jsx';
 import { go } from '../router.js';
-
-function kalimatTawar(t) {
-  const data = `Menurut data KOZY dari ${t.n} kos serupa dalam ${t.radius}, harga wajar kamar ini sekitar ${rp(t.harga_wajar)}/bulan.`;
-  if (t.status === 'KEMAHALAN') {
-    const target = bulat10rb(t.harga_wajar + (t.harga - t.harga_wajar) * 0.15);
-    return [data, `Harga ${rp(t.harga)} lebih mahal dari ${t.persentil}% kos sejenis di sekitar sini.`, `Apakah bisa ${rp(target)}/bulan kalau saya langsung bayar 6 bulan?`];
-  }
-  if (t.status === 'CEK') {
-    return [data, 'Harganya jauh di bawah kos serupa, jadi saya ingin memastikan dulu.', 'Apakah harga ini sudah termasuk listrik, air, dan WiFi? Boleh saya lihat kamarnya sebelum membayar?'];
-  }
-  if (t.status === 'WAJAR') {
-    const target = bulat10rb(Math.min(t.harga, t.harga_wajar) * 0.97);
-    return [data, 'Harganya sudah wajar dan saya serius ingin menyewa.', `Apakah bisa ${rp(target)}/bulan kalau saya bayar 6 bulan di depan?`];
-  }
-  return [data, 'Harganya sudah bagus, saya ingin segera booking.', 'Apakah ada biaya tambahan di luar sewa, seperti listrik, air, atau parkir?'];
-}
 
 const kode = (id) => `KZ-${Math.abs([...id].reduce((h, c) => (h * 31 + c.charCodeAt(0)) | 0, 7)).toString(36).toUpperCase().slice(0, 6)}`;
 
@@ -103,7 +88,7 @@ export default function KartuTawar() {
           </dl>
           <p className="kartu-diff">
             Selisih {t.selisih_rp < 0 ? '−' : '+'}
-            {rp(t.selisih_rp)} ({persen(t.selisih_persen)}) · dari {t.n} kos serupa
+            {rp(t.selisih_rp)} ({persen(t.selisih_persen)}) · dari {t.n} iklan kos di Kec. {t.kec}
           </p>
           <footer className="kartu-f">
             <Icon name="qr" size={16} />
