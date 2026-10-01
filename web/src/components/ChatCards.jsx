@@ -77,7 +77,7 @@ export function KeputusanKartu({ k }) {
       </ul>
       {k.alternatif && <p className="c-muted">{k.alternatif}</p>}
       <details className="c-more">
-        <summary>Cek juga saat survei</summary>
+        <summary>Cek sendiri saat lihat kosnya</summary>
         <ul>
           {k.cek.map((c) => (
             <li key={c}>{c}</li>

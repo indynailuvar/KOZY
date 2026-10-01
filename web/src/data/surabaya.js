@@ -1,26 +1,30 @@
-// Data acuan untuk pengembangan frontend. Di produksi, angka-angka ini datang dari API KOZY
-// (hasil scraping iklan + model hedonic). Koordinat adalah perkiraan titik tengah / lokasi umum.
+// Data acuan wilayah + metadata tampilan.
+// Angka harga TIDAK ada di sini: semuanya berasal dari hasil scraping di `pasar.json`
+// (dibuat oleh scripts/build_pasar.py). Di sini hanya hal yang bukan hasil pengukuran harga:
+// daftar titik penting kota dan label tampilan.
+import kawasanData from './kawasan.json';
+import pasar from './pasar.json';
 
-export const MODEL = { akurasi: 0.92, updated: '2026-09-12' };
-export const DATA_UPDATED = MODEL.updated;
+export const PASAR = pasar;
+export const MODEL = pasar.meta;
+export const DATA_UPDATED = pasar.meta.diambil;
 
-// harga = perkiraan kontribusi ke harga wajar (dipakai model, tidak ditampilkan per item ke penyewa)
+// Fasilitas yang ikut dihitung model. Papikost juga mencatat lemari, meja belajar,
+// dan parkir, tetapi hampir semua iklannya punya itu sehingga pengaruhnya tidak bisa
+// dipisahkan — datanya disimpan di `fasilitas_lain` untuk ditampilkan saja.
 export const FASILITAS = [
-  { id: 'ac', label: 'AC', icon: 'snow', harga: 150_000 },
-  { id: 'wifi', label: 'WiFi', icon: 'wifi', harga: 40_000 },
-  { id: 'km', label: 'KM Dalam', icon: 'bath', harga: 120_000 },
-  { id: 'parkir', label: 'Parkir', icon: 'park', harga: 15_000 },
-  { id: 'lemari', label: 'Lemari', icon: 'door', harga: 20_000 },
-  { id: 'laundry', label: 'Laundry', icon: 'shirt', harga: 60_000 },
-  { id: 'dapur', label: 'Dapur', icon: 'utensils', harga: 40_000 },
-  { id: 'belajar', label: 'Ruang Belajar', icon: 'book', harga: 25_000 },
+  { id: 'km', label: 'KM Dalam', icon: 'bath' },
+  { id: 'ac', label: 'AC', icon: 'snow' },
+  { id: 'wifi', label: 'WiFi', icon: 'wifi' },
+  { id: 'kasur', label: 'Kasur', icon: 'bed' },
+  { id: 'kloset', label: 'Kloset Duduk', icon: 'toilet' },
+  { id: 'akses24', label: 'Akses 24 Jam', icon: 'clock' },
 ];
 
 export const JENIS_KOS = [
-  { id: 'putra', label: 'Putra', harga: 0 },
-  { id: 'putri', label: 'Putri', harga: 20_000 },
-  { id: 'campur', label: 'Campur', harga: 30_000 },
-  { id: 'syariah', label: 'Syariah', harga: 10_000 },
+  { id: 'putra', label: 'Putra' },
+  { id: 'putri', label: 'Putri' },
+  { id: 'campur', label: 'Campur' },
 ];
 
 export const PERSONA = [
@@ -58,65 +62,47 @@ export const TEMPAT = [
   { id: 'sier', nama: 'Kawasan Industri SIER', singkat: 'SIER', jenis: 'kantor', lat: -7.3338, lng: 112.7555 },
   { id: 'merr-office', nama: 'Perkantoran MERR', singkat: 'MERR', jenis: 'kantor', lat: -7.2905, lng: 112.7825 },
 
-  { id: 'rs-soetomo', nama: 'RSUD Dr. Soetomo', singkat: 'RSUD Soetomo', jenis: 'rs', lat: -7.2681, lng: 112.758 },
-  { id: 'rs-unair', nama: 'RS Universitas Airlangga', singkat: 'RS UNAIR', jenis: 'rs', lat: -7.2708, lng: 112.7866 },
-  { id: 'rs-haji', nama: 'RS Haji Surabaya', singkat: 'RS Haji', jenis: 'rs', lat: -7.2839, lng: 112.7811 },
-  { id: 'rs-ramelan', nama: 'RSAL Dr. Ramelan', singkat: 'RSAL Ramelan', jenis: 'rs', lat: -7.3106, lng: 112.7383 },
-  { id: 'rs-premier', nama: 'RS Premier Surabaya', singkat: 'RS Premier', jenis: 'rs', lat: -7.3002, lng: 112.7729 },
+  { id: 'rs-soetomo', nama: 'RSUD Dr. Soetomo', singkat: 'RS Soetomo', jenis: 'rs', lat: -7.2686, lng: 112.7583 },
+  { id: 'rs-unair', nama: 'RS Universitas Airlangga', singkat: 'RS UNAIR', jenis: 'rs', lat: -7.2665, lng: 112.7815 },
+  { id: 'rs-haji', nama: 'RS Haji Surabaya', singkat: 'RS Haji', jenis: 'rs', lat: -7.3118, lng: 112.7806 },
+  { id: 'rs-ramelan', nama: 'RSAL Dr. Ramelan', singkat: 'RSAL', jenis: 'rs', lat: -7.3012, lng: 112.7418 },
+  { id: 'rs-premier', nama: 'RS Premier Surabaya', singkat: 'RS Premier', jenis: 'rs', lat: -7.3155, lng: 112.7771 },
 
-  { id: 'pasar-pucang', nama: 'Pasar Pucang Anom', singkat: 'Pasar Pucang', jenis: 'pasar', lat: -7.2877, lng: 112.7605 },
-  { id: 'pasar-wonokromo', nama: 'Pasar Wonokromo', singkat: 'Pasar Wonokromo', jenis: 'pasar', lat: -7.3021, lng: 112.7381 },
-  { id: 'pasar-genteng', nama: 'Pasar Genteng', singkat: 'Pasar Genteng', jenis: 'pasar', lat: -7.2587, lng: 112.7442 },
-  { id: 'pasar-keputih', nama: 'Pasar di Keputih', singkat: 'pasar Keputih', jenis: 'pasar', lat: -7.2935, lng: 112.8021 },
+  { id: 'pasar-pucang', nama: 'Pasar Pucang Anom', singkat: 'Pasar Pucang', jenis: 'pasar', lat: -7.2828, lng: 112.7574 },
+  { id: 'pasar-wonokromo', nama: 'Pasar Wonokromo', singkat: 'Pasar Wonokromo', jenis: 'pasar', lat: -7.3015, lng: 112.7364 },
+  { id: 'pasar-keputran', nama: 'Pasar Keputran', singkat: 'Keputran', jenis: 'pasar', lat: -7.2759, lng: 112.7401 },
+  { id: 'pasar-soponyono', nama: 'Pasar Soponyono Rungkut', singkat: 'Pasar Rungkut', jenis: 'pasar', lat: -7.3305, lng: 112.7826 },
 
-  { id: 'st-gubeng', nama: 'Stasiun Gubeng', singkat: 'St. Gubeng', jenis: 'stasiun', lat: -7.2654, lng: 112.752 },
-  { id: 'st-wonokromo', nama: 'Stasiun Wonokromo', singkat: 'St. Wonokromo', jenis: 'stasiun', lat: -7.303, lng: 112.7337 },
-  { id: 'st-pasarturi', nama: 'Stasiun Pasar Turi', singkat: 'St. Pasar Turi', jenis: 'stasiun', lat: -7.2459, lng: 112.731 },
+  { id: 'st-gubeng', nama: 'Stasiun Gubeng', singkat: 'St. Gubeng', jenis: 'stasiun', lat: -7.2653, lng: 112.7524 },
+  { id: 'st-wonokromo', nama: 'Stasiun Wonokromo', singkat: 'St. Wonokromo', jenis: 'stasiun', lat: -7.3018, lng: 112.7373 },
 
-  { id: 'sman5', nama: 'SMAN 5 Surabaya', singkat: 'SMAN 5', jenis: 'sekolah', lat: -7.2657, lng: 112.7449 },
-  { id: 'sman6', nama: 'SMAN 6 Surabaya', singkat: 'SMAN 6', jenis: 'sekolah', lat: -7.2605, lng: 112.7478 },
-  { id: 'sekolah-mulyorejo', nama: 'Sekolah di Mulyorejo', singkat: 'sekolah Mulyorejo', jenis: 'sekolah', lat: -7.2655, lng: 112.7905 },
-  { id: 'sekolah-ketintang', nama: 'Sekolah di Ketintang', singkat: 'sekolah Ketintang', jenis: 'sekolah', lat: -7.314, lng: 112.73 },
+  { id: 'sma5', nama: 'SMAN 5 Surabaya', singkat: 'SMAN 5', jenis: 'sekolah', lat: -7.2637, lng: 112.7481 },
+  { id: 'sma16', nama: 'SMAN 16 Surabaya', singkat: 'SMAN 16', jenis: 'sekolah', lat: -7.3247, lng: 112.7266 },
+  { id: 'smk6', nama: 'SMKN 6 Surabaya', singkat: 'SMKN 6', jenis: 'sekolah', lat: -7.2905, lng: 112.7413 },
 
-  { id: 'joyoboyo', nama: 'Terminal Intermoda Joyoboyo', singkat: 'Terminal Joyoboyo', jenis: 'transportasi', lat: -7.299, lng: 112.7366 },
-  { id: 'bratang', nama: 'Terminal Bratang', singkat: 'Terminal Bratang', jenis: 'transportasi', lat: -7.298, lng: 112.7581 },
-  { id: 'halte-merr', nama: 'Halte Suroboyo Bus MERR', singkat: 'Halte MERR', jenis: 'transportasi', lat: -7.2878, lng: 112.7818 },
+  { id: 'trans-merr', nama: 'Halte Suroboyo Bus MERR', singkat: 'Halte MERR', jenis: 'transportasi', lat: -7.2884, lng: 112.7825 },
+  { id: 'trans-rajawali', nama: 'Terminal Bratang', singkat: 'Terminal Bratang', jenis: 'transportasi', lat: -7.2925, lng: 112.7597 },
+  { id: 'trans-purabaya', nama: 'Terminal Purabaya', singkat: 'Purabaya', jenis: 'transportasi', lat: -7.3477, lng: 112.7238 },
 ];
 
-// base = harga dasar kawasan (kamar polos), n = kos pembanding, jarak = ke pusat aktivitas terdekat (km)
-// aman = 1–5, komposisi = % tipe kos di kawasan, aksesibel = jumlah kos dengan akses disabilitas
-export const KAWASAN = [
-  { id: 'keputih', nama: 'Keputih', kec: 'Sukolilo', base: 610_000, n: 28, jarak: 0.65, lat: -7.2922, lng: 112.8003, aman: 4, komposisi: { putra: 40, putri: 35, campur: 20, syariah: 5 }, aksesibel: 3 },
-  { id: 'gebang', nama: 'Gebang Putih', kec: 'Sukolilo', base: 580_000, n: 24, jarak: 1.2, lat: -7.2838, lng: 112.7878, aman: 4, komposisi: { putra: 35, putri: 40, campur: 20, syariah: 5 }, aksesibel: 2 },
-  { id: 'semolowaru', nama: 'Semolowaru', kec: 'Sukolilo', base: 540_000, n: 17, jarak: 2.8, lat: -7.2985, lng: 112.7765, aman: 3, komposisi: { putra: 40, putri: 30, campur: 25, syariah: 5 }, aksesibel: 1 },
-  { id: 'mulyorejo', nama: 'Mulyorejo', kec: 'Mulyorejo', base: 820_000, n: 31, jarak: 2.4, lat: -7.2632, lng: 112.7872, aman: 5, komposisi: { putra: 30, putri: 40, campur: 25, syariah: 5 }, aksesibel: 4 },
-  { id: 'klampis', nama: 'Klampis Ngasem', kec: 'Sukolilo', base: 860_000, n: 19, jarak: 3.1, lat: -7.2905, lng: 112.7702, aman: 4, komposisi: { putra: 30, putri: 35, campur: 30, syariah: 5 }, aksesibel: 2 },
-  { id: 'menur', nama: 'Menur Pumpungan', kec: 'Sukolilo', base: 830_000, n: 16, jarak: 3.5, lat: -7.2968, lng: 112.7668, aman: 4, komposisi: { putra: 35, putri: 35, campur: 25, syariah: 5 }, aksesibel: 1 },
-  { id: 'nginden', nama: 'Nginden Jangkungan', kec: 'Sukolilo', base: 620_000, n: 22, jarak: 1.3, lat: -7.3002, lng: 112.769, aman: 4, komposisi: { putra: 35, putri: 35, campur: 25, syariah: 5 }, aksesibel: 2 },
-  { id: 'airlangga', nama: 'Airlangga', kec: 'Gubeng', base: 680_000, n: 26, jarak: 0.7, lat: -7.2695, lng: 112.7562, aman: 4, komposisi: { putra: 35, putri: 40, campur: 20, syariah: 5 }, aksesibel: 3 },
-  { id: 'dharmawangsa', nama: 'Dharmawangsa', kec: 'Gubeng', base: 720_000, n: 22, jarak: 0.9, lat: -7.2768, lng: 112.7563, aman: 5, komposisi: { putra: 30, putri: 45, campur: 20, syariah: 5 }, aksesibel: 2 },
-  { id: 'pucang', nama: 'Pucang Sewu', kec: 'Gubeng', base: 640_000, n: 25, jarak: 1.0, lat: -7.289, lng: 112.7585, aman: 4, komposisi: { putra: 35, putri: 35, campur: 25, syariah: 5 }, aksesibel: 3 },
-  { id: 'gubeng', nama: 'Gubeng', kec: 'Gubeng', base: 750_000, n: 42, jarak: 1.4, lat: -7.2752, lng: 112.7478, aman: 4, komposisi: { putra: 35, putri: 30, campur: 30, syariah: 5 }, aksesibel: 5 },
-  { id: 'tegalsari', nama: 'Tegalsari', kec: 'Tegalsari', base: 780_000, n: 27, jarak: 0.9, lat: -7.2688, lng: 112.7352, aman: 4, komposisi: { putra: 30, putri: 30, campur: 35, syariah: 5 }, aksesibel: 3 },
-  { id: 'darmo', nama: 'Darmo', kec: 'Wonokromo', base: 700_000, n: 24, jarak: 1.2, lat: -7.289, lng: 112.7385, aman: 5, komposisi: { putra: 30, putri: 35, campur: 30, syariah: 5 }, aksesibel: 3 },
-  { id: 'wonokromo', nama: 'Wonokromo', kec: 'Wonokromo', base: 480_000, n: 21, jarak: 1.8, lat: -7.3005, lng: 112.7352, aman: 3, komposisi: { putra: 45, putri: 25, campur: 25, syariah: 5 }, aksesibel: 2 },
-  { id: 'ketintang', nama: 'Ketintang', kec: 'Gayungan', base: 520_000, n: 30, jarak: 0.6, lat: -7.3142, lng: 112.7282, aman: 3, komposisi: { putra: 40, putri: 35, campur: 15, syariah: 10 }, aksesibel: 2 },
-  { id: 'jemursari', nama: 'Jemursari', kec: 'Wonocolo', base: 560_000, n: 18, jarak: 1.6, lat: -7.3238, lng: 112.7438, aman: 4, komposisi: { putra: 30, putri: 35, campur: 15, syariah: 20 }, aksesibel: 1 },
-  { id: 'tenggilis', nama: 'Tenggilis Mejoyo', kec: 'Tenggilis Mejoyo', base: 540_000, n: 20, jarak: 0.8, lat: -7.3186, lng: 112.7648, aman: 4, komposisi: { putra: 35, putri: 35, campur: 25, syariah: 5 }, aksesibel: 2 },
-  { id: 'rungkut', nama: 'Rungkut', kec: 'Rungkut', base: 500_000, n: 23, jarak: 1.1, lat: -7.3278, lng: 112.7792, aman: 3, komposisi: { putra: 45, putri: 25, campur: 25, syariah: 5 }, aksesibel: 2 },
-  { id: 'lakarsantri', nama: 'Lakarsantri', kec: 'Lakarsantri', base: 430_000, n: 13, jarak: 1.9, lat: -7.3218, lng: 112.6498, aman: 3, komposisi: { putra: 40, putri: 30, campur: 25, syariah: 5 }, aksesibel: 0 },
-  { id: 'benowo', nama: 'Benowo', kec: 'Benowo', base: 400_000, n: 11, jarak: 2.2, lat: -7.2392, lng: 112.6302, aman: 3, komposisi: { putra: 45, putri: 25, campur: 25, syariah: 5 }, aksesibel: 0 },
-  { id: 'pakal', nama: 'Pakal', kec: 'Pakal', base: 380_000, n: 9, jarak: 2.6, lat: -7.2331, lng: 112.6148, aman: 3, komposisi: { putra: 45, putri: 25, campur: 25, syariah: 5 }, aksesibel: 0 },
-];
+// Kawasan = kelurahan tempat kos benar-benar terdata. Daftar ini TIDAK ditulis tangan:
+// isinya dibuat scripts/build_kawasan.py dari koordinat kos yang sudah dikenali
+// kelurahan + kecamatannya, dengan titik tengah = median koordinat kos di sana.
+// `kec` menentukan data pasar mana yang dipakai (harga hanya terdata sampai kecamatan).
+const KM_PER_DERAJAT_LAT = 111.32;
+const KM_PER_DERAJAT_LNG = 110.57;
+const jarakKm = (a, b) => Math.hypot((a.lat - b.lat) * KM_PER_DERAJAT_LAT, (a.lng - b.lng) * KM_PER_DERAJAT_LNG);
 
-// Di luar cakupan (masuk daftar tunggu)
-export const LUAR_CAKUPAN = ['sidoarjo', 'waru', 'gresik', 'driyorejo', 'taman', 'malang', 'bangkalan'];
+// `jarak` = jarak ke pusat aktivitas terdekat, dihitung dari koordinat, bukan ditaksir.
+export const KAWASAN = kawasanData.kawasan.map((k) => ({
+  ...k,
+  jarak: Math.round(Math.min(...TEMPAT.map((t) => jarakKm(k, t))) * 10) / 10,
+}));
+export const KAWASAN_META = kawasanData.meta;
 
-export const BUDGET_RANGE = { min: 300_000, max: 3_000_000, step: 50_000 };
+export const LUAR_CAKUPAN = ['sidoarjo', 'waru', 'gresik', 'driyorejo', 'taman', 'geluran', 'malang', 'bangkalan'];
 
-// Perkiraan biaya pasang fasilitas (simulator pemilik)
-export const BIAYA_FASILITAS = { ac: 3_500_000, wifi: 600_000, km: 6_000_000, parkir: 1_500_000, lemari: 700_000, laundry: 2_500_000, dapur: 2_000_000, belajar: 800_000 };
+export const BUDGET_RANGE = { min: 300_000, max: 5_000_000, step: 50_000 };
 
-export const FITUR_AKSES = ['Kamar di lantai dasar', 'Pintu lebar untuk kursi roda', 'Kamar mandi dengan pegangan', 'Jalan masuk landai'];
-
-export const NAMA_KOS = ['Kos Melati', 'Kos Cemara', 'Kos Salsabila', 'Kos Harmoni', 'Kos Kenanga', 'Kos Anggrek', 'Kos Flamboyan', 'Kos Teratai', 'Kos Bougenville', 'Kos Seruni'];
+// Perkiraan biaya pasang fasilitas untuk simulasi pemilik kos (asumsi, bukan hasil scraping).
+export const BIAYA_FASILITAS = { ac: 3_500_000, wifi: 600_000, km: 6_000_000, kasur: 1_800_000, kloset: 1_500_000, akses24: 1_200_000 };

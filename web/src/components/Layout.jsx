@@ -9,7 +9,6 @@ const NAV = [
   { href: '#/', label: 'Beranda', match: (p) => p === '/' },
   { href: '#/cek', label: 'Cek Harga', match: (p) => ['/cek', '/hasil', '/kartu-tawar'].includes(p) },
   { href: '#/cari', label: 'Cari Kos', match: (p) => ['/cari', '/kawasan', '/match', '/bandingkan'].includes(p) },
-  { href: '#/ai', label: 'KOZY AI', match: (p) => p === '/ai' },
   { href: '#/edukasi', label: 'Edukasi', match: (p) => p === '/edukasi' },
 ];
 
@@ -36,6 +35,12 @@ export function Header({ path }) {
     setAkun(false);
   }, [path]);
   useEffect(() => {
+    if (!menu) return;
+    const onKey = (e) => e.key === 'Escape' && setMenu(false);
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [menu]);
+  useEffect(() => {
     if (!akun) return;
     const close = (e) => !akunRef.current?.contains(e.target) && setAkun(false);
     document.addEventListener('pointerdown', close);
@@ -61,10 +66,16 @@ export function Header({ path }) {
           ))}
         </nav>
         <div className="topbar-r">
+          {/* Tombol tetap, bukan tautan di dalam laci menu: pengguna sebelumnya
+              tidak menemukan KOZY AI karena di HP dia tersembunyi di hamburger. */}
+          <a href="#/ai" className={`ai-btn ${path === '/ai' ? 'on' : ''}`} aria-label="KOZY AI" aria-current={path === '/ai' ? 'page' : undefined}>
+            <Icon name="sparkles" size={18} />
+            <span>KOZY AI</span>
+          </a>
           <MenuAkses />
           <div className="acct only-desk" ref={akunRef}>
             {state.user ? (
-              <button type="button" className="avatar" aria-label="Akun" aria-expanded={akun} onClick={() => setAkun((a) => !a)}>
+              <button type="button" className="avatar" aria-label={`Akun ${state.user.nama}`} aria-expanded={akun} onClick={() => setAkun((a) => !a)}>
                 {state.user.nama[0]}
               </button>
             ) : (
@@ -86,13 +97,13 @@ export function Header({ path }) {
               </div>
             )}
           </div>
-          <button type="button" className="icon-btn only-mob" aria-label="Menu" aria-expanded={menu} onClick={() => setMenu((o) => !o)}>
+          <button type="button" className="icon-btn only-mob" aria-label="Menu" aria-expanded={menu} aria-controls="menu-hp" onClick={() => setMenu((o) => !o)}>
             <Icon name={menu ? 'x' : 'menu'} size={22} />
           </button>
         </div>
       </div>
       {menu && (
-        <nav className="drawer" aria-label="Menu">
+        <nav className="drawer" id="menu-hp" aria-label="Menu">
           {[...NAV, { href: '#/riwayat', label: 'Riwayat cek' }, { href: '#/pemilik', label: 'Untuk pemilik kos' }, { href: '#/tentang', label: 'Tentang KOZY' }].map((n) => (
             <a key={n.href} href={n.href}>
               {n.label}

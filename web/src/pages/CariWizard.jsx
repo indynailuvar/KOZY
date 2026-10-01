@@ -1,12 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Icon from '../components/Icon.jsx';
 import RangeSlider from '../components/RangeSlider.jsx';
-import { Button, Options, Question, Switch, Tiles, Wizard } from '../components/ui.jsx';
+import { Button, LineInput, Options, Question, Switch, Tiles, Wizard } from '../components/ui.jsx';
 import { ProcessSheet } from '../components/Sheets.jsx';
 import { OPSI_JENIS } from './CekWizard.jsx';
 import { BUDGET_RANGE, FASILITAS, KEBUTUHAN, PERSONA } from '../data/surabaya.js';
 import { analisisPasar, LANGKAH_CARI, personaById, saranTujuan, tujuanById } from '../api/kozy.js';
-import { rp, rpSingkat } from '../lib/format.js';
+import { angkaDariTeks, rp, rpSingkat } from '../lib/format.js';
+import { catat } from '../lib/jejak.js';
 import { useStore } from '../store.jsx';
 import { go } from '../router.js';
 
@@ -55,7 +56,12 @@ export default function CariWizard() {
     1: persona ? null : 'Pilih salah satu.',
     2: null,
     3: tujuanId ? null : 'Pilih lokasi tujuan dari daftar.',
-    4: null,
+    4:
+      budget[1] < BUDGET_RANGE.min
+        ? `Budget maksimal minimal ${rp(BUDGET_RANGE.min)}.`
+        : budget[0] >= budget[1]
+          ? 'Budget maksimal harus lebih besar dari budget minimal.'
+          : null,
     5: jenis ? null : 'Pilih jenis kos.',
     6: null,
   };
@@ -67,6 +73,7 @@ export default function CariWizard() {
     const hasil = await analisisPasar(input, (i) => alive.current && setProses({ open: true, active: i }));
     if (!alive.current) return;
     set({ cari: { ...hasil, pilih: null }, match: null });
+    catat('cari_selesai', { persona, tujuan: tujuan.singkat, budget: budget[1], tipe: input.jenis || 'semua', fasilitas: fasilitas.length, disabilitas });
     addRiwayat({ id: hasil.id, jenis: 'cari', dibuat: hasil.dibuat, judul: `Dekat ${tujuan.singkat} · maks. ${rpSingkat(budget[1])}`, data: { ...hasil, pilih: null } });
     setProses({ open: true, active: 4 });
     setTimeout(() => go('/kawasan'), 250);
@@ -179,6 +186,30 @@ export default function CariWizard() {
               <b>{rp(budget[1])}</b>
             </p>
             <RangeSlider min={BUDGET_RANGE.min} max={BUDGET_RANGE.max} step={BUDGET_RANGE.step} value={budget} onChange={setBudget} format={rp} label="Budget" />
+            <div className="budget-inputs">
+              <LineInput
+                id="budget-min"
+                label="Minimal"
+                prefix="Rp"
+                inputMode="numeric"
+                value={budget[0] ? budget[0].toLocaleString('id-ID') : ''}
+                onChange={(v) => setBudget([Math.min(BUDGET_RANGE.max, angkaDariTeks(v)), budget[1]])}
+                placeholder="0"
+                invalid={!!err}
+                noAuto
+              />
+              <LineInput
+                id="budget-max"
+                label="Maksimal"
+                prefix="Rp"
+                inputMode="numeric"
+                value={budget[1] ? budget[1].toLocaleString('id-ID') : ''}
+                onChange={(v) => setBudget([budget[0], Math.min(BUDGET_RANGE.max, angkaDariTeks(v))])}
+                placeholder="0"
+                invalid={!!err}
+                noAuto
+              />
+            </div>
             <div className="quick">
               {BUDGET_CEPAT.map((b) => (
                 <button key={b.label} type="button" className={budget[0] === b.v[0] && budget[1] === b.v[1] ? 'is-on' : ''} onClick={() => setBudget(b.v)}>
@@ -204,13 +235,18 @@ export default function CariWizard() {
               <span className="ic-circle">
                 <Icon name="access" size={20} />
               </span>
-              <Switch checked={disabilitas} onChange={setDisabilitas} label="Ramah disabilitas" sub="Utamakan kos dengan akses kursi roda" />
+              <Switch
+                checked={disabilitas}
+                onChange={setDisabilitas}
+                label="Butuh kos ramah disabilitas"
+                sub="Data akses kursi roda belum ada di sumber kami. Kalau dinyalakan, KOZY mengecek langsung ke pemilik."
+              />
             </div>
           </>
         )}
 
         {err && (
-          <p className="err" role="alert">
+          <p className="err" id="wz-err" role="alert">
             {err}
           </p>
         )}

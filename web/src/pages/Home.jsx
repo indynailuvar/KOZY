@@ -53,7 +53,7 @@ export default function Home() {
       <section className="home-more">
         <p className="sec-label">Fitur lainnya</p>
         <div className="list-card">
-          <ListRow icon="sparkles" title="Tanya KOZY AI" sub="Ide upgrade kamar & bantu pilih kos" href="#/ai" />
+          <ListRow icon="sparkles" title="Tanya KOZY AI" sub="Cara nawar, pilih antara 2 kos, atur uang bulanan" href="#/ai" />
           <ListRow icon="scale" title="Bandingkan 2 kos" sub="Timbang harga, jarak, dan fasilitas" href="#/bandingkan" />
           <ListRow icon="wallet" title="Tips keuangan anak kos" sub="Tanggal tua, budget, dana darurat" href="#/edukasi" />
           <ListRow icon="access" title="Aksesibilitas" sub="Mode suara dan teks besar" onClick={() => setAkses(true)} />

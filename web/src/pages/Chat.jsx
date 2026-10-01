@@ -2,8 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import Icon from '../components/Icon.jsx';
 import { SpeakButton } from '../components/A11y.jsx';
 import { KeputusanKartu, PilihKos, ProdukKartu, TipsKartu, teksSuara } from '../components/ChatCards.jsx';
-import { tanyaAI } from '../api/ai.js';
+import { kenaliNiat, tanyaAI } from '../api/ai.js';
 import { bicara } from '../lib/speech.js';
+import { catat } from '../lib/jejak.js';
 import { useStore } from '../store.jsx';
 import { go } from '../router.js';
 
@@ -81,6 +82,7 @@ export default function Chat() {
       ...ktxTambahan,
     };
     tambah({ dari: 'user', teks: t });
+    catat('ai_tanya', { niat: kenaliNiat(t) });
     setTeks('');
     setSibuk(true);
     try {

@@ -32,6 +32,8 @@ function iconFor(m) {
     html = `<div class="mk-lock ${m.open ? 'is-open' : ''}"><span class="mk-lock-ic">${svg(ICON[m.open ? 'unlock' : 'lock'], 20)}</span><b>${esc(m.label)}</b></div>`;
   } else if (m.kind === 'price') {
     html = `<div class="mk-price ${m.selected ? 'is-sel' : ''}">${esc(m.label)}</div>`;
+  } else if (m.kind === 'est') {
+    html = `<div class="mk-est ${m.selected ? 'is-sel' : ''}">${esc(m.label)}</div>`;
   } else if (m.kind === 'pin') {
     html = `<div class="mk-pin"><span>${svg(ICON.home, 18)}</span></div>`;
   } else if (m.kind === 'area') {
@@ -53,6 +55,7 @@ export default function KozyMap({
   interactive = true,
   padBottom = 48,
   className = '',
+  label = '',
   children,
 }) {
   const el = useRef(null);
@@ -71,11 +74,17 @@ export default function KozyMap({
       touchZoom: interactive,
       doubleClickZoom: interactive,
       boxZoom: false,
-      keyboard: interactive,
+      // Peta hanya visual. Isinya selalu tersedia sebagai daftar teks di halaman,
+      // jadi peta tidak ikut urutan Tab dan disembunyikan dari pembaca layar.
+      keyboard: false,
     });
     L.tileLayer(TILE, { maxZoom: 19, attribution: ATTR }).addTo(m);
     m.attributionControl.setPrefix(false);
-    if (interactive) L.control.zoom({ position: 'topright' }).addTo(m);
+    if (interactive) L.control.zoom({ position: 'topright', zoomInTitle: 'Perbesar', zoomOutTitle: 'Perkecil' }).addTo(m);
+    m.getContainer().removeAttribute('tabindex');
+    m.getContainer()
+      .querySelectorAll('a')
+      .forEach((a) => a.setAttribute('tabindex', '-1'));
     // scroll-zoom hanya setelah peta diklik, agar halaman tetap bisa di-scroll
     m.on('click', () => m.scrollWheelZoom.enable());
     m.on('mouseout', () => m.scrollWheelZoom.disable());
@@ -113,7 +122,7 @@ export default function KozyMap({
         zIndexOffset: mk.selected ? 1000 : mk.kind === 'place' ? -100 : 0,
         title: mk.title || mk.label,
         alt: mk.title || mk.label,
-        keyboard: !!mk.id,
+        keyboard: false,
         interactive: !!mk.id || mk.kind === 'lock',
       });
       if (mk.id || mk.kind === 'lock') marker.on('click', () => onSel.current?.(mk.id || 'lock'));
@@ -139,7 +148,8 @@ export default function KozyMap({
 
   return (
     <div className={`kmap ${className}`}>
-      <div ref={el} className="kmap-canvas" />
+      <div ref={el} className="kmap-canvas" aria-hidden="true" />
+      {label && <p className="sr-only">{label}</p>}
       {children}
     </div>
   );

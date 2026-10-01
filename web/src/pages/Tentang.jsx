@@ -1,12 +1,16 @@
 import Icon from '../components/Icon.jsx';
 import { Button, PageHead } from '../components/ui.jsx';
+import { PASAR } from '../data/surabaya.js';
+import { rp, tanggal } from '../lib/format.js';
 import { go } from '../router.js';
 
+const M = PASAR.meta;
 const CARA = [
-  'Kami mengumpulkan ribuan iklan kos di Surabaya, lalu membersihkan data ganda.',
-  'Model hedonic memperkirakan pengaruh kawasan, jenis kos, fasilitas, luas kamar, dan akses ke tempat penting.',
-  'Harga dibandingkan dengan minimal 15 kos serupa dalam radius 800 m. Jika kurang, area diperluas dan hasilnya diberi tanda keyakinan rendah.',
-  'Harga yang janggal disaring sebelum dipakai sebagai pembanding.',
+  `Kami mengumpulkan iklan kos di Surabaya. Saat ini terkumpul ${M.n} iklan dari ${M.sumber}, diambil ${tanggal(M.diambil)}.`,
+  'Model hedonic memperkirakan pengaruh kecamatan, jenis kos, dan tiap fasilitas terhadap harga.',
+  `Saat diuji ulang dengan data yang tidak dipakai melatih, perkiraan model meleset rata-rata ± ${rp(M.mae)} (${M.mape}%). Angka itu kami tampilkan apa adanya.`,
+  'Harga disebut wajar kalau selisihnya di bawah 15% dari perkiraan, seukuran meleset khas model. Di luar itu baru ditandai kemahalan atau murah.',
+  'Kalau data di suatu kecamatan belum terkumpul, KOZY bilang belum ada data. Kami tidak menebak.',
 ];
 
 export default function Tentang() {
@@ -29,6 +33,12 @@ export default function Tentang() {
             </li>
           ))}
         </ul>
+
+        <h2>Batas data saat ini</h2>
+        <p>
+          Sumber data belum memuat luas kamar, alamat persis, dan nomor pemilik. Karena itu KOZY tidak menghitung luas kamar, titik di peta hanya perkiraan area, dan kami
+          mengarahkan kamu ke iklan aslinya. Fasilitas yang dihitung baru {PASAR.model && Object.keys(PASAR.model.fasilitas).length} jenis, yaitu yang memang tercatat di iklan.
+        </p>
 
         <h2>Netral</h2>
         <p>Kamu membayar untuk mengakses hasil analisis, bukan untuk memengaruhi penilaian. Pemilik kos tidak bisa membayar agar harganya dinilai wajar.</p>

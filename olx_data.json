@@ -1,0 +1,5493 @@
+{
+  "version": "100.0",
+  "data": [
+    {
+      "id": "944936975",
+      "score": 1.0,
+      "spell": {
+        "id": 119,
+        "key": "CONFUSION_ES",
+        "version": "1",
+        "main": false,
+        "facet_disabled": false,
+        "default_sorting": "DEFAULT"
+      },
+      "status": {
+        "status": "active",
+        "allow_edit": true,
+        "ban_reason_id": null,
+        "display": "active",
+        "translated_display": "Aktif",
+        "link": null,
+        "flags": {
+          "new": false,
+          "hot": false
+        },
+        "message": null,
+        "allow_deactivate": false
+      },
+      "category_id": "4833",
+      "ad_id": "944936975",
+      "favorites": {
+        "count": 0,
+        "count_label_next": "1"
+      },
+      "user_name": "MJ property",
+      "discount_toggle": null,
+      "has_phone_param": false,
+      "description": "HANYA BULAN INI IDAMAN BANGET RUMAH KOST JALAN RAYA KEPUTIH \n \n\n PALING STRATEGIS \n PALING CUAN\n  PALING UNTUNG \n \n\n KARNA DISINI PEMBAYARAN KOST 3BULAN KE DEPAN INVESTASI PALING MENGUNTUNGKAN DI MASA PANDEMI\n \n\n LT 80 4X20 LB 295 3LT KT 15 KM 15\n DAPUR GARASI 20MOTOR HARGA 3.1M DISCOUNT AKHIR TAHUN JADI 2.5M.",
+      "created_at": "2026-09-11T11:21:51+07:00",
+      "inspection_info": null,
+      "package_id": null,
+      "title": "RAYA KEPUTIH RUMAH KOST LARIS MAHASISWA ITS HANG TUAH",
+      "multi_location": [],
+      "has_video": false,
+      "video_url": null,
+      "partner_id": null,
+      "user_type": "Regular",
+      "spotlightPackageId": null,
+      "price": {
+        "value": {
+          "raw": 2500000000.0,
+          "currency": {
+            "iso_4217": "IDR",
+            "pre": "Rp"
+          },
+          "display": "Rp 2.500.000.000"
+        },
+        "key_name": "Harga",
+        "key": "price"
+      },
+      "has_promotion": false,
+      "partner_code": null,
+      "is_video_generated": false,
+      "monetizationInfo": null,
+      "credit_eligibility": false,
+      "video_thumbnail_url": null,
+      "images": [
+        {
+          "id": "2653889946",
+          "external_id": "69f315a5224e9-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f315a5224e9-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f315a5224e9-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f315a5224e9-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f315a5224e9-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f315a5224e9-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653889947",
+          "external_id": "69f315a51bd2c-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f315a51bd2c-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f315a51bd2c-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f315a51bd2c-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f315a51bd2c-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f315a51bd2c-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653889948",
+          "external_id": "69f315a55b570-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f315a55b570-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f315a55b570-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f315a55b570-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f315a55b570-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f315a55b570-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653889949",
+          "external_id": "69f315a506297-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f315a506297-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f315a506297-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f315a506297-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f315a506297-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f315a506297-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653889950",
+          "external_id": "69f315a439098-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f315a439098-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f315a439098-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f315a439098-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f315a439098-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f315a439098-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653889951",
+          "external_id": "69f315a6ae304-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f315a6ae304-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f315a6ae304-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f315a6ae304-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f315a6ae304-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f315a6ae304-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653889952",
+          "external_id": "69f315a6495a1-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f315a6495a1-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f315a6495a1-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f315a6495a1-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f315a6495a1-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f315a6495a1-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653889953",
+          "external_id": "69f315a61dfd1-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f315a61dfd1-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f315a61dfd1-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f315a61dfd1-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f315a61dfd1-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f315a61dfd1-ID/image;s=120x90"
+          }
+        }
+      ],
+      "certified_car": false,
+      "is_multi_location": false,
+      "is_kyc_verified_user": false,
+      "locations_resolved": {
+        "COUNTRY_id": "1000001",
+        "COUNTRY_name": "Indonesia",
+        "ADMIN_LEVEL_1_id": "2000011",
+        "ADMIN_LEVEL_1_name": "Jawa Timur",
+        "ADMIN_LEVEL_3_id": "4000216",
+        "ADMIN_LEVEL_3_name": "Surabaya Kota",
+        "SUBLOCALITY_LEVEL_1_id": "5002569",
+        "SUBLOCALITY_LEVEL_1_name": "Mulyorejo"
+      },
+      "deal_price": null,
+      "creditEligibile": false,
+      "business_platform": null,
+      "main_info": null,
+      "is_escrow_enabled": false,
+      "artificial_boost": false,
+      "display_date": "2026-09-11T04:21:39+0000",
+      "isSpinViewAvailable": false,
+      "user_id": "7078689",
+      "installment": null,
+      "escrowEnabled": false,
+      "created_at_first": "2026-04-30T15:41:10+07:00",
+      "locations": [
+        {
+          "lat": -7.285,
+          "lon": 112.778,
+          "region_id": "2000011",
+          "district_id": "5002569",
+          "city_id": "4000216"
+        }
+      ],
+      "parameters": [
+        {
+          "type": "single",
+          "key": "external_source_label",
+          "value": "https://www.lamudi.co.id/properti/41032-73-99f2ff945f8-b646-197f5c8-b0dd-78eb",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-99f2ff945f8-b646-197f5c8-b0dd-78eb",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-99f2ff945f8-b646-197f5c8-b0dd-78eb",
+          "key_name": "parameter-external_source_label",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-99f2ff945f8-b646-197f5c8-b0dd-78eb"
+        },
+        {
+          "type": "single",
+          "key": "external_source_url",
+          "value": "https://www.lamudi.co.id/properti/41032-73-99f2ff945f8-b646-197f5c8-b0dd-78eb?i=AOtYHOc",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-99f2ff945f8-b646-197f5c8-b0dd-78eb?i=AOtYHOc",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-99f2ff945f8-b646-197f5c8-b0dd-78eb?i=AOtYHOc",
+          "key_name": "parameter-external_source_url",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-99f2ff945f8-b646-197f5c8-b0dd-78eb?i=AOtYHOc"
+        },
+        {
+          "type": "single",
+          "key": "p_sqr_building",
+          "value": "240",
+          "value_name": "240",
+          "absoluteValue": "240",
+          "key_name": "Luas bangunan",
+          "formatted_value": "240"
+        },
+        {
+          "type": "single",
+          "key": "p_bathroom",
+          "value": "10",
+          "value_name": "10",
+          "absoluteValue": "10",
+          "key_name": "Kamar Mandi",
+          "formatted_value": "10"
+        }
+      ],
+      "extra_parameters": null,
+      "escrow_details": null
+    },
+    {
+      "id": "939290212",
+      "score": 0.998046875,
+      "spell": {
+        "id": 119,
+        "key": "CONFUSION_ES",
+        "version": "1",
+        "main": false,
+        "facet_disabled": false,
+        "default_sorting": "DEFAULT"
+      },
+      "status": {
+        "status": "active",
+        "allow_edit": true,
+        "ban_reason_id": null,
+        "display": "active",
+        "translated_display": "Aktif",
+        "link": null,
+        "flags": {
+          "new": false,
+          "hot": false
+        },
+        "message": null,
+        "allow_deactivate": false
+      },
+      "category_id": "4833",
+      "ad_id": "939290212",
+      "favorites": {
+        "count": 6,
+        "count_label": "6",
+        "count_label_next": "7",
+        "count_label_prev": "5"
+      },
+      "user_name": "Maju Jaya Property",
+      "discount_toggle": null,
+      "has_phone_param": false,
+      "description": "MURAH RUMAH KOST RUMAH KOST JL BUMI MARINA MAS IDAMAN MAHASISWA PASTI CUAN SELANGKAH HANG TUAH ITS MANYAR KLAMPIS.\nHANYA 1.2M AJA UK 5x10 SHM DAN IMB CARPORT MOTOR R TAMU 2LT KT 6 KM 6 DAPUR JEMURAN.",
+      "created_at": "2026-09-11T11:21:49+07:00",
+      "inspection_info": null,
+      "package_id": null,
+      "title": "RUMAH KOST DIJUAL HARGA SPESIAL",
+      "multi_location": [],
+      "has_video": false,
+      "video_url": null,
+      "partner_id": null,
+      "user_type": "Regular",
+      "spotlightPackageId": null,
+      "price": {
+        "value": {
+          "raw": 1200000000.0,
+          "currency": {
+            "iso_4217": "IDR",
+            "pre": "Rp"
+          },
+          "display": "Rp 1.200.000.000"
+        },
+        "key_name": "Harga",
+        "key": "price"
+      },
+      "has_promotion": false,
+      "partner_code": null,
+      "is_video_generated": false,
+      "monetizationInfo": null,
+      "credit_eligibility": false,
+      "video_thumbnail_url": null,
+      "images": [
+        {
+          "id": "2614221732",
+          "external_id": "68dbf065db60c-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/68dbf065db60c-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbf065db60c-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbf065db60c-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbf065db60c-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbf065db60c-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2614221733",
+          "external_id": "68dbf06ee57a1-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/68dbf06ee57a1-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbf06ee57a1-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbf06ee57a1-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbf06ee57a1-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbf06ee57a1-ID/image;s=120x90"
+          }
+        }
+      ],
+      "certified_car": false,
+      "is_multi_location": false,
+      "is_kyc_verified_user": false,
+      "locations_resolved": {
+        "COUNTRY_id": "1000001",
+        "COUNTRY_name": "Indonesia",
+        "ADMIN_LEVEL_1_id": "2000011",
+        "ADMIN_LEVEL_1_name": "Jawa Timur",
+        "ADMIN_LEVEL_3_id": "4000216",
+        "ADMIN_LEVEL_3_name": "Surabaya Kota",
+        "SUBLOCALITY_LEVEL_1_id": "5002577",
+        "SUBLOCALITY_LEVEL_1_name": "Sukolilo"
+      },
+      "deal_price": null,
+      "creditEligibile": false,
+      "business_platform": null,
+      "main_info": null,
+      "is_escrow_enabled": false,
+      "seller_membershiptype": "seller-type-premium",
+      "artificial_boost": false,
+      "display_date": "2026-09-11T04:21:28+0000",
+      "isSpinViewAvailable": false,
+      "user_id": "118649024",
+      "installment": null,
+      "escrowEnabled": false,
+      "created_at_first": "2025-09-30T21:59:58+07:00",
+      "locations": [
+        {
+          "lat": -7.282,
+          "lon": 112.802,
+          "region_id": "2000011",
+          "district_id": "5002577",
+          "city_id": "4000216"
+        }
+      ],
+      "parameters": [
+        {
+          "type": "single",
+          "key": "external_source_label",
+          "value": "https://www.lamudi.co.id/properti/41032-73-68b993381ef6-e16f-197f597-8507-772b",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-68b993381ef6-e16f-197f597-8507-772b",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-68b993381ef6-e16f-197f597-8507-772b",
+          "key_name": "parameter-external_source_label",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-68b993381ef6-e16f-197f597-8507-772b"
+        },
+        {
+          "type": "single",
+          "key": "external_source_url",
+          "value": "https://www.lamudi.co.id/properti/41032-73-68b993381ef6-e16f-197f597-8507-772b?i=PYVE8g",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-68b993381ef6-e16f-197f597-8507-772b?i=PYVE8g",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-68b993381ef6-e16f-197f597-8507-772b?i=PYVE8g",
+          "key_name": "parameter-external_source_url",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-68b993381ef6-e16f-197f597-8507-772b?i=PYVE8g"
+        },
+        {
+          "type": "single",
+          "key": "p_sqr_building",
+          "value": "50",
+          "value_name": "50",
+          "absoluteValue": "50",
+          "key_name": "Luas bangunan",
+          "formatted_value": "50"
+        },
+        {
+          "type": "single",
+          "key": "p_bathroom",
+          "value": "9",
+          "value_name": "9",
+          "absoluteValue": "9",
+          "key_name": "Kamar Mandi",
+          "formatted_value": "9"
+        }
+      ],
+      "extra_parameters": null,
+      "escrow_details": null
+    },
+    {
+      "id": "939285234",
+      "score": 0.99609375,
+      "spell": {
+        "id": 119,
+        "key": "CONFUSION_ES",
+        "version": "1",
+        "main": false,
+        "facet_disabled": false,
+        "default_sorting": "DEFAULT"
+      },
+      "status": {
+        "status": "active",
+        "allow_edit": true,
+        "ban_reason_id": null,
+        "display": "active",
+        "translated_display": "Aktif",
+        "link": null,
+        "flags": {
+          "new": false,
+          "hot": false
+        },
+        "message": null,
+        "allow_deactivate": false
+      },
+      "category_id": "4833",
+      "ad_id": "939285234",
+      "favorites": {
+        "count": 0,
+        "count_label_next": "1"
+      },
+      "user_name": "MJ property",
+      "discount_toggle": null,
+      "has_phone_param": false,
+      "description": "LANGSUNG DIBELI RUMAH KOST KEREN 40KAMAR SEMUA KAMAR MANDI DALAM IDAMAN ANAK KAMPUS/MAHASISWA ITS DAN HANG TUAH SELANGKAH KE 2MENIT ITS 2MENIT HANG TUAH 3MENIT UNAIR 5MENIT GALAXY MALL JUARA BANGET LT 270 LB 600 SHM 3LT KT 40 KM 40 GARASI 40MOTOR DAPUR HARGA 6.5M.",
+      "created_at": "2026-09-11T11:21:37+07:00",
+      "inspection_info": null,
+      "package_id": null,
+      "title": "LANGSUNG DIBELI RUMAH KOST KEREN 40KAMAR SEMUA KAMAR MANDI DALAM",
+      "multi_location": [],
+      "has_video": false,
+      "video_url": null,
+      "partner_id": null,
+      "user_type": "Regular",
+      "spotlightPackageId": null,
+      "price": {
+        "value": {
+          "raw": 6500000000.0,
+          "currency": {
+            "iso_4217": "IDR",
+            "pre": "Rp"
+          },
+          "display": "Rp 6.500.000.000"
+        },
+        "key_name": "Harga",
+        "key": "price"
+      },
+      "has_promotion": false,
+      "partner_code": null,
+      "is_video_generated": false,
+      "monetizationInfo": null,
+      "credit_eligibility": false,
+      "video_thumbnail_url": null,
+      "images": [
+        {
+          "id": "2614179002",
+          "external_id": "68dbcf5d7ecd5-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/68dbcf5d7ecd5-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbcf5d7ecd5-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbcf5d7ecd5-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbcf5d7ecd5-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbcf5d7ecd5-ID/image;s=120x90"
+          }
+        }
+      ],
+      "certified_car": false,
+      "is_multi_location": false,
+      "is_kyc_verified_user": false,
+      "locations_resolved": {
+        "COUNTRY_id": "1000001",
+        "COUNTRY_name": "Indonesia",
+        "ADMIN_LEVEL_1_id": "2000011",
+        "ADMIN_LEVEL_1_name": "Jawa Timur",
+        "ADMIN_LEVEL_3_id": "4000216",
+        "ADMIN_LEVEL_3_name": "Surabaya Kota",
+        "SUBLOCALITY_LEVEL_1_id": "5002577",
+        "SUBLOCALITY_LEVEL_1_name": "Sukolilo"
+      },
+      "deal_price": null,
+      "creditEligibile": false,
+      "business_platform": null,
+      "main_info": null,
+      "is_escrow_enabled": false,
+      "artificial_boost": false,
+      "display_date": "2026-09-11T04:20:44+0000",
+      "isSpinViewAvailable": false,
+      "user_id": "7078689",
+      "installment": null,
+      "escrowEnabled": false,
+      "created_at_first": "2025-09-30T19:38:53+07:00",
+      "locations": [
+        {
+          "lat": -7.282,
+          "lon": 112.802,
+          "region_id": "2000011",
+          "district_id": "5002577",
+          "city_id": "4000216"
+        }
+      ],
+      "parameters": [
+        {
+          "type": "single",
+          "key": "external_source_label",
+          "value": "https://www.lamudi.co.id/properti/41032-73-4846d7e97d85-d90-197f5ff-a3a0-7431",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-4846d7e97d85-d90-197f5ff-a3a0-7431",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-4846d7e97d85-d90-197f5ff-a3a0-7431",
+          "key_name": "parameter-external_source_label",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-4846d7e97d85-d90-197f5ff-a3a0-7431"
+        },
+        {
+          "type": "single",
+          "key": "external_source_url",
+          "value": "https://www.lamudi.co.id/properti/41032-73-4846d7e97d85-d90-197f5ff-a3a0-7431?i=AIVOlwM",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-4846d7e97d85-d90-197f5ff-a3a0-7431?i=AIVOlwM",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-4846d7e97d85-d90-197f5ff-a3a0-7431?i=AIVOlwM",
+          "key_name": "parameter-external_source_url",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-4846d7e97d85-d90-197f5ff-a3a0-7431?i=AIVOlwM"
+        },
+        {
+          "type": "single",
+          "key": "p_sqr_building",
+          "value": "600",
+          "value_name": "600",
+          "absoluteValue": "600",
+          "key_name": "Luas bangunan",
+          "formatted_value": "600"
+        },
+        {
+          "type": "single",
+          "key": "p_bathroom",
+          "value": "9",
+          "value_name": "9",
+          "absoluteValue": "9",
+          "key_name": "Kamar Mandi",
+          "formatted_value": "9"
+        }
+      ],
+      "extra_parameters": null,
+      "escrow_details": null
+    },
+    {
+      "id": "939289984",
+      "score": 0.994140625,
+      "spell": {
+        "id": 119,
+        "key": "CONFUSION_ES",
+        "version": "1",
+        "main": false,
+        "facet_disabled": false,
+        "default_sorting": "DEFAULT"
+      },
+      "status": {
+        "status": "active",
+        "allow_edit": true,
+        "ban_reason_id": null,
+        "display": "active",
+        "translated_display": "Aktif",
+        "link": null,
+        "flags": {
+          "new": false,
+          "hot": false
+        },
+        "message": null,
+        "allow_deactivate": false
+      },
+      "category_id": "4833",
+      "ad_id": "939289984",
+      "favorites": {
+        "count": 1,
+        "count_label": "1",
+        "count_label_next": "2"
+      },
+      "user_name": "MJ property",
+      "discount_toggle": null,
+      "has_phone_param": false,
+      "description": "Poll murah nya lokasi di tengah kota surabaya dalam perumahan lagi lokasi lingkungan kampus lokasi \n \n\n perumahan KEPUTIH TEGAL\n \n\n selangkah hang tuah.its .unair ke mana aja dekat pusat kota surabaya.\n \n\n \n\n 10menit galaxy mall 10menit Rs haji 10menit Rs unair 15menit delta plaza \n \n\n HARGA 2.2M promo kusus bulan ini hanya 1.9M \n ¹\n uk 80 Lb 160 2Lt R tamu kt 10 km 10 dapur jemuran parkiran mobil.\n BELI BULAN INI FREE AC, FURNIST KAMAR, WIFI, CCTV,SETIAP KAMAR JADI SIAP KERJA TINGGAL CUAN",
+      "created_at": "2026-09-11T11:21:44+07:00",
+      "inspection_info": null,
+      "package_id": null,
+      "title": "TER LARIS RUMAH KOST MAHASISWA ITS HANG TUAH KEPUTIH TEGAL",
+      "multi_location": [],
+      "has_video": false,
+      "video_url": null,
+      "partner_id": null,
+      "user_type": "Regular",
+      "spotlightPackageId": null,
+      "price": {
+        "value": {
+          "raw": 1900000000.0,
+          "currency": {
+            "iso_4217": "IDR",
+            "pre": "Rp"
+          },
+          "display": "Rp 1.900.000.000"
+        },
+        "key_name": "Harga",
+        "key": "price"
+      },
+      "has_promotion": false,
+      "partner_code": null,
+      "is_video_generated": false,
+      "monetizationInfo": null,
+      "credit_eligibility": false,
+      "video_thumbnail_url": null,
+      "images": [
+        {
+          "id": "2614220142",
+          "external_id": "68dbee0aa3966-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/68dbee0aa3966-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbee0aa3966-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbee0aa3966-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbee0aa3966-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbee0aa3966-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2614220143",
+          "external_id": "68dbee0a6fc0e-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/68dbee0a6fc0e-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbee0a6fc0e-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbee0a6fc0e-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbee0a6fc0e-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbee0a6fc0e-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2614220144",
+          "external_id": "68dbee0a96fa8-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/68dbee0a96fa8-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbee0a96fa8-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbee0a96fa8-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbee0a96fa8-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbee0a96fa8-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2614220145",
+          "external_id": "68dbee0a2de4c-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/68dbee0a2de4c-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbee0a2de4c-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbee0a2de4c-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbee0a2de4c-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbee0a2de4c-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2614220146",
+          "external_id": "68dbee0c95634-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/68dbee0c95634-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbee0c95634-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbee0c95634-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbee0c95634-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbee0c95634-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2614220147",
+          "external_id": "68dbee0b840da-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/68dbee0b840da-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbee0b840da-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbee0b840da-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbee0b840da-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbee0b840da-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2614220148",
+          "external_id": "68dbee0b5748c-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/68dbee0b5748c-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbee0b5748c-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbee0b5748c-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbee0b5748c-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbee0b5748c-ID/image;s=120x90"
+          }
+        }
+      ],
+      "certified_car": false,
+      "is_multi_location": false,
+      "is_kyc_verified_user": false,
+      "locations_resolved": {
+        "COUNTRY_id": "1000001",
+        "COUNTRY_name": "Indonesia",
+        "ADMIN_LEVEL_1_id": "2000011",
+        "ADMIN_LEVEL_1_name": "Jawa Timur",
+        "ADMIN_LEVEL_3_id": "4000216",
+        "ADMIN_LEVEL_3_name": "Surabaya Kota",
+        "SUBLOCALITY_LEVEL_1_id": "5002577",
+        "SUBLOCALITY_LEVEL_1_name": "Sukolilo"
+      },
+      "deal_price": null,
+      "creditEligibile": false,
+      "business_platform": null,
+      "main_info": null,
+      "is_escrow_enabled": false,
+      "artificial_boost": false,
+      "display_date": "2026-09-11T04:20:37+0000",
+      "isSpinViewAvailable": false,
+      "user_id": "7078689",
+      "installment": null,
+      "escrowEnabled": false,
+      "created_at_first": "2025-09-30T21:49:48+07:00",
+      "locations": [
+        {
+          "lat": -7.282,
+          "lon": 112.802,
+          "region_id": "2000011",
+          "district_id": "5002577",
+          "city_id": "4000216"
+        }
+      ],
+      "parameters": [
+        {
+          "type": "single",
+          "key": "external_source_label",
+          "value": "https://www.lamudi.co.id/properti/41032-73-2fa665ef34be-3fe8-197f594-8144-7eba",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-2fa665ef34be-3fe8-197f594-8144-7eba",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-2fa665ef34be-3fe8-197f594-8144-7eba",
+          "key_name": "parameter-external_source_label",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-2fa665ef34be-3fe8-197f594-8144-7eba"
+        },
+        {
+          "type": "single",
+          "key": "external_source_url",
+          "value": "https://www.lamudi.co.id/properti/41032-73-2fa665ef34be-3fe8-197f594-8144-7eba?i=cYcEJw",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-2fa665ef34be-3fe8-197f594-8144-7eba?i=cYcEJw",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-2fa665ef34be-3fe8-197f594-8144-7eba?i=cYcEJw",
+          "key_name": "parameter-external_source_url",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-2fa665ef34be-3fe8-197f594-8144-7eba?i=cYcEJw"
+        },
+        {
+          "type": "single",
+          "key": "p_sqr_building",
+          "value": "160",
+          "value_name": "160",
+          "absoluteValue": "160",
+          "key_name": "Luas bangunan",
+          "formatted_value": "160"
+        },
+        {
+          "type": "single",
+          "key": "p_bathroom",
+          "value": "10",
+          "value_name": "10",
+          "absoluteValue": "10",
+          "key_name": "Kamar Mandi",
+          "formatted_value": "10"
+        }
+      ],
+      "extra_parameters": null,
+      "escrow_details": null
+    },
+    {
+      "id": "944937743",
+      "score": 0.9921875,
+      "spell": {
+        "id": 119,
+        "key": "CONFUSION_ES",
+        "version": "1",
+        "main": false,
+        "facet_disabled": false,
+        "default_sorting": "DEFAULT"
+      },
+      "status": {
+        "status": "active",
+        "allow_edit": true,
+        "ban_reason_id": null,
+        "display": "active",
+        "translated_display": "Aktif",
+        "link": null,
+        "flags": {
+          "new": false,
+          "hot": false
+        },
+        "message": null,
+        "allow_deactivate": false
+      },
+      "category_id": "4833",
+      "ad_id": "944937743",
+      "favorites": {
+        "count": 0,
+        "count_label_next": "1"
+      },
+      "user_name": "MJ property",
+      "discount_toggle": null,
+      "has_phone_param": false,
+      "description": "MURAH IDAMAN MAHASISWA HANG TUAH ITS STRATEGIS BANGET MURAHHH POLLL ISTIMEWAH NOL JALAN RAYA KEPUTIH LOOOO \n \n\n HARGA ASLI 5.9M HARGA PROMO DISCOUNT 1M TINGGAL 4.9M\n \n\n 30KAMAR SEMUA KAMAR MANDI \n \n\n DALAMMMM LT 160 3LT KT 30 KM 30 DAPUR JEMURAN PARKIRAN LUASSS MUAT 35 MOTOR DAN 5MOBIL.",
+      "created_at": "2026-09-11T11:21:47+07:00",
+      "inspection_info": null,
+      "package_id": null,
+      "title": "MURAH IDAMAN MAHASISWA RUMAH KOST HANG TUAH ITS RAYA KEPUTIH",
+      "multi_location": [],
+      "has_video": false,
+      "video_url": null,
+      "partner_id": null,
+      "user_type": "Regular",
+      "spotlightPackageId": null,
+      "price": {
+        "value": {
+          "raw": 4900000000.0,
+          "currency": {
+            "iso_4217": "IDR",
+            "pre": "Rp"
+          },
+          "display": "Rp 4.900.000.000"
+        },
+        "key_name": "Harga",
+        "key": "price"
+      },
+      "has_promotion": false,
+      "partner_code": null,
+      "is_video_generated": false,
+      "monetizationInfo": null,
+      "credit_eligibility": false,
+      "video_thumbnail_url": null,
+      "images": [
+        {
+          "id": "2653896023",
+          "external_id": "69f31b8381ead-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31b8381ead-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b8381ead-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b8381ead-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b8381ead-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b8381ead-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653896024",
+          "external_id": "69f31b832ef10-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31b832ef10-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b832ef10-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b832ef10-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b832ef10-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b832ef10-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653896025",
+          "external_id": "69f31b8384d99-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31b8384d99-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b8384d99-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b8384d99-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b8384d99-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b8384d99-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653896026",
+          "external_id": "69f31b83586d2-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31b83586d2-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b83586d2-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b83586d2-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b83586d2-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b83586d2-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653896027",
+          "external_id": "69f31b845ad7d-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31b845ad7d-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b845ad7d-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b845ad7d-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b845ad7d-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b845ad7d-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653896028",
+          "external_id": "69f31b84368a3-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31b84368a3-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b84368a3-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b84368a3-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b84368a3-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b84368a3-ID/image;s=120x90"
+          }
+        }
+      ],
+      "certified_car": false,
+      "is_multi_location": false,
+      "is_kyc_verified_user": false,
+      "locations_resolved": {
+        "COUNTRY_id": "1000001",
+        "COUNTRY_name": "Indonesia",
+        "ADMIN_LEVEL_1_id": "2000011",
+        "ADMIN_LEVEL_1_name": "Jawa Timur",
+        "ADMIN_LEVEL_3_id": "4000216",
+        "ADMIN_LEVEL_3_name": "Surabaya Kota",
+        "SUBLOCALITY_LEVEL_1_id": "5002577",
+        "SUBLOCALITY_LEVEL_1_name": "Sukolilo"
+      },
+      "deal_price": null,
+      "creditEligibile": false,
+      "business_platform": null,
+      "main_info": null,
+      "is_escrow_enabled": false,
+      "artificial_boost": false,
+      "display_date": "2026-09-11T04:20:26+0000",
+      "isSpinViewAvailable": false,
+      "user_id": "7078689",
+      "installment": null,
+      "escrowEnabled": false,
+      "created_at_first": "2026-04-30T16:06:13+07:00",
+      "locations": [
+        {
+          "lat": -7.282,
+          "lon": 112.802,
+          "region_id": "2000011",
+          "district_id": "5002577",
+          "city_id": "4000216"
+        }
+      ],
+      "parameters": [
+        {
+          "type": "single",
+          "key": "external_source_label",
+          "value": "https://www.lamudi.co.id/properti/41032-73-f0868bf92c5a-7192-197f6b7-b4d3-7471",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-f0868bf92c5a-7192-197f6b7-b4d3-7471",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-f0868bf92c5a-7192-197f6b7-b4d3-7471",
+          "key_name": "parameter-external_source_label",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-f0868bf92c5a-7192-197f6b7-b4d3-7471"
+        },
+        {
+          "type": "single",
+          "key": "external_source_url",
+          "value": "https://www.lamudi.co.id/properti/41032-73-f0868bf92c5a-7192-197f6b7-b4d3-7471?i=AO4VfLE",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-f0868bf92c5a-7192-197f6b7-b4d3-7471?i=AO4VfLE",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-f0868bf92c5a-7192-197f6b7-b4d3-7471?i=AO4VfLE",
+          "key_name": "parameter-external_source_url",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-f0868bf92c5a-7192-197f6b7-b4d3-7471?i=AO4VfLE"
+        },
+        {
+          "type": "single",
+          "key": "p_sqr_building",
+          "value": "480",
+          "value_name": "480",
+          "absoluteValue": "480",
+          "key_name": "Luas bangunan",
+          "formatted_value": "480"
+        },
+        {
+          "type": "single",
+          "key": "p_bathroom",
+          "value": "10",
+          "value_name": "10",
+          "absoluteValue": "10",
+          "key_name": "Kamar Mandi",
+          "formatted_value": "10"
+        }
+      ],
+      "extra_parameters": null,
+      "escrow_details": null
+    },
+    {
+      "id": "939514562",
+      "score": 0.990234375,
+      "spell": {
+        "id": 119,
+        "key": "CONFUSION_ES",
+        "version": "1",
+        "main": false,
+        "facet_disabled": false,
+        "default_sorting": "DEFAULT"
+      },
+      "status": {
+        "status": "active",
+        "allow_edit": true,
+        "ban_reason_id": null,
+        "display": "active",
+        "translated_display": "Aktif",
+        "link": null,
+        "flags": {
+          "new": false,
+          "hot": false
+        },
+        "message": null,
+        "allow_deactivate": false
+      },
+      "category_id": "4833",
+      "ad_id": "939514562",
+      "favorites": {
+        "count": 6,
+        "count_label": "6",
+        "count_label_next": "7",
+        "count_label_prev": "5"
+      },
+      "user_name": "Maju Jaya Property",
+      "discount_toggle": null,
+      "has_phone_param": false,
+      "description": "RUMAH KOST KEREN DEKAT PERUMAHAN BUMI MARINA SELANGKAH UNIVERSITAS ITS, HANG TUAH, ITATS DAN UNAIR SANGAT STRATEGIS DI PUSAT KOTA SURABAYA DAN KE GALAXY MALL DEKAT.\nLOKASI KEPUTIH TEGAL TIMUR HARGA 1.5M UK 5X23 2LT LB 200 SHM DAN IMB R TAMU KT 10 KM 10 DAPUR JEMURAN.",
+      "created_at": "2026-09-11T11:21:47+07:00",
+      "inspection_info": null,
+      "package_id": null,
+      "title": "RUMAH KOST KEREN DEKAT PERUMAHAN BUMI MARINA HARGA MURAH DI SURABAYA",
+      "multi_location": [],
+      "has_video": false,
+      "video_url": null,
+      "partner_id": null,
+      "user_type": "Regular",
+      "spotlightPackageId": null,
+      "price": {
+        "value": {
+          "raw": 1500000000.0,
+          "currency": {
+            "iso_4217": "IDR",
+            "pre": "Rp"
+          },
+          "display": "Rp 1.500.000.000"
+        },
+        "key_name": "Harga",
+        "key": "price"
+      },
+      "has_promotion": false,
+      "partner_code": null,
+      "is_video_generated": false,
+      "monetizationInfo": null,
+      "credit_eligibility": false,
+      "video_thumbnail_url": null,
+      "images": [
+        {
+          "id": "2616011308",
+          "external_id": "68e53334e0a43-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/68e53334e0a43-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/68e53334e0a43-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/68e53334e0a43-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/68e53334e0a43-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/68e53334e0a43-ID/image;s=120x90"
+          }
+        }
+      ],
+      "certified_car": false,
+      "is_multi_location": false,
+      "is_kyc_verified_user": false,
+      "locations_resolved": {
+        "COUNTRY_id": "1000001",
+        "COUNTRY_name": "Indonesia",
+        "ADMIN_LEVEL_1_id": "2000011",
+        "ADMIN_LEVEL_1_name": "Jawa Timur",
+        "ADMIN_LEVEL_3_id": "4000216",
+        "ADMIN_LEVEL_3_name": "Surabaya Kota",
+        "SUBLOCALITY_LEVEL_1_id": "5002577",
+        "SUBLOCALITY_LEVEL_1_name": "Sukolilo"
+      },
+      "deal_price": null,
+      "creditEligibile": false,
+      "business_platform": null,
+      "main_info": null,
+      "is_escrow_enabled": false,
+      "seller_membershiptype": "seller-type-premium",
+      "artificial_boost": false,
+      "display_date": "2026-09-11T04:20:26+0000",
+      "isSpinViewAvailable": false,
+      "user_id": "118649024",
+      "installment": null,
+      "escrowEnabled": false,
+      "created_at_first": "2025-10-07T22:35:16+07:00",
+      "locations": [
+        {
+          "lat": -7.282,
+          "lon": 112.802,
+          "region_id": "2000011",
+          "district_id": "5002577",
+          "city_id": "4000216"
+        }
+      ],
+      "parameters": [
+        {
+          "type": "single",
+          "key": "external_source_label",
+          "value": "https://www.lamudi.co.id/properti/41032-73-8a52a4de36fa-bd6-197f78b-8348-7726",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-8a52a4de36fa-bd6-197f78b-8348-7726",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-8a52a4de36fa-bd6-197f78b-8348-7726",
+          "key_name": "parameter-external_source_label",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-8a52a4de36fa-bd6-197f78b-8348-7726"
+        },
+        {
+          "type": "single",
+          "key": "external_source_url",
+          "value": "https://www.lamudi.co.id/properti/41032-73-8a52a4de36fa-bd6-197f78b-8348-7726?i=APvtXUw",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-8a52a4de36fa-bd6-197f78b-8348-7726?i=APvtXUw",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-8a52a4de36fa-bd6-197f78b-8348-7726?i=APvtXUw",
+          "key_name": "parameter-external_source_url",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-8a52a4de36fa-bd6-197f78b-8348-7726?i=APvtXUw"
+        },
+        {
+          "type": "single",
+          "key": "p_sqr_building",
+          "value": "200",
+          "value_name": "200",
+          "absoluteValue": "200",
+          "key_name": "Luas bangunan",
+          "formatted_value": "200"
+        },
+        {
+          "type": "single",
+          "key": "p_bathroom",
+          "value": "9",
+          "value_name": "9",
+          "absoluteValue": "9",
+          "key_name": "Kamar Mandi",
+          "formatted_value": "9"
+        }
+      ],
+      "extra_parameters": null,
+      "escrow_details": null
+    },
+    {
+      "id": "939286794",
+      "score": 0.98828125,
+      "spell": {
+        "id": 119,
+        "key": "CONFUSION_ES",
+        "version": "1",
+        "main": false,
+        "facet_disabled": false,
+        "default_sorting": "DEFAULT"
+      },
+      "status": {
+        "status": "active",
+        "allow_edit": true,
+        "ban_reason_id": null,
+        "display": "active",
+        "translated_display": "Aktif",
+        "link": null,
+        "flags": {
+          "new": false,
+          "hot": false
+        },
+        "message": null,
+        "allow_deactivate": false
+      },
+      "category_id": "4833",
+      "ad_id": "939286794",
+      "favorites": {
+        "count": 2,
+        "count_label": "2",
+        "count_label_next": "3",
+        "count_label_prev": "1"
+      },
+      "user_name": "MJ property",
+      "discount_toggle": null,
+      "has_phone_param": false,
+      "description": "LANGSUNG DIBELI RUMAH KOST KEREN 40KAMAR SEMUA KAMAR MANDI DALAM IDAMAN ANAK KAMPUS/MAHASISWA ITS DAN HANG TUAH SELANGKAH KE 2MENIT ITS 2MENIT HANG TUAH 3MENIT UNAIR 5MENIT GALAXY MALL JUARA BANGET LT 270 LB 600 SHM 3LT KT 40 KM 40 GARASI 40MOTOR DAPUR HARGA 6.5M.",
+      "created_at": "2026-09-11T11:21:48+07:00",
+      "inspection_info": null,
+      "package_id": null,
+      "title": "RUMAH KOST KEREN 40KAMAR SEMUA KAMAR MANDI DALAM",
+      "multi_location": [],
+      "has_video": false,
+      "video_url": null,
+      "partner_id": null,
+      "user_type": "Regular",
+      "spotlightPackageId": null,
+      "price": {
+        "value": {
+          "raw": 6500000000.0,
+          "currency": {
+            "iso_4217": "IDR",
+            "pre": "Rp"
+          },
+          "display": "Rp 6.500.000.000"
+        },
+        "key_name": "Harga",
+        "key": "price"
+      },
+      "has_promotion": false,
+      "partner_code": null,
+      "is_video_generated": false,
+      "monetizationInfo": null,
+      "credit_eligibility": false,
+      "video_thumbnail_url": null,
+      "images": [
+        {
+          "id": "2614192750",
+          "external_id": "68dbd55144388-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/68dbd55144388-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbd55144388-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbd55144388-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbd55144388-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dbd55144388-ID/image;s=120x90"
+          }
+        }
+      ],
+      "certified_car": false,
+      "is_multi_location": false,
+      "is_kyc_verified_user": false,
+      "locations_resolved": {
+        "COUNTRY_id": "1000001",
+        "COUNTRY_name": "Indonesia",
+        "ADMIN_LEVEL_1_id": "2000011",
+        "ADMIN_LEVEL_1_name": "Jawa Timur",
+        "ADMIN_LEVEL_3_id": "4000216",
+        "ADMIN_LEVEL_3_name": "Surabaya Kota",
+        "SUBLOCALITY_LEVEL_1_id": "5002569",
+        "SUBLOCALITY_LEVEL_1_name": "Mulyorejo"
+      },
+      "deal_price": null,
+      "creditEligibile": false,
+      "business_platform": null,
+      "main_info": null,
+      "is_escrow_enabled": false,
+      "artificial_boost": false,
+      "display_date": "2026-09-11T04:20:26+0000",
+      "isSpinViewAvailable": false,
+      "user_id": "7078689",
+      "installment": null,
+      "escrowEnabled": false,
+      "created_at_first": "2025-09-30T20:04:17+07:00",
+      "locations": [
+        {
+          "lat": -7.285,
+          "lon": 112.778,
+          "region_id": "2000011",
+          "district_id": "5002569",
+          "city_id": "4000216"
+        }
+      ],
+      "parameters": [
+        {
+          "type": "single",
+          "key": "external_source_label",
+          "value": "https://www.lamudi.co.id/properti/41032-73-117187c3086e-3256-197f58f-93eb-7af1",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-117187c3086e-3256-197f58f-93eb-7af1",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-117187c3086e-3256-197f58f-93eb-7af1",
+          "key_name": "parameter-external_source_label",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-117187c3086e-3256-197f58f-93eb-7af1"
+        },
+        {
+          "type": "single",
+          "key": "external_source_url",
+          "value": "https://www.lamudi.co.id/properti/41032-73-117187c3086e-3256-197f58f-93eb-7af1?i=ANXjQpo",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-117187c3086e-3256-197f58f-93eb-7af1?i=ANXjQpo",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-117187c3086e-3256-197f58f-93eb-7af1?i=ANXjQpo",
+          "key_name": "parameter-external_source_url",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-117187c3086e-3256-197f58f-93eb-7af1?i=ANXjQpo"
+        },
+        {
+          "type": "single",
+          "key": "p_sqr_building",
+          "value": "600",
+          "value_name": "600",
+          "absoluteValue": "600",
+          "key_name": "Luas bangunan",
+          "formatted_value": "600"
+        },
+        {
+          "type": "single",
+          "key": "p_bathroom",
+          "value": "9",
+          "value_name": "9",
+          "absoluteValue": "9",
+          "key_name": "Kamar Mandi",
+          "formatted_value": "9"
+        }
+      ],
+      "extra_parameters": null,
+      "escrow_details": null
+    },
+    {
+      "id": "944938006",
+      "score": 0.986328125,
+      "spell": {
+        "id": 119,
+        "key": "CONFUSION_ES",
+        "version": "1",
+        "main": false,
+        "facet_disabled": false,
+        "default_sorting": "DEFAULT"
+      },
+      "status": {
+        "status": "active",
+        "allow_edit": true,
+        "ban_reason_id": null,
+        "display": "active",
+        "translated_display": "Aktif",
+        "link": null,
+        "flags": {
+          "new": false,
+          "hot": false
+        },
+        "message": null,
+        "allow_deactivate": false
+      },
+      "category_id": "4833",
+      "ad_id": "944938006",
+      "favorites": {
+        "count": 0,
+        "count_label_next": "1"
+      },
+      "user_name": "MJ property",
+      "discount_toggle": null,
+      "has_phone_param": false,
+      "description": "MURAH RUMAH KOST RUMAH KOST JL RAYA KEPUTIH TEGAL IDAMAN MAHASISWA PASTI CUAN PEMBAYARAN KOST DISINI 3BULAN DIDEPAN OMZET 110JT BERSIH SELANGKAH HANG TUAH ITS MANYAR KLAMPIS.\n \n\n \n\nHANYA 5.4M  PROMO 4.9M AJA UK 8.3x20 SHM DAN IMB CARPORT MOTOR R TAMU 2LT KT 25 KM 25 DAPUR JEMURAN.",
+      "created_at": "2026-09-11T11:21:39+07:00",
+      "inspection_info": null,
+      "package_id": null,
+      "title": "25KAMAR RUMAH KOST RAYA KEPUTIH LARIS ITS HANG TUAH",
+      "multi_location": [],
+      "has_video": false,
+      "video_url": null,
+      "partner_id": null,
+      "user_type": "Regular",
+      "spotlightPackageId": null,
+      "price": {
+        "value": {
+          "raw": 4900000000.0,
+          "currency": {
+            "iso_4217": "IDR",
+            "pre": "Rp"
+          },
+          "display": "Rp 4.900.000.000"
+        },
+        "key_name": "Harga",
+        "key": "price"
+      },
+      "has_promotion": false,
+      "partner_code": null,
+      "is_video_generated": false,
+      "monetizationInfo": null,
+      "credit_eligibility": false,
+      "video_thumbnail_url": null,
+      "images": [
+        {
+          "id": "2653898044",
+          "external_id": "69f31d316cf11-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31d316cf11-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31d316cf11-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31d316cf11-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31d316cf11-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31d316cf11-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653898045",
+          "external_id": "69f31d319bf49-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31d319bf49-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31d319bf49-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31d319bf49-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31d319bf49-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31d319bf49-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653898046",
+          "external_id": "69f31d317aef2-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31d317aef2-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31d317aef2-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31d317aef2-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31d317aef2-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31d317aef2-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653898047",
+          "external_id": "69f31d32b9326-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31d32b9326-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31d32b9326-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31d32b9326-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31d32b9326-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31d32b9326-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653898048",
+          "external_id": "69f31d326219b-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31d326219b-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31d326219b-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31d326219b-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31d326219b-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31d326219b-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653898049",
+          "external_id": "69f31d33b9abd-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31d33b9abd-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31d33b9abd-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31d33b9abd-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31d33b9abd-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31d33b9abd-ID/image;s=120x90"
+          }
+        }
+      ],
+      "certified_car": false,
+      "is_multi_location": false,
+      "is_kyc_verified_user": false,
+      "locations_resolved": {
+        "COUNTRY_id": "1000001",
+        "COUNTRY_name": "Indonesia",
+        "ADMIN_LEVEL_1_id": "2000011",
+        "ADMIN_LEVEL_1_name": "Jawa Timur",
+        "ADMIN_LEVEL_3_id": "4000216",
+        "ADMIN_LEVEL_3_name": "Surabaya Kota",
+        "SUBLOCALITY_LEVEL_1_id": "5002562",
+        "SUBLOCALITY_LEVEL_1_name": "Gubeng"
+      },
+      "deal_price": null,
+      "creditEligibile": false,
+      "business_platform": null,
+      "main_info": null,
+      "is_escrow_enabled": false,
+      "artificial_boost": false,
+      "display_date": "2026-09-11T04:20:23+0000",
+      "isSpinViewAvailable": false,
+      "user_id": "7078689",
+      "installment": null,
+      "escrowEnabled": false,
+      "created_at_first": "2026-04-30T16:13:23+07:00",
+      "locations": [
+        {
+          "lat": -7.271,
+          "lon": 112.748,
+          "region_id": "2000011",
+          "district_id": "5002562",
+          "city_id": "4000216"
+        }
+      ],
+      "parameters": [
+        {
+          "type": "single",
+          "key": "external_source_label",
+          "value": "https://www.lamudi.co.id/properti/41032-73-1a995ff7fd7d-775c-197f724-a2f8-7b20",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-1a995ff7fd7d-775c-197f724-a2f8-7b20",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-1a995ff7fd7d-775c-197f724-a2f8-7b20",
+          "key_name": "parameter-external_source_label",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-1a995ff7fd7d-775c-197f724-a2f8-7b20"
+        },
+        {
+          "type": "single",
+          "key": "external_source_url",
+          "value": "https://www.lamudi.co.id/properti/41032-73-1a995ff7fd7d-775c-197f724-a2f8-7b20?i=ALwliVs",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-1a995ff7fd7d-775c-197f724-a2f8-7b20?i=ALwliVs",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-1a995ff7fd7d-775c-197f724-a2f8-7b20?i=ALwliVs",
+          "key_name": "parameter-external_source_url",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-1a995ff7fd7d-775c-197f724-a2f8-7b20?i=ALwliVs"
+        },
+        {
+          "type": "single",
+          "key": "p_sqr_building",
+          "value": "400",
+          "value_name": "400",
+          "absoluteValue": "400",
+          "key_name": "Luas bangunan",
+          "formatted_value": "400"
+        },
+        {
+          "type": "single",
+          "key": "p_bathroom",
+          "value": "10",
+          "value_name": "10",
+          "absoluteValue": "10",
+          "key_name": "Kamar Mandi",
+          "formatted_value": "10"
+        }
+      ],
+      "extra_parameters": null,
+      "escrow_details": null
+    },
+    {
+      "id": "944937708",
+      "score": 0.984375,
+      "spell": {
+        "id": 119,
+        "key": "CONFUSION_ES",
+        "version": "1",
+        "main": false,
+        "facet_disabled": false,
+        "default_sorting": "DEFAULT"
+      },
+      "status": {
+        "status": "active",
+        "allow_edit": true,
+        "ban_reason_id": null,
+        "display": "active",
+        "translated_display": "Aktif",
+        "link": null,
+        "flags": {
+          "new": false,
+          "hot": false
+        },
+        "message": null,
+        "allow_deactivate": false
+      },
+      "category_id": "4833",
+      "ad_id": "944937708",
+      "favorites": {
+        "count": 0,
+        "count_label_next": "1"
+      },
+      "user_name": "MJ property",
+      "discount_toggle": null,
+      "has_phone_param": false,
+      "description": "POLL LARISNYA\n \n\n INVESTASI PALING AMAN UNTUK MASA PANDEMI.\n \n BUMI MARINA JL KEMBAR\n \n HARGA DIATAS 3.7M ADALAH HARGA CASH DAN NET \n \n HARGA ASLI 3.5M SPESIFIKASI : UK 154 SHM DAN IMB CARPORT MOTOR ANAK KOST R TAMU KT 20 KM 20 DAPUR JEMURAN.\n \n FREE FURNIST \n FREE AJB \n FREE BALIK NAMA \n FREE PAJAK \n FREE FURNIST \n FREE AC",
+      "created_at": "2026-09-11T11:21:38+07:00",
+      "inspection_info": null,
+      "package_id": null,
+      "title": "JL KEMBAR BUMI 20KAMAR MARINA RUMAH KOST LARIS ANAK ITS HANG TUAH",
+      "multi_location": [],
+      "has_video": false,
+      "video_url": null,
+      "partner_id": null,
+      "user_type": "Regular",
+      "spotlightPackageId": null,
+      "price": {
+        "value": {
+          "raw": 3700000000.0,
+          "currency": {
+            "iso_4217": "IDR",
+            "pre": "Rp"
+          },
+          "display": "Rp 3.700.000.000"
+        },
+        "key_name": "Harga",
+        "key": "price"
+      },
+      "has_promotion": false,
+      "partner_code": null,
+      "is_video_generated": false,
+      "monetizationInfo": null,
+      "credit_eligibility": false,
+      "video_thumbnail_url": null,
+      "images": [
+        {
+          "id": "2653895719",
+          "external_id": "69f31b3bdda33-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31b3bdda33-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b3bdda33-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b3bdda33-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b3bdda33-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b3bdda33-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653895720",
+          "external_id": "69f31b3b1687a-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31b3b1687a-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b3b1687a-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b3b1687a-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b3b1687a-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b3b1687a-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653895721",
+          "external_id": "69f31b3ba0410-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31b3ba0410-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b3ba0410-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b3ba0410-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b3ba0410-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b3ba0410-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653895722",
+          "external_id": "69f31b3b3abf0-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31b3b3abf0-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b3b3abf0-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b3b3abf0-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b3b3abf0-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b3b3abf0-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653895723",
+          "external_id": "69f31b3b4a671-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31b3b4a671-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b3b4a671-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b3b4a671-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b3b4a671-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b3b4a671-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653895724",
+          "external_id": "69f31b3d415dc-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31b3d415dc-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b3d415dc-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b3d415dc-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b3d415dc-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b3d415dc-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653895725",
+          "external_id": "69f31b3c35af3-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31b3c35af3-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b3c35af3-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b3c35af3-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b3c35af3-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31b3c35af3-ID/image;s=120x90"
+          }
+        }
+      ],
+      "certified_car": false,
+      "is_multi_location": false,
+      "is_kyc_verified_user": false,
+      "locations_resolved": {
+        "COUNTRY_id": "1000001",
+        "COUNTRY_name": "Indonesia",
+        "ADMIN_LEVEL_1_id": "2000011",
+        "ADMIN_LEVEL_1_name": "Jawa Timur",
+        "ADMIN_LEVEL_3_id": "4000216",
+        "ADMIN_LEVEL_3_name": "Surabaya Kota",
+        "SUBLOCALITY_LEVEL_1_id": "5002559",
+        "SUBLOCALITY_LEVEL_1_name": "Dukuh Pakis"
+      },
+      "deal_price": null,
+      "creditEligibile": false,
+      "business_platform": null,
+      "main_info": null,
+      "is_escrow_enabled": false,
+      "artificial_boost": false,
+      "display_date": "2026-09-11T04:19:08+0000",
+      "isSpinViewAvailable": false,
+      "user_id": "7078689",
+      "installment": null,
+      "escrowEnabled": false,
+      "created_at_first": "2026-04-30T16:05:01+07:00",
+      "locations": [
+        {
+          "lat": -7.29,
+          "lon": 112.702,
+          "region_id": "2000011",
+          "district_id": "5002559",
+          "city_id": "4000216"
+        }
+      ],
+      "parameters": [
+        {
+          "type": "single",
+          "key": "external_source_label",
+          "value": "https://www.lamudi.co.id/properti/41032-73-5ce66824c7b5-5d0-197f5fc-82a7-715d",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-5ce66824c7b5-5d0-197f5fc-82a7-715d",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-5ce66824c7b5-5d0-197f5fc-82a7-715d",
+          "key_name": "parameter-external_source_label",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-5ce66824c7b5-5d0-197f5fc-82a7-715d"
+        },
+        {
+          "type": "single",
+          "key": "external_source_url",
+          "value": "https://www.lamudi.co.id/properti/41032-73-5ce66824c7b5-5d0-197f5fc-82a7-715d?i=AO-PqII",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-5ce66824c7b5-5d0-197f5fc-82a7-715d?i=AO-PqII",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-5ce66824c7b5-5d0-197f5fc-82a7-715d?i=AO-PqII",
+          "key_name": "parameter-external_source_url",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-5ce66824c7b5-5d0-197f5fc-82a7-715d?i=AO-PqII"
+        },
+        {
+          "type": "single",
+          "key": "p_sqr_building",
+          "value": "310",
+          "value_name": "310",
+          "absoluteValue": "310",
+          "key_name": "Luas bangunan",
+          "formatted_value": "310"
+        },
+        {
+          "type": "single",
+          "key": "p_bathroom",
+          "value": "10",
+          "value_name": "10",
+          "absoluteValue": "10",
+          "key_name": "Kamar Mandi",
+          "formatted_value": "10"
+        }
+      ],
+      "extra_parameters": null,
+      "escrow_details": null
+    },
+    {
+      "id": "944937126",
+      "score": 0.982421875,
+      "spell": {
+        "id": 119,
+        "key": "CONFUSION_ES",
+        "version": "1",
+        "main": false,
+        "facet_disabled": false,
+        "default_sorting": "DEFAULT"
+      },
+      "status": {
+        "status": "active",
+        "allow_edit": true,
+        "ban_reason_id": null,
+        "display": "active",
+        "translated_display": "Aktif",
+        "link": null,
+        "flags": {
+          "new": false,
+          "hot": false
+        },
+        "message": null,
+        "allow_deactivate": false
+      },
+      "category_id": "4833",
+      "ad_id": "944937126",
+      "favorites": {
+        "count": 0,
+        "count_label_next": "1"
+      },
+      "user_name": "MJ property",
+      "discount_toggle": null,
+      "has_phone_param": false,
+      "description": "SUPER ISTIMEWAH RUMAH KOST ONE GATE DI\n \n\n JL KEMBAR PERUMAHAN BUMI MARINA MAS\n \n\n SELANGKAH HANG TUAH ITS UNAIR\n \n\n HARGA 7.95M\n LT 10x20\n SHM\n 3LT\n KT 34\n KM 34",
+      "created_at": "2026-09-11T11:21:39+07:00",
+      "inspection_info": null,
+      "package_id": null,
+      "title": "34RUMAH KOST JL KEMBAR BUMI MARINA ITS HANG TUAH",
+      "multi_location": [],
+      "has_video": false,
+      "video_url": null,
+      "partner_id": null,
+      "user_type": "Regular",
+      "spotlightPackageId": null,
+      "price": {
+        "value": {
+          "raw": 6950000000.0,
+          "currency": {
+            "iso_4217": "IDR",
+            "pre": "Rp"
+          },
+          "display": "Rp 6.950.000.000"
+        },
+        "key_name": "Harga",
+        "key": "price"
+      },
+      "has_promotion": false,
+      "partner_code": null,
+      "is_video_generated": false,
+      "monetizationInfo": null,
+      "credit_eligibility": false,
+      "video_thumbnail_url": null,
+      "images": [
+        {
+          "id": "2653891158",
+          "external_id": "69f31700e3201-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31700e3201-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31700e3201-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31700e3201-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31700e3201-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31700e3201-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653891159",
+          "external_id": "69f317006ac80-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f317006ac80-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f317006ac80-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f317006ac80-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f317006ac80-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f317006ac80-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653891160",
+          "external_id": "69f31700ef0f8-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31700ef0f8-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31700ef0f8-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31700ef0f8-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31700ef0f8-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31700ef0f8-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653891161",
+          "external_id": "69f31700c98f8-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31700c98f8-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31700c98f8-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31700c98f8-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31700c98f8-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31700c98f8-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653891162",
+          "external_id": "69f317005af6d-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f317005af6d-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f317005af6d-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f317005af6d-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f317005af6d-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f317005af6d-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653891163",
+          "external_id": "69f31701a8546-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31701a8546-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31701a8546-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31701a8546-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31701a8546-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31701a8546-ID/image;s=120x90"
+          }
+        }
+      ],
+      "certified_car": false,
+      "is_multi_location": false,
+      "is_kyc_verified_user": false,
+      "locations_resolved": {
+        "COUNTRY_id": "1000001",
+        "COUNTRY_name": "Indonesia",
+        "ADMIN_LEVEL_1_id": "2000011",
+        "ADMIN_LEVEL_1_name": "Jawa Timur",
+        "ADMIN_LEVEL_3_id": "4000216",
+        "ADMIN_LEVEL_3_name": "Surabaya Kota",
+        "SUBLOCALITY_LEVEL_1_id": "5002559",
+        "SUBLOCALITY_LEVEL_1_name": "Dukuh Pakis"
+      },
+      "deal_price": null,
+      "creditEligibile": false,
+      "business_platform": null,
+      "main_info": null,
+      "is_escrow_enabled": false,
+      "artificial_boost": false,
+      "display_date": "2026-09-11T04:19:08+0000",
+      "isSpinViewAvailable": false,
+      "user_id": "7078689",
+      "installment": null,
+      "escrowEnabled": false,
+      "created_at_first": "2026-04-30T15:46:58+07:00",
+      "locations": [
+        {
+          "lat": -7.29,
+          "lon": 112.702,
+          "region_id": "2000011",
+          "district_id": "5002559",
+          "city_id": "4000216"
+        }
+      ],
+      "parameters": [
+        {
+          "type": "single",
+          "key": "external_source_label",
+          "value": "https://www.lamudi.co.id/properti/41032-73-4616ede8c0-1391-197f5ea-8419-7367",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-4616ede8c0-1391-197f5ea-8419-7367",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-4616ede8c0-1391-197f5ea-8419-7367",
+          "key_name": "parameter-external_source_label",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-4616ede8c0-1391-197f5ea-8419-7367"
+        },
+        {
+          "type": "single",
+          "key": "external_source_url",
+          "value": "https://www.lamudi.co.id/properti/41032-73-4616ede8c0-1391-197f5ea-8419-7367?i=e3mALQ",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-4616ede8c0-1391-197f5ea-8419-7367?i=e3mALQ",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-4616ede8c0-1391-197f5ea-8419-7367?i=e3mALQ",
+          "key_name": "parameter-external_source_url",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-4616ede8c0-1391-197f5ea-8419-7367?i=e3mALQ"
+        },
+        {
+          "type": "single",
+          "key": "p_sqr_building",
+          "value": "600",
+          "value_name": "600",
+          "absoluteValue": "600",
+          "key_name": "Luas bangunan",
+          "formatted_value": "600"
+        },
+        {
+          "type": "single",
+          "key": "p_bathroom",
+          "value": "10",
+          "value_name": "10",
+          "absoluteValue": "10",
+          "key_name": "Kamar Mandi",
+          "formatted_value": "10"
+        }
+      ],
+      "extra_parameters": null,
+      "escrow_details": null
+    },
+    {
+      "id": "944937078",
+      "score": 0.98046875,
+      "spell": {
+        "id": 119,
+        "key": "CONFUSION_ES",
+        "version": "1",
+        "main": false,
+        "facet_disabled": false,
+        "default_sorting": "DEFAULT"
+      },
+      "status": {
+        "status": "active",
+        "allow_edit": true,
+        "ban_reason_id": null,
+        "display": "active",
+        "translated_display": "Aktif",
+        "link": null,
+        "flags": {
+          "new": false,
+          "hot": false
+        },
+        "message": null,
+        "allow_deactivate": false
+      },
+      "category_id": "4833",
+      "ad_id": "944937078",
+      "favorites": {
+        "count": 0,
+        "count_label_next": "1"
+      },
+      "user_name": "MJ property",
+      "discount_toggle": null,
+      "has_phone_param": false,
+      "description": "SUPER ISTIMEWAH KUSUS BULAN INI\n \n RUMAH KOST 2LT ADA CAFE / R COMUNAL\n \n IDOLA MAHASISWA UNAIR, ITS, HANG TUAH\n \n LOKASI jl utama BUMI MARINA\n \n LT 7x30\n SHM DAN IMB\n 2LT\n KT 30\n KM 30\n DAPUR\n GARASI\n \n Free furnist tiap kamar\n Free ac\n Free pajak\n Free balik nama\n \n Harga 5.5m promo cash 5,2M saja",
+      "created_at": "2026-09-11T11:21:48+07:00",
+      "inspection_info": null,
+      "package_id": null,
+      "title": "LARIS CAFE RUMAH KOST 2LT 30KAMAR BUMI MARINA ITS HANG TUAH",
+      "multi_location": [],
+      "has_video": false,
+      "video_url": null,
+      "partner_id": null,
+      "user_type": "Regular",
+      "spotlightPackageId": null,
+      "price": {
+        "value": {
+          "raw": 5200000000.0,
+          "currency": {
+            "iso_4217": "IDR",
+            "pre": "Rp"
+          },
+          "display": "Rp 5.200.000.000"
+        },
+        "key_name": "Harga",
+        "key": "price"
+      },
+      "has_promotion": false,
+      "partner_code": null,
+      "is_video_generated": false,
+      "monetizationInfo": null,
+      "credit_eligibility": false,
+      "video_thumbnail_url": null,
+      "images": [
+        {
+          "id": "2653890760",
+          "external_id": "69f316932b2c0-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f316932b2c0-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f316932b2c0-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f316932b2c0-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f316932b2c0-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f316932b2c0-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653890761",
+          "external_id": "69f31694ec413-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31694ec413-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31694ec413-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31694ec413-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31694ec413-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31694ec413-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653890762",
+          "external_id": "69f31694e461f-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31694e461f-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31694e461f-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31694e461f-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31694e461f-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31694e461f-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653890763",
+          "external_id": "69f31694697e6-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31694697e6-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31694697e6-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31694697e6-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31694697e6-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31694697e6-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653890764",
+          "external_id": "69f31693923bc-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31693923bc-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31693923bc-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31693923bc-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31693923bc-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31693923bc-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653890765",
+          "external_id": "69f316952ce02-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f316952ce02-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f316952ce02-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f316952ce02-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f316952ce02-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f316952ce02-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653890766",
+          "external_id": "69f31695061ec-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31695061ec-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31695061ec-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31695061ec-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31695061ec-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31695061ec-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653890767",
+          "external_id": "69f31695e6e1c-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31695e6e1c-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31695e6e1c-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31695e6e1c-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31695e6e1c-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31695e6e1c-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653890768",
+          "external_id": "69f31695baa0c-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31695baa0c-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31695baa0c-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31695baa0c-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31695baa0c-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31695baa0c-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653890769",
+          "external_id": "69f31695de868-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31695de868-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31695de868-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31695de868-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31695de868-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31695de868-ID/image;s=120x90"
+          }
+        }
+      ],
+      "certified_car": false,
+      "is_multi_location": false,
+      "is_kyc_verified_user": false,
+      "locations_resolved": {
+        "COUNTRY_id": "1000001",
+        "COUNTRY_name": "Indonesia",
+        "ADMIN_LEVEL_1_id": "2000011",
+        "ADMIN_LEVEL_1_name": "Jawa Timur",
+        "ADMIN_LEVEL_3_id": "4000216",
+        "ADMIN_LEVEL_3_name": "Surabaya Kota",
+        "SUBLOCALITY_LEVEL_1_id": "5002559",
+        "SUBLOCALITY_LEVEL_1_name": "Dukuh Pakis"
+      },
+      "deal_price": null,
+      "creditEligibile": false,
+      "business_platform": null,
+      "main_info": null,
+      "is_escrow_enabled": false,
+      "artificial_boost": false,
+      "display_date": "2026-09-11T04:18:21+0000",
+      "isSpinViewAvailable": false,
+      "user_id": "7078689",
+      "installment": null,
+      "escrowEnabled": false,
+      "created_at_first": "2026-04-30T15:45:10+07:00",
+      "locations": [
+        {
+          "lat": -7.29,
+          "lon": 112.702,
+          "region_id": "2000011",
+          "district_id": "5002559",
+          "city_id": "4000216"
+        }
+      ],
+      "parameters": [
+        {
+          "type": "single",
+          "key": "external_source_label",
+          "value": "https://www.lamudi.co.id/properti/41032-73-79cba4089faa-362d-197f5c6-9c9a-73bd",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-79cba4089faa-362d-197f5c6-9c9a-73bd",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-79cba4089faa-362d-197f5c6-9c9a-73bd",
+          "key_name": "parameter-external_source_label",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-79cba4089faa-362d-197f5c6-9c9a-73bd"
+        },
+        {
+          "type": "single",
+          "key": "external_source_url",
+          "value": "https://www.lamudi.co.id/properti/41032-73-79cba4089faa-362d-197f5c6-9c9a-73bd?i=AOvT-fg",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-79cba4089faa-362d-197f5c6-9c9a-73bd?i=AOvT-fg",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-79cba4089faa-362d-197f5c6-9c9a-73bd?i=AOvT-fg",
+          "key_name": "parameter-external_source_url",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-79cba4089faa-362d-197f5c6-9c9a-73bd?i=AOvT-fg"
+        },
+        {
+          "type": "single",
+          "key": "p_sqr_building",
+          "value": "350",
+          "value_name": "350",
+          "absoluteValue": "350",
+          "key_name": "Luas bangunan",
+          "formatted_value": "350"
+        },
+        {
+          "type": "single",
+          "key": "p_bathroom",
+          "value": "10",
+          "value_name": "10",
+          "absoluteValue": "10",
+          "key_name": "Kamar Mandi",
+          "formatted_value": "10"
+        }
+      ],
+      "extra_parameters": null,
+      "escrow_details": null
+    },
+    {
+      "id": "944936468",
+      "score": 0.978515625,
+      "spell": {
+        "id": 119,
+        "key": "CONFUSION_ES",
+        "version": "1",
+        "main": false,
+        "facet_disabled": false,
+        "default_sorting": "DEFAULT"
+      },
+      "status": {
+        "status": "active",
+        "allow_edit": true,
+        "ban_reason_id": null,
+        "display": "active",
+        "translated_display": "Aktif",
+        "link": null,
+        "flags": {
+          "new": false,
+          "hot": false
+        },
+        "message": null,
+        "allow_deactivate": false
+      },
+      "category_id": "4833",
+      "ad_id": "944936468",
+      "favorites": {
+        "count": 0,
+        "count_label_next": "1"
+      },
+      "user_name": "MJ property",
+      "discount_toggle": null,
+      "has_phone_param": false,
+      "description": "Segera dibeli rumah kost larisss mahasiswa its hang tuah\n \n\n Tiap bulan bersih 75jt dan disini bayar kost minim 3 bulan di depan\n \n\n PALING DICARI MAHASISWA\n \n\n NOL RAYA KEPUTIH\n \n\n DEKAT DENGAN ITS, HANG TUAH, UNAIR\n \n\n LT 200\n SHM DAN IMB\n 4LT\n KT 50\n KM 50\n DAPUR\n GARASI\n R COMUNAL / R NONGKRONG\n \n\n LARIS TERUS\n\n\n HARGA 9M PROMO BERKAH 7.5M SAJA BELI SEKARANG BONUS\n \n\n FREE PAJAK BELI\n FREE BIAYA NOTARIS\n FREE BALIK NAMA\n FREE FURNIST\n FREE AC\n FREE WIFI\n FREE TV SETIAP KAMAR\n FEEE CCTV SETIAP LANTAI",
+      "created_at": "2026-09-11T11:21:42+07:00",
+      "inspection_info": null,
+      "package_id": null,
+      "title": "JUAL 50 KAMAR RUMAH KOST DI RAYA KEPUTIH TEGAL  ITS HANG TUAH SURABAYA",
+      "multi_location": [],
+      "has_video": false,
+      "video_url": null,
+      "partner_id": null,
+      "user_type": "Regular",
+      "spotlightPackageId": null,
+      "price": {
+        "value": {
+          "raw": 7500000000.0,
+          "currency": {
+            "iso_4217": "IDR",
+            "pre": "Rp"
+          },
+          "display": "Rp 7.500.000.000"
+        },
+        "key_name": "Harga",
+        "key": "price"
+      },
+      "has_promotion": false,
+      "partner_code": null,
+      "is_video_generated": false,
+      "monetizationInfo": null,
+      "credit_eligibility": false,
+      "video_thumbnail_url": null,
+      "images": [
+        {
+          "id": "2653886116",
+          "external_id": "69f3118d03843-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f3118d03843-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3118d03843-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3118d03843-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3118d03843-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3118d03843-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653886117",
+          "external_id": "69f3118db6472-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f3118db6472-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3118db6472-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3118db6472-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3118db6472-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3118db6472-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653886118",
+          "external_id": "69f3118d0b6a0-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f3118d0b6a0-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3118d0b6a0-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3118d0b6a0-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3118d0b6a0-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3118d0b6a0-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653886119",
+          "external_id": "69f3118d91422-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f3118d91422-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3118d91422-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3118d91422-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3118d91422-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3118d91422-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653886120",
+          "external_id": "69f3118d8aea1-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f3118d8aea1-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3118d8aea1-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3118d8aea1-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3118d8aea1-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3118d8aea1-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653886121",
+          "external_id": "69f3118e4cb27-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f3118e4cb27-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3118e4cb27-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3118e4cb27-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3118e4cb27-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3118e4cb27-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653886122",
+          "external_id": "69f3118e037cc-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f3118e037cc-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3118e037cc-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3118e037cc-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3118e037cc-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3118e037cc-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653886123",
+          "external_id": "69f3118e1c7f9-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f3118e1c7f9-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3118e1c7f9-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3118e1c7f9-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3118e1c7f9-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3118e1c7f9-ID/image;s=120x90"
+          }
+        }
+      ],
+      "certified_car": false,
+      "is_multi_location": false,
+      "is_kyc_verified_user": false,
+      "locations_resolved": {
+        "COUNTRY_id": "1000001",
+        "COUNTRY_name": "Indonesia",
+        "ADMIN_LEVEL_1_id": "2000011",
+        "ADMIN_LEVEL_1_name": "Jawa Timur",
+        "ADMIN_LEVEL_3_id": "4000216",
+        "ADMIN_LEVEL_3_name": "Surabaya Kota",
+        "SUBLOCALITY_LEVEL_1_id": "5002559",
+        "SUBLOCALITY_LEVEL_1_name": "Dukuh Pakis"
+      },
+      "deal_price": null,
+      "creditEligibile": false,
+      "business_platform": null,
+      "main_info": null,
+      "is_escrow_enabled": false,
+      "artificial_boost": false,
+      "display_date": "2026-09-11T04:18:10+0000",
+      "isSpinViewAvailable": false,
+      "user_id": "7078689",
+      "installment": null,
+      "escrowEnabled": false,
+      "created_at_first": "2026-04-30T15:23:43+07:00",
+      "locations": [
+        {
+          "lat": -7.29,
+          "lon": 112.702,
+          "region_id": "2000011",
+          "district_id": "5002559",
+          "city_id": "4000216"
+        }
+      ],
+      "parameters": [
+        {
+          "type": "single",
+          "key": "external_source_label",
+          "value": "https://www.lamudi.co.id/properti/41032-73-1b8030a60eec-b8bf-197f5b0-be51-78ed",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-1b8030a60eec-b8bf-197f5b0-be51-78ed",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-1b8030a60eec-b8bf-197f5b0-be51-78ed",
+          "key_name": "parameter-external_source_label",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-1b8030a60eec-b8bf-197f5b0-be51-78ed"
+        },
+        {
+          "type": "single",
+          "key": "external_source_url",
+          "value": "https://www.lamudi.co.id/properti/41032-73-1b8030a60eec-b8bf-197f5b0-be51-78ed?i=GfWlAw",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-1b8030a60eec-b8bf-197f5b0-be51-78ed?i=GfWlAw",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-1b8030a60eec-b8bf-197f5b0-be51-78ed?i=GfWlAw",
+          "key_name": "parameter-external_source_url",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-1b8030a60eec-b8bf-197f5b0-be51-78ed?i=GfWlAw"
+        },
+        {
+          "type": "single",
+          "key": "p_sqr_building",
+          "value": "700",
+          "value_name": "700",
+          "absoluteValue": "700",
+          "key_name": "Luas bangunan",
+          "formatted_value": "700"
+        },
+        {
+          "type": "single",
+          "key": "p_bathroom",
+          "value": "10",
+          "value_name": "10",
+          "absoluteValue": "10",
+          "key_name": "Kamar Mandi",
+          "formatted_value": "10"
+        }
+      ],
+      "extra_parameters": null,
+      "escrow_details": null
+    },
+    {
+      "id": "924287603",
+      "score": 0.9765625,
+      "spell": {
+        "id": 119,
+        "key": "CONFUSION_ES",
+        "version": "1",
+        "main": false,
+        "facet_disabled": false,
+        "default_sorting": "DEFAULT"
+      },
+      "status": {
+        "status": "active",
+        "allow_edit": true,
+        "ban_reason_id": null,
+        "display": "active",
+        "translated_display": "Aktif",
+        "link": null,
+        "flags": {
+          "new": false,
+          "hot": false
+        },
+        "message": null,
+        "allow_deactivate": false
+      },
+      "category_id": "4833",
+      "ad_id": "924287603",
+      "favorites": {
+        "count": 2,
+        "count_label": "2",
+        "count_label_next": "3",
+        "count_label_prev": "1"
+      },
+      "user_name": "MJ property",
+      "discount_toggle": null,
+      "has_phone_param": false,
+      "description": "SAMPAI NOLAK NOLAK LARISSS POLLLL\n \n\n LOKASI KEPUTIH BHAKTI\n \n\n RUMAH KOST TENANG DAN NYAMAN\n \n\n 5MENIT ITS\n 5MENIT UPN\n 5MENIT HANG TUAH\n 10MENIT GALAXY MALL\n 10MENIT UNAIR\n \n\n \n\n LT 10x8\n SHM\n 2LT\n LB 160\n GARASI\n KT 10\n KM 10\n \n\n \n\n HARGA 1,65M PROMO KUSUS CASH NET MINGGU INI SAJA\n \n\n \n\n FREE FURNIST\n FREE WIFI\n FREE CCTV\n FREE AC",
+      "created_at": "2026-09-11T11:21:42+07:00",
+      "inspection_info": null,
+      "package_id": null,
+      "title": "Rumah kost Laris 10kamar keputih bhakti its hang tuah",
+      "multi_location": [],
+      "has_video": false,
+      "video_url": null,
+      "partner_id": null,
+      "user_type": "Regular",
+      "spotlightPackageId": null,
+      "price": {
+        "value": {
+          "raw": 1650000000.0,
+          "currency": {
+            "iso_4217": "IDR",
+            "pre": "Rp"
+          },
+          "display": "Rp 1.650.000.000"
+        },
+        "key_name": "Harga",
+        "key": "price"
+      },
+      "has_promotion": false,
+      "partner_code": null,
+      "is_video_generated": false,
+      "monetizationInfo": null,
+      "credit_eligibility": false,
+      "video_thumbnail_url": null,
+      "images": [
+        {
+          "id": "2608648772",
+          "external_id": "68cd8666b9d40-ID",
+          "width": 1284,
+          "height": 1197,
+          "url": "https://apollo.olx.co.id:443/v1/files/68cd8666b9d40-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 1006,
+            "url": "https://apollo.olx.co.id:443/v1/files/68cd8666b9d40-ID/image;s=1080x1006"
+          },
+          "big": {
+            "width": 505,
+            "height": 470,
+            "url": "https://apollo.olx.co.id:443/v1/files/68cd8666b9d40-ID/image;s=505x470"
+          },
+          "medium": {
+            "width": 120,
+            "height": 111,
+            "url": "https://apollo.olx.co.id:443/v1/files/68cd8666b9d40-ID/image;s=120x111"
+          },
+          "small": {
+            "width": 120,
+            "height": 111,
+            "url": "https://apollo.olx.co.id:443/v1/files/68cd8666b9d40-ID/image;s=120x111"
+          }
+        },
+        {
+          "id": "2608648773",
+          "external_id": "68cd86669a5ad-ID",
+          "width": 1284,
+          "height": 1653,
+          "url": "https://apollo.olx.co.id:443/v1/files/68cd86669a5ad-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 1390,
+            "url": "https://apollo.olx.co.id:443/v1/files/68cd86669a5ad-ID/image;s=1080x1390"
+          },
+          "big": {
+            "width": 505,
+            "height": 650,
+            "url": "https://apollo.olx.co.id:443/v1/files/68cd86669a5ad-ID/image;s=505x650"
+          },
+          "medium": {
+            "width": 120,
+            "height": 154,
+            "url": "https://apollo.olx.co.id:443/v1/files/68cd86669a5ad-ID/image;s=120x154"
+          },
+          "small": {
+            "width": 120,
+            "height": 154,
+            "url": "https://apollo.olx.co.id:443/v1/files/68cd86669a5ad-ID/image;s=120x154"
+          }
+        },
+        {
+          "id": "2608648774",
+          "external_id": "68cd8666de761-ID",
+          "width": 1284,
+          "height": 1622,
+          "url": "https://apollo.olx.co.id:443/v1/files/68cd8666de761-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 1364,
+            "url": "https://apollo.olx.co.id:443/v1/files/68cd8666de761-ID/image;s=1080x1364"
+          },
+          "big": {
+            "width": 505,
+            "height": 637,
+            "url": "https://apollo.olx.co.id:443/v1/files/68cd8666de761-ID/image;s=505x637"
+          },
+          "medium": {
+            "width": 120,
+            "height": 151,
+            "url": "https://apollo.olx.co.id:443/v1/files/68cd8666de761-ID/image;s=120x151"
+          },
+          "small": {
+            "width": 120,
+            "height": 151,
+            "url": "https://apollo.olx.co.id:443/v1/files/68cd8666de761-ID/image;s=120x151"
+          }
+        },
+        {
+          "id": "2608648775",
+          "external_id": "68cd866656624-ID",
+          "width": 500,
+          "height": 333,
+          "url": "https://apollo.olx.co.id:443/v1/files/68cd866656624-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 719,
+            "url": "https://apollo.olx.co.id:443/v1/files/68cd866656624-ID/image;s=1080x719"
+          },
+          "big": {
+            "width": 505,
+            "height": 336,
+            "url": "https://apollo.olx.co.id:443/v1/files/68cd866656624-ID/image;s=505x336"
+          },
+          "medium": {
+            "width": 120,
+            "height": 79,
+            "url": "https://apollo.olx.co.id:443/v1/files/68cd866656624-ID/image;s=120x79"
+          },
+          "small": {
+            "width": 120,
+            "height": 79,
+            "url": "https://apollo.olx.co.id:443/v1/files/68cd866656624-ID/image;s=120x79"
+          }
+        }
+      ],
+      "certified_car": false,
+      "is_multi_location": false,
+      "is_kyc_verified_user": false,
+      "locations_resolved": {
+        "COUNTRY_id": "1000001",
+        "COUNTRY_name": "Indonesia",
+        "ADMIN_LEVEL_1_id": "2000011",
+        "ADMIN_LEVEL_1_name": "Jawa Timur",
+        "ADMIN_LEVEL_3_id": "4000216",
+        "ADMIN_LEVEL_3_name": "Surabaya Kota",
+        "SUBLOCALITY_LEVEL_1_id": "5002559",
+        "SUBLOCALITY_LEVEL_1_name": "Dukuh Pakis"
+      },
+      "deal_price": null,
+      "creditEligibile": false,
+      "business_platform": null,
+      "main_info": null,
+      "is_escrow_enabled": false,
+      "artificial_boost": false,
+      "display_date": "2026-09-11T04:18:08+0000",
+      "isSpinViewAvailable": false,
+      "user_id": "7078689",
+      "installment": null,
+      "escrowEnabled": false,
+      "created_at_first": "2024-08-09T17:43:17+07:00",
+      "locations": [
+        {
+          "lat": -7.29,
+          "lon": 112.702,
+          "region_id": "2000011",
+          "district_id": "5002559",
+          "city_id": "4000216"
+        }
+      ],
+      "parameters": [
+        {
+          "type": "single",
+          "key": "external_source_label",
+          "value": "https://www.lamudi.co.id/properti/41032-73-3d84425a2bb0-1f87-197f5c3-afe8-7063",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-3d84425a2bb0-1f87-197f5c3-afe8-7063",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-3d84425a2bb0-1f87-197f5c3-afe8-7063",
+          "key_name": "parameter-external_source_label",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-3d84425a2bb0-1f87-197f5c3-afe8-7063"
+        },
+        {
+          "type": "single",
+          "key": "external_source_url",
+          "value": "https://www.lamudi.co.id/properti/41032-73-3d84425a2bb0-1f87-197f5c3-afe8-7063?i=N9tmkg",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-3d84425a2bb0-1f87-197f5c3-afe8-7063?i=N9tmkg",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-3d84425a2bb0-1f87-197f5c3-afe8-7063?i=N9tmkg",
+          "key_name": "parameter-external_source_url",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-3d84425a2bb0-1f87-197f5c3-afe8-7063?i=N9tmkg"
+        },
+        {
+          "type": "single",
+          "key": "p_sqr_building",
+          "value": "160",
+          "value_name": "160",
+          "absoluteValue": "160",
+          "key_name": "Luas bangunan",
+          "formatted_value": "160"
+        },
+        {
+          "type": "single",
+          "key": "p_bathroom",
+          "value": "10",
+          "value_name": "10",
+          "absoluteValue": "10",
+          "key_name": "Kamar Mandi",
+          "formatted_value": "10"
+        }
+      ],
+      "extra_parameters": null,
+      "escrow_details": null
+    },
+    {
+      "id": "944937084",
+      "score": 0.974609375,
+      "spell": {
+        "id": 119,
+        "key": "CONFUSION_ES",
+        "version": "1",
+        "main": false,
+        "facet_disabled": false,
+        "default_sorting": "DEFAULT"
+      },
+      "status": {
+        "status": "active",
+        "allow_edit": true,
+        "ban_reason_id": null,
+        "display": "active",
+        "translated_display": "Aktif",
+        "link": null,
+        "flags": {
+          "new": false,
+          "hot": false
+        },
+        "message": null,
+        "allow_deactivate": false
+      },
+      "category_id": "4833",
+      "ad_id": "944937084",
+      "favorites": {
+        "count": 1,
+        "count_label": "1",
+        "count_label_next": "2"
+      },
+      "user_name": "MJ property",
+      "discount_toggle": null,
+      "has_phone_param": false,
+      "description": "HANYA DISINI RUMAH KOSTLOKASI JALAN RAYA KEPUTIH STRATEGISSS POLLL  \n\n\n\n\n JL UTAMA BUMI MARINA PALING MURAHHHH \n\n\n\n\n40KAMAR RUMAH LARIS BANGETTTTT\n\n\n\n\nHARGA  DAN KUSUS BULAN INI HANYA 7.8MPROMO DISCOUNT 1M JADI 6,8M\n\n\n\n\nLT 240 3LT KT 40 KM 40 DAPUR JEMURAN.\n\n\n\n\nFREE FURNIST\n\nFREE AC\n\nFREE WIFI\n\nFREE CCTV",
+      "created_at": "2026-09-11T11:21:35+07:00",
+      "inspection_info": null,
+      "package_id": null,
+      "title": "40KAMAR RUMAH KOST 3LT JL UTAMA BUMI MARINA ITS ,HANG TUAH, UNAIR",
+      "multi_location": [],
+      "has_video": false,
+      "video_url": null,
+      "partner_id": null,
+      "user_type": "Regular",
+      "spotlightPackageId": null,
+      "price": {
+        "value": {
+          "raw": 6800000000.0,
+          "currency": {
+            "iso_4217": "IDR",
+            "pre": "Rp"
+          },
+          "display": "Rp 6.800.000.000"
+        },
+        "key_name": "Harga",
+        "key": "price"
+      },
+      "has_promotion": false,
+      "partner_code": null,
+      "is_video_generated": false,
+      "monetizationInfo": null,
+      "credit_eligibility": false,
+      "video_thumbnail_url": null,
+      "images": [
+        {
+          "id": "2653890809",
+          "external_id": "69f3169e0e3fc-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f3169e0e3fc-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3169e0e3fc-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3169e0e3fc-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3169e0e3fc-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3169e0e3fc-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653890810",
+          "external_id": "69f3169e09a8f-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f3169e09a8f-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3169e09a8f-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3169e09a8f-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3169e09a8f-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3169e09a8f-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653890811",
+          "external_id": "69f3169f41253-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f3169f41253-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3169f41253-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3169f41253-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3169f41253-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3169f41253-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653890812",
+          "external_id": "69f3169e9488d-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f3169e9488d-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3169e9488d-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3169e9488d-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3169e9488d-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3169e9488d-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653890813",
+          "external_id": "69f3169e99cf7-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f3169e99cf7-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3169e99cf7-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3169e99cf7-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3169e99cf7-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3169e99cf7-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653890814",
+          "external_id": "69f316a0dcf4a-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f316a0dcf4a-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f316a0dcf4a-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f316a0dcf4a-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f316a0dcf4a-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f316a0dcf4a-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653890815",
+          "external_id": "69f316a05c89f-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f316a05c89f-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f316a05c89f-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f316a05c89f-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f316a05c89f-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f316a05c89f-ID/image;s=120x90"
+          }
+        }
+      ],
+      "certified_car": false,
+      "is_multi_location": false,
+      "is_kyc_verified_user": false,
+      "locations_resolved": {
+        "COUNTRY_id": "1000001",
+        "COUNTRY_name": "Indonesia",
+        "ADMIN_LEVEL_1_id": "2000011",
+        "ADMIN_LEVEL_1_name": "Jawa Timur",
+        "ADMIN_LEVEL_3_id": "4000216",
+        "ADMIN_LEVEL_3_name": "Surabaya Kota",
+        "SUBLOCALITY_LEVEL_1_id": "5002559",
+        "SUBLOCALITY_LEVEL_1_name": "Dukuh Pakis"
+      },
+      "deal_price": null,
+      "creditEligibile": false,
+      "business_platform": null,
+      "main_info": null,
+      "is_escrow_enabled": false,
+      "artificial_boost": false,
+      "display_date": "2026-09-11T04:18:02+0000",
+      "isSpinViewAvailable": false,
+      "user_id": "7078689",
+      "installment": null,
+      "escrowEnabled": false,
+      "created_at_first": "2026-04-30T15:45:21+07:00",
+      "locations": [
+        {
+          "lat": -7.29,
+          "lon": 112.702,
+          "region_id": "2000011",
+          "district_id": "5002559",
+          "city_id": "4000216"
+        }
+      ],
+      "parameters": [
+        {
+          "type": "single",
+          "key": "external_source_label",
+          "value": "https://www.lamudi.co.id/properti/41032-73-be7c0c8457cc-26d4-197f5e4-99d8-7a25",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-be7c0c8457cc-26d4-197f5e4-99d8-7a25",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-be7c0c8457cc-26d4-197f5e4-99d8-7a25",
+          "key_name": "parameter-external_source_label",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-be7c0c8457cc-26d4-197f5e4-99d8-7a25"
+        },
+        {
+          "type": "single",
+          "key": "external_source_url",
+          "value": "https://www.lamudi.co.id/properti/41032-73-be7c0c8457cc-26d4-197f5e4-99d8-7a25?i=Vr0HKg",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-be7c0c8457cc-26d4-197f5e4-99d8-7a25?i=Vr0HKg",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-be7c0c8457cc-26d4-197f5e4-99d8-7a25?i=Vr0HKg",
+          "key_name": "parameter-external_source_url",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-be7c0c8457cc-26d4-197f5e4-99d8-7a25?i=Vr0HKg"
+        },
+        {
+          "type": "single",
+          "key": "p_sqr_building",
+          "value": "750",
+          "value_name": "750",
+          "absoluteValue": "750",
+          "key_name": "Luas bangunan",
+          "formatted_value": "750"
+        },
+        {
+          "type": "single",
+          "key": "p_bathroom",
+          "value": "10",
+          "value_name": "10",
+          "absoluteValue": "10",
+          "key_name": "Kamar Mandi",
+          "formatted_value": "10"
+        }
+      ],
+      "extra_parameters": null,
+      "escrow_details": null
+    },
+    {
+      "id": "944938289",
+      "score": 0.97265625,
+      "spell": {
+        "id": 119,
+        "key": "CONFUSION_ES",
+        "version": "1",
+        "main": false,
+        "facet_disabled": false,
+        "default_sorting": "DEFAULT"
+      },
+      "status": {
+        "status": "active",
+        "allow_edit": true,
+        "ban_reason_id": null,
+        "display": "active",
+        "translated_display": "Aktif",
+        "link": null,
+        "flags": {
+          "new": false,
+          "hot": false
+        },
+        "message": null,
+        "allow_deactivate": false
+      },
+      "category_id": "4833",
+      "ad_id": "944938289",
+      "favorites": {
+        "count": 0,
+        "count_label_next": "1"
+      },
+      "user_name": "MJ property",
+      "discount_toggle": null,
+      "has_phone_param": false,
+      "description": "BELI LANGSUNG DIAMANKAN UNIT NYA RUMAH KOST INI DIJAMIN PALING MURAH DAN MENGUNTUNGKAN.\n \n INVESTASI PALING AMAN UNTUK MASA PANDEMI.\n \n JALAN DEPAN KEMBAR PAVING 20METER  SIMPANGAN LOSS LOKASI PERUM BUMI MARINA ITS HANG TUAH\n \n HARGA DIATAS 2.8M ADALAH HARGA CASH DAN NET HARGA ASLI 2.4M\n \n SPESIFIKASI : UK 4x30 SHM DAN IMB CARPORT MOTOR ANAK KOST R TAMU KT 16 KM 16 DAPUR JEMURAN.",
+      "created_at": "2026-09-11T11:21:33+07:00",
+      "inspection_info": null,
+      "package_id": null,
+      "title": "LARIS RUMAH KOST 2LT JL KEMBAR BUMI MARINA ITS ,HANG TUAH, UNAIR",
+      "multi_location": [],
+      "has_video": false,
+      "video_url": null,
+      "partner_id": null,
+      "user_type": "Regular",
+      "spotlightPackageId": null,
+      "price": {
+        "value": {
+          "raw": 2400000000.0,
+          "currency": {
+            "iso_4217": "IDR",
+            "pre": "Rp"
+          },
+          "display": "Rp 2.400.000.000"
+        },
+        "key_name": "Harga",
+        "key": "price"
+      },
+      "has_promotion": false,
+      "partner_code": null,
+      "is_video_generated": false,
+      "monetizationInfo": null,
+      "credit_eligibility": false,
+      "video_thumbnail_url": null,
+      "images": [
+        {
+          "id": "2653900085",
+          "external_id": "69f31f6779b5e-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31f6779b5e-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31f6779b5e-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31f6779b5e-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31f6779b5e-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31f6779b5e-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653900086",
+          "external_id": "69f31f6766e23-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31f6766e23-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31f6766e23-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31f6766e23-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31f6766e23-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31f6766e23-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653900087",
+          "external_id": "69f31f687d9c6-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31f687d9c6-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31f687d9c6-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31f687d9c6-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31f687d9c6-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31f687d9c6-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653900088",
+          "external_id": "69f31f67d034f-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31f67d034f-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31f67d034f-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31f67d034f-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31f67d034f-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31f67d034f-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653900089",
+          "external_id": "69f31f6714b39-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31f6714b39-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31f6714b39-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31f6714b39-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31f6714b39-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31f6714b39-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653900090",
+          "external_id": "69f31f691f557-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31f691f557-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31f691f557-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31f691f557-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31f691f557-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31f691f557-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653900091",
+          "external_id": "69f31f69e2367-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31f69e2367-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31f69e2367-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31f69e2367-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31f69e2367-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31f69e2367-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653900092",
+          "external_id": "69f31f693dc84-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31f693dc84-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31f693dc84-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31f693dc84-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31f693dc84-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31f693dc84-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653900093",
+          "external_id": "69f31f69dd3dc-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31f69dd3dc-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31f69dd3dc-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31f69dd3dc-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31f69dd3dc-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31f69dd3dc-ID/image;s=120x90"
+          }
+        }
+      ],
+      "certified_car": false,
+      "is_multi_location": false,
+      "is_kyc_verified_user": false,
+      "locations_resolved": {
+        "COUNTRY_id": "1000001",
+        "COUNTRY_name": "Indonesia",
+        "ADMIN_LEVEL_1_id": "2000011",
+        "ADMIN_LEVEL_1_name": "Jawa Timur",
+        "ADMIN_LEVEL_3_id": "4000216",
+        "ADMIN_LEVEL_3_name": "Surabaya Kota",
+        "SUBLOCALITY_LEVEL_1_id": "5002559",
+        "SUBLOCALITY_LEVEL_1_name": "Dukuh Pakis"
+      },
+      "deal_price": null,
+      "creditEligibile": false,
+      "business_platform": null,
+      "main_info": null,
+      "is_escrow_enabled": false,
+      "artificial_boost": false,
+      "display_date": "2026-09-11T04:18:01+0000",
+      "isSpinViewAvailable": false,
+      "user_id": "7078689",
+      "installment": null,
+      "escrowEnabled": false,
+      "created_at_first": "2026-04-30T16:22:50+07:00",
+      "locations": [
+        {
+          "lat": -7.29,
+          "lon": 112.702,
+          "region_id": "2000011",
+          "district_id": "5002559",
+          "city_id": "4000216"
+        }
+      ],
+      "parameters": [
+        {
+          "type": "single",
+          "key": "external_source_label",
+          "value": "https://www.lamudi.co.id/properti/41032-73-2cfa78afa40c-1415-1987fe1-ae9e-7389",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-2cfa78afa40c-1415-1987fe1-ae9e-7389",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-2cfa78afa40c-1415-1987fe1-ae9e-7389",
+          "key_name": "parameter-external_source_label",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-2cfa78afa40c-1415-1987fe1-ae9e-7389"
+        },
+        {
+          "type": "single",
+          "key": "external_source_url",
+          "value": "https://www.lamudi.co.id/properti/41032-73-2cfa78afa40c-1415-1987fe1-ae9e-7389?i=IpuA9g",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-2cfa78afa40c-1415-1987fe1-ae9e-7389?i=IpuA9g",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-2cfa78afa40c-1415-1987fe1-ae9e-7389?i=IpuA9g",
+          "key_name": "parameter-external_source_url",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-2cfa78afa40c-1415-1987fe1-ae9e-7389?i=IpuA9g"
+        },
+        {
+          "type": "single",
+          "key": "p_sqr_building",
+          "value": "240",
+          "value_name": "240",
+          "absoluteValue": "240",
+          "key_name": "Luas bangunan",
+          "formatted_value": "240"
+        },
+        {
+          "type": "single",
+          "key": "p_bathroom",
+          "value": "10",
+          "value_name": "10",
+          "absoluteValue": "10",
+          "key_name": "Kamar Mandi",
+          "formatted_value": "10"
+        }
+      ],
+      "extra_parameters": null,
+      "escrow_details": null
+    },
+    {
+      "id": "944937853",
+      "score": 0.970703125,
+      "spell": {
+        "id": 119,
+        "key": "CONFUSION_ES",
+        "version": "1",
+        "main": false,
+        "facet_disabled": false,
+        "default_sorting": "DEFAULT"
+      },
+      "status": {
+        "status": "active",
+        "allow_edit": true,
+        "ban_reason_id": null,
+        "display": "active",
+        "translated_display": "Aktif",
+        "link": null,
+        "flags": {
+          "new": false,
+          "hot": false
+        },
+        "message": null,
+        "allow_deactivate": false
+      },
+      "category_id": "4833",
+      "ad_id": "944937853",
+      "favorites": {
+        "count": 0,
+        "count_label_next": "1"
+      },
+      "user_name": "MJ property",
+      "discount_toggle": null,
+      "has_phone_param": false,
+      "description": "Langsung hubungi kami dan amankan rumah kost paling STRATEGIS. UNTUNG POLL \n \n Paling menguntungkan Paling laris Idola mahasiswa hang tuah.\n Its Unair \n \n\n Raya keputih \n \n\n Lt 160 Lb 400 kt 20 km 20 Shm dan imb Dapur Jemuran Nol raya keputih Harga 4.5m.\n \n\n \n BELI SEKARANG :\n FREE FURNIST \n FREE AC \n FREE WIFI \n FREE CCTV \n FREE AJB \n FREE BALIK NAMA \n FREE PAJAK",
+      "created_at": "2026-09-11T11:21:46+07:00",
+      "inspection_info": null,
+      "package_id": null,
+      "title": "RAYA KEPUTIH RUMAH KOST LARIS MAHASISWA ITS HANG TUAH",
+      "multi_location": [],
+      "has_video": false,
+      "video_url": null,
+      "partner_id": null,
+      "user_type": "Regular",
+      "spotlightPackageId": null,
+      "price": {
+        "value": {
+          "raw": 4500000000.0,
+          "currency": {
+            "iso_4217": "IDR",
+            "pre": "Rp"
+          },
+          "display": "Rp 4.500.000.000"
+        },
+        "key_name": "Harga",
+        "key": "price"
+      },
+      "has_promotion": false,
+      "partner_code": null,
+      "is_video_generated": false,
+      "monetizationInfo": null,
+      "credit_eligibility": false,
+      "video_thumbnail_url": null,
+      "images": [
+        {
+          "id": "2653896818",
+          "external_id": "69f31c4e4f9fb-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31c4e4f9fb-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31c4e4f9fb-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31c4e4f9fb-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31c4e4f9fb-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31c4e4f9fb-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653896819",
+          "external_id": "69f31c4ecb1c8-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31c4ecb1c8-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31c4ecb1c8-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31c4ecb1c8-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31c4ecb1c8-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31c4ecb1c8-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653896820",
+          "external_id": "69f31c4e097a4-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31c4e097a4-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31c4e097a4-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31c4e097a4-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31c4e097a4-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31c4e097a4-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653896821",
+          "external_id": "69f31c4eebb34-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31c4eebb34-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31c4eebb34-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31c4eebb34-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31c4eebb34-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31c4eebb34-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653896822",
+          "external_id": "69f31c4ee90a3-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31c4ee90a3-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31c4ee90a3-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31c4ee90a3-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31c4ee90a3-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31c4ee90a3-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653896823",
+          "external_id": "69f31c4fcf689-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31c4fcf689-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31c4fcf689-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31c4fcf689-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31c4fcf689-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31c4fcf689-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653896824",
+          "external_id": "69f31c4fb6a34-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f31c4fb6a34-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31c4fb6a34-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31c4fb6a34-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31c4fb6a34-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f31c4fb6a34-ID/image;s=120x90"
+          }
+        }
+      ],
+      "certified_car": false,
+      "is_multi_location": false,
+      "is_kyc_verified_user": false,
+      "locations_resolved": {
+        "COUNTRY_id": "1000001",
+        "COUNTRY_name": "Indonesia",
+        "ADMIN_LEVEL_1_id": "2000011",
+        "ADMIN_LEVEL_1_name": "Jawa Timur",
+        "ADMIN_LEVEL_3_id": "4000216",
+        "ADMIN_LEVEL_3_name": "Surabaya Kota",
+        "SUBLOCALITY_LEVEL_1_id": "5002559",
+        "SUBLOCALITY_LEVEL_1_name": "Dukuh Pakis"
+      },
+      "deal_price": null,
+      "creditEligibile": false,
+      "business_platform": null,
+      "main_info": null,
+      "is_escrow_enabled": false,
+      "artificial_boost": false,
+      "display_date": "2026-09-11T04:17:46+0000",
+      "isSpinViewAvailable": false,
+      "user_id": "7078689",
+      "installment": null,
+      "escrowEnabled": false,
+      "created_at_first": "2026-04-30T16:09:36+07:00",
+      "locations": [
+        {
+          "lat": -7.29,
+          "lon": 112.702,
+          "region_id": "2000011",
+          "district_id": "5002559",
+          "city_id": "4000216"
+        }
+      ],
+      "parameters": [
+        {
+          "type": "single",
+          "key": "external_source_label",
+          "value": "https://www.lamudi.co.id/properti/41032-73-d9493e33bd22-d4e7-197f5ff-9b9d-7243",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-d9493e33bd22-d4e7-197f5ff-9b9d-7243",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-d9493e33bd22-d4e7-197f5ff-9b9d-7243",
+          "key_name": "parameter-external_source_label",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-d9493e33bd22-d4e7-197f5ff-9b9d-7243"
+        },
+        {
+          "type": "single",
+          "key": "external_source_url",
+          "value": "https://www.lamudi.co.id/properti/41032-73-d9493e33bd22-d4e7-197f5ff-9b9d-7243?i=ANsqQ4M",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-d9493e33bd22-d4e7-197f5ff-9b9d-7243?i=ANsqQ4M",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-d9493e33bd22-d4e7-197f5ff-9b9d-7243?i=ANsqQ4M",
+          "key_name": "parameter-external_source_url",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-d9493e33bd22-d4e7-197f5ff-9b9d-7243?i=ANsqQ4M"
+        },
+        {
+          "type": "single",
+          "key": "p_sqr_building",
+          "value": "320",
+          "value_name": "320",
+          "absoluteValue": "320",
+          "key_name": "Luas bangunan",
+          "formatted_value": "320"
+        },
+        {
+          "type": "single",
+          "key": "p_bathroom",
+          "value": "10",
+          "value_name": "10",
+          "absoluteValue": "10",
+          "key_name": "Kamar Mandi",
+          "formatted_value": "10"
+        }
+      ],
+      "extra_parameters": null,
+      "escrow_details": null
+    },
+    {
+      "id": "944937313",
+      "score": 0.96875,
+      "spell": {
+        "id": 119,
+        "key": "CONFUSION_ES",
+        "version": "1",
+        "main": false,
+        "facet_disabled": false,
+        "default_sorting": "DEFAULT"
+      },
+      "status": {
+        "status": "active",
+        "allow_edit": true,
+        "ban_reason_id": null,
+        "display": "active",
+        "translated_display": "Aktif",
+        "link": null,
+        "flags": {
+          "new": false,
+          "hot": false
+        },
+        "message": null,
+        "allow_deactivate": false
+      },
+      "category_id": "4833",
+      "ad_id": "944937313",
+      "favorites": {
+        "count": 0,
+        "count_label_next": "1"
+      },
+      "user_name": "MJ property",
+      "discount_toggle": null,
+      "has_phone_param": false,
+      "description": "7,5x30\n Shm dan imb kost\n 2lt\n Kt 30\n Km 30\n Dapur\n Garasi\n \n LARISSSS BANGET MAHASISWA ITS ,HANG TUAH ,UNAIR\n \n STRATEGIS\n \n RUMAH KOST JL UTAMA BESAR PERUMAHAN BUMI MARINA ONE GATE\n \n KEMANAN 25JAM\n \n HARGA 5.5M PROMO BERKAH 4.9M NET KUSUS BULAN INI.\n \n FREE FURNIST\n FREE AC\n FREE CCTV\n FREE WIFI",
+      "created_at": "2026-09-11T11:21:42+07:00",
+      "inspection_info": null,
+      "package_id": null,
+      "title": "TER LARIS 30KAMAR RUMAH KOST MAHASISWA ITS HANG TUAH UNAIR BUMI MARINA",
+      "multi_location": [],
+      "has_video": false,
+      "video_url": null,
+      "partner_id": null,
+      "user_type": "Regular",
+      "spotlightPackageId": null,
+      "price": {
+        "value": {
+          "raw": 4900000000.0,
+          "currency": {
+            "iso_4217": "IDR",
+            "pre": "Rp"
+          },
+          "display": "Rp 4.900.000.000"
+        },
+        "key_name": "Harga",
+        "key": "price"
+      },
+      "has_promotion": false,
+      "partner_code": null,
+      "is_video_generated": false,
+      "monetizationInfo": null,
+      "credit_eligibility": false,
+      "video_thumbnail_url": null,
+      "images": [
+        {
+          "id": "2653892495",
+          "external_id": "69f3186c08949-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f3186c08949-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3186c08949-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3186c08949-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3186c08949-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3186c08949-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653892496",
+          "external_id": "69f3186ca7816-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f3186ca7816-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3186ca7816-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3186ca7816-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3186ca7816-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3186ca7816-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653892497",
+          "external_id": "69f3186ce487d-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f3186ce487d-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3186ce487d-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3186ce487d-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3186ce487d-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3186ce487d-ID/image;s=120x90"
+          }
+        },
+        {
+          "id": "2653892498",
+          "external_id": "69f3186c5ce2c-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/69f3186c5ce2c-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3186c5ce2c-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3186c5ce2c-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3186c5ce2c-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/69f3186c5ce2c-ID/image;s=120x90"
+          }
+        }
+      ],
+      "certified_car": false,
+      "is_multi_location": false,
+      "is_kyc_verified_user": false,
+      "locations_resolved": {
+        "COUNTRY_id": "1000001",
+        "COUNTRY_name": "Indonesia",
+        "ADMIN_LEVEL_1_id": "2000011",
+        "ADMIN_LEVEL_1_name": "Jawa Timur",
+        "ADMIN_LEVEL_3_id": "4000216",
+        "ADMIN_LEVEL_3_name": "Surabaya Kota",
+        "SUBLOCALITY_LEVEL_1_id": "5002559",
+        "SUBLOCALITY_LEVEL_1_name": "Dukuh Pakis"
+      },
+      "deal_price": null,
+      "creditEligibile": false,
+      "business_platform": null,
+      "main_info": null,
+      "is_escrow_enabled": false,
+      "artificial_boost": false,
+      "display_date": "2026-09-11T04:17:27+0000",
+      "isSpinViewAvailable": false,
+      "user_id": "7078689",
+      "installment": null,
+      "escrowEnabled": false,
+      "created_at_first": "2026-04-30T15:53:00+07:00",
+      "locations": [
+        {
+          "lat": -7.29,
+          "lon": 112.702,
+          "region_id": "2000011",
+          "district_id": "5002559",
+          "city_id": "4000216"
+        }
+      ],
+      "parameters": [
+        {
+          "type": "single",
+          "key": "external_source_label",
+          "value": "https://www.lamudi.co.id/properti/41032-73-37b329726e9e-4c16-197f5ea-af2d-7678",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-37b329726e9e-4c16-197f5ea-af2d-7678",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-37b329726e9e-4c16-197f5ea-af2d-7678",
+          "key_name": "parameter-external_source_label",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-37b329726e9e-4c16-197f5ea-af2d-7678"
+        },
+        {
+          "type": "single",
+          "key": "external_source_url",
+          "value": "https://www.lamudi.co.id/properti/41032-73-37b329726e9e-4c16-197f5ea-af2d-7678?i=Ko6Z5w",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-37b329726e9e-4c16-197f5ea-af2d-7678?i=Ko6Z5w",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-37b329726e9e-4c16-197f5ea-af2d-7678?i=Ko6Z5w",
+          "key_name": "parameter-external_source_url",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-37b329726e9e-4c16-197f5ea-af2d-7678?i=Ko6Z5w"
+        },
+        {
+          "type": "single",
+          "key": "p_sqr_building",
+          "value": "30",
+          "value_name": "30",
+          "absoluteValue": "30",
+          "key_name": "Luas bangunan",
+          "formatted_value": "30"
+        },
+        {
+          "type": "single",
+          "key": "p_bathroom",
+          "value": "10",
+          "value_name": "10",
+          "absoluteValue": "10",
+          "key_name": "Kamar Mandi",
+          "formatted_value": "10"
+        }
+      ],
+      "extra_parameters": null,
+      "escrow_details": null
+    },
+    {
+      "id": "939295044",
+      "score": 0.966796875,
+      "spell": {
+        "id": 119,
+        "key": "CONFUSION_ES",
+        "version": "1",
+        "main": false,
+        "facet_disabled": false,
+        "default_sorting": "DEFAULT"
+      },
+      "status": {
+        "status": "active",
+        "allow_edit": true,
+        "ban_reason_id": null,
+        "display": "active",
+        "translated_display": "Aktif",
+        "link": null,
+        "flags": {
+          "new": false,
+          "hot": false
+        },
+        "message": null,
+        "allow_deactivate": false
+      },
+      "category_id": "4833",
+      "ad_id": "939295044",
+      "favorites": {
+        "count": 3,
+        "count_label": "3",
+        "count_label_next": "4",
+        "count_label_prev": "2"
+      },
+      "user_name": "Maju Jaya Property",
+      "discount_toggle": null,
+      "has_phone_param": false,
+      "description": "PROMO BULAN INI CASH KERASS HANYA 2,7M HARGA ASLI 2.9M RUMAH KOST STRATEGIS AREA KAMPUS ITS, HANG TUAH, ITATS, UNAIR 20KAMAR SEMUA KAMAR MANDI DALAM UK 6X23 SHM KT 20 KM20 CARPORT 20MOTOR.",
+      "created_at": "2026-09-11T11:14:12+07:00",
+      "inspection_info": null,
+      "package_id": null,
+      "title": "JUAL KOST PROMO BULAN INI CASH KERASS HANYA 2,7M DI SURABAYA",
+      "multi_location": [],
+      "has_video": false,
+      "video_url": null,
+      "partner_id": null,
+      "user_type": "Regular",
+      "spotlightPackageId": null,
+      "price": {
+        "value": {
+          "raw": 2700000000.0,
+          "currency": {
+            "iso_4217": "IDR",
+            "pre": "Rp"
+          },
+          "display": "Rp 2.700.000.000"
+        },
+        "key_name": "Harga",
+        "key": "price"
+      },
+      "has_promotion": false,
+      "partner_code": null,
+      "is_video_generated": false,
+      "monetizationInfo": null,
+      "credit_eligibility": false,
+      "video_thumbnail_url": null,
+      "images": [
+        {
+          "id": "2614268231",
+          "external_id": "68dc6f1c13f3b-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/68dc6f1c13f3b-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dc6f1c13f3b-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dc6f1c13f3b-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dc6f1c13f3b-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dc6f1c13f3b-ID/image;s=120x90"
+          }
+        }
+      ],
+      "certified_car": false,
+      "is_multi_location": false,
+      "is_kyc_verified_user": false,
+      "locations_resolved": {
+        "COUNTRY_id": "1000001",
+        "COUNTRY_name": "Indonesia",
+        "ADMIN_LEVEL_1_id": "2000011",
+        "ADMIN_LEVEL_1_name": "Jawa Timur",
+        "ADMIN_LEVEL_3_id": "4000216",
+        "ADMIN_LEVEL_3_name": "Surabaya Kota",
+        "SUBLOCALITY_LEVEL_1_id": "5002577",
+        "SUBLOCALITY_LEVEL_1_name": "Sukolilo"
+      },
+      "deal_price": null,
+      "creditEligibile": false,
+      "business_platform": null,
+      "main_info": null,
+      "is_escrow_enabled": false,
+      "seller_membershiptype": "seller-type-premium",
+      "artificial_boost": false,
+      "display_date": "2026-09-11T04:14:11+0000",
+      "isSpinViewAvailable": false,
+      "user_id": "118649024",
+      "installment": null,
+      "escrowEnabled": false,
+      "created_at_first": "2025-10-01T07:00:31+07:00",
+      "locations": [
+        {
+          "lat": -7.282,
+          "lon": 112.802,
+          "region_id": "2000011",
+          "district_id": "5002577",
+          "city_id": "4000216"
+        }
+      ],
+      "parameters": [
+        {
+          "type": "single",
+          "key": "external_source_label",
+          "value": "https://www.lamudi.co.id/properti/41032-73-ecfa6ffa7c3b-db6-197f683-8d55-7770",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-ecfa6ffa7c3b-db6-197f683-8d55-7770",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-ecfa6ffa7c3b-db6-197f683-8d55-7770",
+          "key_name": "parameter-external_source_label",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-ecfa6ffa7c3b-db6-197f683-8d55-7770"
+        },
+        {
+          "type": "single",
+          "key": "external_source_url",
+          "value": "https://www.lamudi.co.id/properti/41032-73-ecfa6ffa7c3b-db6-197f683-8d55-7770?i=eBRArA",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-ecfa6ffa7c3b-db6-197f683-8d55-7770?i=eBRArA",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-ecfa6ffa7c3b-db6-197f683-8d55-7770?i=eBRArA",
+          "key_name": "parameter-external_source_url",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-ecfa6ffa7c3b-db6-197f683-8d55-7770?i=eBRArA"
+        },
+        {
+          "type": "single",
+          "key": "p_sqr_building",
+          "value": "138",
+          "value_name": "138",
+          "absoluteValue": "138",
+          "key_name": "Luas bangunan",
+          "formatted_value": "138"
+        },
+        {
+          "type": "single",
+          "key": "p_bathroom",
+          "value": "9",
+          "value_name": "9",
+          "absoluteValue": "9",
+          "key_name": "Kamar Mandi",
+          "formatted_value": "9"
+        }
+      ],
+      "extra_parameters": null,
+      "escrow_details": null
+    },
+    {
+      "id": "939294532",
+      "score": 0.96484375,
+      "spell": {
+        "id": 119,
+        "key": "CONFUSION_ES",
+        "version": "1",
+        "main": false,
+        "facet_disabled": false,
+        "default_sorting": "DEFAULT"
+      },
+      "status": {
+        "status": "active",
+        "allow_edit": true,
+        "ban_reason_id": null,
+        "display": "active",
+        "translated_display": "Aktif",
+        "link": null,
+        "flags": {
+          "new": false,
+          "hot": false
+        },
+        "message": null,
+        "allow_deactivate": false
+      },
+      "category_id": "4833",
+      "ad_id": "939294532",
+      "favorites": {
+        "count": 0,
+        "count_label_next": "1"
+      },
+      "user_name": "Maju Jaya Property",
+      "discount_toggle": null,
+      "has_phone_param": false,
+      "description": "PROMO BULAN INI CASH KERASS HANYA 2,7M HARGA ASLI 2.9M RUMAH KOST STRATEGIS AREA KAMPUS ITS, HANG TUAH, ITATS, UNAIR 20KAMAR SEMUA KAMAR MANDI DALAM UK 6X23 SHM KT 20 KM20 CARPORT 20MOTOR.",
+      "created_at": "2026-09-11T11:14:12+07:00",
+      "inspection_info": null,
+      "title": "RUMAH KOST STRATEGIS AREA KAMPUS ITS, HANG TUAH, ITATS",
+      "multi_location": [],
+      "has_video": false,
+      "video_url": null,
+      "partner_id": null,
+      "user_type": "Regular",
+      "spotlightPackageId": null,
+      "price": {
+        "value": {
+          "raw": 2700000000.0,
+          "currency": {
+            "iso_4217": "IDR",
+            "pre": "Rp"
+          },
+          "display": "Rp 2.700.000.000"
+        },
+        "key_name": "Harga",
+        "key": "price"
+      },
+      "has_promotion": false,
+      "partner_code": null,
+      "is_video_generated": false,
+      "monetizationInfo": null,
+      "credit_eligibility": false,
+      "video_thumbnail_url": null,
+      "images": [
+        {
+          "id": "2614263801",
+          "external_id": "68dc64c90e221-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/68dc64c90e221-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dc64c90e221-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dc64c90e221-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dc64c90e221-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dc64c90e221-ID/image;s=120x90"
+          }
+        }
+      ],
+      "certified_car": false,
+      "package": {
+        "id": "2001523"
+      },
+      "is_multi_location": false,
+      "is_kyc_verified_user": false,
+      "locations_resolved": {
+        "COUNTRY_id": "1000001",
+        "COUNTRY_name": "Indonesia",
+        "ADMIN_LEVEL_1_id": "2000011",
+        "ADMIN_LEVEL_1_name": "Jawa Timur",
+        "ADMIN_LEVEL_3_id": "4000216",
+        "ADMIN_LEVEL_3_name": "Surabaya Kota",
+        "SUBLOCALITY_LEVEL_1_id": "5002577",
+        "SUBLOCALITY_LEVEL_1_name": "Sukolilo"
+      },
+      "deal_price": null,
+      "creditEligibile": false,
+      "business_platform": null,
+      "main_info": null,
+      "is_escrow_enabled": false,
+      "seller_membershiptype": "seller-type-premium",
+      "artificial_boost": false,
+      "display_date": "2026-09-11T04:14:10+0000",
+      "isSpinViewAvailable": false,
+      "user_id": "118649024",
+      "installment": null,
+      "escrowEnabled": false,
+      "created_at_first": "2025-10-01T06:16:27+07:00",
+      "locations": [
+        {
+          "lat": -7.282,
+          "lon": 112.802,
+          "region_id": "2000011",
+          "district_id": "5002577",
+          "city_id": "4000216"
+        }
+      ],
+      "parameters": [
+        {
+          "type": "single",
+          "key": "external_source_label",
+          "value": "https://www.lamudi.co.id/properti/41032-73-301b81d9e30e-34d3-197f704-b94a-75c5",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-301b81d9e30e-34d3-197f704-b94a-75c5",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-301b81d9e30e-34d3-197f704-b94a-75c5",
+          "key_name": "parameter-external_source_label",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-301b81d9e30e-34d3-197f704-b94a-75c5"
+        },
+        {
+          "type": "single",
+          "key": "external_source_url",
+          "value": "https://www.lamudi.co.id/properti/41032-73-301b81d9e30e-34d3-197f704-b94a-75c5?i=AMi0qIc",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-301b81d9e30e-34d3-197f704-b94a-75c5?i=AMi0qIc",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-301b81d9e30e-34d3-197f704-b94a-75c5?i=AMi0qIc",
+          "key_name": "parameter-external_source_url",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-301b81d9e30e-34d3-197f704-b94a-75c5?i=AMi0qIc"
+        },
+        {
+          "type": "single",
+          "key": "p_sqr_building",
+          "value": "138",
+          "value_name": "138",
+          "absoluteValue": "138",
+          "key_name": "Luas bangunan",
+          "formatted_value": "138"
+        },
+        {
+          "type": "single",
+          "key": "p_bathroom",
+          "value": "9",
+          "value_name": "9",
+          "absoluteValue": "9",
+          "key_name": "Kamar Mandi",
+          "formatted_value": "9"
+        }
+      ],
+      "extra_parameters": null,
+      "escrow_details": null
+    },
+    {
+      "id": "939292032",
+      "score": 0.962890625,
+      "spell": {
+        "id": 119,
+        "key": "CONFUSION_ES",
+        "version": "1",
+        "main": false,
+        "facet_disabled": false,
+        "default_sorting": "DEFAULT"
+      },
+      "status": {
+        "status": "active",
+        "allow_edit": true,
+        "ban_reason_id": null,
+        "display": "active",
+        "translated_display": "Aktif",
+        "link": null,
+        "flags": {
+          "new": false,
+          "hot": false
+        },
+        "message": null,
+        "allow_deactivate": false
+      },
+      "category_id": "4833",
+      "ad_id": "939292032",
+      "favorites": {
+        "count": 0,
+        "count_label_next": "1"
+      },
+      "user_name": "Maju Jaya Property",
+      "discount_toggle": null,
+      "has_phone_param": false,
+      "description": "murah poll Asli keren dan laris rumah kost 20kamar semua kamar mandi dalam.lokasi lingkungan kampus lokasi perumahan keputih tegal timur selangkah hang tuah.its .unair ke mana aja dekat pusat kota surabaya.\n10menit galaxy mall 10menit Rs haji 10menit Rs unair 15menit delta plaza promo kusus bulan ini hanya 2.5M harga sdli 2.7M uk 7x23 Lb 250 2Lt R tamu kt 20 km 20 dapur jemuran parkiran muat 20motor.",
+      "created_at": "2026-09-11T11:14:00+07:00",
+      "inspection_info": null,
+      "package_id": null,
+      "title": "JUAL RUMAH KOST FLASH SALE KHUSUS BULANINI HANYA 2.5M DI SURABAYA",
+      "multi_location": [],
+      "has_video": false,
+      "video_url": null,
+      "partner_id": null,
+      "user_type": "Regular",
+      "spotlightPackageId": null,
+      "price": {
+        "value": {
+          "raw": 2500000000.0,
+          "currency": {
+            "iso_4217": "IDR",
+            "pre": "Rp"
+          },
+          "display": "Rp 2.500.000.000"
+        },
+        "key_name": "Harga",
+        "key": "price"
+      },
+      "has_promotion": false,
+      "partner_code": null,
+      "is_video_generated": false,
+      "monetizationInfo": null,
+      "credit_eligibility": false,
+      "video_thumbnail_url": null,
+      "images": [
+        {
+          "id": "2614237172",
+          "external_id": "68dc0b5fc5b52-ID",
+          "width": 1080,
+          "height": 810,
+          "url": "https://apollo.olx.co.id:443/v1/files/68dc0b5fc5b52-ID/image",
+          "full": {
+            "width": 1080,
+            "height": 810,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dc0b5fc5b52-ID/image;s=1080x810"
+          },
+          "big": {
+            "width": 505,
+            "height": 378,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dc0b5fc5b52-ID/image;s=505x378"
+          },
+          "medium": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dc0b5fc5b52-ID/image;s=120x90"
+          },
+          "small": {
+            "width": 120,
+            "height": 90,
+            "url": "https://apollo.olx.co.id:443/v1/files/68dc0b5fc5b52-ID/image;s=120x90"
+          }
+        }
+      ],
+      "certified_car": false,
+      "is_multi_location": false,
+      "is_kyc_verified_user": false,
+      "locations_resolved": {
+        "COUNTRY_id": "1000001",
+        "COUNTRY_name": "Indonesia",
+        "ADMIN_LEVEL_1_id": "2000011",
+        "ADMIN_LEVEL_1_name": "Jawa Timur",
+        "ADMIN_LEVEL_3_id": "4000216",
+        "ADMIN_LEVEL_3_name": "Surabaya Kota",
+        "SUBLOCALITY_LEVEL_1_id": "5002577",
+        "SUBLOCALITY_LEVEL_1_name": "Sukolilo"
+      },
+      "deal_price": null,
+      "creditEligibile": false,
+      "business_platform": null,
+      "main_info": null,
+      "is_escrow_enabled": false,
+      "seller_membershiptype": "seller-type-premium",
+      "artificial_boost": false,
+      "display_date": "2026-09-11T04:13:59+0000",
+      "isSpinViewAvailable": false,
+      "user_id": "118649024",
+      "installment": null,
+      "escrowEnabled": false,
+      "created_at_first": "2025-09-30T23:54:59+07:00",
+      "locations": [
+        {
+          "lat": -7.282,
+          "lon": 112.802,
+          "region_id": "2000011",
+          "district_id": "5002577",
+          "city_id": "4000216"
+        }
+      ],
+      "parameters": [
+        {
+          "type": "single",
+          "key": "external_source_label",
+          "value": "https://www.lamudi.co.id/properti/41032-73-dc114361c11f-23f6-197f78b-bac4-7e52",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-dc114361c11f-23f6-197f78b-bac4-7e52",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-dc114361c11f-23f6-197f78b-bac4-7e52",
+          "key_name": "parameter-external_source_label",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-dc114361c11f-23f6-197f78b-bac4-7e52"
+        },
+        {
+          "type": "single",
+          "key": "external_source_url",
+          "value": "https://www.lamudi.co.id/properti/41032-73-dc114361c11f-23f6-197f78b-bac4-7e52?i=HH363g",
+          "value_name": "https://www.lamudi.co.id/properti/41032-73-dc114361c11f-23f6-197f78b-bac4-7e52?i=HH363g",
+          "absoluteValue": "https://www.lamudi.co.id/properti/41032-73-dc114361c11f-23f6-197f78b-bac4-7e52?i=HH363g",
+          "key_name": "parameter-external_source_url",
+          "formatted_value": "https://www.lamudi.co.id/properti/41032-73-dc114361c11f-23f6-197f78b-bac4-7e52?i=HH363g"
+        },
+        {
+          "type": "single",
+          "key": "p_sqr_building",
+          "value": "250",
+          "value_name": "250",
+          "absoluteValue": "250",
+          "key_name": "Luas bangunan",
+          "formatted_value": "250"
+        },
+        {
+          "type": "single",
+          "key": "p_bathroom",
+          "value": "9",
+          "value_name": "9",
+          "absoluteValue": "9",
+          "key_name": "Kamar Mandi",
+          "formatted_value": "9"
+        }
+      ],
+      "extra_parameters": null,
+      "escrow_details": null
+    }
+  ],
+  "metadata": {
+    "sections": [],
+    "feed_version": "100.0",
+    "total_ads": 983,
+    "total_suggested_ads": 0,
+    "total_similar_ads": 0,
+    "ads_on_page": 20,
+    "total_pages": 2,
+    "resultset_id": "olxid:SEARCH:46512f2b458ee1cfcc84c0b5a9d4c49bc333351e2f18392128d9a147555ea52f:100.0",
+    "suggested_sections": [],
+    "modified_term": "kost surabaya",
+    "filters": [
+      {
+        "id": "price",
+        "values": [],
+        "display_order": 200,
+        "description": "Harga",
+        "range": [
+          {
+            "id": "min",
+            "description": "min",
+            "min_value": 0,
+            "max_value": 500000000000
+          },
+          {
+            "id": "max",
+            "description": "maks",
+            "min_value": 0,
+            "max_value": 500000000000
+          }
+        ],
+        "type": "range-input",
+        "render_as": "range-input"
+      }
+    ],
+    "applicable_suggestions": [],
+    "applied_filters": [],
+    "relaxed_filters": [],
+    "applied_sorting": {
+      "key": "desc-creation"
+    },
+    "next_page_url": "http://api.olx.co.id/relevance/v4/search?clientId=pwa&query=kost%20surabaya&page=1&clientVersion=12.9.0",
+    "isCachedResponse": false,
+    "search_query": "kost surabaya",
+    "modified_filters": {}
+  },
+  "empty": false,
+  "not_empty": true,
+  "suggested_data": [],
+  "similarads_data": []
+}

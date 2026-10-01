@@ -1,0 +1,7424 @@
+{
+ "meta": {
+  "sumber": "Mamikos + Papikost",
+  "diambil": "2026-09-29",
+  "diambil_per_sumber": {
+   "Mamikos": "2026-09-16",
+   "Papikost": "2026-09-29"
+  },
+  "n": 307,
+  "n_sumber": {
+   "Mamikos": 240,
+   "Papikost": 67
+  },
+  "kecamatan": 14,
+  "kecamatan_kuat": 6,
+  "min_iklan_kec": 5,
+  "berkoordinat": 67,
+  "ada_sisa_kamar": 67,
+  "mae": 279000,
+  "mape": 21.0,
+  "r2_log": 0.663,
+  "catatan": "Harga sewa bulanan dari iklan Mamikos dan Papikost. Luas kamar dan nomor pemilik tidak ada di kedua sumber; koordinat hanya ada di Papikost."
+ },
+ "model": {
+  "bentuk": "log-linear",
+  "intercept": 13.276765343845515,
+  "kec": {
+   "Gayungan": 0.1579304926029169,
+   "Gubeng": -0.029127092694091195,
+   "Gunung Anyar": 0.1579304926029169,
+   "Lakarsantri": 0.1579304926029169,
+   "Mulyorejo": 0.1579304926029169,
+   "Rungkut": -0.07156515037259192,
+   "Sambikerep": 0.1579304926029169,
+   "Sawahan": 0.1579304926029169,
+   "Sukolilo": 0.01688545080476546,
+   "Tambaksari": 0.1579304926029169,
+   "Tegalsari": 0.1579304926029169,
+   "Tenggilis Mejoyo": -0.12298301007072891,
+   "Wonocolo": 0.061626167275831034,
+   "Wonokromo": -0.03602520844353589
+  },
+  "fasilitas": {
+   "km": 0.2431819858539987,
+   "ac": 0.45652006784480004,
+   "wifi": 0.04863217411935618,
+   "kasur": 0.17401684539068868,
+   "kloset": 0.10823146857869166,
+   "akses24": -0.005628026912381692
+  },
+  "jenis": {
+   "putra": 0.0,
+   "putri": -0.04624215867461072,
+   "campur": 0.160051124178359
+  }
+ },
+ "model_penuh": {
+  "koefisien": {
+   "intercept": 13.228744131848552,
+   "kec:Rungkut": -0.04243805767850073,
+   "kec:Sukolilo": 0.04601254349885665,
+   "kec:Tenggilis Mejoyo": -0.09385591737663772,
+   "kec:Wonocolo": 0.09075325996992223,
+   "kec:Wonokromo": -0.006898115749444697,
+   "kec:lainnya": 0.18705758529700808,
+   "fas:km": 0.2431819858539987,
+   "fas:ac": 0.45652006784480004,
+   "fas:wifi": 0.04863217411935618,
+   "fas:kasur": 0.17401684539068868,
+   "fas:kloset": 0.10823146857869166,
+   "fas:akses24": -0.005628026912381692,
+   "jenis:putri": -0.04624215867461072,
+   "jenis:campur": 0.160051124178359,
+   "situs:Papikost": 0.08657454665644207
+  },
+  "efek_kec_sebelum_dipusatkan": {
+   "Gubeng": 0.0,
+   "Rungkut": -0.04243805767850073,
+   "Sukolilo": 0.04601254349885665,
+   "Tenggilis Mejoyo": -0.09385591737663772,
+   "Wonocolo": 0.09075325996992223,
+   "Wonokromo": -0.006898115749444697,
+   "Gayungan": 0.18705758529700808,
+   "Gunung Anyar": 0.18705758529700808,
+   "Lakarsantri": 0.18705758529700808,
+   "Mulyorejo": 0.18705758529700808,
+   "Sambikerep": 0.18705758529700808,
+   "Sawahan": 0.18705758529700808,
+   "Tambaksari": 0.18705758529700808,
+   "Tegalsari": 0.18705758529700808
+  },
+  "pergeseran_pusat": 0.029127092694091195,
+  "bagian_papikost": 0.2182410423452769,
+  "kecamatan_kelompok_lainnya": [
+   "Gayungan",
+   "Gunung Anyar",
+   "Lakarsantri",
+   "Mulyorejo",
+   "Sambikerep",
+   "Sawahan",
+   "Tambaksari",
+   "Tegalsari"
+  ],
+  "catatan": "Model apa adanya sebelum diringkas. Untuk pemeriksaan, bukan dipakai aplikasi."
+ },
+ "kecamatan": {
+  "Gayungan": {
+   "n": 3,
+   "p10": 2300000,
+   "p25": 2300000,
+   "p50": 2500000,
+   "p75": 2500000,
+   "p90": 2500000,
+   "komposisi": {
+    "putra": 67,
+    "putri": 0,
+    "campur": 33
+   },
+   "fasilitas": {
+    "km": 100,
+    "ac": 67,
+    "wifi": 100,
+    "kasur": 100,
+    "kloset": 76,
+    "akses24": 59
+   },
+   "fasilitas_dasar": {
+    "km": 3,
+    "ac": 3,
+    "wifi": 3,
+    "kasur": 3,
+    "kloset": 0,
+    "akses24": 0
+   },
+   "sumber": {
+    "Papikost": 3
+   },
+   "berkoordinat": 3,
+   "keyakinan": "rendah"
+  },
+  "Gubeng": {
+   "n": 54,
+   "p10": 700000,
+   "p25": 900000,
+   "p50": 1300000,
+   "p75": 1525000,
+   "p90": 2200000,
+   "komposisi": {
+    "putra": 31,
+    "putri": 35,
+    "campur": 33
+   },
+   "fasilitas": {
+    "km": 44,
+    "ac": 78,
+    "wifi": 94,
+    "kasur": 98,
+    "kloset": 83,
+    "akses24": 69
+   },
+   "fasilitas_dasar": {
+    "km": 54,
+    "ac": 54,
+    "wifi": 54,
+    "kasur": 54,
+    "kloset": 48,
+    "akses24": 48
+   },
+   "sumber": {
+    "Mamikos": 48,
+    "Papikost": 6
+   },
+   "berkoordinat": 6,
+   "keyakinan": "sedang"
+  },
+  "Gunung Anyar": {
+   "n": 4,
+   "p10": 800000,
+   "p25": 1000000,
+   "p50": 1000000,
+   "p75": 1000000,
+   "p90": 1500000,
+   "komposisi": {
+    "putra": 25,
+    "putri": 75,
+    "campur": 0
+   },
+   "fasilitas": {
+    "km": 25,
+    "ac": 25,
+    "wifi": 100,
+    "kasur": 100,
+    "kloset": 76,
+    "akses24": 59
+   },
+   "fasilitas_dasar": {
+    "km": 4,
+    "ac": 4,
+    "wifi": 4,
+    "kasur": 4,
+    "kloset": 0,
+    "akses24": 0
+   },
+   "sumber": {
+    "Papikost": 4
+   },
+   "berkoordinat": 4,
+   "keyakinan": "rendah"
+  },
+  "Lakarsantri": {
+   "n": 2,
+   "p10": 800000,
+   "p25": 800000,
+   "p50": 800000,
+   "p75": 800000,
+   "p90": 800000,
+   "komposisi": {
+    "putra": 0,
+    "putri": 100,
+    "campur": 0
+   },
+   "fasilitas": {
+    "km": 100,
+    "ac": 0,
+    "wifi": 0,
+    "kasur": 100,
+    "kloset": 76,
+    "akses24": 59
+   },
+   "fasilitas_dasar": {
+    "km": 2,
+    "ac": 2,
+    "wifi": 2,
+    "kasur": 2,
+    "kloset": 0,
+    "akses24": 0
+   },
+   "sumber": {
+    "Papikost": 2
+   },
+   "berkoordinat": 2,
+   "keyakinan": "rendah"
+  },
+  "Mulyorejo": {
+   "n": 2,
+   "p10": 2000000,
+   "p25": 2000000,
+   "p50": 2000000,
+   "p75": 2750000,
+   "p90": 2750000,
+   "komposisi": {
+    "putra": 50,
+    "putri": 50,
+    "campur": 0
+   },
+   "fasilitas": {
+    "km": 100,
+    "ac": 100,
+    "wifi": 100,
+    "kasur": 100,
+    "kloset": 76,
+    "akses24": 59
+   },
+   "fasilitas_dasar": {
+    "km": 2,
+    "ac": 2,
+    "wifi": 2,
+    "kasur": 2,
+    "kloset": 0,
+    "akses24": 0
+   },
+   "sumber": {
+    "Papikost": 2
+   },
+   "berkoordinat": 2,
+   "keyakinan": "rendah"
+  },
+  "Rungkut": {
+   "n": 17,
+   "p10": 750000,
+   "p25": 1000000,
+   "p50": 1300000,
+   "p75": 1600000,
+   "p90": 1850000,
+   "komposisi": {
+    "putra": 47,
+    "putri": 24,
+    "campur": 29
+   },
+   "fasilitas": {
+    "km": 53,
+    "ac": 71,
+    "wifi": 88,
+    "kasur": 100,
+    "kloset": 89,
+    "akses24": 56
+   },
+   "fasilitas_dasar": {
+    "km": 17,
+    "ac": 17,
+    "wifi": 17,
+    "kasur": 17,
+    "kloset": 9,
+    "akses24": 9
+   },
+   "sumber": {
+    "Mamikos": 9,
+    "Papikost": 8
+   },
+   "berkoordinat": 8,
+   "keyakinan": "sedang"
+  },
+  "Sambikerep": {
+   "n": 4,
+   "p10": 600000,
+   "p25": 1200000,
+   "p50": 1850000,
+   "p75": 1850000,
+   "p90": 2700000,
+   "komposisi": {
+    "putra": 25,
+    "putri": 50,
+    "campur": 25
+   },
+   "fasilitas": {
+    "km": 50,
+    "ac": 50,
+    "wifi": 50,
+    "kasur": 100,
+    "kloset": 76,
+    "akses24": 59
+   },
+   "fasilitas_dasar": {
+    "km": 4,
+    "ac": 4,
+    "wifi": 4,
+    "kasur": 4,
+    "kloset": 0,
+    "akses24": 0
+   },
+   "sumber": {
+    "Papikost": 4
+   },
+   "berkoordinat": 4,
+   "keyakinan": "rendah"
+  },
+  "Sawahan": {
+   "n": 3,
+   "p10": 500000,
+   "p25": 500000,
+   "p50": 1600000,
+   "p75": 2000000,
+   "p90": 2000000,
+   "komposisi": {
+    "putra": 0,
+    "putri": 33,
+    "campur": 67
+   },
+   "fasilitas": {
+    "km": 67,
+    "ac": 67,
+    "wifi": 100,
+    "kasur": 100,
+    "kloset": 76,
+    "akses24": 59
+   },
+   "fasilitas_dasar": {
+    "km": 3,
+    "ac": 3,
+    "wifi": 3,
+    "kasur": 3,
+    "kloset": 0,
+    "akses24": 0
+   },
+   "sumber": {
+    "Papikost": 3
+   },
+   "berkoordinat": 3,
+   "keyakinan": "rendah"
+  },
+  "Sukolilo": {
+   "n": 107,
+   "p10": 625000,
+   "p25": 753000,
+   "p50": 1100000,
+   "p75": 1550000,
+   "p90": 2000000,
+   "komposisi": {
+    "putra": 13,
+    "putri": 71,
+    "campur": 16
+   },
+   "fasilitas": {
+    "km": 48,
+    "ac": 55,
+    "wifi": 91,
+    "kasur": 97,
+    "kloset": 70,
+    "akses24": 42
+   },
+   "fasilitas_dasar": {
+    "km": 107,
+    "ac": 107,
+    "wifi": 107,
+    "kasur": 107,
+    "kloset": 91,
+    "akses24": 91
+   },
+   "sumber": {
+    "Mamikos": 91,
+    "Papikost": 16
+   },
+   "berkoordinat": 16,
+   "keyakinan": "sedang"
+  },
+  "Tambaksari": {
+   "n": 4,
+   "p10": 800000,
+   "p25": 900000,
+   "p50": 1000000,
+   "p75": 1000000,
+   "p90": 1300000,
+   "komposisi": {
+    "putra": 0,
+    "putri": 100,
+    "campur": 0
+   },
+   "fasilitas": {
+    "km": 25,
+    "ac": 25,
+    "wifi": 100,
+    "kasur": 100,
+    "kloset": 76,
+    "akses24": 59
+   },
+   "fasilitas_dasar": {
+    "km": 4,
+    "ac": 4,
+    "wifi": 4,
+    "kasur": 4,
+    "kloset": 0,
+    "akses24": 0
+   },
+   "sumber": {
+    "Papikost": 4
+   },
+   "berkoordinat": 4,
+   "keyakinan": "rendah"
+  },
+  "Tegalsari": {
+   "n": 1,
+   "p10": 1750000,
+   "p25": 1750000,
+   "p50": 1750000,
+   "p75": 1750000,
+   "p90": 1750000,
+   "komposisi": {
+    "putra": 0,
+    "putri": 0,
+    "campur": 100
+   },
+   "fasilitas": {
+    "km": 100,
+    "ac": 100,
+    "wifi": 100,
+    "kasur": 100,
+    "kloset": 76,
+    "akses24": 59
+   },
+   "fasilitas_dasar": {
+    "km": 1,
+    "ac": 1,
+    "wifi": 1,
+    "kasur": 1,
+    "kloset": 0,
+    "akses24": 0
+   },
+   "sumber": {
+    "Papikost": 1
+   },
+   "berkoordinat": 1,
+   "keyakinan": "rendah"
+  },
+  "Tenggilis Mejoyo": {
+   "n": 18,
+   "p10": 600000,
+   "p25": 650000,
+   "p50": 950000,
+   "p75": 1300000,
+   "p90": 1500000,
+   "komposisi": {
+    "putra": 17,
+    "putri": 61,
+    "campur": 22
+   },
+   "fasilitas": {
+    "km": 61,
+    "ac": 56,
+    "wifi": 100,
+    "kasur": 94,
+    "kloset": 56,
+    "akses24": 67
+   },
+   "fasilitas_dasar": {
+    "km": 18,
+    "ac": 18,
+    "wifi": 18,
+    "kasur": 18,
+    "kloset": 9,
+    "akses24": 9
+   },
+   "sumber": {
+    "Mamikos": 9,
+    "Papikost": 9
+   },
+   "berkoordinat": 9,
+   "keyakinan": "sedang"
+  },
+  "Wonocolo": {
+   "n": 28,
+   "p10": 1050000,
+   "p25": 1500000,
+   "p50": 1700000,
+   "p75": 1900000,
+   "p90": 2300000,
+   "komposisi": {
+    "putra": 14,
+    "putri": 32,
+    "campur": 54
+   },
+   "fasilitas": {
+    "km": 86,
+    "ac": 86,
+    "wifi": 86,
+    "kasur": 96,
+    "kloset": 83,
+    "akses24": 75
+   },
+   "fasilitas_dasar": {
+    "km": 28,
+    "ac": 28,
+    "wifi": 28,
+    "kasur": 28,
+    "kloset": 24,
+    "akses24": 24
+   },
+   "sumber": {
+    "Mamikos": 24,
+    "Papikost": 4
+   },
+   "berkoordinat": 4,
+   "keyakinan": "sedang"
+  },
+  "Wonokromo": {
+   "n": 60,
+   "p10": 650000,
+   "p25": 794500,
+   "p50": 1300000,
+   "p75": 1500000,
+   "p90": 1800000,
+   "komposisi": {
+    "putra": 32,
+    "putri": 43,
+    "campur": 25
+   },
+   "fasilitas": {
+    "km": 57,
+    "ac": 60,
+    "wifi": 88,
+    "kasur": 98,
+    "kloset": 76,
+    "akses24": 69
+   },
+   "fasilitas_dasar": {
+    "km": 60,
+    "ac": 60,
+    "wifi": 60,
+    "kasur": 60,
+    "kloset": 59,
+    "akses24": 59
+   },
+   "sumber": {
+    "Mamikos": 59,
+    "Papikost": 1
+   },
+   "berkoordinat": 1,
+   "keyakinan": "sedang"
+  }
+ },
+ "kos": [
+  {
+   "sumber": "Papikost",
+   "nama": "Behomy Cozynest Gayungsari",
+   "kec": "Gayungan",
+   "kel": "Gayungan",
+   "harga": 2300000,
+   "jenis": "campur",
+   "fasilitas": [
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmobil",
+    "pmotor",
+    "tv"
+   ],
+   "sisa_kamar": 9,
+   "rating": null,
+   "dilihat": 1052,
+   "promo": null,
+   "lat": -7.3358512,
+   "lng": 112.7182307,
+   "url": "https://papikost.com/kost/behomy-cozynest-gayungsari"
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kamar Mawar",
+   "kec": "Gayungan",
+   "kel": "Ketintang",
+   "harga": 2500000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "pmobil",
+    "pmotor"
+   ],
+   "sisa_kamar": 5,
+   "rating": null,
+   "dilihat": 207,
+   "promo": null,
+   "lat": -7.3219777714724765,
+   "lng": 112.72587954998015,
+   "url": "https://papikost.com/kost/kamar-mawar"
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kamar Anggrek",
+   "kec": "Gayungan",
+   "kel": "Ketintang",
+   "harga": 2500000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "pmobil",
+    "pmotor"
+   ],
+   "sisa_kamar": 5,
+   "rating": null,
+   "dilihat": 77,
+   "promo": null,
+   "lat": -7.3219777714724765,
+   "lng": 112.72587954998015,
+   "url": "https://papikost.com/kost/kamar-anggrek"
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Krukah 1 Tipe A",
+   "kec": "Gubeng",
+   "harga": 500000,
+   "jenis": "putri",
+   "fasilitas": [
+    "akses24",
+    "kasur"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 240,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Barata Jaya 33 Tipe A",
+   "kec": "Gubeng",
+   "harga": 550000,
+   "jenis": "putri",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 92,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Amanah Ngagal Wasana Tipe A",
+   "kec": "Gubeng",
+   "harga": 600000,
+   "jenis": "putra",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Heinz Tipe Standar",
+   "kec": "Gubeng",
+   "harga": 650000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 119,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Amanah Ngagal Wasana Tipe B",
+   "kec": "Gubeng",
+   "harga": 650000,
+   "jenis": "putra",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "kloset"
+   ],
+   "fasilitas_lain": [],
+   "rating": 5.0,
+   "dilihat": 147,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Bu Tutik Bratang",
+   "kec": "Gubeng",
+   "harga": 700000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 308,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Asri Tipe Standar",
+   "kec": "Gubeng",
+   "harga": 700000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 137,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kost Putri Dafin Didi Gubeng Surabaya",
+   "kec": "Gubeng",
+   "kel": "Airlangga",
+   "harga": 700000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmotor"
+   ],
+   "sisa_kamar": 7,
+   "rating": null,
+   "dilihat": 3780,
+   "promo": null,
+   "lat": -7.26968548,
+   "lng": 112.759864,
+   "url": "https://papikost.com/kost/kost-putri-dafin-didi-gubeng-surabaya"
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Misdi Ceria Tipe A",
+   "kec": "Gubeng",
+   "harga": 800000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 372,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kos omah lawas",
+   "kec": "Gubeng",
+   "kel": "Baratajaya",
+   "harga": 800000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmobil",
+    "pmotor"
+   ],
+   "sisa_kamar": 2,
+   "rating": null,
+   "dilihat": 2307,
+   "promo": null,
+   "lat": -7.296959175631529,
+   "lng": 112.7570863609958,
+   "url": "https://papikost.com/kost/kos-omah-lawas"
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Jl Ngagel Jaya Tengah Tipe B",
+   "kec": "Gubeng",
+   "harga": 852000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 72,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Bapak Eko Dan Bu Gendut",
+   "kec": "Gubeng",
+   "harga": 900000,
+   "jenis": "campur",
+   "fasilitas": [
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Ngagel Jaya Tengah Tipe C2",
+   "kec": "Gubeng",
+   "harga": 900000,
+   "jenis": "campur",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 134,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Talia Tipe A",
+   "kec": "Gubeng",
+   "harga": 900000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 155,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Jaya Kost Gubeng Kertajaya 1",
+   "kec": "Gubeng",
+   "kel": "Gubeng",
+   "harga": 900000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmotor"
+   ],
+   "sisa_kamar": 4,
+   "rating": null,
+   "dilihat": 159,
+   "promo": null,
+   "lat": -7.2760394696824,
+   "lng": 112.75116473436356,
+   "url": "https://papikost.com/kost/jaya-kost-gubeng-kertajaya-1"
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Talia Tipe B",
+   "kec": "Gubeng",
+   "harga": 925000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 61,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Ruma Asta",
+   "kec": "Gubeng",
+   "harga": 950000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 121,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Amanah Ngagel Wasana Tipe C",
+   "kec": "Gubeng",
+   "harga": 1000000,
+   "jenis": "putra",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Jl Ngagel Jaya Tengah Tipe C",
+   "kec": "Gubeng",
+   "harga": 1000000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 194,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Ami Eksklusif",
+   "kec": "Gubeng",
+   "harga": 1100000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 282,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Jl Ngagel Jaya Tengah Tipe A",
+   "kec": "Gubeng",
+   "harga": 1150000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 143,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Bu Yana Vvip 1",
+   "kec": "Gubeng",
+   "harga": 1200000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Bu Yana VVIP 3",
+   "kec": "Gubeng",
+   "harga": 1200000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 109,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Edu Baratajaya",
+   "kec": "Gubeng",
+   "harga": 1200000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kos bu Made",
+   "kec": "Gubeng",
+   "kel": "Airlangga",
+   "harga": 1200000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmotor"
+   ],
+   "sisa_kamar": 1,
+   "rating": null,
+   "dilihat": 549,
+   "promo": null,
+   "lat": -7.2783885747516806,
+   "lng": 112.76000797748566,
+   "url": "https://papikost.com/kost/kos-bu-made"
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Griya Ayu Baratajaya Tipe B",
+   "kec": "Gubeng",
+   "harga": 1225000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 500,
+   "promo": 1105000,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Bungtomo11",
+   "kec": "Gubeng",
+   "harga": 1300000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 500,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Edu 3 Executive",
+   "kec": "Gubeng",
+   "harga": 1300000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Ngagel Vl",
+   "kec": "Gubeng",
+   "harga": 1300000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 485,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Brajarani Lima Sepuluh Tipe A",
+   "kec": "Gubeng",
+   "harga": 1300000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 80,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Bu Wati Tipe Comfort",
+   "kec": "Gubeng",
+   "harga": 1350000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": 4.4,
+   "dilihat": 500,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Bing Cen",
+   "kec": "Gubeng",
+   "harga": 1400000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 354,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Bu Yana Vvip",
+   "kec": "Gubeng",
+   "harga": 1400000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 57,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Bu Yana Tipe A",
+   "kec": "Gubeng",
+   "harga": 1400000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost ISTTS",
+   "kec": "Gubeng",
+   "harga": 1500000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 315,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Novan 12",
+   "kec": "Gubeng",
+   "harga": 1500000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 296,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Ngagel Madya I",
+   "kec": "Gubeng",
+   "harga": 1500000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 456,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Barata Jaya 1C",
+   "kec": "Gubeng",
+   "harga": 1500000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 107,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Graha Wasana Tipe Eksekutif",
+   "kec": "Gubeng",
+   "harga": 1500010,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 401,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Griya Ayu Baratajaya Tipe A",
+   "kec": "Gubeng",
+   "harga": 1525000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 346,
+   "promo": 1375000,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Hj Hasan Tipe B",
+   "kec": "Gubeng",
+   "harga": 1525000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": 5.0,
+   "dilihat": 258,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Hj Hasan Tipe A",
+   "kec": "Gubeng",
+   "harga": 1655000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": 4.9,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Pondok Alfi",
+   "kec": "Gubeng",
+   "kel": "Baratajaya",
+   "harga": 1700000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmobil",
+    "pmotor",
+    "tv"
+   ],
+   "sisa_kamar": 10,
+   "rating": null,
+   "dilihat": 258,
+   "promo": null,
+   "lat": -7.295116,
+   "lng": 112.7618451,
+   "url": "https://papikost.com/kost/pondok-alfi"
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Njt Tipe Eksklusif",
+   "kec": "Gubeng",
+   "harga": 1750000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 292,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Ngagel Tama 5153 Tipe B",
+   "kec": "Gubeng",
+   "harga": 1800000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 384,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Griya HNN2 kos putra",
+   "kec": "Gubeng",
+   "kel": "Airlangga",
+   "harga": 1850000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "dispenser",
+    "lemari",
+    "meja",
+    "pmotor"
+   ],
+   "sisa_kamar": 10,
+   "rating": null,
+   "dilihat": 39,
+   "promo": null,
+   "lat": -7.2774883,
+   "lng": 112.7547777,
+   "url": "https://papikost.com/kost/griya-hnn2-kos-putra"
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost La Koste Unair 26 Tipe A",
+   "kec": "Gubeng",
+   "harga": 1950000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 228,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Denaya Vip",
+   "kec": "Gubeng",
+   "harga": 2000000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 500,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Komfee Living",
+   "kec": "Gubeng",
+   "harga": 2200000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 173,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Mei",
+   "kec": "Gubeng",
+   "harga": 2500000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 117,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Baratajaya Tipe Deluxe",
+   "kec": "Gubeng",
+   "harga": 2500000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Matra Ngagel Pucang Sewu",
+   "kec": "Gubeng",
+   "harga": 2515000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": 4.8,
+   "dilihat": 500,
+   "promo": 2440300,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Baratajaya Tipe Grand Deluxe",
+   "kec": "Gubeng",
+   "harga": 3000000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 86,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Baratajaya Tipe Eksekutif Grand Deluxe",
+   "kec": "Gubeng",
+   "harga": 4000000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 78,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kost Mahasiswi Rungkut Gunung Anyar Surabaya",
+   "kec": "Gunung Anyar",
+   "kel": "Rungkut Menanggal",
+   "harga": 800000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmotor"
+   ],
+   "sisa_kamar": 4,
+   "rating": null,
+   "dilihat": 327,
+   "promo": null,
+   "lat": -7.3353585608627965,
+   "lng": 112.77542352670935,
+   "url": "https://papikost.com/kost/kost-mahasiswi-rungkut-gunung-anyar-surabaya"
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kost Putra Athar's",
+   "kec": "Gunung Anyar",
+   "kel": "Gunung Anyar Tambak",
+   "harga": 1000000,
+   "jenis": "putra",
+   "fasilitas": [
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmotor"
+   ],
+   "sisa_kamar": 3,
+   "rating": null,
+   "dilihat": 501,
+   "promo": null,
+   "lat": -7.335223,
+   "lng": 112.809624,
+   "url": "https://papikost.com/kost/kost-putra-athars"
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Metaverse Kost (Basic Room)",
+   "kec": "Gunung Anyar",
+   "kel": "Rungkut Menanggal",
+   "harga": 1000000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmobil",
+    "pmotor"
+   ],
+   "sisa_kamar": 5,
+   "rating": null,
+   "dilihat": 63,
+   "promo": null,
+   "lat": -7.3361995426474715,
+   "lng": 112.77809908613392,
+   "url": "https://papikost.com/kost/metaverse-kost-basic-room"
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Metaverse Kost (Galaxy Room)",
+   "kec": "Gunung Anyar",
+   "kel": "Rungkut Menanggal",
+   "harga": 1500000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmobil",
+    "pmotor"
+   ],
+   "sisa_kamar": 5,
+   "rating": null,
+   "dilihat": 57,
+   "promo": null,
+   "lat": -7.3361995426474715,
+   "lng": 112.77809908613392,
+   "url": "https://papikost.com/kost/metaverse-kost-galaxy-room"
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kos Putri Bersih dan Nyaman ( Lakarsantri, Sby Barat)",
+   "kec": "Lakarsantri",
+   "kel": "Jeruk",
+   "harga": 800000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "km"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "pmotor"
+   ],
+   "sisa_kamar": 4,
+   "rating": null,
+   "dilihat": 1228,
+   "promo": null,
+   "lat": -7.303908,
+   "lng": 112.646734,
+   "url": "https://papikost.com/kost/kos-putri-bersih-dan-nyaman-lakarsantri-sby-barat"
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kos Putri dekat PTC",
+   "kec": "Lakarsantri",
+   "kel": "Jeruk",
+   "harga": 800000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "km"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "pmotor"
+   ],
+   "sisa_kamar": 4,
+   "rating": null,
+   "dilihat": 632,
+   "promo": null,
+   "lat": -7.303908,
+   "lng": 112.646734,
+   "url": "https://papikost.com/kost/kos-putri-dekat-ptc"
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "KAYLA KOST PUTRI / MAHASISWI",
+   "kec": "Mulyorejo",
+   "kel": "Kalisari",
+   "harga": 2000000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmobil",
+    "pmotor"
+   ],
+   "sisa_kamar": 6,
+   "rating": null,
+   "dilihat": 109,
+   "promo": null,
+   "lat": -7.2716888,
+   "lng": 112.804311,
+   "url": "https://papikost.com/kost/kayla-kost-putri-mahasiswi"
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Pastelle Premium Kost",
+   "kec": "Mulyorejo",
+   "kel": "Kalisari",
+   "harga": 2750000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmobil",
+    "pmotor",
+    "tv"
+   ],
+   "sisa_kamar": 10,
+   "rating": null,
+   "dilihat": 313,
+   "promo": null,
+   "lat": -7.265486224964494,
+   "lng": 112.79544462757484,
+   "url": "https://papikost.com/kost/pastelle-premium-kost"
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Fadilla Tipe A",
+   "kec": "Rungkut",
+   "harga": 650000,
+   "jenis": "putri",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 401,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kost Pria Sederhana Surabaya",
+   "kec": "Rungkut",
+   "kel": "Kali Rungkut",
+   "harga": 700000,
+   "jenis": "putra",
+   "fasilitas": [
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmotor"
+   ],
+   "sisa_kamar": 8,
+   "rating": null,
+   "dilihat": 1981,
+   "promo": null,
+   "lat": -7.32181509548724,
+   "lng": 112.76306130688681,
+   "url": "https://papikost.com/kost/kost-pria-sederhana-surabaya"
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kos murah laki di daerah strategis merr rungkut",
+   "kec": "Rungkut",
+   "kel": "Kedung Baruk",
+   "harga": 750000,
+   "jenis": "putra",
+   "fasilitas": [
+    "kasur"
+   ],
+   "fasilitas_lain": [],
+   "sisa_kamar": 2,
+   "rating": null,
+   "dilihat": 1324,
+   "promo": null,
+   "lat": -7.3181049058094665,
+   "lng": 112.78180360794067,
+   "url": "https://papikost.com/kost/kos-murah-laki-di-daerah-strategis-merr-rungkut"
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kost Putri Rungkut Asri",
+   "kec": "Rungkut",
+   "kel": "Kali Rungkut",
+   "harga": 800000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmobil",
+    "pmotor"
+   ],
+   "sisa_kamar": 10,
+   "rating": null,
+   "dilihat": 1292,
+   "promo": null,
+   "lat": -7.326843,
+   "lng": 112.776241,
+   "url": "https://papikost.com/kost/kost-putri-rungkut-asri"
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Mommy",
+   "kec": "Rungkut",
+   "harga": 1000000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": 5.0,
+   "dilihat": 203,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Ubaya Mega",
+   "kec": "Rungkut",
+   "harga": 1000000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 500,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kos Bu Sri Kamar A",
+   "kec": "Rungkut",
+   "kel": "Medokan Ayu",
+   "harga": 1000000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "pmobil",
+    "pmotor"
+   ],
+   "sisa_kamar": 2,
+   "rating": null,
+   "dilihat": 548,
+   "promo": null,
+   "lat": -7.3322688,
+   "lng": 112.7962218,
+   "url": "https://papikost.com/kost/kos-bu-sri-kamar-a"
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kost Andy Sambo",
+   "kec": "Rungkut",
+   "kel": "Medokan Ayu",
+   "harga": 1000000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "pmotor"
+   ],
+   "sisa_kamar": 10,
+   "rating": null,
+   "dilihat": 380,
+   "promo": null,
+   "lat": -7.328018311977341,
+   "lng": 112.79662093676507,
+   "url": "https://papikost.com/kost/kost-andy-sambo"
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kost Baru Merr Boulevard",
+   "kec": "Rungkut",
+   "kel": "Penjaringan Sari",
+   "harga": 1300000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmobil",
+    "pmotor"
+   ],
+   "sisa_kamar": 4,
+   "rating": null,
+   "dilihat": 329,
+   "promo": null,
+   "lat": -7.323061661777231,
+   "lng": 112.78377127640852,
+   "url": "https://papikost.com/kost/kost-baru-merr-boulevard"
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Tenggilis Mejoyo KH 14 Tipe A",
+   "kec": "Rungkut",
+   "harga": 1325000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": 4.8,
+   "dilihat": 234,
+   "promo": 1229000,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Mommy Tipe B",
+   "kec": "Rungkut",
+   "harga": 1400000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 65,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Amarta Habitat Tipe Comfort",
+   "kec": "Rungkut",
+   "kel": "Medokan Ayu",
+   "harga": 1500000,
+   "jenis": "putra",
+   "fasilitas": [
+    "kasur"
+   ],
+   "fasilitas_lain": [
+    "dispenser"
+   ],
+   "sisa_kamar": 2,
+   "rating": null,
+   "dilihat": 147,
+   "promo": null,
+   "lat": -7.3304388,
+   "lng": 112.7968705,
+   "url": "https://papikost.com/kost/amarta-habitat-tipe-comfort"
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Cozy Cove Kost",
+   "kec": "Rungkut",
+   "kel": "Kali Rungkut",
+   "harga": 1600000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmobil",
+    "pmotor",
+    "tv"
+   ],
+   "sisa_kamar": 10,
+   "rating": null,
+   "dilihat": 44,
+   "promo": null,
+   "lat": -7.3237404,
+   "lng": 112.7629419,
+   "url": "https://papikost.com/kost/cozy-cove-kost"
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Jack And Jill Executive",
+   "kec": "Rungkut",
+   "harga": 1650000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 358,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Jnj Living Tipe Eksklusif",
+   "kec": "Rungkut",
+   "harga": 1850000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 108,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Jnj Living Rs Ubaya Tipe Ekslusif",
+   "kec": "Rungkut",
+   "harga": 1850000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 205,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost J&j Living Tipe Eksklusif",
+   "kec": "Rungkut",
+   "harga": 1850000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 74,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kost Putri Bu Ratna",
+   "kec": "Sambikerep",
+   "kel": "Lontar",
+   "harga": 600000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "pmotor"
+   ],
+   "sisa_kamar": 3,
+   "rating": null,
+   "dilihat": 1240,
+   "promo": null,
+   "lat": -7.2819604114359375,
+   "lng": 112.67427653074265,
+   "url": "https://papikost.com/kost/kost-putri-bu-ratna"
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kos bu liyatin",
+   "kec": "Sambikerep",
+   "kel": "Made",
+   "harga": 1200000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmobil",
+    "pmotor"
+   ],
+   "sisa_kamar": 8,
+   "rating": null,
+   "dilihat": 94,
+   "promo": null,
+   "lat": -7.279964351879207,
+   "lng": 112.62778043746947,
+   "url": "https://papikost.com/kost/kos-bu-liyatin"
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "House of Felix - Kamar Standard",
+   "kec": "Sambikerep",
+   "kel": "Bringin",
+   "harga": 1850000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "dispenser",
+    "lemari",
+    "meja",
+    "pmobil",
+    "pmotor",
+    "tv"
+   ],
+   "sisa_kamar": 5,
+   "rating": null,
+   "dilihat": 169,
+   "promo": null,
+   "lat": -7.2676446,
+   "lng": 112.63691,
+   "url": "https://papikost.com/kost/house-of-felix-kamar-standard"
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Cozy One Bedroom Citraland near Universitas Ciputra",
+   "kec": "Sambikerep",
+   "kel": "Sambikerep",
+   "harga": 2700000,
+   "jenis": "putra",
+   "fasilitas": [
+    "kasur"
+   ],
+   "fasilitas_lain": [],
+   "sisa_kamar": 1,
+   "rating": null,
+   "dilihat": 105,
+   "promo": null,
+   "lat": -7.274451581264419,
+   "lng": 112.6499354839325,
+   "url": "https://papikost.com/kost/cozy-one-bedroom-citraland-near-universitas-ciputra"
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kost Hera Surabaya",
+   "kec": "Sawahan",
+   "kel": "Petemon",
+   "harga": 500000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "pmobil",
+    "pmotor"
+   ],
+   "sisa_kamar": 3,
+   "rating": null,
+   "dilihat": 628,
+   "promo": null,
+   "lat": -7.26374458698596,
+   "lng": 112.7240894437,
+   "url": "https://papikost.com/kost/kost-hera-surabaya"
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Standar Room",
+   "kec": "Sawahan",
+   "kel": "Kupang Krajan",
+   "harga": 1600000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "pmobil",
+    "pmotor"
+   ],
+   "sisa_kamar": 6,
+   "rating": null,
+   "dilihat": 74,
+   "promo": null,
+   "lat": -7.271993161725186,
+   "lng": 112.72672444581984,
+   "url": "https://papikost.com/kost/standar-room"
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Deluxe Mezanine",
+   "kec": "Sawahan",
+   "kel": "Kupang Krajan",
+   "harga": 2000000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "pmobil",
+    "pmotor"
+   ],
+   "sisa_kamar": 2,
+   "rating": null,
+   "dilihat": 57,
+   "promo": null,
+   "lat": -7.271993161725186,
+   "lng": 112.72672444581984,
+   "url": "https://papikost.com/kost/deluxe-mezanine"
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Bu Sulimah",
+   "kec": "Sukolilo",
+   "harga": 450000,
+   "jenis": "putra",
+   "fasilitas": [
+    "kasur"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Siti Zubaidah Tipe A",
+   "kec": "Sukolilo",
+   "harga": 450000,
+   "jenis": "putri",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 288,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Bu Nuryatin Tipe Standart",
+   "kec": "Sukolilo",
+   "harga": 500000,
+   "jenis": "putra",
+   "fasilitas": [
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 115,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Pandega Citrabangsa Tipe Biasa",
+   "kec": "Sukolilo",
+   "harga": 500000,
+   "jenis": "putri",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 500,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Pink Nginden II Tipe C",
+   "kec": "Sukolilo",
+   "harga": 550000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 61,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Unitomo Untag Premier Tipe A",
+   "kec": "Sukolilo",
+   "harga": 550000,
+   "jenis": "putri",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 71,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Eko",
+   "kec": "Sukolilo",
+   "harga": 575000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Bu Siti UNTAG Tipe Standar",
+   "kec": "Sukolilo",
+   "harga": 600000,
+   "jenis": "campur",
+   "fasilitas": [
+    "kasur"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 500,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Umar",
+   "kec": "Sukolilo",
+   "harga": 600000,
+   "jenis": "putri",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 360,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Tipe Standar A",
+   "kec": "Sukolilo",
+   "kel": "Menur Pumpungan",
+   "harga": 600000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmotor"
+   ],
+   "sisa_kamar": 3,
+   "rating": null,
+   "dilihat": 685,
+   "promo": null,
+   "lat": -7.2983632,
+   "lng": 112.763602,
+   "url": "https://papikost.com/kost/tipe-standar-a"
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kost Elmy",
+   "kec": "Sukolilo",
+   "kel": "Medokan Semampir",
+   "harga": 600000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari"
+   ],
+   "sisa_kamar": 10,
+   "rating": null,
+   "dilihat": 5,
+   "promo": null,
+   "lat": -7.309423,
+   "lng": 112.7783642,
+   "url": "https://papikost.com/kost/kost-elmy"
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Minimalist Tipe D",
+   "kec": "Sukolilo",
+   "harga": 625000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Sharleen Tipe Standar",
+   "kec": "Sukolilo",
+   "harga": 650000,
+   "jenis": "putra",
+   "fasilitas": [
+    "kasur"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Pink Nginden II Tipe Non Ac",
+   "kec": "Sukolilo",
+   "harga": 650000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 149,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Minimalist Tipe C",
+   "kec": "Sukolilo",
+   "harga": 650000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Asiyah 1 Tipe C",
+   "kec": "Sukolilo",
+   "harga": 675000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 77,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Syariah Kurnia Tipe Standar",
+   "kec": "Sukolilo",
+   "harga": 680000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 365,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Pumpungan IV Tipe Standar",
+   "kec": "Sukolilo",
+   "harga": 680000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 130,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Manyar Tipe B",
+   "kec": "Sukolilo",
+   "harga": 700000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Tutik Mirawati Tipe A",
+   "kec": "Sukolilo",
+   "harga": 700000,
+   "jenis": "putra",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": 5.0,
+   "dilihat": 86,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Tipe Premium B",
+   "kec": "Sukolilo",
+   "kel": "Menur Pumpungan",
+   "harga": 700000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmotor"
+   ],
+   "sisa_kamar": 2,
+   "rating": null,
+   "dilihat": 609,
+   "promo": null,
+   "lat": -7.2983632,
+   "lng": 112.763602,
+   "url": "https://papikost.com/kost/tipe-premium-b"
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Pumpungan",
+   "kec": "Sukolilo",
+   "harga": 725000,
+   "jenis": "putri",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 257,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Nginden Tipe 1",
+   "kec": "Sukolilo",
+   "harga": 750000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 30,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Minimalist Tipe B",
+   "kec": "Sukolilo",
+   "harga": 750000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 86,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost IV Tipe B",
+   "kec": "Sukolilo",
+   "harga": 750000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Pink Nginden Tipe Non Ac",
+   "kec": "Sukolilo",
+   "harga": 750000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 150,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Nginden Intan Utara Tipe Tertib",
+   "kec": "Sukolilo",
+   "harga": 753000,
+   "jenis": "campur",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "kloset"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 500,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Pumpungan IV 25 Tipe Mantap",
+   "kec": "Sukolilo",
+   "harga": 775000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 361,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Pumpungan IV Tipe Premium B",
+   "kec": "Sukolilo",
+   "harga": 775000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Priyanca Tipe Standar",
+   "kec": "Sukolilo",
+   "harga": 800000,
+   "jenis": "putra",
+   "fasilitas": [
+    "kasur",
+    "kloset"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Untag Tipe Standar",
+   "kec": "Sukolilo",
+   "harga": 800000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 62,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Pancasila Tipe C",
+   "kec": "Sukolilo",
+   "harga": 800000,
+   "jenis": "putri",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Sone Laundry Tipe C",
+   "kec": "Sukolilo",
+   "harga": 800000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 70,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Razky Tipe A",
+   "kec": "Sukolilo",
+   "harga": 800000,
+   "jenis": "putra",
+   "fasilitas": [
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 80,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Nginden Intan Utara Tipe A",
+   "kec": "Sukolilo",
+   "harga": 800000,
+   "jenis": "campur",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "kloset"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 308,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Rafiasha",
+   "kec": "Sukolilo",
+   "harga": 800000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost 3 Tingkat Tertib Bersih Nginden Tipe A",
+   "kec": "Sukolilo",
+   "harga": 803000,
+   "jenis": "campur",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 135,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Asiyah 1 Tipe B",
+   "kec": "Sukolilo",
+   "harga": 825000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Asiyah 1 Tipe A",
+   "kec": "Sukolilo",
+   "harga": 860000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Tunggal Jaya",
+   "kec": "Sukolilo",
+   "harga": 900000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Griya Suya Tipe Standard Non Ac",
+   "kec": "Sukolilo",
+   "harga": 900000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 339,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Pink Nginden II Tipe Ac",
+   "kec": "Sukolilo",
+   "harga": 900000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 77,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Tipe Premium A",
+   "kec": "Sukolilo",
+   "kel": "Menur Pumpungan",
+   "harga": 900000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmotor"
+   ],
+   "sisa_kamar": 1,
+   "rating": null,
+   "dilihat": 705,
+   "promo": null,
+   "lat": -7.2983632,
+   "lng": 112.763602,
+   "url": "https://papikost.com/kost/tipe-premium-a"
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Semolowaru Praja Tipe A",
+   "kec": "Sukolilo",
+   "harga": 950000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 101,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kamar Deluxe",
+   "kec": "Sukolilo",
+   "kel": "Menur Pumpungan",
+   "harga": 950000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmotor"
+   ],
+   "sisa_kamar": 1,
+   "rating": null,
+   "dilihat": 269,
+   "promo": null,
+   "lat": -7.2983632,
+   "lng": 112.763602,
+   "url": "https://papikost.com/kost/kamar-deluxe"
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Pumpungan IV 25 Deluxe 2",
+   "kec": "Sukolilo",
+   "harga": 975000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 301,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Pumpungan IV Tipe Premium A",
+   "kec": "Sukolilo",
+   "harga": 975000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 296,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Pumpungan IV 25 Tipe Mantap Jiwa",
+   "kec": "Sukolilo",
+   "harga": 975000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Pumpungan IV 25 Deluxe",
+   "kec": "Sukolilo",
+   "harga": 1000000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Exclusive Arya House Tipe Standart",
+   "kec": "Sukolilo",
+   "harga": 1000000,
+   "jenis": "putra",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 112,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Sedulur Nginden Tipe Standar",
+   "kec": "Sukolilo",
+   "harga": 1000000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "7 Eden Kos Pria Manyar Jaya",
+   "kec": "Sukolilo",
+   "kel": "Menur Pumpungan",
+   "harga": 1000000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmotor"
+   ],
+   "sisa_kamar": 10,
+   "rating": null,
+   "dilihat": 274,
+   "promo": null,
+   "lat": -7.297024793336967,
+   "lng": 112.77231395244598,
+   "url": "https://papikost.com/kost/7-eden-kos-pria-manyar-jaya"
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kamar AC &amp; NON AC",
+   "kec": "Sukolilo",
+   "kel": "Ngiden Jangkungan",
+   "harga": 1000000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmotor"
+   ],
+   "sisa_kamar": 3,
+   "rating": null,
+   "dilihat": 116,
+   "promo": null,
+   "lat": -7.302205,
+   "lng": 112.766977,
+   "url": "https://papikost.com/kost/kamar-ac-andamp-non-ac"
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Minimalist Tipe A",
+   "kec": "Sukolilo",
+   "harga": 1100000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Umi Tipe A1",
+   "kec": "Sukolilo",
+   "harga": 1180000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Manyar Rejo I Tipe A",
+   "kec": "Sukolilo",
+   "harga": 1200000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 405,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Griya Suya Tipe Premium Ac",
+   "kec": "Sukolilo",
+   "harga": 1200000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Ucik Nginden Tengah",
+   "kec": "Sukolilo",
+   "harga": 1250000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 245,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Pancasila Tipe B",
+   "kec": "Sukolilo",
+   "harga": 1250000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 147,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "VVIP",
+   "kec": "Sukolilo",
+   "kel": "Ngiden Jangkungan",
+   "harga": 1250000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmotor"
+   ],
+   "sisa_kamar": 7,
+   "rating": null,
+   "dilihat": 41,
+   "promo": null,
+   "lat": -7.302205,
+   "lng": 112.766977,
+   "url": "https://papikost.com/kost/vvip"
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kost Palem Semolo Premium",
+   "kec": "Sukolilo",
+   "kel": "Menur Pumpungan",
+   "harga": 1250000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmobil",
+    "pmotor"
+   ],
+   "sisa_kamar": 6,
+   "rating": null,
+   "dilihat": 41,
+   "promo": null,
+   "lat": -7.2861,
+   "lng": 112.7695,
+   "url": "https://papikost.com/kost/kost-palem-semolo-premium"
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Valentino Tipe C",
+   "kec": "Sukolilo",
+   "harga": 1300000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": 5.0,
+   "dilihat": 272,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Ucik",
+   "kec": "Sukolilo",
+   "harga": 1300000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 128,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Manyar Tipe Premium A",
+   "kec": "Sukolilo",
+   "harga": 1300000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Pumpungan IV 25 Deluxe Plus",
+   "kec": "Sukolilo",
+   "harga": 1300000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 207,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Namira Tipe A",
+   "kec": "Sukolilo",
+   "harga": 1300000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": 5.0,
+   "dilihat": 172,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Pancasila Tipe A",
+   "kec": "Sukolilo",
+   "harga": 1400000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": 5.0,
+   "dilihat": 174,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Praja III Tipe A",
+   "kec": "Sukolilo",
+   "harga": 1400000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "akses24"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Untag Unitomo Tipe A",
+   "kec": "Sukolilo",
+   "harga": 1400000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Semolowaru Praja Tipe B1",
+   "kec": "Sukolilo",
+   "harga": 1400000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Elite Nginden Tengah",
+   "kec": "Sukolilo",
+   "harga": 1400000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Semolowaru Praja Tipe Ac Reguler Lt 2",
+   "kec": "Sukolilo",
+   "harga": 1400000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Sone Laundry Tipe A",
+   "kec": "Sukolilo",
+   "harga": 1400000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 234,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Lazarus Eksekutif",
+   "kec": "Sukolilo",
+   "harga": 1500000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 158,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Cemerlang Manyar Indah 1",
+   "kec": "Sukolilo",
+   "harga": 1500000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kost Putri Home Sweet Home Semolowaru Surabaya Timur",
+   "kec": "Sukolilo",
+   "kel": "Semolowaru",
+   "harga": 1500000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmobil",
+    "pmotor"
+   ],
+   "sisa_kamar": 9,
+   "rating": null,
+   "dilihat": 130,
+   "promo": null,
+   "lat": -7.3053171,
+   "lng": 112.7743487,
+   "url": "https://papikost.com/kost/kost-putri-home-sweet-home-semolowaru-surabaya-timur"
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Pumpungan IV 25 Tipe Studio",
+   "kec": "Sukolilo",
+   "harga": 1500001,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Cemerlang",
+   "kec": "Sukolilo",
+   "harga": 1520000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 73,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Valentino Tipe B",
+   "kec": "Sukolilo",
+   "harga": 1550000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": 5.0,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Keluarga Tipe A",
+   "kec": "Sukolilo",
+   "harga": 1550000,
+   "jenis": "campur",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "kloset",
+    "km"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Semolowaru Praja Tipe Ac Kmd",
+   "kec": "Sukolilo",
+   "harga": 1550000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Holistay 1 Standard",
+   "kec": "Sukolilo",
+   "harga": 1600000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 90,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Haifa Manyar Indah",
+   "kec": "Sukolilo",
+   "harga": 1600000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Tesere Manyar Indah",
+   "kec": "Sukolilo",
+   "harga": 1675000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 126,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Holistay 1 Superior B",
+   "kec": "Sukolilo",
+   "harga": 1700000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Ekslusif Manyar Rejo",
+   "kec": "Sukolilo",
+   "harga": 1750000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 130,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kost Palem Semolo Exclusive A",
+   "kec": "Sukolilo",
+   "kel": "Menur Pumpungan",
+   "harga": 1750000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmobil",
+    "pmotor"
+   ],
+   "sisa_kamar": 1,
+   "rating": null,
+   "dilihat": 14,
+   "promo": null,
+   "lat": -7.2861,
+   "lng": 112.7695,
+   "url": "https://papikost.com/kost/kost-palem-semolo-exclusive-a"
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kost Palem Semolo Exclusive B",
+   "kec": "Sukolilo",
+   "kel": "Menur Pumpungan",
+   "harga": 1750000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmobil",
+    "pmotor"
+   ],
+   "sisa_kamar": 2,
+   "rating": null,
+   "dilihat": 5,
+   "promo": null,
+   "lat": -7.2861,
+   "lng": 112.7695,
+   "url": "https://papikost.com/kost/kost-palem-semolo-exclusive-b"
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Valentino Tipe A",
+   "kec": "Sukolilo",
+   "harga": 1800000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Untag Unitomo Tipe B",
+   "kec": "Sukolilo",
+   "harga": 1800000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 65,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Holistay 1 Tipe Superior",
+   "kec": "Sukolilo",
+   "harga": 1800000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": 5.0,
+   "dilihat": 500,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Alsi Home Surabaya",
+   "kec": "Sukolilo",
+   "kel": "Menur Pumpungan",
+   "harga": 1900000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "meja",
+    "pmobil",
+    "pmotor"
+   ],
+   "sisa_kamar": 4,
+   "rating": null,
+   "dilihat": 266,
+   "promo": null,
+   "lat": -7.2999787,
+   "lng": 112.7718391,
+   "url": "https://papikost.com/kost/alsi-home-surabaya"
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Emerald guesthouse Klampis Surabaya",
+   "kec": "Sukolilo",
+   "kel": "Klampis Ngasem",
+   "harga": 1950000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmobil",
+    "pmotor",
+    "tv"
+   ],
+   "sisa_kamar": 4,
+   "rating": null,
+   "dilihat": 194,
+   "promo": null,
+   "lat": -7.291026,
+   "lng": 112.776156,
+   "url": "https://papikost.com/kost/emerald-guesthouse-klampis-surabaya"
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Arc Living Saptahary",
+   "kec": "Sukolilo",
+   "harga": 2000000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 227,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Mono",
+   "kec": "Sukolilo",
+   "harga": 2000000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 152,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Alsi Kos Surabaya",
+   "kec": "Sukolilo",
+   "kel": "Menur Pumpungan",
+   "harga": 2000000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmobil",
+    "pmotor",
+    "tv"
+   ],
+   "sisa_kamar": 6,
+   "rating": null,
+   "dilihat": 194,
+   "promo": null,
+   "lat": -7.2999787,
+   "lng": 112.7718391,
+   "url": "https://papikost.com/kost/alsi-kos-surabaya"
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Nginden Intan Tipe Executive",
+   "kec": "Sukolilo",
+   "harga": 2200000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": 4.4,
+   "dilihat": 123,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Nginden Intan Tipe Vip",
+   "kec": "Sukolilo",
+   "harga": 2200000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 197,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Onnie Rooms Tipe A",
+   "kec": "Sukolilo",
+   "harga": 2225000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 222,
+   "promo": 2005000,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Klapa Exclusive",
+   "kec": "Sukolilo",
+   "harga": 2300000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 140,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Omah Ndoro Syariah Superior",
+   "kec": "Sukolilo",
+   "harga": 2300000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 208,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Holistay 1 Deluxe",
+   "kec": "Sukolilo",
+   "harga": 2300000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 180,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Nestay Living Deluxe",
+   "kec": "Sukolilo",
+   "harga": 2300000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Onnie Room",
+   "kec": "Sukolilo",
+   "kel": "Menur Pumpungan",
+   "harga": 2500000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmobil",
+    "pmotor"
+   ],
+   "sisa_kamar": 10,
+   "rating": null,
+   "dilihat": 95,
+   "promo": null,
+   "lat": -7.295142246175472,
+   "lng": 112.76799157261848,
+   "url": "https://papikost.com/kost/onnie-room"
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Manyar Tipe B1",
+   "kec": "Sukolilo",
+   "harga": 3000000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 177,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Manyar Tipe A",
+   "kec": "Sukolilo",
+   "harga": 3000000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Graha Aashritha 1",
+   "kec": "Sukolilo",
+   "harga": 3250000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 255,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kos Putri Dandelion Tipe C",
+   "kec": "Tambaksari",
+   "kel": "Pacar Kembang",
+   "harga": 800000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmotor"
+   ],
+   "sisa_kamar": 1,
+   "rating": null,
+   "dilihat": 14,
+   "promo": null,
+   "lat": -7.25957023809304,
+   "lng": 112.77139596641064,
+   "url": "https://papikost.com/kost/kos-putri-dandelion-tipe-c"
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kos Putri Dandelion Tipe B",
+   "kec": "Tambaksari",
+   "kel": "Pacar Kembang",
+   "harga": 900000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmotor"
+   ],
+   "sisa_kamar": 1,
+   "rating": null,
+   "dilihat": 3,
+   "promo": null,
+   "lat": -7.25957023809304,
+   "lng": 112.77139596641064,
+   "url": "https://papikost.com/kost/kos-putri-dandelion-tipe-b"
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kos Putri Dandelion Tipe A",
+   "kec": "Tambaksari",
+   "kel": "Pacar Kembang",
+   "harga": 1000000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "pmotor"
+   ],
+   "sisa_kamar": 1,
+   "rating": null,
+   "dilihat": 5,
+   "promo": null,
+   "lat": -7.25957023809304,
+   "lng": 112.77139596641064,
+   "url": "https://papikost.com/kost/kos-putri-dandelion-tipe-a"
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kos Putri Sekar Arum dekat Unair",
+   "kec": "Tambaksari",
+   "kel": "Pacar Kembang",
+   "harga": 1300000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmotor"
+   ],
+   "sisa_kamar": 9,
+   "rating": null,
+   "dilihat": 109,
+   "promo": null,
+   "lat": -7.263025029536,
+   "lng": 112.76396814734426,
+   "url": "https://papikost.com/kost/kos-putri-sekar-arum-dekat-unair"
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Bobo Studio",
+   "kec": "Tegalsari",
+   "kel": "Dr. Sutomo",
+   "harga": 1750000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmobil",
+    "pmotor",
+    "tv"
+   ],
+   "sisa_kamar": 10,
+   "rating": null,
+   "dilihat": 2163,
+   "promo": null,
+   "lat": -7.276182446295405,
+   "lng": 112.73354329168795,
+   "url": "https://papikost.com/kost/bobo-studio"
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Dwi Aningsih Tipe A",
+   "kec": "Tenggilis Mejoyo",
+   "harga": 575000,
+   "jenis": "putri",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 281,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Bu Dewi Reformasi Tipe B",
+   "kec": "Tenggilis Mejoyo",
+   "harga": 575000,
+   "jenis": "putri",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 205,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Bu Dewi Reformasi Tipe A",
+   "kec": "Tenggilis Mejoyo",
+   "harga": 600000,
+   "jenis": "putri",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 254,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kost pasutri kutisari utara 5 no 9",
+   "kec": "Tenggilis Mejoyo",
+   "kel": "Kutisari",
+   "harga": 600000,
+   "jenis": "campur",
+   "fasilitas": [
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "pmotor"
+   ],
+   "sisa_kamar": 10,
+   "rating": null,
+   "dilihat": 6442,
+   "promo": null,
+   "lat": -7.33213,
+   "lng": 112.74381,
+   "url": "https://papikost.com/kost/kost-pasutri-kutisari-utara-5-no-9"
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Bapak Aji",
+   "kec": "Tenggilis Mejoyo",
+   "harga": 650000,
+   "jenis": "putri",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kos-kosan maskaryo kamar type 2",
+   "kec": "Tenggilis Mejoyo",
+   "kel": "Tenggilis Mejoyo",
+   "harga": 800000,
+   "jenis": "putra",
+   "fasilitas": [
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmotor"
+   ],
+   "sisa_kamar": 7,
+   "rating": null,
+   "dilihat": 42,
+   "promo": null,
+   "lat": -7.3227419,
+   "lng": 112.7598365,
+   "url": "https://papikost.com/kost/kos-kosan-maskaryo-kamar-type-2"
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Panjang Jiwo Permai",
+   "kec": "Tenggilis Mejoyo",
+   "harga": 850000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 410,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kos-kosan maskaryo kamar Type 1",
+   "kec": "Tenggilis Mejoyo",
+   "kel": "Tenggilis Mejoyo",
+   "harga": 875000,
+   "jenis": "putra",
+   "fasilitas": [
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmotor"
+   ],
+   "sisa_kamar": 1,
+   "rating": null,
+   "dilihat": 20,
+   "promo": null,
+   "lat": -7.3227419,
+   "lng": 112.7598365,
+   "url": "https://papikost.com/kost/kos-kosan-maskaryo-kamar-type-1"
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Hana Tipe A",
+   "kec": "Tenggilis Mejoyo",
+   "harga": 950000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 193,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Novan G1",
+   "kec": "Tenggilis Mejoyo",
+   "harga": 1050000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": 4.4,
+   "dilihat": 79,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kost KIU 228",
+   "kec": "Tenggilis Mejoyo",
+   "kel": "Kutisari",
+   "harga": 1100000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmotor"
+   ],
+   "sisa_kamar": 1,
+   "rating": null,
+   "dilihat": 21,
+   "promo": null,
+   "lat": -7.3372721,
+   "lng": 112.7497199,
+   "url": "https://papikost.com/kost/kost-kiu-228"
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost De Luma Residence Standard",
+   "kec": "Tenggilis Mejoyo",
+   "harga": 1200000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 500,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kost Putri KIU 228",
+   "kec": "Tenggilis Mejoyo",
+   "kel": "Kutisari",
+   "harga": 1200000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmotor"
+   ],
+   "sisa_kamar": 1,
+   "rating": null,
+   "dilihat": 13,
+   "promo": null,
+   "lat": -7.3372721,
+   "lng": 112.7497199,
+   "url": "https://papikost.com/kost/kost-putri-kiu-228"
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kost Putri Kutisari SIER Tenggilis",
+   "kec": "Tenggilis Mejoyo",
+   "kel": "Kutisari",
+   "harga": 1300000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmobil",
+    "pmotor"
+   ],
+   "sisa_kamar": 6,
+   "rating": null,
+   "dilihat": 407,
+   "promo": null,
+   "lat": -7.333773294687014,
+   "lng": 112.74722036338972,
+   "url": "https://papikost.com/kost/kost-putri-kutisari-sier-tenggilis"
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "KOST KIU228",
+   "kec": "Tenggilis Mejoyo",
+   "kel": "Kutisari",
+   "harga": 1300000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmotor"
+   ],
+   "sisa_kamar": 2,
+   "rating": null,
+   "dilihat": 32,
+   "promo": null,
+   "lat": -7.3372721,
+   "lng": 112.7497199,
+   "url": "https://papikost.com/kost/kost-kiu228"
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "KOST PUTRI 415",
+   "kec": "Tenggilis Mejoyo",
+   "kel": "Panjang Jiwo",
+   "harga": 1500000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmobil",
+    "pmotor"
+   ],
+   "sisa_kamar": 4,
+   "rating": null,
+   "dilihat": 119,
+   "promo": null,
+   "lat": -7.312439382988887,
+   "lng": 112.76453554630278,
+   "url": "https://papikost.com/kost/kost-putri-415"
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kost Kamar Besar dan Homy Tenggilis",
+   "kec": "Tenggilis Mejoyo",
+   "kel": "Tenggilis Mejoyo",
+   "harga": 2300000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmobil",
+    "pmotor",
+    "tv"
+   ],
+   "sisa_kamar": 10,
+   "rating": null,
+   "dilihat": 264,
+   "promo": null,
+   "lat": -7.318893216952698,
+   "lng": 112.7568680641707,
+   "url": "https://papikost.com/kost/kost-kamar-besar-dan-homy-tenggilis"
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Prapen Indah Tipe Eksekutif",
+   "kec": "Tenggilis Mejoyo",
+   "harga": 3000000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Achmad 1 Tipe Standar Non Ac",
+   "kec": "Wonocolo",
+   "harga": 800000,
+   "jenis": "putra",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 500,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kamar Kost HS",
+   "kec": "Wonocolo",
+   "kel": "Bendul Merisi",
+   "harga": 800000,
+   "jenis": "putra",
+   "fasilitas": [
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "pmotor"
+   ],
+   "sisa_kamar": 6,
+   "rating": null,
+   "dilihat": 1066,
+   "promo": null,
+   "lat": -7.310097460967134,
+   "lng": 112.74150609970093,
+   "url": "https://papikost.com/kost/kamar-kost-hs"
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Sidosermo 1",
+   "kec": "Wonocolo",
+   "harga": 1050000,
+   "jenis": "putri",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "km"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 347,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Sidosermo",
+   "kec": "Wonocolo",
+   "harga": 1050000,
+   "jenis": "putra",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "kloset",
+    "km"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 167,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Executive Tipe A",
+   "kec": "Wonocolo",
+   "harga": 1100000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 222,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Tiara Sidosermo Tipe B",
+   "kec": "Wonocolo",
+   "harga": 1125000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 500,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Tiara Sidosermo Tipe A",
+   "kec": "Wonocolo",
+   "harga": 1400000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 500,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost BMU 834 Tipe A",
+   "kec": "Wonocolo",
+   "harga": 1500000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kos D8",
+   "kec": "Wonocolo",
+   "kel": "SiwalanKerto",
+   "harga": 1500000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmobil",
+    "pmotor",
+    "tv"
+   ],
+   "sisa_kamar": 10,
+   "rating": null,
+   "dilihat": 814,
+   "promo": null,
+   "lat": -7.3421729,
+   "lng": 112.736717,
+   "url": "https://papikost.com/kost/kos-d8"
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "Kost Casa Sevilla Hunian Ternyaman",
+   "kec": "Wonocolo",
+   "kel": "Jemur Wonosari",
+   "harga": 1500000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "lemari",
+    "meja",
+    "pmobil",
+    "pmotor",
+    "tv"
+   ],
+   "sisa_kamar": 10,
+   "rating": null,
+   "dilihat": 586,
+   "promo": null,
+   "lat": -7.3283564,
+   "lng": 112.7348616,
+   "url": "https://papikost.com/kost/kost-casa-sevilla-hunian-ternyaman"
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Exclusive Graha Cipta Sidosermo Tipe A",
+   "kec": "Wonocolo",
+   "harga": 1502500,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 500,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Hakare Bendul Tipe Standar",
+   "kec": "Wonocolo",
+   "harga": 1600000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 186,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Q Tipe C Sidosermo",
+   "kec": "Wonocolo",
+   "harga": 1625000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": 4.9,
+   "dilihat": 200,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Gymbrader Inn Tipe Standart Premium Deluxe",
+   "kec": "Wonocolo",
+   "harga": 1700000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 278,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Kamda BMU Tipe B AC",
+   "kec": "Wonocolo",
+   "harga": 1700000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Arunala Co Living Tipe A",
+   "kec": "Wonocolo",
+   "harga": 1700000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 80,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Exclusive Graha Cipta Sidosermo Tipe B",
+   "kec": "Wonocolo",
+   "harga": 1702500,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 304,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Q Tipe B Sidosermo",
+   "kec": "Wonocolo",
+   "harga": 1775000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": 4.9,
+   "dilihat": 376,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Sidosermo Indah Residence B2",
+   "kec": "Wonocolo",
+   "harga": 1800000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kloset",
+    "km"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Kamda BMU Tipe A",
+   "kec": "Wonocolo",
+   "harga": 1900000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 109,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Arunala Co Living Tipe B",
+   "kec": "Wonocolo",
+   "harga": 1900000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Hakare Bendul Tipe Standart",
+   "kec": "Wonocolo",
+   "harga": 2000000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Hakare Bendul Tipe Mezanin",
+   "kec": "Wonocolo",
+   "harga": 2000000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 138,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Q Tipe A Sidosermo",
+   "kec": "Wonocolo",
+   "harga": 2025000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": 4.9,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Hakare Bendul Tipe Standar 1",
+   "kec": "Wonocolo",
+   "harga": 2300000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Kamda BMU Tipe A Standart Balcony",
+   "kec": "Wonocolo",
+   "harga": 2400000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Sidosermo Indah Residence",
+   "kec": "Wonocolo",
+   "harga": 2500000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "FELIZ GUESTHOUSE SURABAYA TWIN BED ROOM",
+   "kec": "Wonocolo",
+   "kel": "Jemur Wonosari",
+   "harga": 3000000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "meja",
+    "tv"
+   ],
+   "sisa_kamar": 3,
+   "rating": null,
+   "dilihat": 39,
+   "promo": null,
+   "lat": -7.322102411926709,
+   "lng": 112.74651244282722,
+   "url": "https://papikost.com/kost/feliz-guesthouse-surabaya-twin-bed-room"
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Bu Noer",
+   "kec": "Wonokromo",
+   "harga": 350000,
+   "jenis": "putra",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 500,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Risnoe Tipe A",
+   "kec": "Wonokromo",
+   "harga": 575000,
+   "jenis": "putra",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 210,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Adem Ayem Tipe Standar",
+   "kec": "Wonokromo",
+   "harga": 600000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "kloset"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 177,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost JS 12",
+   "kec": "Wonokromo",
+   "harga": 600000,
+   "jenis": "putra",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 215,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Mitra Jaya Bratang Tipe B",
+   "kec": "Wonokromo",
+   "harga": 632500,
+   "jenis": "putri",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": 4.5,
+   "dilihat": 500,
+   "promo": 577825,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Ibu Agus",
+   "kec": "Wonokromo",
+   "harga": 650000,
+   "jenis": "campur",
+   "fasilitas": [
+    "akses24",
+    "kasur"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Desta Tipe Standart",
+   "kec": "Wonokromo",
+   "harga": 650000,
+   "jenis": "putra",
+   "fasilitas": [
+    "kasur"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 443,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Achmad Raihan Tipe Non Ac",
+   "kec": "Wonokromo",
+   "harga": 650000,
+   "jenis": "putra",
+   "fasilitas": [
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 340,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Rumah Berkah",
+   "kec": "Wonokromo",
+   "harga": 700000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 500,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Krukah",
+   "kec": "Wonokromo",
+   "harga": 700000,
+   "jenis": "putra",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Bratang Tipe B",
+   "kec": "Wonokromo",
+   "harga": 725000,
+   "jenis": "putri",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": 5.0,
+   "dilihat": 128,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Lapak Tantri",
+   "kec": "Wonokromo",
+   "harga": 725000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 237,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Mi Casa Tipe B",
+   "kec": "Wonokromo",
+   "harga": 750000,
+   "jenis": "putra",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 339,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Ngagel Krukah Bratang",
+   "kec": "Wonokromo",
+   "harga": 750000,
+   "jenis": "putri",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 131,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Ngagel Mulya",
+   "kec": "Wonokromo",
+   "harga": 750000,
+   "jenis": "putra",
+   "fasilitas": [
+    "kasur",
+    "kloset"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 500,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Mitra Jaya Bratang Tipe A",
+   "kec": "Wonokromo",
+   "harga": 794500,
+   "jenis": "putri",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": 4.8,
+   "dilihat": 500,
+   "promo": 725245,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Cendana Standart",
+   "kec": "Wonokromo",
+   "harga": 900000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 500,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Hijau Bu Made",
+   "kec": "Wonokromo",
+   "harga": 900001,
+   "jenis": "putri",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 493,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Bratang Gede 6D",
+   "kec": "Wonokromo",
+   "harga": 980000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": 4.0,
+   "dilihat": 92,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Aditya",
+   "kec": "Wonokromo",
+   "harga": 1000000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Kibar 43 Tipe A Ngagel Mulyo",
+   "kec": "Wonokromo",
+   "harga": 1000000,
+   "jenis": "putri",
+   "fasilitas": [
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": 5.0,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Ferkyta Tipe B",
+   "kec": "Wonokromo",
+   "harga": 1000000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": 5.0,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Harmoni Nusantara",
+   "kec": "Wonokromo",
+   "harga": 1000000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 144,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Achmad Raihan Tipe Ac",
+   "kec": "Wonokromo",
+   "harga": 1000000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 336,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Ferkyta Tipe A",
+   "kec": "Wonokromo",
+   "harga": 1100000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": 5.0,
+   "dilihat": 123,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Warata",
+   "kec": "Wonokromo",
+   "harga": 1100000,
+   "jenis": "putra",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": 4.6,
+   "dilihat": 64,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Beth Tipe D",
+   "kec": "Wonokromo",
+   "harga": 1100000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 72,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Suma Tipe B",
+   "kec": "Wonokromo",
+   "harga": 1100000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 183,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Bratang Gede 6E Tipe B",
+   "kec": "Wonokromo",
+   "harga": 1200000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 67,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Beth Tipe C",
+   "kec": "Wonokromo",
+   "harga": 1200000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Bhinneka Ngagel Tipe D",
+   "kec": "Wonokromo",
+   "harga": 1300000,
+   "jenis": "campur",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 325,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Bratang Gede 6E Tipe 1",
+   "kec": "Wonokromo",
+   "harga": 1300000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": 5.0,
+   "dilihat": 220,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Bhinneka Ngagel Tipe C",
+   "kec": "Wonokromo",
+   "harga": 1400000,
+   "jenis": "campur",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 198,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Kibar 43 Tipe B",
+   "kec": "Wonokromo",
+   "harga": 1400000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 63,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost HJM Eksklusif",
+   "kec": "Wonokromo",
+   "harga": 1400000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 109,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Bu Lestari",
+   "kec": "Wonokromo",
+   "harga": 1400000,
+   "jenis": "putri",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": 5.0,
+   "dilihat": 79,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Bhinneka Ngagel Tipe A Non Ac",
+   "kec": "Wonokromo",
+   "harga": 1400000,
+   "jenis": "campur",
+   "fasilitas": [
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 204,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Beth Tipe B",
+   "kec": "Wonokromo",
+   "harga": 1400000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Suma Tipe Vip",
+   "kec": "Wonokromo",
+   "harga": 1500000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 88,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Yura Tipe Vip",
+   "kec": "Wonokromo",
+   "harga": 1500000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 421,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Raudhah In Tipe 3",
+   "kec": "Wonokromo",
+   "harga": 1500000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 198,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Ladeaa 776 Tipe Standar",
+   "kec": "Wonokromo",
+   "harga": 1500000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 77,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Raudhah In",
+   "kec": "Wonokromo",
+   "harga": 1500000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 268,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Raudhah In Tipe Lantai 1",
+   "kec": "Wonokromo",
+   "harga": 1500000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 338,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Beth Tipe A",
+   "kec": "Wonokromo",
+   "harga": 1500000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 76,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Suma Tipe Balkon",
+   "kec": "Wonokromo",
+   "harga": 1500000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": null,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Dede Executive",
+   "kec": "Wonokromo",
+   "harga": 1550000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 462,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Palma VVIP",
+   "kec": "Wonokromo",
+   "harga": 1600000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 306,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Luxury Graha Indah Tipe Executive",
+   "kec": "Wonokromo",
+   "harga": 1700000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 404,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Z Stay Tipe A",
+   "kec": "Wonokromo",
+   "harga": 1700000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 111,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Z Stay Tipe B",
+   "kec": "Wonokromo",
+   "harga": 1700123,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 271,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Griya Wigu 1",
+   "kec": "Wonokromo",
+   "harga": 1750000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 101,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Kusuma Bratang Gede VI Tipe A",
+   "kec": "Wonokromo",
+   "harga": 1800000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 80,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Hosana Tipe Ac",
+   "kec": "Wonokromo",
+   "harga": 1800000,
+   "jenis": "putri",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": 5.0,
+   "dilihat": 167,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Papikost",
+   "nama": "FIDI KOST",
+   "kec": "Wonokromo",
+   "kel": "Jagir",
+   "harga": 1800000,
+   "jenis": "putra",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [
+    "dispenser",
+    "lemari",
+    "meja",
+    "pmotor"
+   ],
+   "sisa_kamar": 10,
+   "rating": null,
+   "dilihat": 36,
+   "promo": null,
+   "lat": -7.30754761034647,
+   "lng": 112.74044158411355,
+   "url": "https://papikost.com/kost/fidi-kost"
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Premium",
+   "kec": "Wonokromo",
+   "harga": 1900000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 146,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Zstay",
+   "kec": "Wonokromo",
+   "harga": 1900000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 121,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Eksekutif Novy Kamar Besar",
+   "kec": "Wonokromo",
+   "harga": 2000000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 34,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Bhinneka Ngagel Tipe B",
+   "kec": "Wonokromo",
+   "harga": 2100000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 205,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  },
+  {
+   "sumber": "Mamikos",
+   "nama": "Kost Eksklusif Ngagel Tipe D",
+   "kec": "Wonokromo",
+   "harga": 2300000,
+   "jenis": "campur",
+   "fasilitas": [
+    "ac",
+    "akses24",
+    "kasur",
+    "kloset",
+    "km",
+    "wifi"
+   ],
+   "fasilitas_lain": [],
+   "rating": null,
+   "dilihat": 102,
+   "promo": null,
+   "sisa_kamar": null,
+   "lat": null,
+   "lng": null,
+   "url": null
+  }
+ ]
+}

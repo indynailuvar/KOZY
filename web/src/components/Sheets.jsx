@@ -3,6 +3,7 @@ import Icon from './Icon.jsx';
 import { Button, ListRow, Sheet } from './ui.jsx';
 import { useStore } from '../store.jsx';
 import { rp } from '../lib/format.js';
+import { catat } from '../lib/jejak.js';
 
 // ---------- Proses analisis (4 baris progresif) ----------
 export function ProcessSheet({ open, title, steps, active, error, onRetry, onEdit }) {
@@ -25,7 +26,7 @@ export function ProcessSheet({ open, title, steps, active, error, onRetry, onEdi
       ) : (
         <div className="sheet-body">
           <h2 className="h2">{title}</h2>
-          <ol className="steps">
+          <ol className="steps" aria-live="polite">
             {steps.map((s, i) => {
               const st = i < active ? 'done' : i === active ? 'run' : 'wait';
               return (
@@ -115,58 +116,6 @@ function useCountdown(active, detik = 15 * 60) {
   return `${String(Math.floor(sisa / 60)).padStart(2, '0')}:${String(sisa % 60).padStart(2, '0')}`;
 }
 
-// ---------- KOZY Verified (survei lapangan) ----------
-export const HARGA_VERIFIED = 75_000;
-
-export function VerifiedCard() {
-  const { toast } = useStore();
-  const [open, setOpen] = useState(false);
-  return (
-    <>
-      <div className="list-card">
-        <ListRow icon="shieldc" title="Mau lebih yakin sebelum transfer?" sub="KOZY Verified · survei lapangan" onClick={() => setOpen(true)} />
-      </div>
-      <Sheet open={open} onClose={() => setOpen(false)} label="KOZY Verified">
-        <div className="sheet-body">
-          <span className="ic-circle lg">
-            <Icon name="shieldc" size={22} />
-          </span>
-          <h2 className="h2">KOZY Verified</h2>
-          <p className="price-line">
-            <b>{rp(HARGA_VERIFIED)}</b> per kos
-          </p>
-          <ul className="check-list">
-            <li>
-              <Icon name="check" size={16} strokeWidth={2.6} />
-              Foto kamar terbaru dari tim lapangan
-            </li>
-            <li>
-              <Icon name="check" size={16} strokeWidth={2.6} />
-              Pengecekan kepemilikan kos
-            </li>
-            <li>
-              <Icon name="check" size={16} strokeWidth={2.6} />
-              Laporan risiko penipuan
-            </li>
-          </ul>
-          <Button
-            block
-            onClick={() => {
-              setOpen(false);
-              toast('Permintaan survei terkirim');
-            }}
-          >
-            Ajukan survei
-          </Button>
-          <Button variant="ghost" block onClick={() => setOpen(false)}>
-            Nanti saja
-          </Button>
-        </div>
-      </Sheet>
-    </>
-  );
-}
-
 // ---------- Paywall KOZY Match ----------
 export const HARGA_MATCH = 19_900;
 
@@ -185,6 +134,7 @@ export function Paywall({ open, onClose, onPaid, purchaseId }) {
     setTimeout(() => {
       setCek(false);
       setTahap('sukses');
+      catat('bayar', { produk: 'match', harga: HARGA_MATCH });
       set((s) => ({ paid: { ...s.paid, [purchaseId]: true } }));
       setTimeout(() => onPaid?.(), 900);
     }, 900);
@@ -204,11 +154,11 @@ export function Paywall({ open, onClose, onPaid, purchaseId }) {
           <ul className="check-list">
             <li>
               <Icon name="check" size={16} strokeWidth={2.6} />
-              Peta 5 kos dengan harga wajar
+              Peta kos yang harganya wajar di area itu
             </li>
             <li>
               <Icon name="check" size={16} strokeWidth={2.6} />
-              Kontak pemilik yang sudah diverifikasi
+              Nama kos, fasilitas, dan tautan ke iklan aslinya
             </li>
             <li>
               <Icon name="check" size={16} strokeWidth={2.6} />

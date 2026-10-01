@@ -3,7 +3,7 @@ import Icon from './Icon.jsx';
 import { Button } from './ui.jsx';
 import { useStore } from '../store.jsx';
 
-export function WaitlistBox({ nama, dikenal }) {
+export function WaitlistBox({ nama, dikenal, belumData = false }) {
   const { toast } = useStore();
   const [kontak, setKontak] = useState('');
   const [terkirim, setTerkirim] = useState(false);
@@ -18,13 +18,15 @@ export function WaitlistBox({ nama, dikenal }) {
         <div>
           <b>{dikenal ? `${nama} belum tercakup` : 'Lokasi belum kami kenali'}</b>
           <p>
-            {dikenal
-              ? 'Saat ini KOZY baru menilai kos di Kota Surabaya.'
-              : 'Coba ketik nama kelurahan/kecamatan di Surabaya, atau tempel link Google Maps.'}
+            {belumData
+              ? 'Data kos di kecamatan ini belum terkumpul, jadi KOZY belum bisa menilai harganya. Kami tidak menebak angka.'
+              : dikenal
+                ? 'Saat ini KOZY baru menilai kos di Kota Surabaya.'
+                : 'Coba ketik nama kelurahan/kecamatan di Surabaya, atau tempel link Google Maps.'}
           </p>
         </div>
       </div>
-      {dikenal &&
+      {(dikenal || belumData) &&
         (terkirim ? (
           <p className="waitlist-ok">
             <Icon name="checkc" size={18} /> Kamu masuk daftar tunggu. Kami kabari saat kawasan ini siap.

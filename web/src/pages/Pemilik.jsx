@@ -1,10 +1,19 @@
+// Sisi pemilik kos (B2B).
+//
+// Satu kos hampir tidak pernah punya satu harga saja — biasanya ada beberapa tipe
+// kamar dengan harga dan fasilitas berbeda. Karena itu klaim dan dashboardnya
+// bekerja per tipe kamar, bukan per kos, dan tiap tipe punya foto 4 sisinya sendiri
+// yang bisa diputar calon penyewa seperti di Google Maps.
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Icon from '../components/Icon.jsx';
-import { AmountInput, Button, InfoTip, Options, PageHead, Question, Sheet, StatusBadge, Switch, Tiles, Wizard } from '../components/ui.jsx';
+import Kamar360, { jumlahSisi } from '../components/Kamar360.jsx';
+import { DaftarTipe, EditorTipe, galatTipe, tipeBaru } from '../components/TipeKamar.jsx';
+import { AmountInput, Banner, Button, InfoTip, Options, PageHead, Question, Segmented, Sheet, StatusBadge, Switch, Wizard } from '../components/ui.jsx';
 import { LoginPanel } from '../components/Sheets.jsx';
 import { OPSI_JENIS } from './CekWizard.jsx';
 import { analisisPemilik, jenisById, kawasanById, kenaliLokasi, saranLokasi } from '../api/kozy.js';
-import { BIAYA_FASILITAS, DATA_UPDATED, FASILITAS } from '../data/surabaya.js';
+import { BIAYA_FASILITAS, DATA_UPDATED } from '../data/surabaya.js';
+import { ringkasFoto } from '../lib/foto.js';
 import { bulat10rb, daftar, rp, rpSingkat, tanggal } from '../lib/format.js';
 import { useStore } from '../store.jsx';
 import { go } from '../router.js';
@@ -44,15 +53,23 @@ function badgeSvg(kawasan) {
 </svg>`;
 }
 
-const TOTAL = 5;
+// Klaim versi lama hanya menyimpan satu harga. Dibungkus jadi satu tipe supaya
+// pemilik yang sudah terlanjur klaim tidak kehilangan datanya.
+export function rapikanPemilik(p) {
+  if (!p) return null;
+  if (Array.isArray(p.tipe)) return p;
+  return { ...p, tipe: [{ ...tipeBaru(0), nama: 'Tipe A', harga: p.harga || 0, fasilitas: p.fasilitas || [], kamar: 1, sisa: 1 }], harga: undefined, fasilitas: undefined };
+}
+
+const TOTAL = 4;
 
 function Klaim() {
   const { state, set, toast } = useStore();
   const [step, setStep] = useState(1);
   const [lokasi, setLokasi] = useState('');
   const [jenis, setJenis] = useState(null);
-  const [harga, setHarga] = useState(0);
-  const [fasilitas, setFasilitas] = useState([]);
+  const [tipe, setTipe] = useState([]);
+  const [edit, setEdit] = useState(null);
   const [file, setFile] = useState(null);
   const [setuju, setSetuju] = useState(false);
   const [coba, setCoba] = useState(false);
@@ -63,19 +80,25 @@ function Klaim() {
   const lok = useMemo(() => kenaliLokasi(lokasi), [lokasi]);
   const saran = lok.status === 'ok' ? [] : saranLokasi(lokasi);
   const galat = {
-    1: lok.status === 'ok' ? null : lok.status === 'luar' ? 'Saat ini KOZY baru mencakup Kota Surabaya.' : 'Pilih lokasi dari saran atau tempel link Google Maps.',
+    1:
+      lok.status === 'ok'
+        ? null
+        : lok.status === 'luar'
+          ? 'Saat ini KOZY baru mencakup Kota Surabaya.'
+          : lok.status === 'belum-data'
+            ? `Data kos di Kec. ${lok.kawasan.kec} belum terkumpul, jadi harganya belum bisa dinilai.`
+            : 'Pilih lokasi dari saran atau tempel link Google Maps.',
     2: jenis ? null : 'Pilih jenis kos.',
-    3: harga >= 100_000 ? null : 'Masukkan harga minimal Rp 100.000.',
-    4: null,
-    5: !file ? 'Unggah bukti kepemilikan dulu.' : !setuju ? 'Centang persetujuan data pribadi.' : null,
+    3: !tipe.length ? 'Tambah minimal satu tipe kamar.' : (tipe.map(galatTipe).find(Boolean) ?? null),
+    4: !file ? 'Unggah bukti kepemilikan dulu.' : !setuju ? 'Centang persetujuan data pribadi.' : null,
   };
 
   const verifikasi = () => {
     setSheet('verif');
     timer.current = setTimeout(() => {
-      set({ pemilik: { kawasanId: lok.kawasan.id, jenis, harga, fasilitas, luas: null, bukti: file.name } });
+      set({ pemilik: { kawasanId: lok.kawasan.id, jenis, tipe, bukti: file.name } });
       setSheet(null);
-      toast('Kos kamu berhasil diverifikasi');
+      toast(`Kos kamu berhasil diverifikasi · ${tipe.length} tipe kamar`);
     }, 1400);
   };
   const lanjut = () => {
@@ -93,6 +116,11 @@ function Klaim() {
   };
   const err = coba ? galat[step] : null;
 
+  const simpanTipe = (t) => {
+    setTipe((a) => (a.some((x) => x.id === t.id) ? a.map((x) => (x.id === t.id ? t : x)) : [...a, t]));
+    setEdit(null);
+  };
+
   return (
     <>
       <Wizard
@@ -108,7 +136,7 @@ function Klaim() {
       >
         {step === 1 && (
           <>
-            <Question judul="Di mana kos kamu?" sub="Lihat posisi harga kos kamu dan dapatkan badge harga wajar." />
+            <Question judul="Di mana kos kamu?" sub="Lihat posisi harga tiap tipe kamar dan dapatkan badge harga wajar." />
             <label className={`field lg ${err ? 'is-err' : ''}`}>
               <Icon name="search" size={20} />
               <input value={lokasi} onChange={(e) => setLokasi(e.target.value)} placeholder="Link Google Maps atau nama daerah" aria-label="Lokasi kos" autoComplete="off" />
@@ -143,18 +171,11 @@ function Klaim() {
         )}
         {step === 3 && (
           <>
-            <Question judul="Berapa harga sewanya?" sub="Harga per bulan yang kamu pasang saat ini." />
-            <AmountInput id="harga-pemilik" label="Harga sewa per bulan" prefix="Rp" value={harga} onChange={setHarga} placeholder="0" />
-            <p className="amount-note">per bulan</p>
+            <Question judul="Ada tipe kamar apa saja?" sub="Tiap tipe punya harga, fasilitas, dan fotonya sendiri. Kalau kosmu seragam, satu tipe saja cukup." />
+            <DaftarTipe tipe={tipe} onUbah={setEdit} onTambah={() => setEdit({ ...tipeBaru(tipe.length), baru: true })} />
           </>
         )}
         {step === 4 && (
-          <>
-            <Question judul="Fasilitas apa saja yang ada?" sub="Pilih semua yang tersedia di kamar." />
-            <Tiles label="Fasilitas" values={fasilitas} options={FASILITAS} onToggle={(id) => setFasilitas((a) => (a.includes(id) ? a.filter((x) => x !== id) : [...a, id]))} />
-          </>
-        )}
-        {step === 5 && (
           <>
             <Question judul="Unggah bukti kepemilikan" sub="Foto sertifikat/PBB, izin usaha kos, atau foto papan nama kos bersama kamu." />
             <label className={`drop ${file ? 'has-file' : ''}`}>
@@ -174,12 +195,26 @@ function Klaim() {
           </>
         )}
         {err && (
-          <p className="err" role="alert">
+          <p className="err" id="wz-err" role="alert">
             {err}
           </p>
         )}
       </Wizard>
 
+      <EditorTipe
+        open={!!edit}
+        awal={edit || tipeBaru(0)}
+        onSimpan={simpanTipe}
+        onBatal={() => setEdit(null)}
+        onHapus={
+          edit && !edit.baru
+            ? () => {
+                setTipe((a) => a.filter((x) => x.id !== edit.id));
+                setEdit(null);
+              }
+            : null
+        }
+      />
       <Sheet open={sheet === 'login'} onClose={() => setSheet(null)} label="Masuk">
         <LoginPanel alasan="Klaim kos terhubung ke akunmu." onDone={verifikasi} />
       </Sheet>
@@ -198,17 +233,46 @@ function Dashboard() {
   const { state, set, toast } = useStore();
   const p = state.pemilik;
   const k = kawasanById(p.kawasanId);
-  const [ubah, setUbah] = useState(false);
-  const [hargaBaru, setHargaBaru] = useState(p.harga);
+  const jenis = jenisById(p.jenis);
+  const [pilih, setPilih] = useState(p.tipe[0]?.id);
+  const [edit, setEdit] = useState(null);
   const [tambah, setTambah] = useState([]);
   const [semuaSim, setSemuaSim] = useState(false);
-  const a = useMemo(() => analisisPemilik(p), [p]);
+
+  const t = p.tipe.find((x) => x.id === pilih) || p.tipe[0];
+  const a = useMemo(() => analisisPemilik({ kawasanId: p.kawasanId, jenis: p.jenis, fasilitas: t.fasilitas, harga: t.harga }), [p.kawasanId, p.jenis, t]);
+  // tiap tipe dinilai sendiri; badge baru boleh kalau tidak ada satu pun yang kemahalan
+  const semua = useMemo(
+    () => p.tipe.map((x) => ({ ...x, a: analisisPemilik({ kawasanId: p.kawasanId, jenis: p.jenis, fasilitas: x.fasilitas, harga: x.harga }) })),
+    [p.kawasanId, p.jenis, p.tipe],
+  );
+  const kemahalan = semua.filter((x) => x.a.status === 'KEMAHALAN');
+  const bolehBadge = kemahalan.length === 0;
+
   const sim = a.simulasi.filter((s) => tambah.includes(s.id));
   const simTambah = sim.reduce((x, s) => x + s.tambah, 0);
   const simBiaya = sim.reduce((x, s) => x + BIAYA_FASILITAS[s.id], 0);
-  const bolehBadge = a.status !== 'KEMAHALAN';
-  const jenis = jenisById(p.jenis);
 
+  const totalKamar = p.tipe.reduce((x, y) => x + (y.kamar || 0), 0);
+  const totalSisa = p.tipe.reduce((x, y) => x + (y.sisa || 0), 0);
+  const harga = p.tipe.map((x) => x.harga).filter(Boolean);
+  const foto = ringkasFoto(p.tipe);
+
+  useEffect(() => setTambah([]), [pilih]);
+
+  const simpanTipe = (baru) => {
+    set({ pemilik: { ...p, tipe: p.tipe.some((x) => x.id === baru.id) ? p.tipe.map((x) => (x.id === baru.id ? baru : x)) : [...p.tipe, baru] } });
+    setPilih(baru.id);
+    setEdit(null);
+    toast(`${baru.nama} tersimpan`);
+  };
+  const hapusTipe = () => {
+    if (p.tipe.length < 2) return toast('Minimal harus ada satu tipe kamar');
+    const sisa = p.tipe.filter((x) => x.id !== edit.id);
+    set({ pemilik: { ...p, tipe: sisa } });
+    setPilih(sisa[0].id);
+    setEdit(null);
+  };
   const unduh = () => {
     const url = URL.createObjectURL(new Blob([badgeSvg(k.nama)], { type: 'image/svg+xml' }));
     const el = document.createElement('a');
@@ -223,9 +287,58 @@ function Dashboard() {
     <div className="page narrow">
       <PageHead judul="Kos kamu" sub={`${k.nama}, ${k.kec}${jenis ? ` · Kos ${jenis.label.toLowerCase()}` : ''}`} aksi={<span className="tag-ok">Terverifikasi</span>} />
 
+      <section className="card">
+        <h2 className="card-t">Ringkasan kos</h2>
+        <dl className="trio">
+          <div>
+            <dt>Tipe kamar</dt>
+            <dd>{p.tipe.length}</dd>
+          </div>
+          <div>
+            <dt>Kamar kosong</dt>
+            <dd>
+              {totalSisa}
+              <small>dari {totalKamar}</small>
+            </dd>
+          </div>
+          <div>
+            <dt>Rentang harga</dt>
+            <dd>{harga.length ? (Math.min(...harga) === Math.max(...harga) ? rpSingkat(harga[0]) : `${rpSingkat(Math.min(...harga))}–${rpSingkat(Math.max(...harga))}`) : '–'}</dd>
+          </div>
+        </dl>
+      </section>
+
+      {kemahalan.length > 0 && (
+        <Banner tone="warn" icon="alert" title={`${kemahalan.length} tipe kamar di atas harga pasaran`}>
+          {daftar(kemahalan.map((x) => x.nama))} harganya di atas kewajaran kecamatan ini. Badge Harga Wajar baru bisa diunduh kalau semua tipe sudah wajar.
+        </Banner>
+      )}
+
+      <section className="card">
+        <div className="card-row">
+          <h2 className="card-t">Tipe kamar</h2>
+          <span className="muted small">{foto.jumlah ? `${foto.jumlah} foto${foto.kb ? ` · ${foto.kb} KB` : ''}` : 'belum ada foto'}</span>
+        </div>
+        <DaftarTipe tipe={p.tipe} onUbah={setEdit} onTambah={() => setEdit({ ...tipeBaru(p.tipe.length), baru: true })} />
+      </section>
+
+      {p.tipe.length > 1 && (
+        <div className="tipe-pick">
+          <Segmented label="Lihat analisis tipe" value={t.id} onChange={setPilih} options={p.tipe.map((x) => ({ id: x.id, label: x.nama }))} />
+        </div>
+      )}
+
+      {jumlahSisi(t.foto) > 0 && (
+        <section className="card">
+          <h2 className="card-t">Foto {t.nama}</h2>
+          <p className="card-s">Beginilah calon penyewa melihat kamarnya — bisa diputar ke empat sisi.</p>
+          <Kamar360 foto={t.foto} nama={t.nama} tinggi="sm" />
+        </section>
+      )}
+
       <section className="card owner-pos">
         <div className="card-row">
-          <h2 className="card-t">Posisi harga di pasar</h2>
+          <h2 className="card-t">Posisi harga {t.nama}</h2>
           <StatusBadge status={a.status} size="sm" />
         </div>
         <Gauge persentil={a.persentil} />
@@ -235,30 +348,12 @@ function Dashboard() {
         <dl className="duo">
           <div>
             <dt>Harga kamu</dt>
-            {ubah ? (
-              <dd>
-                <form
-                  className="inline-edit"
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    if (hargaBaru >= 100_000) set({ pemilik: { ...p, harga: hargaBaru } });
-                    setUbah(false);
-                  }}
-                >
-                  <AmountInput id="harga-baru" label="Harga sewa baru" value={hargaBaru} onChange={setHargaBaru} />
-                  <button type="submit" className="text-btn">
-                    Simpan
-                  </button>
-                </form>
-              </dd>
-            ) : (
-              <dd>
-                {rp(p.harga)}
-                <button type="button" className="text-btn sm" onClick={() => setUbah(true)}>
-                  Ubah
-                </button>
-              </dd>
-            )}
+            <dd>
+              {rp(t.harga)}
+              <button type="button" className="text-btn sm" onClick={() => setEdit(t)}>
+                Ubah
+              </button>
+            </dd>
           </div>
           <div>
             <dt>Harga wajar</dt>
@@ -266,23 +361,23 @@ function Dashboard() {
           </div>
         </dl>
         <p className="v-basis">
-          {a.n} kos pembanding · data {tanggal(DATA_UPDATED)}
-          <InfoTip label="Cara menghitung">Harga wajar dihitung dari kos serupa di kawasan yang sama, dengan jenis dan fasilitas yang sama.</InfoTip>
+          {a.n} iklan kos di Kec. {a.kec} · data {tanggal(DATA_UPDATED)}
+          <InfoTip label="Cara menghitung">Dihitung dari iklan kos di kecamatan yang sama, dengan jenis kos dan fasilitas tipe ini.</InfoTip>
         </p>
       </section>
 
       {a.simulasi.length > 0 && (
         <section className="card">
-          <h2 className="card-t">Kalau kamu menambah fasilitas</h2>
+          <h2 className="card-t">Kalau {t.nama} ditambah fasilitas</h2>
           <p className="card-s">Nyalakan untuk melihat perkiraan harga wajar yang baru.</p>
           <div className="switch-list">
             {(semuaSim ? a.simulasi : [...a.simulasi].sort((x, y) => y.tambah - x.tambah).slice(0, 4)).map((s) => (
               <Switch
                 key={s.id}
                 label={s.label}
-                sub={`Harga wajar naik ± ${rpSingkat(s.tambah)}/bulan`}
+                sub={`Harga wajar naik ± ${rpSingkat(s.tambah)}/bulan · ${s.punya_pct}% kos di kecamatan ini punya`}
                 checked={tambah.includes(s.id)}
-                onChange={() => setTambah((t) => (t.includes(s.id) ? t.filter((x) => x !== s.id) : [...t, s.id]))}
+                onChange={() => setTambah((x) => (x.includes(s.id) ? x.filter((y) => y !== s.id) : [...x, s.id]))}
               />
             ))}
           </div>
@@ -294,10 +389,10 @@ function Dashboard() {
           {sim.length > 0 && (
             <div className="sim-res">
               <p>
-                Dengan {daftar(sim.map((s) => s.label))}, harga wajar menjadi <b>{rp(bulat10rb(a.harga_wajar + simTambah))}</b>.
+                Dengan {daftar(sim.map((s) => s.label))}, harga wajar {t.nama} menjadi <b>{rp(bulat10rb(a.harga_wajar + simTambah))}</b>.
               </p>
               <small>
-                Perkiraan biaya {rp(simBiaya)} · balik modal ± {Math.ceil(simBiaya / simTambah)} bulan
+                Perkiraan biaya {rp(simBiaya)} per kamar · balik modal ± {Math.ceil(simBiaya / simTambah)} bulan
               </small>
             </div>
           )}
@@ -314,7 +409,7 @@ function Dashboard() {
                 'Pasang di iklan atau pintu kos. Badge tidak bisa dibeli dan diperbarui tiap bulan.'
               ) : (
                 <>
-                  Badge hanya untuk harga wajar. Turunkan harga ke maksimal <b>{rp(bulat10rb(a.harga_wajar * 1.1))}</b> untuk mendapatkannya.
+                  Turunkan {daftar(kemahalan.map((x) => x.nama))} ke maksimal <b>{rp(bulat10rb(kemahalan[0].a.harga_wajar * 1.1))}</b> untuk mendapatkannya.
                 </>
               )}
             </p>
@@ -325,6 +420,8 @@ function Dashboard() {
         </div>
       </section>
 
+      <EditorTipe open={!!edit} awal={edit || tipeBaru(0)} onSimpan={simpanTipe} onBatal={() => setEdit(null)} onHapus={edit && !edit.baru ? hapusTipe : null} />
+
       <button type="button" className="text-btn center" onClick={() => set({ pemilik: null })}>
         Ganti kos
       </button>
@@ -333,6 +430,12 @@ function Dashboard() {
 }
 
 export default function Pemilik() {
-  const { state } = useStore();
-  return state.pemilik ? <Dashboard /> : <Klaim />;
+  const { state, set } = useStore();
+  // klaim lama (satu harga) dibungkus jadi satu tipe sekali saat halaman dibuka
+  useEffect(() => {
+    if (state.pemilik && !Array.isArray(state.pemilik.tipe)) set({ pemilik: rapikanPemilik(state.pemilik) });
+  }, [state.pemilik, set]);
+  if (!state.pemilik) return <Klaim />;
+  if (!Array.isArray(state.pemilik.tipe)) return null;
+  return <Dashboard />;
 }

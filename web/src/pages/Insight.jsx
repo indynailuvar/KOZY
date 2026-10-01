@@ -1,10 +1,12 @@
 import { useMemo, useState } from 'react';
 import Icon from '../components/Icon.jsx';
+import TanyaAI from '../components/TanyaAI.jsx';
 import KozyMap from '../components/KozyMap.jsx';
 import { SpeakButton, useBacaOtomatis } from '../components/A11y.jsx';
 import { Button, EmptyState, InfoTip, PageHead, ScoreRing, Segmented } from '../components/ui.jsx';
 import { fasilitasById, hitungArea, jenisById, kebutuhanById, ringkasInsight, saranAI, tujuanById } from '../api/kozy.js';
-import { daftar, rp, rpSingkat, rpSuara } from '../lib/format.js';
+import { bulat10rb, daftar, rp, rpSingkat, rpSuara } from '../lib/format.js';
+import { catat } from '../lib/jejak.js';
 import { useStore } from '../store.jsx';
 import { go } from '../router.js';
 
@@ -12,7 +14,7 @@ const FIT = { pas: 'Pas budget', sebagian: 'Sebagian pas', atas: 'Di atas budget
 
 function Sebaran({ bins }) {
   const max = Math.max(...bins.map((b) => b.jumlah), 1);
-  const label = (v) => (v >= 1_000_000 ? `${(v / 1_000_000).toLocaleString('id-ID', { maximumFractionDigits: 1 })} jt` : `${v / 1000} rb`);
+  const label = (v) => (v >= 1_000_000 ? `${(v / 1_000_000).toLocaleString('id-ID', { maximumFractionDigits: 1 })} jt` : `${Math.round(v / 1000)} rb`);
   return (
     <div className="histo">
       <div className="histo-bars" aria-hidden="true">
@@ -24,13 +26,13 @@ function Sebaran({ bins }) {
         <span>{label(bins[0].lo)}</span>
         <span>{label(bins[bins.length - 1].hi)}</span>
       </div>
-      <p className="note">Batang biru = rentang harga yang paling banyak ditemui.</p>
+      <p className="note">Tinggi batang = banyaknya kos pada rentang harga itu. Biru tua = rentang yang cocok untukmu.</p>
     </div>
   );
 }
 
 export default function Insight() {
-  const { state, set } = useStore();
+  const { state, set, bukaAI } = useStore();
   const r = state.cari;
   const [dilepas, setDilepas] = useState([]);
   const [semua, setSemua] = useState(false);
@@ -63,7 +65,11 @@ export default function Insight() {
     );
 
   const tampil = semua ? areas : areas.slice(0, 4);
+  // budget lebih besar daripada harga pasaran area terbaik: sisanya bisa dipakai melengkapi kamar
+  const teratas = areas[0];
+  const sisa = teratas ? bulat10rb(r.input.budgetMax - teratas.p50) : 0;
   const detail = (a) => {
+    catat('area_dipilih', { kawasan: a.nama, kec: a.kec, skor: a.skor, fit: a.fit });
     set({ cari: { ...r, input, pilih: { id: a.id, nama: a.nama } }, match: null });
     go('/match?dari=cari');
   };
@@ -74,6 +80,7 @@ export default function Insight() {
     <div className="ins-map-box">
       <KozyMap
         className="map-md"
+        label="Peta area rekomendasi. Semua area juga tercantum di daftar."
         center={[tujuan.lat, tujuan.lng]}
         zoom={14}
         fitKey={`${kunci}:${semua}`}
@@ -115,8 +122,10 @@ export default function Insight() {
               <small>/bulan</small>
             </p>
             <p className="v-basis">
-              {insight.n} data pembanding · akurasi model {Math.round(insight.akurasi * 100)}%
-              <InfoTip label="Tentang akurasi">Seberapa dekat perkiraan model dengan harga sebenarnya pada data uji.</InfoTip>
+              {insight.n} iklan kos di {insight.kecs.length} kecamatan · perkiraan meleset ± {rpSingkat(insight.mae)}
+              <InfoTip label="Tentang angka ini">
+                Rentang harga diambil dari harga iklan kos yang sebenarnya, bukan tebakan. Saat diuji ulang, perkiraan model meleset rata-rata ± {rp(insight.mae)} ({insight.mape}%).
+              </InfoTip>
             </p>
             <button type="button" className="text-btn" aria-expanded={sebaran} onClick={() => setSebaran((s) => !s)}>
               {sebaran ? 'Sembunyikan sebaran harga' : 'Lihat sebaran harga'}
@@ -124,6 +133,21 @@ export default function Insight() {
             </button>
             {sebaran && <Sebaran bins={insight.bins} />}
           </section>
+
+          {sisa >= 150_000 && (
+            <div className="ai-tip">
+              <span className="ic-circle sm">
+                <Icon name="sofa" size={16} />
+              </span>
+              <p>
+                <b>Sisa budget {rp(sisa)} per bulan</b>
+                Kos di {teratas.nama} umumnya {rpSingkat(teratas.p50)}, sedangkan budgetmu {rpSingkat(r.input.budgetMax)}. Sisanya bisa dipakai melengkapi kamar.
+              </p>
+              <Button size="sm" variant="secondary" onClick={() => bukaAI({ teks: `Ide upgrade kamar dengan budget ${rp(sisa)}` })}>
+                Ide belanja
+              </Button>
+            </div>
+          )}
 
           {saran && (
             <div className="ai-tip">
@@ -165,7 +189,7 @@ export default function Insight() {
           {tampilan === 'peta' && <div className="only-mob">{peta}</div>}
 
           <div className={`area-list ${tampilan === 'peta' ? 'hide-mob' : ''}`}>
-            <p className="sec-label">{areas.length} area dianalisis</p>
+            <p className="sec-label">{areas.length} area dengan data</p>
             {tampil.map((a, i) => (
               <button key={a.id} type="button" className={`area-row ${a.id === pilihId ? 'is-on' : ''}`} onClick={() => detail(a)} onMouseEnter={() => setPilihId(a.id)}>
                 <span className="rank">{i + 1}</span>
@@ -191,6 +215,16 @@ export default function Insight() {
 
         <aside className="ins-map only-desk-block">{peta}</aside>
       </div>
+
+      <TanyaAI
+        dari="insight"
+        judul="Bingung pilih area yang mana?"
+        saran={[
+          sisa > 0 ? `Sisa budget ${rp(sisa)} enaknya dibuat apa?` : 'Ide upgrade kamar dari uang hemat',
+          'Apa saja yang wajib dicek sebelum bayar kos?',
+          'Cara nawar harga kos',
+        ]}
+      />
     </div>
   );
 }
