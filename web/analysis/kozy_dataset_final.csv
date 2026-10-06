@@ -1,0 +1,308 @@
+nama_kost,kecamatan,kelurahan,jenis,harga,sumber,fas_km,fas_ac,fas_wifi,fas_kasur,fas_kloset,fas_akses24,fas_lemari,fas_meja,fas_pmotor,fas_pmobil,fas_tv,fas_dispenser,n_fasilitas_tercatat,rating,jumlah_dilihat,sisa_kamar,latitude,longitude,segmen,url
+Behomy Cozynest Gayungsari,Gayungan,Gayungan,campur,2300000,Papikost,1,0,1,1,,,1,1,1,1,1,0,10,,1052,9,-7.3358512,112.7182307,Kos Lengkap,https://papikost.com/kost/behomy-cozynest-gayungsari
+Kamar Mawar,Gayungan,Ketintang,putra,2500000,Papikost,1,1,1,1,,,1,0,1,1,0,0,10,,207,5,-7.3219777714724765,112.72587954998015,Kos Lengkap,https://papikost.com/kost/kamar-mawar
+Kamar Anggrek,Gayungan,Ketintang,putra,2500000,Papikost,1,1,1,1,,,1,0,1,1,0,0,10,,77,5,-7.3219777714724765,112.72587954998015,Kos Lengkap,https://papikost.com/kost/kamar-anggrek
+Kost Krukah 1 Tipe A,Gubeng,,putri,500000,Mamikos,0,0,0,1,0,1,,,,,,,6,,240,,,,Kos Dasar,
+Kost Barata Jaya 33 Tipe A,Gubeng,,putri,550000,Mamikos,0,0,1,1,1,1,,,,,,,6,,92,,,,Kos Lengkap,
+Kost Amanah Ngagal Wasana Tipe A,Gubeng,,putra,600000,Mamikos,0,0,1,1,0,1,,,,,,,6,,,,,,Kos Lengkap,
+Kost Heinz Tipe Standar,Gubeng,,putra,650000,Mamikos,0,1,1,1,0,0,,,,,,,6,,119,,,,Kos Lengkap,
+Kost Amanah Ngagal Wasana Tipe B,Gubeng,,putra,650000,Mamikos,0,0,0,1,1,1,,,,,,,6,5.0,147,,,,Kos Dasar,
+Kost Bu Tutik Bratang,Gubeng,,putri,700000,Mamikos,0,0,0,1,0,0,,,,,,,6,,308,,,,Kos Dasar,
+Kost Asri Tipe Standar,Gubeng,,putri,700000,Mamikos,0,0,1,1,0,0,,,,,,,6,,137,,,,Kos Lengkap,
+Kost Putri Dafin Didi Gubeng Surabaya,Gubeng,Airlangga,putri,700000,Papikost,0,0,1,1,,,1,1,1,0,0,0,10,,3780,7,-7.26968548,112.759864,Kos Lengkap,https://papikost.com/kost/kost-putri-dafin-didi-gubeng-surabaya
+Kost Misdi Ceria Tipe A,Gubeng,,putri,800000,Mamikos,0,0,1,1,0,0,,,,,,,6,,372,,,,Kos Lengkap,
+Kos omah lawas,Gubeng,Baratajaya,campur,800000,Papikost,0,1,1,1,,,1,1,1,1,0,0,10,,2307,2,-7.296959175631529,112.7570863609958,Kos Lengkap,https://papikost.com/kost/kos-omah-lawas
+Kost Jl Ngagel Jaya Tengah Tipe B,Gubeng,,campur,852000,Mamikos,0,1,1,1,1,1,,,,,,,6,,72,,,,Kos Lengkap,
+Kost Bapak Eko Dan Bu Gendut,Gubeng,,campur,900000,Mamikos,0,0,1,1,0,0,,,,,,,6,,,,,,Kos Lengkap,
+Kost Ngagel Jaya Tengah Tipe C2,Gubeng,,campur,900000,Mamikos,0,0,1,1,1,1,,,,,,,6,,134,,,,Kos Lengkap,
+Kost Talia Tipe A,Gubeng,,putri,900000,Mamikos,0,1,1,1,1,1,,,,,,,6,,155,,,,Kos Lengkap,
+Jaya Kost Gubeng Kertajaya 1,Gubeng,Gubeng,putra,900000,Papikost,0,1,1,1,,,1,1,1,0,0,0,10,,159,4,-7.2760394696824,112.75116473436356,Kos Lengkap,https://papikost.com/kost/jaya-kost-gubeng-kertajaya-1
+Kost Talia Tipe B,Gubeng,,putri,925000,Mamikos,0,1,1,1,1,1,,,,,,,6,,61,,,,Kos Lengkap,
+Kost Ruma Asta,Gubeng,,putri,950000,Mamikos,0,0,1,1,1,0,,,,,,,6,,121,,,,Kos Lengkap,
+Kost Amanah Ngagel Wasana Tipe C,Gubeng,,putra,1000000,Mamikos,0,0,1,1,0,1,,,,,,,6,,,,,,Kos Lengkap,
+Kost Jl Ngagel Jaya Tengah Tipe C,Gubeng,,campur,1000000,Mamikos,1,1,1,1,1,1,,,,,,,6,,194,,,,Kos Lengkap,
+Kost Ami Eksklusif,Gubeng,,putri,1100000,Mamikos,1,1,1,1,1,1,,,,,,,6,,282,,,,Kos Lengkap,
+Kost Jl Ngagel Jaya Tengah Tipe A,Gubeng,,campur,1150000,Mamikos,1,1,1,0,1,1,,,,,,,6,,143,,,,Kos Lengkap,
+Kost Bu Yana Vvip 1,Gubeng,,putra,1200000,Mamikos,0,1,1,1,1,0,,,,,,,6,,,,,,Kos Lengkap,
+Kost Bu Yana VVIP 3,Gubeng,,putra,1200000,Mamikos,0,1,1,1,1,1,,,,,,,6,,109,,,,Kos Lengkap,
+Kost Edu Baratajaya,Gubeng,,putri,1200000,Mamikos,0,1,1,1,1,0,,,,,,,6,,,,,,Kos Lengkap,
+Kos bu Made,Gubeng,Airlangga,putra,1200000,Papikost,0,1,1,1,,,1,1,1,0,0,0,10,,549,1,-7.2783885747516806,112.76000797748566,Kos Lengkap,https://papikost.com/kost/kos-bu-made
+Kost Griya Ayu Baratajaya Tipe B,Gubeng,,putri,1225000,Mamikos,0,1,1,1,1,1,,,,,,,6,,500,,,,Kos Lengkap,
+Kost Bungtomo11,Gubeng,,campur,1300000,Mamikos,0,1,1,1,1,1,,,,,,,6,,500,,,,Kos Lengkap,
+Kost Edu 3 Executive,Gubeng,,putri,1300000,Mamikos,0,1,1,1,1,1,,,,,,,6,,,,,,Kos Lengkap,
+Kost Ngagel Vl,Gubeng,,putri,1300000,Mamikos,1,1,1,1,1,0,,,,,,,6,,485,,,,Kos Lengkap,
+Kost Brajarani Lima Sepuluh Tipe A,Gubeng,,putri,1300000,Mamikos,0,1,1,1,1,1,,,,,,,6,,80,,,,Kos Lengkap,
+Kost Bu Wati Tipe Comfort,Gubeng,,campur,1350000,Mamikos,1,1,1,1,1,1,,,,,,,6,4.4,500,,,,Kos Lengkap,
+Kost Bing Cen,Gubeng,,campur,1400000,Mamikos,0,1,1,1,1,1,,,,,,,6,,354,,,,Kos Lengkap,
+Kost Bu Yana Vvip,Gubeng,,campur,1400000,Mamikos,1,1,1,1,1,0,,,,,,,6,,57,,,,Kos Lengkap,
+Kost Bu Yana Tipe A,Gubeng,,campur,1400000,Mamikos,1,1,1,1,1,1,,,,,,,6,,,,,,Kos Lengkap,
+Kost ISTTS,Gubeng,,putra,1500000,Mamikos,0,1,1,1,1,1,,,,,,,6,,315,,,,Kos Lengkap,
+Kost Novan 12,Gubeng,,putra,1500000,Mamikos,1,1,1,1,1,1,,,,,,,6,,296,,,,Kos Lengkap,
+Kost Ngagel Madya I,Gubeng,,putra,1500000,Mamikos,1,1,1,1,1,1,,,,,,,6,,456,,,,Kos Lengkap,
+Kost Barata Jaya 1C,Gubeng,,putra,1500000,Mamikos,1,1,1,1,1,0,,,,,,,6,,107,,,,Kos Lengkap,
+Kost Graha Wasana Tipe Eksekutif,Gubeng,,putri,1500010,Mamikos,1,1,1,1,1,1,,,,,,,6,,401,,,,Kos Lengkap,
+Kost Griya Ayu Baratajaya Tipe A,Gubeng,,putri,1525000,Mamikos,0,1,1,1,1,1,,,,,,,6,,346,,,,Kos Lengkap,
+Kost Hj Hasan Tipe B,Gubeng,,putri,1525000,Mamikos,1,1,1,1,1,1,,,,,,,6,5.0,258,,,,Kos Lengkap,
+Kost Hj Hasan Tipe A,Gubeng,,putri,1655000,Mamikos,1,1,1,1,1,1,,,,,,,6,4.9,,,,,Kos Lengkap,
+Pondok Alfi,Gubeng,Baratajaya,campur,1700000,Papikost,1,1,1,1,,,1,1,1,1,1,0,10,,258,10,-7.295116,112.7618451,Kos Lengkap,https://papikost.com/kost/pondok-alfi
+Kost Njt Tipe Eksklusif,Gubeng,,campur,1750000,Mamikos,1,1,1,1,1,0,,,,,,,6,,292,,,,Kos Lengkap,
+Kost Ngagel Tama 5153 Tipe B,Gubeng,,campur,1800000,Mamikos,1,1,1,1,1,1,,,,,,,6,,384,,,,Kos Lengkap,
+Griya HNN2 kos putra,Gubeng,Airlangga,putra,1850000,Papikost,1,1,1,1,,,1,1,1,0,0,1,10,,39,10,-7.2774883,112.7547777,Kos Lengkap,https://papikost.com/kost/griya-hnn2-kos-putra
+Kost La Koste Unair 26 Tipe A,Gubeng,,putra,1950000,Mamikos,1,1,1,1,1,1,,,,,,,6,,228,,,,Kos Lengkap,
+Kost Denaya Vip,Gubeng,,campur,2000000,Mamikos,1,1,1,1,1,1,,,,,,,6,,500,,,,Kos Lengkap,
+Kost Komfee Living,Gubeng,,campur,2200000,Mamikos,1,1,1,1,1,0,,,,,,,6,,173,,,,Kos Lengkap,
+Kost Mei,Gubeng,,campur,2500000,Mamikos,1,1,1,1,1,0,,,,,,,6,,117,,,,Kos Lengkap,
+Kost Baratajaya Tipe Deluxe,Gubeng,,putra,2500000,Mamikos,0,1,1,1,1,1,,,,,,,6,,,,,,Kos Lengkap,
+Kost Matra Ngagel Pucang Sewu,Gubeng,,campur,2515000,Mamikos,1,1,1,1,1,0,,,,,,,6,4.8,500,,,,Kos Lengkap,
+Kost Baratajaya Tipe Grand Deluxe,Gubeng,,putra,3000000,Mamikos,1,1,1,1,1,1,,,,,,,6,,86,,,,Kos Lengkap,
+Kost Baratajaya Tipe Eksekutif Grand Deluxe,Gubeng,,putra,4000000,Mamikos,1,1,1,1,1,1,,,,,,,6,,78,,,,Kos Lengkap,
+Kost Mahasiswi Rungkut Gunung Anyar Surabaya,Gunung Anyar,Rungkut Menanggal,putri,800000,Papikost,0,0,1,1,,,1,1,1,0,0,0,10,,327,4,-7.3353585608627965,112.77542352670935,Kos Lengkap,https://papikost.com/kost/kost-mahasiswi-rungkut-gunung-anyar-surabaya
+Kost Putra Athar's,Gunung Anyar,Gunung Anyar Tambak,putra,1000000,Papikost,0,0,1,1,,,1,1,1,0,0,0,10,,501,3,-7.335223,112.809624,Kos Lengkap,https://papikost.com/kost/kost-putra-athars
+Metaverse Kost (Basic Room),Gunung Anyar,Rungkut Menanggal,putri,1000000,Papikost,0,0,1,1,,,1,1,1,1,0,0,10,,63,5,-7.3361995426474715,112.77809908613392,Kos Lengkap,https://papikost.com/kost/metaverse-kost-basic-room
+Metaverse Kost (Galaxy Room),Gunung Anyar,Rungkut Menanggal,putri,1500000,Papikost,1,1,1,1,,,1,1,1,1,0,0,10,,57,5,-7.3361995426474715,112.77809908613392,Kos Lengkap,https://papikost.com/kost/metaverse-kost-galaxy-room
+"Kos Putri Bersih dan Nyaman ( Lakarsantri, Sby Barat)",Lakarsantri,Jeruk,putri,800000,Papikost,1,0,0,1,,,1,0,1,0,0,0,10,,1228,4,-7.303908,112.646734,Kos Dasar,https://papikost.com/kost/kos-putri-bersih-dan-nyaman-lakarsantri-sby-barat
+Kos Putri dekat PTC,Lakarsantri,Jeruk,putri,800000,Papikost,1,0,0,1,,,1,0,1,0,0,0,10,,632,4,-7.303908,112.646734,Kos Dasar,https://papikost.com/kost/kos-putri-dekat-ptc
+KAYLA KOST PUTRI / MAHASISWI,Mulyorejo,Kalisari,putri,2000000,Papikost,1,1,1,1,,,1,1,1,1,0,0,10,,109,6,-7.2716888,112.804311,Kos Lengkap,https://papikost.com/kost/kayla-kost-putri-mahasiswi
+Pastelle Premium Kost,Mulyorejo,Kalisari,putra,2750000,Papikost,1,1,1,1,,,1,1,1,1,1,0,10,,313,10,-7.265486224964494,112.79544462757484,Kos Lengkap,https://papikost.com/kost/pastelle-premium-kost
+Kost Fadilla Tipe A,Rungkut,,putri,650000,Mamikos,0,0,1,1,0,1,,,,,,,6,,401,,,,Kos Lengkap,
+Kost Pria Sederhana Surabaya,Rungkut,Kali Rungkut,putra,700000,Papikost,0,0,1,1,,,1,1,1,0,0,0,10,,1981,8,-7.32181509548724,112.76306130688681,Kos Lengkap,https://papikost.com/kost/kost-pria-sederhana-surabaya
+Kos murah laki di daerah strategis merr rungkut,Rungkut,Kedung Baruk,putra,750000,Papikost,0,0,0,1,,,0,0,0,0,0,0,10,,1324,2,-7.3181049058094665,112.78180360794067,Kos Dasar,https://papikost.com/kost/kos-murah-laki-di-daerah-strategis-merr-rungkut
+Kost Putri Rungkut Asri,Rungkut,Kali Rungkut,putri,800000,Papikost,0,0,1,1,,,1,1,1,1,0,0,10,,1292,10,-7.326843,112.776241,Kos Lengkap,https://papikost.com/kost/kost-putri-rungkut-asri
+Kost Mommy,Rungkut,,putra,1000000,Mamikos,1,1,1,1,1,0,,,,,,,6,5.0,203,,,,Kos Lengkap,
+Kost Ubaya Mega,Rungkut,,campur,1000000,Mamikos,1,1,1,1,1,1,,,,,,,6,,500,,,,Kos Lengkap,
+Kos Bu Sri Kamar A,Rungkut,Medokan Ayu,putri,1000000,Papikost,0,1,1,1,,,1,0,1,1,0,0,10,,548,2,-7.3322688,112.7962218,Kos Lengkap,https://papikost.com/kost/kos-bu-sri-kamar-a
+Kost Andy Sambo,Rungkut,Medokan Ayu,putra,1000000,Papikost,1,1,1,1,,,1,0,1,0,0,0,10,,380,10,-7.328018311977341,112.79662093676507,Kos Lengkap,https://papikost.com/kost/kost-andy-sambo
+Kost Baru Merr Boulevard,Rungkut,Penjaringan Sari,putra,1300000,Papikost,0,1,1,1,,,1,1,1,1,0,0,10,,329,4,-7.323061661777231,112.78377127640852,Kos Lengkap,https://papikost.com/kost/kost-baru-merr-boulevard
+Kost Tenggilis Mejoyo KH 14 Tipe A,Rungkut,,putra,1325000,Mamikos,0,1,1,1,1,0,,,,,,,6,4.8,234,,,,Kos Lengkap,
+Kost Mommy Tipe B,Rungkut,,putra,1400000,Mamikos,1,1,1,1,1,1,,,,,,,6,,65,,,,Kos Lengkap,
+Amarta Habitat Tipe Comfort,Rungkut,Medokan Ayu,putra,1500000,Papikost,0,0,0,1,,,0,0,0,0,0,1,10,,147,2,-7.3304388,112.7968705,Kos Dasar,https://papikost.com/kost/amarta-habitat-tipe-comfort
+Cozy Cove Kost,Rungkut,Kali Rungkut,putri,1600000,Papikost,1,1,1,1,,,1,1,1,1,1,0,10,,44,10,-7.3237404,112.7629419,Kos Lengkap,https://papikost.com/kost/cozy-cove-kost
+Kost Jack And Jill Executive,Rungkut,,campur,1650000,Mamikos,1,1,1,1,1,0,,,,,,,6,,358,,,,Kos Lengkap,
+Kost Jnj Living Tipe Eksklusif,Rungkut,,campur,1850000,Mamikos,1,1,1,1,1,1,,,,,,,6,,108,,,,Kos Lengkap,
+Kost Jnj Living Rs Ubaya Tipe Ekslusif,Rungkut,,campur,1850000,Mamikos,1,1,1,1,1,1,,,,,,,6,,205,,,,Kos Lengkap,
+Kost J&j Living Tipe Eksklusif,Rungkut,,campur,1850000,Mamikos,1,1,1,1,1,0,,,,,,,6,,74,,,,Kos Lengkap,
+Kost Putri Bu Ratna,Sambikerep,Lontar,putri,600000,Papikost,0,0,0,1,,,1,0,1,0,0,0,10,,1240,3,-7.2819604114359375,112.67427653074265,Kos Dasar,https://papikost.com/kost/kost-putri-bu-ratna
+Kos bu liyatin,Sambikerep,Made,putri,1200000,Papikost,1,1,1,1,,,1,1,1,1,0,0,10,,94,8,-7.279964351879207,112.62778043746947,Kos Lengkap,https://papikost.com/kost/kos-bu-liyatin
+House of Felix - Kamar Standard,Sambikerep,Bringin,campur,1850000,Papikost,1,1,1,1,,,1,1,1,1,1,1,10,,169,5,-7.2676446,112.63691,Kos Lengkap,https://papikost.com/kost/house-of-felix-kamar-standard
+Cozy One Bedroom Citraland near Universitas Ciputra,Sambikerep,Sambikerep,putra,2700000,Papikost,0,0,0,1,,,0,0,0,0,0,0,10,,105,1,-7.274451581264419,112.6499354839325,Kos Dasar,https://papikost.com/kost/cozy-one-bedroom-citraland-near-universitas-ciputra
+Kost Hera Surabaya,Sawahan,Petemon,putri,500000,Papikost,0,0,1,1,,,0,0,1,1,0,0,10,,628,3,-7.26374458698596,112.7240894437,Kos Lengkap,https://papikost.com/kost/kost-hera-surabaya
+Standar Room,Sawahan,Kupang Krajan,campur,1600000,Papikost,1,1,1,1,,,1,0,1,1,0,0,10,,74,6,-7.271993161725186,112.72672444581984,Kos Lengkap,https://papikost.com/kost/standar-room
+Deluxe Mezanine,Sawahan,Kupang Krajan,campur,2000000,Papikost,1,1,1,1,,,1,0,1,1,0,0,10,,57,2,-7.271993161725186,112.72672444581984,Kos Lengkap,https://papikost.com/kost/deluxe-mezanine
+Kost Bu Sulimah,Sukolilo,,putra,450000,Mamikos,0,0,0,1,0,0,,,,,,,6,,,,,,Kos Dasar,
+Kost Siti Zubaidah Tipe A,Sukolilo,,putri,450000,Mamikos,0,0,1,1,0,1,,,,,,,6,,288,,,,Kos Lengkap,
+Kost Bu Nuryatin Tipe Standart,Sukolilo,,putra,500000,Mamikos,0,0,1,1,0,0,,,,,,,6,,115,,,,Kos Lengkap,
+Kost Pandega Citrabangsa Tipe Biasa,Sukolilo,,putri,500000,Mamikos,1,0,1,1,1,1,,,,,,,6,,500,,,,Kos Lengkap,
+Kost Pink Nginden II Tipe C,Sukolilo,,putri,550000,Mamikos,0,0,1,1,0,0,,,,,,,6,,61,,,,Kos Lengkap,
+Kost Unitomo Untag Premier Tipe A,Sukolilo,,putri,550000,Mamikos,0,0,1,1,1,1,,,,,,,6,,71,,,,Kos Lengkap,
+Kost Eko,Sukolilo,,putri,575000,Mamikos,0,0,1,1,0,0,,,,,,,6,,,,,,Kos Lengkap,
+Kost Bu Siti UNTAG Tipe Standar,Sukolilo,,campur,600000,Mamikos,0,0,0,1,0,0,,,,,,,6,,500,,,,Kos Dasar,
+Kost Umar,Sukolilo,,putri,600000,Mamikos,0,0,1,1,0,1,,,,,,,6,,360,,,,Kos Lengkap,
+Tipe Standar A,Sukolilo,Menur Pumpungan,putri,600000,Papikost,0,0,1,1,,,1,1,1,0,0,0,10,,685,3,-7.2983632,112.763602,Kos Lengkap,https://papikost.com/kost/tipe-standar-a
+Kost Elmy,Sukolilo,Medokan Semampir,putri,600000,Papikost,0,0,1,1,,,1,0,0,0,0,0,10,,5,10,-7.309423,112.7783642,Kos Lengkap,https://papikost.com/kost/kost-elmy
+Kost Minimalist Tipe D,Sukolilo,,putri,625000,Mamikos,0,0,1,1,0,0,,,,,,,6,,,,,,Kos Lengkap,
+Kost Sharleen Tipe Standar,Sukolilo,,putra,650000,Mamikos,0,0,0,1,0,0,,,,,,,6,,,,,,Kos Dasar,
+Kost Pink Nginden II Tipe Non Ac,Sukolilo,,putri,650000,Mamikos,0,0,1,1,0,0,,,,,,,6,,149,,,,Kos Lengkap,
+Kost Minimalist Tipe C,Sukolilo,,putri,650000,Mamikos,0,0,1,1,0,0,,,,,,,6,,,,,,Kos Lengkap,
+Kost Asiyah 1 Tipe C,Sukolilo,,putri,675000,Mamikos,0,0,1,1,1,0,,,,,,,6,,77,,,,Kos Lengkap,
+Kost Syariah Kurnia Tipe Standar,Sukolilo,,putri,680000,Mamikos,0,0,1,1,0,0,,,,,,,6,,365,,,,Kos Lengkap,
+Kost Pumpungan IV Tipe Standar,Sukolilo,,putri,680000,Mamikos,0,0,1,1,0,0,,,,,,,6,,130,,,,Kos Lengkap,
+Kost Manyar Tipe B,Sukolilo,,putri,700000,Mamikos,0,0,1,1,1,0,,,,,,,6,,,,,,Kos Lengkap,
+Kost Tutik Mirawati Tipe A,Sukolilo,,putra,700000,Mamikos,0,0,1,1,1,1,,,,,,,6,5.0,86,,,,Kos Lengkap,
+Tipe Premium B,Sukolilo,Menur Pumpungan,putri,700000,Papikost,0,0,1,1,,,1,1,1,0,0,0,10,,609,2,-7.2983632,112.763602,Kos Lengkap,https://papikost.com/kost/tipe-premium-b
+Kost Pumpungan,Sukolilo,,putri,725000,Mamikos,0,0,1,1,1,1,,,,,,,6,,257,,,,Kos Lengkap,
+Kost Nginden Tipe 1,Sukolilo,,putri,750000,Mamikos,0,0,1,1,1,0,,,,,,,6,,30,,,,Kos Lengkap,
+Kost Minimalist Tipe B,Sukolilo,,putri,750000,Mamikos,0,0,1,1,0,0,,,,,,,6,,86,,,,Kos Lengkap,
+Kost IV Tipe B,Sukolilo,,putri,750000,Mamikos,0,0,1,1,0,0,,,,,,,6,,,,,,Kos Lengkap,
+Kost Pink Nginden Tipe Non Ac,Sukolilo,,putri,750000,Mamikos,0,0,1,1,0,0,,,,,,,6,,150,,,,Kos Lengkap,
+Kost Nginden Intan Utara Tipe Tertib,Sukolilo,,campur,753000,Mamikos,0,0,0,1,1,1,,,,,,,6,,500,,,,Kos Dasar,
+Kost Pumpungan IV 25 Tipe Mantap,Sukolilo,,putri,775000,Mamikos,0,0,1,1,1,0,,,,,,,6,,361,,,,Kos Lengkap,
+Kost Pumpungan IV Tipe Premium B,Sukolilo,,putri,775000,Mamikos,0,0,1,1,0,0,,,,,,,6,,,,,,Kos Lengkap,
+Kost Priyanca Tipe Standar,Sukolilo,,putra,800000,Mamikos,0,0,0,1,1,0,,,,,,,6,,,,,,Kos Dasar,
+Kost Untag Tipe Standar,Sukolilo,,putri,800000,Mamikos,0,0,1,1,1,0,,,,,,,6,,62,,,,Kos Lengkap,
+Kost Pancasila Tipe C,Sukolilo,,putri,800000,Mamikos,0,0,1,1,1,1,,,,,,,6,,,,,,Kos Lengkap,
+Kost Sone Laundry Tipe C,Sukolilo,,putra,800000,Mamikos,0,1,1,1,1,1,,,,,,,6,,70,,,,Kos Lengkap,
+Kost Razky Tipe A,Sukolilo,,putra,800000,Mamikos,0,0,1,1,0,0,,,,,,,6,,80,,,,Kos Lengkap,
+Kost Nginden Intan Utara Tipe A,Sukolilo,,campur,800000,Mamikos,0,0,0,1,1,1,,,,,,,6,,308,,,,Kos Dasar,
+Kost Rafiasha,Sukolilo,,putri,800000,Mamikos,0,0,1,1,1,0,,,,,,,6,,,,,,Kos Lengkap,
+Kost 3 Tingkat Tertib Bersih Nginden Tipe A,Sukolilo,,campur,803000,Mamikos,0,0,1,1,1,1,,,,,,,6,,135,,,,Kos Lengkap,
+Kost Asiyah 1 Tipe B,Sukolilo,,putri,825000,Mamikos,0,0,1,1,1,0,,,,,,,6,,,,,,Kos Lengkap,
+Kost Asiyah 1 Tipe A,Sukolilo,,putri,860000,Mamikos,0,0,1,1,1,0,,,,,,,6,,,,,,Kos Lengkap,
+Kost Tunggal Jaya,Sukolilo,,putri,900000,Mamikos,0,0,1,1,1,0,,,,,,,6,,,,,,Kos Lengkap,
+Kost Griya Suya Tipe Standard Non Ac,Sukolilo,,putri,900000,Mamikos,1,0,1,1,1,0,,,,,,,6,,339,,,,Kos Lengkap,
+Kost Pink Nginden II Tipe Ac,Sukolilo,,putri,900000,Mamikos,0,1,1,1,0,0,,,,,,,6,,77,,,,Kos Lengkap,
+Tipe Premium A,Sukolilo,Menur Pumpungan,putri,900000,Papikost,0,1,1,0,,,1,1,1,0,0,0,10,,705,1,-7.2983632,112.763602,Kos Lengkap,https://papikost.com/kost/tipe-premium-a
+Kost Semolowaru Praja Tipe A,Sukolilo,,putri,950000,Mamikos,0,0,1,1,0,0,,,,,,,6,,101,,,,Kos Lengkap,
+Kamar Deluxe,Sukolilo,Menur Pumpungan,putri,950000,Papikost,1,1,1,1,,,1,1,1,0,0,0,10,,269,1,-7.2983632,112.763602,Kos Lengkap,https://papikost.com/kost/kamar-deluxe
+Kost Pumpungan IV 25 Deluxe 2,Sukolilo,,putri,975000,Mamikos,1,0,1,1,1,0,,,,,,,6,,301,,,,Kos Lengkap,
+Kost Pumpungan IV Tipe Premium A,Sukolilo,,putri,975000,Mamikos,0,1,1,1,0,0,,,,,,,6,,296,,,,Kos Lengkap,
+Kost Pumpungan IV 25 Tipe Mantap Jiwa,Sukolilo,,putri,975000,Mamikos,0,1,1,1,1,0,,,,,,,6,,,,,,Kos Lengkap,
+Kost Pumpungan IV 25 Deluxe,Sukolilo,,putri,1000000,Mamikos,1,0,1,1,1,0,,,,,,,6,,,,,,Kos Lengkap,
+Kost Exclusive Arya House Tipe Standart,Sukolilo,,putra,1000000,Mamikos,0,0,1,1,1,1,,,,,,,6,,112,,,,Kos Lengkap,
+Kost Sedulur Nginden Tipe Standar,Sukolilo,,putra,1000000,Mamikos,0,1,1,1,1,0,,,,,,,6,,,,,,Kos Lengkap,
+7 Eden Kos Pria Manyar Jaya,Sukolilo,Menur Pumpungan,putra,1000000,Papikost,0,1,1,1,,,1,1,1,0,0,0,10,,274,10,-7.297024793336967,112.77231395244598,Kos Lengkap,https://papikost.com/kost/7-eden-kos-pria-manyar-jaya
+Kamar AC &amp; NON AC,Sukolilo,Ngiden Jangkungan,putri,1000000,Papikost,0,1,1,1,,,1,1,1,0,0,0,10,,116,3,-7.302205,112.766977,Kos Lengkap,https://papikost.com/kost/kamar-ac-andamp-non-ac
+Kost Minimalist Tipe A,Sukolilo,,putri,1100000,Mamikos,0,1,1,1,0,0,,,,,,,6,,,,,,Kos Lengkap,
+Kost Umi Tipe A1,Sukolilo,,putri,1180000,Mamikos,1,1,1,1,1,1,,,,,,,6,,,,,,Kos Lengkap,
+Kost Manyar Rejo I Tipe A,Sukolilo,,putri,1200000,Mamikos,1,1,0,1,1,1,,,,,,,6,,405,,,,Kos Dasar,
+Kost Griya Suya Tipe Premium Ac,Sukolilo,,putri,1200000,Mamikos,1,1,1,1,1,0,,,,,,,6,,,,,,Kos Lengkap,
+Kost Ucik Nginden Tengah,Sukolilo,,putra,1250000,Mamikos,1,1,1,1,1,1,,,,,,,6,,245,,,,Kos Lengkap,
+Kost Pancasila Tipe B,Sukolilo,,putri,1250000,Mamikos,0,1,1,1,1,1,,,,,,,6,,147,,,,Kos Lengkap,
+VVIP,Sukolilo,Ngiden Jangkungan,putri,1250000,Papikost,1,1,1,1,,,1,1,1,0,0,0,10,,41,7,-7.302205,112.766977,Kos Lengkap,https://papikost.com/kost/vvip
+Kost Palem Semolo Premium,Sukolilo,Menur Pumpungan,putri,1250000,Papikost,0,1,1,1,,,1,1,1,1,0,0,10,,41,6,-7.2861,112.7695,Kos Lengkap,https://papikost.com/kost/kost-palem-semolo-premium
+Kost Valentino Tipe C,Sukolilo,,putri,1300000,Mamikos,1,1,1,1,1,1,,,,,,,6,5.0,272,,,,Kos Lengkap,
+Kost Ucik,Sukolilo,,putri,1300000,Mamikos,1,1,1,1,1,0,,,,,,,6,,128,,,,Kos Lengkap,
+Kost Manyar Tipe Premium A,Sukolilo,,putri,1300000,Mamikos,0,0,1,1,1,0,,,,,,,6,,,,,,Kos Lengkap,
+Kost Pumpungan IV 25 Deluxe Plus,Sukolilo,,putri,1300000,Mamikos,1,1,1,1,1,0,,,,,,,6,,207,,,,Kos Lengkap,
+Kost Namira Tipe A,Sukolilo,,putri,1300000,Mamikos,1,1,1,1,1,0,,,,,,,6,5.0,172,,,,Kos Lengkap,
+Kost Pancasila Tipe A,Sukolilo,,putri,1400000,Mamikos,1,1,1,1,1,1,,,,,,,6,5.0,174,,,,Kos Lengkap,
+Kost Praja III Tipe A,Sukolilo,,putri,1400000,Mamikos,0,1,0,0,0,1,,,,,,,6,,,,,,Kos Dasar,
+Kost Untag Unitomo Tipe A,Sukolilo,,putri,1400000,Mamikos,1,1,1,1,1,0,,,,,,,6,,,,,,Kos Lengkap,
+Kost Semolowaru Praja Tipe B1,Sukolilo,,putri,1400000,Mamikos,0,0,1,1,0,0,,,,,,,6,,,,,,Kos Lengkap,
+Kost Elite Nginden Tengah,Sukolilo,,putra,1400000,Mamikos,1,1,1,1,1,1,,,,,,,6,,,,,,Kos Lengkap,
+Kost Semolowaru Praja Tipe Ac Reguler Lt 2,Sukolilo,,putri,1400000,Mamikos,0,1,1,1,0,0,,,,,,,6,,,,,,Kos Lengkap,
+Kost Sone Laundry Tipe A,Sukolilo,,putra,1400000,Mamikos,1,1,1,1,1,1,,,,,,,6,,234,,,,Kos Lengkap,
+Kost Lazarus Eksekutif,Sukolilo,,putri,1500000,Mamikos,1,1,1,1,1,0,,,,,,,6,,158,,,,Kos Lengkap,
+Kost Cemerlang Manyar Indah 1,Sukolilo,,putri,1500000,Mamikos,1,1,1,0,0,0,,,,,,,6,,,,,,Kos Lengkap,
+Kost Putri Home Sweet Home Semolowaru Surabaya Timur,Sukolilo,Semolowaru,putri,1500000,Papikost,0,1,1,1,,,1,1,1,1,0,0,10,,130,9,-7.3053171,112.7743487,Kos Lengkap,https://papikost.com/kost/kost-putri-home-sweet-home-semolowaru-surabaya-timur
+Kost Pumpungan IV 25 Tipe Studio,Sukolilo,,putri,1500001,Mamikos,1,1,1,1,1,0,,,,,,,6,,,,,,Kos Lengkap,
+Kost Cemerlang,Sukolilo,,putri,1520000,Mamikos,1,1,1,1,1,1,,,,,,,6,,73,,,,Kos Lengkap,
+Kost Valentino Tipe B,Sukolilo,,putri,1550000,Mamikos,1,1,1,1,1,1,,,,,,,6,5.0,,,,,Kos Lengkap,
+Kost Keluarga Tipe A,Sukolilo,,campur,1550000,Mamikos,1,0,0,1,1,1,,,,,,,6,,,,,,Kos Dasar,
+Kost Semolowaru Praja Tipe Ac Kmd,Sukolilo,,putri,1550000,Mamikos,1,0,1,1,1,0,,,,,,,6,,,,,,Kos Lengkap,
+Kost Holistay 1 Standard,Sukolilo,,campur,1600000,Mamikos,1,1,1,1,1,0,,,,,,,6,,90,,,,Kos Lengkap,
+Kost Haifa Manyar Indah,Sukolilo,,putri,1600000,Mamikos,1,1,1,1,1,1,,,,,,,6,,,,,,Kos Lengkap,
+Kost Tesere Manyar Indah,Sukolilo,,putri,1675000,Mamikos,1,1,1,1,0,0,,,,,,,6,,126,,,,Kos Lengkap,
+Kost Holistay 1 Superior B,Sukolilo,,campur,1700000,Mamikos,1,1,1,1,1,1,,,,,,,6,,,,,,Kos Lengkap,
+Kost Ekslusif Manyar Rejo,Sukolilo,,campur,1750000,Mamikos,1,1,1,1,1,1,,,,,,,6,,130,,,,Kos Lengkap,
+Kost Palem Semolo Exclusive A,Sukolilo,Menur Pumpungan,putri,1750000,Papikost,1,1,1,1,,,1,1,1,1,0,0,10,,14,1,-7.2861,112.7695,Kos Lengkap,https://papikost.com/kost/kost-palem-semolo-exclusive-a
+Kost Palem Semolo Exclusive B,Sukolilo,Menur Pumpungan,putri,1750000,Papikost,1,1,1,1,,,1,1,1,1,0,0,10,,5,2,-7.2861,112.7695,Kos Lengkap,https://papikost.com/kost/kost-palem-semolo-exclusive-b
+Kost Valentino Tipe A,Sukolilo,,putri,1800000,Mamikos,1,1,1,1,1,1,,,,,,,6,,,,,,Kos Lengkap,
+Kost Untag Unitomo Tipe B,Sukolilo,,putri,1800000,Mamikos,1,1,1,1,1,0,,,,,,,6,,65,,,,Kos Lengkap,
+Kost Holistay 1 Tipe Superior,Sukolilo,,campur,1800000,Mamikos,1,1,1,1,1,1,,,,,,,6,5.0,500,,,,Kos Lengkap,
+Alsi Home Surabaya,Sukolilo,Menur Pumpungan,putra,1900000,Papikost,1,1,1,1,,,0,1,1,1,0,0,10,,266,4,-7.2999787,112.7718391,Kos Lengkap,https://papikost.com/kost/alsi-home-surabaya
+Emerald guesthouse Klampis Surabaya,Sukolilo,Klampis Ngasem,campur,1950000,Papikost,1,1,1,1,,,1,1,1,1,1,0,10,,194,4,-7.291026,112.776156,Kos Lengkap,https://papikost.com/kost/emerald-guesthouse-klampis-surabaya
+Kost Arc Living Saptahary,Sukolilo,,putri,2000000,Mamikos,1,1,1,1,1,0,,,,,,,6,,227,,,,Kos Lengkap,
+Kost Mono,Sukolilo,,putri,2000000,Mamikos,1,1,1,1,1,1,,,,,,,6,,152,,,,Kos Lengkap,
+Alsi Kos Surabaya,Sukolilo,Menur Pumpungan,putri,2000000,Papikost,1,1,1,1,,,1,1,1,1,1,0,10,,194,6,-7.2999787,112.7718391,Kos Lengkap,https://papikost.com/kost/alsi-kos-surabaya
+Kost Nginden Intan Tipe Executive,Sukolilo,,campur,2200000,Mamikos,1,1,1,1,1,1,,,,,,,6,4.4,123,,,,Kos Lengkap,
+Kost Nginden Intan Tipe Vip,Sukolilo,,campur,2200000,Mamikos,1,1,1,1,1,1,,,,,,,6,,197,,,,Kos Lengkap,
+Kost Onnie Rooms Tipe A,Sukolilo,,putri,2225000,Mamikos,1,1,1,1,1,1,,,,,,,6,,222,,,,Kos Lengkap,
+Kost Klapa Exclusive,Sukolilo,,putri,2300000,Mamikos,1,1,1,1,1,0,,,,,,,6,,140,,,,Kos Lengkap,
+Kost Omah Ndoro Syariah Superior,Sukolilo,,campur,2300000,Mamikos,1,1,1,1,1,1,,,,,,,6,,208,,,,Kos Lengkap,
+Kost Holistay 1 Deluxe,Sukolilo,,campur,2300000,Mamikos,1,1,1,1,1,1,,,,,,,6,,180,,,,Kos Lengkap,
+Kost Nestay Living Deluxe,Sukolilo,,putri,2300000,Mamikos,1,1,1,1,1,0,,,,,,,6,,,,,,Kos Lengkap,
+Onnie Room,Sukolilo,Menur Pumpungan,putri,2500000,Papikost,1,1,1,1,,,1,1,1,1,0,0,10,,95,10,-7.295142246175472,112.76799157261848,Kos Lengkap,https://papikost.com/kost/onnie-room
+Kost Manyar Tipe B1,Sukolilo,,campur,3000000,Mamikos,1,1,1,1,1,1,,,,,,,6,,177,,,,Kos Lengkap,
+Kost Manyar Tipe A,Sukolilo,,campur,3000000,Mamikos,1,1,1,1,1,1,,,,,,,6,,,,,,Kos Lengkap,
+Kost Graha Aashritha 1,Sukolilo,,campur,3250000,Mamikos,1,1,0,1,1,1,,,,,,,6,,255,,,,Kos Dasar,
+Kos Putri Dandelion Tipe C,Tambaksari,Pacar Kembang,putri,800000,Papikost,0,0,1,1,,,1,1,1,0,0,0,10,,14,1,-7.25957023809304,112.77139596641064,Kos Lengkap,https://papikost.com/kost/kos-putri-dandelion-tipe-c
+Kos Putri Dandelion Tipe B,Tambaksari,Pacar Kembang,putri,900000,Papikost,0,0,1,1,,,1,1,1,0,0,0,10,,3,1,-7.25957023809304,112.77139596641064,Kos Lengkap,https://papikost.com/kost/kos-putri-dandelion-tipe-b
+Kos Putri Dandelion Tipe A,Tambaksari,Pacar Kembang,putri,1000000,Papikost,0,0,1,1,,,1,0,1,0,0,0,10,,5,1,-7.25957023809304,112.77139596641064,Kos Lengkap,https://papikost.com/kost/kos-putri-dandelion-tipe-a
+Kos Putri Sekar Arum dekat Unair,Tambaksari,Pacar Kembang,putri,1300000,Papikost,1,1,1,1,,,1,1,1,0,0,0,10,,109,9,-7.263025029536,112.76396814734426,Kos Lengkap,https://papikost.com/kost/kos-putri-sekar-arum-dekat-unair
+Bobo Studio,Tegalsari,Dr. Sutomo,campur,1750000,Papikost,1,1,1,1,,,1,1,1,1,1,0,10,,2163,10,-7.276182446295405,112.73354329168795,Kos Lengkap,https://papikost.com/kost/bobo-studio
+Kost Dwi Aningsih Tipe A,Tenggilis Mejoyo,,putri,575000,Mamikos,0,0,1,1,0,1,,,,,,,6,,281,,,,Kos Lengkap,
+Kost Bu Dewi Reformasi Tipe B,Tenggilis Mejoyo,,putri,575000,Mamikos,0,0,1,1,0,1,,,,,,,6,,205,,,,Kos Lengkap,
+Kost Bu Dewi Reformasi Tipe A,Tenggilis Mejoyo,,putri,600000,Mamikos,0,0,1,1,0,1,,,,,,,6,,254,,,,Kos Lengkap,
+Kost pasutri kutisari utara 5 no 9,Tenggilis Mejoyo,Kutisari,campur,600000,Papikost,1,0,1,0,,,0,0,1,0,0,0,10,,6442,10,-7.33213,112.74381,Kos Lengkap,https://papikost.com/kost/kost-pasutri-kutisari-utara-5-no-9
+Kost Bapak Aji,Tenggilis Mejoyo,,putri,650000,Mamikos,1,0,1,1,0,1,,,,,,,6,,,,,,Kos Lengkap,
+Kos-kosan maskaryo kamar type 2,Tenggilis Mejoyo,Tenggilis Mejoyo,putra,800000,Papikost,0,0,1,1,,,1,1,1,0,0,0,10,,42,7,-7.3227419,112.7598365,Kos Lengkap,https://papikost.com/kost/kos-kosan-maskaryo-kamar-type-2
+Kost Panjang Jiwo Permai,Tenggilis Mejoyo,,putri,850000,Mamikos,0,1,1,1,1,0,,,,,,,6,,410,,,,Kos Lengkap,
+Kos-kosan maskaryo kamar Type 1,Tenggilis Mejoyo,Tenggilis Mejoyo,putra,875000,Papikost,0,0,1,1,,,1,1,1,0,0,0,10,,20,1,-7.3227419,112.7598365,Kos Lengkap,https://papikost.com/kost/kos-kosan-maskaryo-kamar-type-1
+Kost Hana Tipe A,Tenggilis Mejoyo,,putri,950000,Mamikos,1,0,1,1,1,0,,,,,,,6,,193,,,,Kos Lengkap,
+Kost Novan G1,Tenggilis Mejoyo,,putra,1050000,Mamikos,1,1,1,1,1,1,,,,,,,6,4.4,79,,,,Kos Lengkap,
+Kost KIU 228,Tenggilis Mejoyo,Kutisari,putri,1100000,Papikost,0,1,1,1,,,1,1,1,0,0,0,10,,21,1,-7.3372721,112.7497199,Kos Lengkap,https://papikost.com/kost/kost-kiu-228
+Kost De Luma Residence Standard,Tenggilis Mejoyo,,campur,1200000,Mamikos,1,1,1,1,1,0,,,,,,,6,,500,,,,Kos Lengkap,
+Kost Putri KIU 228,Tenggilis Mejoyo,Kutisari,putri,1200000,Papikost,1,1,1,1,,,1,1,1,0,0,0,10,,13,1,-7.3372721,112.7497199,Kos Lengkap,https://papikost.com/kost/kost-putri-kiu-228
+Kost Putri Kutisari SIER Tenggilis,Tenggilis Mejoyo,Kutisari,putri,1300000,Papikost,1,1,1,1,,,1,1,1,1,0,0,10,,407,6,-7.333773294687014,112.74722036338972,Kos Lengkap,https://papikost.com/kost/kost-putri-kutisari-sier-tenggilis
+KOST KIU228,Tenggilis Mejoyo,Kutisari,putri,1300000,Papikost,1,1,1,1,,,1,1,1,0,0,0,10,,32,2,-7.3372721,112.7497199,Kos Lengkap,https://papikost.com/kost/kost-kiu228
+KOST PUTRI 415,Tenggilis Mejoyo,Panjang Jiwo,putri,1500000,Papikost,1,1,1,1,,,1,1,1,1,0,0,10,,119,4,-7.312439382988887,112.76453554630278,Kos Lengkap,https://papikost.com/kost/kost-putri-415
+Kost Kamar Besar dan Homy Tenggilis,Tenggilis Mejoyo,Tenggilis Mejoyo,campur,2300000,Papikost,1,1,1,1,,,1,1,1,1,1,0,10,,264,10,-7.318893216952698,112.7568680641707,Kos Lengkap,https://papikost.com/kost/kost-kamar-besar-dan-homy-tenggilis
+Kost Prapen Indah Tipe Eksekutif,Tenggilis Mejoyo,,campur,3000000,Mamikos,1,1,1,1,1,1,,,,,,,6,,,,,,Kos Lengkap,
+Kost Achmad 1 Tipe Standar Non Ac,Wonocolo,,putra,800000,Mamikos,1,0,1,1,1,1,,,,,,,6,,500,,,,Kos Lengkap,
+Kamar Kost HS,Wonocolo,Bendul Merisi,putra,800000,Papikost,1,0,1,1,,,1,0,1,0,0,0,10,,1066,6,-7.310097460967134,112.74150609970093,Kos Lengkap,https://papikost.com/kost/kamar-kost-hs
+Kost Sidosermo 1,Wonocolo,,putri,1050000,Mamikos,1,0,0,1,0,1,,,,,,,6,,347,,,,Kos Dasar,
+Kost Sidosermo,Wonocolo,,putra,1050000,Mamikos,1,0,0,1,1,1,,,,,,,6,,167,,,,Kos Dasar,
+Kost Executive Tipe A,Wonocolo,,campur,1100000,Mamikos,1,1,0,1,1,0,,,,,,,6,,222,,,,Kos Dasar,
+Kost Tiara Sidosermo Tipe B,Wonocolo,,putri,1125000,Mamikos,1,1,1,1,0,1,,,,,,,6,,500,,,,Kos Lengkap,
+Kost Tiara Sidosermo Tipe A,Wonocolo,,putri,1400000,Mamikos,1,1,1,1,0,1,,,,,,,6,,500,,,,Kos Lengkap,
+Kost BMU 834 Tipe A,Wonocolo,,putri,1500000,Mamikos,1,1,1,1,0,1,,,,,,,6,,,,,,Kos Lengkap,
+Kos D8,Wonocolo,SiwalanKerto,campur,1500000,Papikost,1,1,1,1,,,1,1,1,1,1,0,10,,814,10,-7.3421729,112.736717,Kos Lengkap,https://papikost.com/kost/kos-d8
+Kost Casa Sevilla Hunian Ternyaman,Wonocolo,Jemur Wonosari,campur,1500000,Papikost,1,1,1,1,,,1,1,1,1,1,0,10,,586,10,-7.3283564,112.7348616,Kos Lengkap,https://papikost.com/kost/kost-casa-sevilla-hunian-ternyaman
+Kost Exclusive Graha Cipta Sidosermo Tipe A,Wonocolo,,putra,1502500,Mamikos,1,1,1,1,1,1,,,,,,,6,,500,,,,Kos Lengkap,
+Kost Hakare Bendul Tipe Standar,Wonocolo,,campur,1600000,Mamikos,0,1,1,1,1,1,,,,,,,6,,186,,,,Kos Lengkap,
+Kost Q Tipe C Sidosermo,Wonocolo,,campur,1625000,Mamikos,1,1,1,1,1,1,,,,,,,6,4.9,200,,,,Kos Lengkap,
+Kost Gymbrader Inn Tipe Standart Premium Deluxe,Wonocolo,,campur,1700000,Mamikos,1,1,1,1,1,1,,,,,,,6,,278,,,,Kos Lengkap,
+Kost Kamda BMU Tipe B AC,Wonocolo,,putri,1700000,Mamikos,1,1,1,1,1,0,,,,,,,6,,,,,,Kos Lengkap,
+Kost Arunala Co Living Tipe A,Wonocolo,,putri,1700000,Mamikos,1,1,1,1,1,0,,,,,,,6,,80,,,,Kos Lengkap,
+Kost Exclusive Graha Cipta Sidosermo Tipe B,Wonocolo,,campur,1702500,Mamikos,1,1,1,1,1,1,,,,,,,6,,304,,,,Kos Lengkap,
+Kost Q Tipe B Sidosermo,Wonocolo,,campur,1775000,Mamikos,1,1,1,1,1,1,,,,,,,6,4.9,376,,,,Kos Lengkap,
+Kost Sidosermo Indah Residence B2,Wonocolo,,campur,1800000,Mamikos,1,1,0,0,1,1,,,,,,,6,,,,,,Kos Dasar,
+Kost Kamda BMU Tipe A,Wonocolo,,putri,1900000,Mamikos,1,1,1,1,1,0,,,,,,,6,,109,,,,Kos Lengkap,
+Kost Arunala Co Living Tipe B,Wonocolo,,putri,1900000,Mamikos,1,1,1,1,1,0,,,,,,,6,,,,,,Kos Lengkap,
+Kost Hakare Bendul Tipe Standart,Wonocolo,,campur,2000000,Mamikos,0,1,1,1,1,1,,,,,,,6,,,,,,Kos Lengkap,
+Kost Hakare Bendul Tipe Mezanin,Wonocolo,,campur,2000000,Mamikos,0,1,1,1,1,1,,,,,,,6,,138,,,,Kos Lengkap,
+Kost Q Tipe A Sidosermo,Wonocolo,,campur,2025000,Mamikos,1,1,1,1,1,1,,,,,,,6,4.9,,,,,Kos Lengkap,
+Kost Hakare Bendul Tipe Standar 1,Wonocolo,,campur,2300000,Mamikos,0,1,1,1,1,1,,,,,,,6,,,,,,Kos Lengkap,
+Kost Kamda BMU Tipe A Standart Balcony,Wonocolo,,putri,2400000,Mamikos,1,1,1,1,1,0,,,,,,,6,,,,,,Kos Lengkap,
+Kost Sidosermo Indah Residence,Wonocolo,,campur,2500000,Mamikos,1,1,1,1,1,1,,,,,,,6,,,,,,Kos Lengkap,
+FELIZ GUESTHOUSE SURABAYA TWIN BED ROOM,Wonocolo,Jemur Wonosari,campur,3000000,Papikost,1,1,1,1,,,0,1,0,0,1,0,10,,39,3,-7.322102411926709,112.74651244282722,Kos Lengkap,https://papikost.com/kost/feliz-guesthouse-surabaya-twin-bed-room
+Kost Bu Noer,Wonokromo,,putra,350000,Mamikos,0,0,1,1,0,1,,,,,,,6,,500,,,,Kos Lengkap,
+Kost Risnoe Tipe A,Wonokromo,,putra,575000,Mamikos,0,0,1,1,1,1,,,,,,,6,,210,,,,Kos Lengkap,
+Kost Adem Ayem Tipe Standar,Wonokromo,,putri,600000,Mamikos,0,0,0,1,1,0,,,,,,,6,,177,,,,Kos Dasar,
+Kost JS 12,Wonokromo,,putra,600000,Mamikos,0,0,1,1,1,1,,,,,,,6,,215,,,,Kos Lengkap,
+Kost Mitra Jaya Bratang Tipe B,Wonokromo,,putri,632500,Mamikos,0,0,1,1,1,1,,,,,,,6,4.5,500,,,,Kos Lengkap,
+Kost Ibu Agus,Wonokromo,,campur,650000,Mamikos,0,0,0,1,0,1,,,,,,,6,,,,,,Kos Dasar,
+Kost Desta Tipe Standart,Wonokromo,,putra,650000,Mamikos,0,0,0,1,0,0,,,,,,,6,,443,,,,Kos Dasar,
+Kost Achmad Raihan Tipe Non Ac,Wonokromo,,putra,650000,Mamikos,1,0,1,1,1,0,,,,,,,6,,340,,,,Kos Lengkap,
+Kost Rumah Berkah,Wonokromo,,putri,700000,Mamikos,1,0,1,1,0,0,,,,,,,6,,500,,,,Kos Lengkap,
+Kost Krukah,Wonokromo,,putra,700000,Mamikos,0,0,1,1,0,1,,,,,,,6,,,,,,Kos Lengkap,
+Kost Bratang Tipe B,Wonokromo,,putri,725000,Mamikos,0,0,1,1,0,1,,,,,,,6,5.0,128,,,,Kos Lengkap,
+Kost Lapak Tantri,Wonokromo,,putri,725000,Mamikos,0,0,1,1,0,0,,,,,,,6,,237,,,,Kos Lengkap,
+Kost Mi Casa Tipe B,Wonokromo,,putra,750000,Mamikos,0,0,1,1,0,1,,,,,,,6,,339,,,,Kos Lengkap,
+Kost Ngagel Krukah Bratang,Wonokromo,,putri,750000,Mamikos,0,0,1,1,0,1,,,,,,,6,,131,,,,Kos Lengkap,
+Kost Ngagel Mulya,Wonokromo,,putra,750000,Mamikos,0,0,0,1,1,0,,,,,,,6,,500,,,,Kos Dasar,
+Kost Mitra Jaya Bratang Tipe A,Wonokromo,,putri,794500,Mamikos,0,0,1,1,0,1,,,,,,,6,4.8,500,,,,Kos Lengkap,
+Kost Cendana Standart,Wonokromo,,putri,900000,Mamikos,0,1,1,1,1,1,,,,,,,6,,500,,,,Kos Lengkap,
+Kost Hijau Bu Made,Wonokromo,,putri,900001,Mamikos,0,0,1,1,1,1,,,,,,,6,,493,,,,Kos Lengkap,
+Kost Bratang Gede 6D,Wonokromo,,putri,980000,Mamikos,0,0,1,1,0,0,,,,,,,6,4.0,92,,,,Kos Lengkap,
+Kost Aditya,Wonokromo,,putra,1000000,Mamikos,1,1,0,1,1,1,,,,,,,6,,,,,,Kos Dasar,
+Kost Kibar 43 Tipe A Ngagel Mulyo,Wonokromo,,putri,1000000,Mamikos,1,0,1,1,0,0,,,,,,,6,5.0,,,,,Kos Lengkap,
+Kost Ferkyta Tipe B,Wonokromo,,putra,1000000,Mamikos,0,1,1,1,1,1,,,,,,,6,5.0,,,,,Kos Lengkap,
+Kost Harmoni Nusantara,Wonokromo,,putri,1000000,Mamikos,1,1,1,1,1,1,,,,,,,6,,144,,,,Kos Lengkap,
+Kost Achmad Raihan Tipe Ac,Wonokromo,,putri,1000000,Mamikos,1,1,1,1,1,0,,,,,,,6,,336,,,,Kos Lengkap,
+Kost Ferkyta Tipe A,Wonokromo,,putra,1100000,Mamikos,0,1,1,1,1,1,,,,,,,6,5.0,123,,,,Kos Lengkap,
+Kost Warata,Wonokromo,,putra,1100000,Mamikos,1,0,1,1,1,1,,,,,,,6,4.6,64,,,,Kos Lengkap,
+Kost Beth Tipe D,Wonokromo,,putra,1100000,Mamikos,0,1,1,1,1,1,,,,,,,6,,72,,,,Kos Lengkap,
+Kost Suma Tipe B,Wonokromo,,putri,1100000,Mamikos,0,1,1,1,1,1,,,,,,,6,,183,,,,Kos Lengkap,
+Kost Bratang Gede 6E Tipe B,Wonokromo,,putri,1200000,Mamikos,1,1,1,1,1,0,,,,,,,6,,67,,,,Kos Lengkap,
+Kost Beth Tipe C,Wonokromo,,putra,1200000,Mamikos,1,1,1,0,1,1,,,,,,,6,,,,,,Kos Lengkap,
+Kost Bhinneka Ngagel Tipe D,Wonokromo,,campur,1300000,Mamikos,1,0,1,1,1,1,,,,,,,6,,325,,,,Kos Lengkap,
+Kost Bratang Gede 6E Tipe 1,Wonokromo,,putri,1300000,Mamikos,1,1,1,1,1,0,,,,,,,6,5.0,220,,,,Kos Lengkap,
+Kost Bhinneka Ngagel Tipe C,Wonokromo,,campur,1400000,Mamikos,1,0,1,1,1,1,,,,,,,6,,198,,,,Kos Lengkap,
+Kost Kibar 43 Tipe B,Wonokromo,,putri,1400000,Mamikos,1,1,1,1,1,0,,,,,,,6,,63,,,,Kos Lengkap,
+Kost HJM Eksklusif,Wonokromo,,putra,1400000,Mamikos,1,1,1,1,1,1,,,,,,,6,,109,,,,Kos Lengkap,
+Kost Bu Lestari,Wonokromo,,putri,1400000,Mamikos,0,0,1,1,1,1,,,,,,,6,5.0,79,,,,Kos Lengkap,
+Kost Bhinneka Ngagel Tipe A Non Ac,Wonokromo,,campur,1400000,Mamikos,1,0,1,1,1,1,,,,,,,6,,204,,,,Kos Lengkap,
+Kost Beth Tipe B,Wonokromo,,putra,1400000,Mamikos,1,1,1,1,1,1,,,,,,,6,,,,,,Kos Lengkap,
+Kost Suma Tipe Vip,Wonokromo,,putri,1500000,Mamikos,1,1,1,1,1,1,,,,,,,6,,88,,,,Kos Lengkap,
+Kost Yura Tipe Vip,Wonokromo,,campur,1500000,Mamikos,0,1,1,1,1,1,,,,,,,6,,421,,,,Kos Lengkap,
+Kost Raudhah In Tipe 3,Wonokromo,,putri,1500000,Mamikos,1,1,1,1,1,0,,,,,,,6,,198,,,,Kos Lengkap,
+Kost Ladeaa 776 Tipe Standar,Wonokromo,,putra,1500000,Mamikos,0,1,1,1,1,0,,,,,,,6,,77,,,,Kos Lengkap,
+Kost Raudhah In,Wonokromo,,putri,1500000,Mamikos,1,1,1,1,1,0,,,,,,,6,,268,,,,Kos Lengkap,
+Kost Raudhah In Tipe Lantai 1,Wonokromo,,putri,1500000,Mamikos,1,1,1,1,1,1,,,,,,,6,,338,,,,Kos Lengkap,
+Kost Beth Tipe A,Wonokromo,,putra,1500000,Mamikos,1,1,1,1,1,1,,,,,,,6,,76,,,,Kos Lengkap,
+Kost Suma Tipe Balkon,Wonokromo,,putri,1500000,Mamikos,0,1,1,1,1,1,,,,,,,6,,,,,,Kos Lengkap,
+Kost Dede Executive,Wonokromo,,putri,1550000,Mamikos,1,1,1,1,1,1,,,,,,,6,,462,,,,Kos Lengkap,
+Kost Palma VVIP,Wonokromo,,campur,1600000,Mamikos,1,1,1,1,1,0,,,,,,,6,,306,,,,Kos Lengkap,
+Kost Luxury Graha Indah Tipe Executive,Wonokromo,,campur,1700000,Mamikos,1,1,1,1,1,1,,,,,,,6,,404,,,,Kos Lengkap,
+Kost Z Stay Tipe A,Wonokromo,,campur,1700000,Mamikos,1,1,0,1,1,1,,,,,,,6,,111,,,,Kos Dasar,
+Kost Z Stay Tipe B,Wonokromo,,campur,1700123,Mamikos,1,1,0,1,1,1,,,,,,,6,,271,,,,Kos Dasar,
+Kost Griya Wigu 1,Wonokromo,,putri,1750000,Mamikos,1,1,1,1,0,1,,,,,,,6,,101,,,,Kos Lengkap,
+Kost Kusuma Bratang Gede VI Tipe A,Wonokromo,,campur,1800000,Mamikos,1,1,1,1,0,1,,,,,,,6,,80,,,,Kos Lengkap,
+Kost Hosana Tipe Ac,Wonokromo,,putri,1800000,Mamikos,1,1,1,1,1,0,,,,,,,6,5.0,167,,,,Kos Lengkap,
+FIDI KOST,Wonokromo,Jagir,putra,1800000,Papikost,1,1,1,1,,,1,1,1,0,0,1,10,,36,10,-7.30754761034647,112.74044158411355,Kos Lengkap,https://papikost.com/kost/fidi-kost
+Kost Premium,Wonokromo,,campur,1900000,Mamikos,1,1,1,1,1,0,,,,,,,6,,146,,,,Kos Lengkap,
+Kost Zstay,Wonokromo,,campur,1900000,Mamikos,1,1,1,1,1,1,,,,,,,6,,121,,,,Kos Lengkap,
+Kost Eksekutif Novy Kamar Besar,Wonokromo,,campur,2000000,Mamikos,0,1,1,1,1,1,,,,,,,6,,34,,,,Kos Lengkap,
+Kost Bhinneka Ngagel Tipe B,Wonokromo,,campur,2100000,Mamikos,1,1,1,1,1,1,,,,,,,6,,205,,,,Kos Lengkap,
+Kost Eksklusif Ngagel Tipe D,Wonokromo,,campur,2300000,Mamikos,1,1,1,1,1,1,,,,,,,6,,102,,,,Kos Lengkap,

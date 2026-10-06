@@ -179,10 +179,57 @@ def persen(v, q):
     return int(v[max(0, min(len(v) - 1, round(q / 100 * (len(v) - 1))))])
 
 
+def periksaGabungan(rows):
+    """Berhenti berisik kalau penggabungan merusak data.
+
+    Dibuat setelah satu versi pipeline lain diam-diam mengosongkan seluruh
+    fasilitas Mamikos karena nama kolomnya tidak dipetakan (ada_ac vs ac),
+    lalu tetap mencetak "BERHASIL". Jumlah baris dan jumlah kolomnya pas,
+    yang rusak isinya — dan tidak ada yang memeriksa. Model jadi melenceng
+    dari MAPE 21% ke 35% tanpa ada yang sadar.
+
+    Aturannya: lebih baik pipeline mati sekarang daripada angka salah
+    mengalir ke aplikasi dan ke skripsi.
+    """
+    galat = []
+    perSumber = {}
+    for r in rows:
+        perSumber.setdefault(r["sumber"], []).append(r)
+
+    # 1. tiap situs HARUS menyumbang fasilitas yang memang dicatatnya
+    for sumber, daftar in perSumber.items():
+        dicatat = set(FAS_APLIKASI) if sumber == "Mamikos" else set(PAPIKOST_FAS.values()) & set(FAS_APLIKASI)
+        for f in sorted(dicatat):
+            punya = sum(1 for r in daftar if f in r["fasilitas"])
+            if punya == 0:
+                galat.append(f"fasilitas '{f}' kosong di SELURUH {len(daftar)} baris {sumber} — pemetaan nama kolom kemungkinan putus")
+
+    # 2. jenis kos harus persis tiga kategori, huruf kecil
+    jenis = {r["jenis"] for r in rows}
+    if jenis != {"putra", "putri", "campur"}:
+        galat.append(f"kategori 'jenis' = {sorted(jenis)}, seharusnya persis putra/putri/campur (cek huruf besar-kecil antar sumber)")
+
+    # 3. kecamatan harus satu satuan wilayah, tanpa sisa sufiks kota
+    for kec in sorted({r["kec"] for r in rows}):
+        if any(k in kec for k in ("Surabaya", "Sidoarjo", ",")):
+            galat.append(f"kecamatan '{kec}' masih membawa sufiks kota — satuan wilayah antar sumber belum disamakan")
+
+    # 4. harga harus di rentang sewa bulanan yang wajar
+    liar = [r for r in rows if not (BATAS_HARGA[0] <= r["harga"] <= BATAS_HARGA[1])]
+    if liar:
+        galat.append(f"{len(liar)} baris berharga di luar {BATAS_HARGA} — mis. {liar[0]['nama'][:40]} Rp{liar[0]['harga']:,}")
+
+    if galat:
+        raise SystemExit("PENGGABUNGAN DITOLAK:\n  - " + "\n  - ".join(galat))
+
+    print("periksa gabungan: %d baris, %s, fasilitas tiap sumber utuh, jenis 3 kategori" % (len(rows), {s: len(v) for s, v in perSumber.items()}))
+
+
 def main():
     mami = bacaMamikos()
     papi, tanpaKec, luarKota, luarHarga = bacaPapikost()
     rows = buangKembar(mami + papi)
+    periksaGabungan(rows)
 
     nKec = {}
     for r in rows:

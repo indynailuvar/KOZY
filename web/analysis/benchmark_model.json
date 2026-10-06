@@ -1,0 +1,75 @@
+{
+ "n": 307,
+ "lipatan": 50,
+ "ambang_t": 2.5,
+ "jarak_mape_terbaik_terburuk": 0.33,
+ "menang_signifikan": [
+  "Ridge"
+ ],
+ "model_produksi": "OLS log-linear",
+ "alasan_produksi": "Selisih semua model di bawah 1 poin MAPE; pada kos Rp 1 juta itu setara ~Rp 3.000, tidak terasa. Koefisien OLS tidak bias oleh penyusutan, sehingga faktor harga yang ditampilkan ke pengguna (mis. 'AC menaikkan 58%') tetap sahih. Ridge dilaporkan di tabel, tidak dipakai produksi.",
+ "hasil": [
+  {
+   "model": "XGBoost",
+   "mae_rp": 268000,
+   "mape": 20.06,
+   "mape_sd": 2.12,
+   "selisih_vs_baseline": -0.32,
+   "t": -1.67,
+   "kesimpulan": "tidak berbeda nyata",
+   "hiperparameter": {
+    "learning_rate": 0.02,
+    "max_depth": 2,
+    "min_child_weight": 10
+   }
+  },
+  {
+   "model": "Ridge",
+   "mae_rp": 268000,
+   "mape": 20.1,
+   "mape_sd": 2.23,
+   "selisih_vs_baseline": -0.29,
+   "t": -2.58,
+   "kesimpulan": "lebih baik (signifikan)",
+   "hiperparameter": {}
+  },
+  {
+   "model": "Random Forest",
+   "mae_rp": 270000,
+   "mape": 20.34,
+   "mape_sd": 2.04,
+   "selisih_vs_baseline": -0.05,
+   "t": -0.22,
+   "kesimpulan": "tidak berbeda nyata",
+   "hiperparameter": {
+    "max_depth": 3,
+    "max_features": 0.6,
+    "min_samples_leaf": 3
+   }
+  },
+  {
+   "model": "SVR (RBF)",
+   "mae_rp": 270000,
+   "mape": 20.38,
+   "mape_sd": 2.45,
+   "selisih_vs_baseline": -0.01,
+   "t": -0.03,
+   "kesimpulan": "tidak berbeda nyata",
+   "hiperparameter": {
+    "svr__C": 0.3,
+    "svr__epsilon": 0.05,
+    "svr__gamma": 0.02
+   }
+  },
+  {
+   "model": "OLS log-linear (baseline)",
+   "mae_rp": 272000,
+   "mape": 20.39,
+   "mape_sd": 2.15,
+   "selisih_vs_baseline": null,
+   "t": null,
+   "kesimpulan": "acuan",
+   "hiperparameter": {}
+  }
+ ]
+}

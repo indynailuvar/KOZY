@@ -97,6 +97,35 @@ cek("Id kawasan unik", len({x["id"] for x in kaw["kawasan"]}), len(kaw["kawasan"
 cek("Tidak ada harga miliaran di data sewa", sum(1 for k in pasar["kos"] if k["harga"] > 10_000_000), 0)
 cek("Tidak ada harga miliaran di perkiraan Google Maps", sum(1 for k in gmaps["kos"] if k["estimasi"] > 10_000_000), 0)
 
+# ---- berkas baru: segmentasi & dataset ekspor ------------------------------
+import csv as _csv
+js = os.path.join(WEB, "src", "data", "segmen.json")
+if os.path.exists(js):
+    sg = json.load(io.open(js, encoding="utf-8"))
+    cek("Segmen: harga TIDAK dipakai membentuk cluster", sg["meta"]["harga_dipakai"], False)
+    cek("Segmen: jumlah label == jumlah kos", len(sg["label"]), pasar["meta"]["n"])
+    cek("Segmen: tiap cluster >= batas minimal anggota", min(s["n"] for s in sg["segmen"]) >= sg["meta"]["min_anggota"], True)
+    cek("Segmen: variabel cluster hanya yang terisi penuh", sorted(sg["meta"]["variabel_numerik"]), sorted(["km", "ac", "wifi", "kasur"]))
+    cek("Segmen: jumlah anggota semua cluster == n", sum(s["n"] for s in sg["segmen"]), pasar["meta"]["n"])
+
+cs = os.path.join(WEB, "analysis", "kozy_dataset_final.csv")
+if os.path.exists(cs):
+    rows = list(_csv.DictReader(io.open(cs, encoding="utf-8")))
+    cek("Ekspor CSV: jumlah baris sama dengan pasar.json", len(rows), pasar["meta"]["n"])
+    # fasilitas yang tidak dicatat suatu situs HARUS kosong, bukan 0
+    papi_kloset = {r["fas_kloset"] for r in rows if r["sumber"] == "Papikost"}
+    mami_lemari = {r["fas_lemari"] for r in rows if r["sumber"] == "Mamikos"}
+    cek("Ekspor CSV: kloset kosong untuk Papikost (bukan 0)", papi_kloset, {""})
+    cek("Ekspor CSV: lemari kosong untuk Mamikos (bukan 0)", mami_lemari, {""})
+    cek("Ekspor CSV: tidak ada fasilitas yang kosong total", sum(1 for f in ["km","ac","wifi","kasur"] if not any(r["fas_"+f]=="1" for r in rows)), 0)
+    cek("Ekspor CSV: jenis tetap 3 kategori", len({r["jenis"] for r in rows}), 3)
+
+bm = os.path.join(WEB, "analysis", "benchmark_model.json")
+if os.path.exists(bm):
+    b = json.load(io.open(bm, encoding="utf-8"))
+    cek("Benchmark: model produksi adalah OLS", b["model_produksi"], "OLS log-linear")
+    cek("Benchmark: jarak antar model di bawah 1 poin MAPE", b["jarak_mape_terbaik_terburuk"] < 1.0, True)
+
 print("=== PEMERIKSAAN ===")
 for x in ok:
     print("  OK   " + x)

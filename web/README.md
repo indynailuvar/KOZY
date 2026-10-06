@@ -134,6 +134,51 @@ pasar.json + gmaps.json  →  scripts/build_kawasan.py  →  src/data/kawasan.js
 
 Daftar kelurahan yang bisa dipilih pengguna dulu ditulis tangan lengkap dengan koordinat kira-kira. Sekarang dibuat dari data: tiap titik kos sudah punya kelurahan + kecamatan, jadi titik tengah kawasan memakai **median koordinat kos yang benar-benar ada di sana**, dan jaraknya ke pusat aktivitas dihitung dari koordinat itu, bukan ditaksir. Kelurahan dengan kurang dari 3 titik dibuang supaya tidak muncul kawasan yang isinya cuma satu kos nyasar. Nama id kawasan lama dipertahankan agar pilihan yang sudah tersimpan di browser pengguna tidak hilang.
 
+### Arsitektur model — keputusan yang sudah diuji
+
+Semua keputusan di bawah berasal dari pengujian di `notebooks/kozy_pembuktian_model.ipynb`, bukan dari selera. Datanya dianggap final: 15 situs dicoba, hanya Mamikos dan Papikost yang bisa diambil.
+
+| Keputusan | Alasan terukur |
+|---|---|
+| **Model produksi = hedonic OLS log-linear** | Setelah RF/XGBoost/SVR dituning adil, jarak MAPE terbaik–terburuk hanya **0,33 poin**. Ridge menang signifikan (t = −2,6) tetapi cuma **0,29 poin** — pada kos Rp 1 juta itu ≈ Rp 3.000, tidak terasa. Koefisien Ridge bias karena penyusutan, sedangkan aplikasi menampilkan faktor harga ("AC menaikkan 58%") yang harus tak bias. |
+| **RF/XGBoost/SVR hanya tabel benchmark** | Tuner memilih `max_depth` 2–3 — melumpuhkan pohonnya sendiri, tanda tidak ada non-linearitas untuk digali. Kurva belajar sudah mendatar di n≈245. |
+| **Kecamatan dengan < 5 iklan digabung** | Koefisien dari 1–4 iklan terlalu goyah. Ini juga sudah menyelesaikan masalah yang biasanya ditangani Ridge. |
+| **Segmentasi: K-Prototypes, bukan K-Means** | Selisih silhouette **+0,000** — benar-benar imbang. Dipilih karena keterbacaan: centroid-nya punya modus kategorikal yang bisa dibaca, bukan karena lebih akurat. |
+| **Harga TIDAK ikut membentuk cluster** | Cluster "pakai harga" tampak unggul (MAPE 20,9%) hanya karena mengintip harga yang sedang dinilai. Versi jujurnya 24,7%, kalah dari hedonic 21,1%. Cluster **melabeli**, hedonic **memvonis**. |
+| **k dipilih dengan syarat ukuran** | Cluster beranggota 7 tidak berguna sebagai label. Syarat minimal 15 anggota; di antara yang lolos, silhouette tertinggi menang → **k = 2**. |
+
+```
+data mentah (scrapers/)
+   └─ geocode_titik.py      koordinat -> kelurahan + kecamatan
+        └─ build_pasar.py   GABUNG + saring + latih OLS + periksaGabungan()   ← satu-satunya tempat penggabungan
+             ├─ build_segmen.py      K-Prototypes tanpa harga   -> segmen.json
+             ├─ build_gmaps.py       perkiraan harga 844 titik  -> gmaps.json
+             ├─ build_olx.py         sisi pemilik               -> olx.json
+             ├─ build_kawasan.py     daftar kelurahan           -> kawasan.json
+             ├─ benchmark_model.py   tabel 5 model (skripsi)    -> analysis/benchmark_model.csv
+             ├─ export_dataset.py    CSV datar (notebook)       -> analysis/kozy_dataset_final.csv
+             └─ cek_data.py          33 pemeriksaan dari berkas mentah
+```
+
+**Penggabungan hanya boleh ada di satu tempat.** Sebelumnya ada dua jalur yang hidup berdampingan, dan yang satu diam-diam mengosongkan seluruh fasilitas Mamikos karena nama kolomnya tidak dipetakan (`ada_ac` vs `ac`) — MAPE melonjak 21% → 35% tanpa pesan error, bahkan tetap mencetak "BERHASIL". Karena itu `build_pasar.py` sekarang punya `periksaGabungan()` yang **menghentikan pipeline** kalau:
+
+- ada fasilitas yang kosong di seluruh baris satu sumber (pemetaan kolom putus),
+- `jenis` bukan persis 3 kategori (huruf besar-kecil antar sumber),
+- kecamatan masih membawa sufiks kota (satuan wilayah belum disamakan),
+- ada harga di luar rentang sewa bulanan yang wajar.
+
+Keempatnya sudah diuji benar-benar menolak, bukan sekadar ditulis.
+
+### Arti sel kosong di `analysis/kozy_dataset_final.csv`
+
+| Nilai | Artinya |
+|---|---|
+| kosong | situs sumbernya **tidak mencatat** kolom itu |
+| `0` | tercatat, dan memang tidak ada |
+| `1` | tercatat, dan ada |
+
+Mengisi "tidak tercatat" dengan `0` akan membuat situs yang tidak mencatat terlihat seolah semua kosnya tanpa fasilitas itu — persis kesalahan yang dulu merusak modelnya. Mamikos tidak mencatat lemari/meja/parkir/TV; Papikost tidak mencatat kloset duduk/akses 24 jam.
+
 ### Yang masih kosong di semua sumber
 
 - **Luas kamar** → langkah luas dihapus dari Cek Harga.
