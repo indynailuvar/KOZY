@@ -1,0 +1,137 @@
+nama_kost,lokasi,jenis,harga_aktual,prediksi_oof,residual_aktual_minus_prediksi,fold,model
+Kost pasutri kutisari utara 5 no 9,Kutisari Surabaya,campur,600000.0,1322743.9002638564,-722743.9002638564,3,Ridge
+Kost Putri Dafin Didi Gubeng Surabaya,Mojo Surabaya,putri,700000.0,682386.3460818602,17613.653918139753,3,Ridge
+Kos omah lawas,Baratajaya Surabaya,campur,800000.0,1403153.9486311846,-603153.9486311846,4,Ridge
+Bobo Studio,DR. Soetomo Surabaya,campur,1750000.0,1877836.901841335,-127836.901841335,2,Ridge
+Kost Pria Sederhana Surabaya,Kalirungkut Surabaya,putra,700000.0,935127.010046841,-235127.010046841,3,Ridge
+Kos murah laki di daerah strategis merr rungkut,Kedung Baruk Surabaya,putra,750000.0,1375477.948689889,-625477.9486898889,1,Ridge
+Kost Putri Rungkut Asri,Kalirungkut Surabaya,putri,800000.0,965426.5765791812,-165426.57657918124,1,Ridge
+Kost Putri Bu Ratna,Lontar Surabaya,putri,600000.0,787661.7307682141,-187661.7307682141,5,Ridge
+"Kos Putri Bersih dan Nyaman ( Lakarsantri, Sby Barat)",Jeruk Surabaya,putri,800000.0,1088834.9459686188,-288834.94596861885,5,Ridge
+Kamar Kost HS,Bendul Merisi Surabaya,putra,800000.0,1228359.0078263977,-428359.00782639766,2,Ridge
+Behomy Cozynest Gayungsari,Gayungan Ketintang Surabaya,campur,2300000.0,1676138.54707624,623861.45292376,2,Ridge
+Kos D8,Siwalan Kerto Surabaya,campur,1500000.0,1988215.7182843317,-488215.7182843317,4,Ridge
+Tipe Premium A,Menur Pumpungan Surabaya,putri,900000.0,450617.09858097485,449382.90141902515,1,Ridge
+Tipe Standar A,Menur Pumpungan Surabaya,putri,600000.0,749873.8988966374,-149873.89889663737,1,Ridge
+Kos Putri dekat PTC,Jeruk Surabaya,putri,800000.0,1088834.9459686188,-288834.94596861885,5,Ridge
+Kost Hera Surabaya,Petemon Surabaya,putri,500000.0,1310233.9242738807,-810233.9242738807,2,Ridge
+Tipe Premium B,Menur Pumpungan Surabaya,putri,700000.0,749873.8988966374,-49873.89889663737,1,Ridge
+Kost Casa Sevilla Hunian Ternyaman,Jemur Wonosari Surabaya,campur,1500000.0,2044403.319430705,-544403.3194307049,3,Ridge
+Kos bu Made,Airlangga Surabaya,putra,1200000.0,1122013.6023082966,77986.3976917034,4,Ridge
+Kos Bu Sri Kamar A,Medokan Ayu Surabaya,putri,1000000.0,1022427.1728452572,-22427.172845257213,1,Ridge
+Kost Putra Athar's,Gunung Anyar Tambak Surabaya,putra,1000000.0,852219.2550525044,147780.74494749564,2,Ridge
+Kost Putri Kutisari SIER Tenggilis,Kutisari Surabaya,putri,1300000.0,1459391.5489491513,-159391.5489491513,5,Ridge
+Kost Andy Sambo,Medokan Ayu Surabaya,putra,1000000.0,1518619.3808309229,-518619.38083092286,3,Ridge
+Kost Baru Merr Boulevard,Penjaringan Sari Surabaya,putra,1300000.0,1259276.974193863,40723.025806136895,5,Ridge
+Kost Mahasiswi Rungkut Gunung Anyar Surabaya,Rungkut Menanggal Surabaya,putri,800000.0,710315.0108526298,89684.98914737022,1,Ridge
+Pastelle Premium Kost,Kalisari Surabaya,putra,2750000.0,2006252.061923556,743747.938076444,1,Ridge
+7 Eden Kos Pria Manyar Jaya,Menur Pumpungan Surabaya,putra,1000000.0,1228882.088860058,-228882.088860058,3,Ridge
+Kamar Deluxe,Menur Pumpungan Surabaya,putri,950000.0,1450846.0561051217,-500846.05610512174,1,Ridge
+Alsi Home Surabaya,Semolowaru Surabaya,putra,1900000.0,2191639.29697629,-291639.2969762902,3,Ridge
+Kost Kamar Besar dan Homy Tenggilis,Tengilis Mejoyo Surabaya,campur,2300000.0,1875396.1080714045,424603.8919285955,2,Ridge
+Pondok Alfi,Menur Pumpungan Surabaya,campur,1700000.0,2020680.5433499014,-320680.54334990145,4,Ridge
+Kamar Mawar,Gayungan Ketintang Surabaya,putra,2500000.0,1261625.732517879,1238374.267482121,5,Ridge
+Alsi Kos Surabaya,Semolowaru Surabaya,putri,2000000.0,1893354.7696485738,106645.23035142617,3,Ridge
+Emerald guesthouse Klampis Surabaya,Klampis Ngasem Surabaya,campur,1950000.0,1994910.263725272,-44910.263725271914,3,Ridge
+House of Felix - Kamar Standard,Kupang Krajan Surabaya,campur,1850000.0,1920118.8328122864,-70118.83281228645,5,Ridge
+kost ibu mul,Airlangga Surabaya,putri,125000.0,1062156.3595997612,-937156.3595997612,2,Ridge
+Jaya Kost Gubeng Kertajaya 1,Gubeng Surabaya,putra,900000.0,1221429.5678745646,-321429.56787456456,3,Ridge
+Amarta Habitat Tipe Comfort,Medokan Ayu Surabaya,putra,1500000.0,1521547.8460591547,-21547.84605915472,4,Ridge
+Kost Putri Home Sweet Home Semolowaru Surabaya Timur,Semolowaru Surabaya,putri,1500000.0,1228968.080725502,271031.919274498,1,Ridge
+KOST PUTRI 415,Panjang Jiwo Surabaya,putri,1500000.0,1641990.894912553,-141990.89491255302,2,Ridge
+Kamar AC &amp; NON AC,Ngenden Jangkungan Surabaya,putri,1000000.0,1012273.6215874585,-12273.621587458532,2,Ridge
+KAYLA KOST PUTRI / MAHASISWI,Kalisari Surabaya,putri,2000000.0,1711131.3699160884,288868.6300839116,4,Ridge
+Kos Putri Sekar Arum dekat Unair,Pacarkembang Surabaya,putri,1300000.0,1418819.723583056,-118819.7235830559,3,Ridge
+Cozy One Bedroom Citraland near Universitas Ciputra,Sambikerep Surabaya,putra,2700000.0,1375477.948689889,1324522.051310111,1,Ridge
+Onnie Room,Menur Pumpungan Surabaya,putri,2500000.0,1417640.0822785175,1082359.9177214825,5,Ridge
+Kos bu liyatin,Made Surabaya,putri,1200000.0,1698840.6351915933,-498840.6351915933,1,Ridge
+Kamar Anggrek,Gayungan Ketintang Surabaya,putra,2500000.0,1261625.732517879,1238374.267482121,5,Ridge
+Standar Room,Kupang Krajan Surabaya,campur,1600000.0,1130291.919626071,469708.0803739291,5,Ridge
+Metaverse Kost (Basic Room),Rungkut Menanggal Surabaya,putri,1000000.0,997868.477983109,2131.5220168910455,1,Ridge
+Metaverse Kost (Galaxy Room),Rungkut Menanggal Surabaya,putri,1500000.0,1698840.6351915933,-198840.63519159332,1,Ridge
+Deluxe Mezanine,Kupang Krajan Surabaya,campur,2000000.0,1130291.919626071,869708.0803739291,5,Ridge
+Cozy Cove Kost,Kalirungkut Surabaya,putri,1600000.0,1888402.287339617,-288402.28733961703,2,Ridge
+Kos-kosan maskaryo kamar type 2,Tengilis Mejoyo Surabaya,putra,800000.0,942059.1871029367,-142059.18710293667,4,Ridge
+VVIP,Ngenden Jangkungan Surabaya,putri,1250000.0,1368409.817371838,-118409.81737183803,2,Ridge
+Kost Palem Semolo Premium,Semolowaru Surabaya,putri,1250000.0,1216340.8022291448,33659.19777085516,3,Ridge
+FELIZ GUESTHOUSE SURABAYA TWIN BED ROOM,Jemur Wonosari Surabaya,campur,3000000.0,2279703.3280737717,720296.6719262283,4,Ridge
+Griya HNN2 kos putra,Airlangga Surabaya,putra,1850000.0,1339197.8722665515,510802.1277334485,5,Ridge
+FIDI KOST,Jagir Surabaya,putra,1800000.0,1370420.2803969611,429579.71960303886,5,Ridge
+KOST KIU228,Kutisari Surabaya,putri,1300000.0,1305913.177454404,-5913.177454404067,2,Ridge
+Kost KIU 228,Kutisari Surabaya,putri,1100000.0,949776.9816700245,150223.01832997554,2,Ridge
+Kos-kosan maskaryo kamar Type 1,Tengilis Mejoyo Surabaya,putra,875000.0,942059.1871029367,-67059.18710293667,4,Ridge
+Kost Palem Semolo Exclusive A,Semolowaru Surabaya,putri,1750000.0,1640644.2151149684,109355.78488503164,3,Ridge
+Kos Putri Dandelion Tipe C,Pacarkembang Surabaya,putri,800000.0,657975.5451451221,142024.4548548779,4,Ridge
+Kost Putri KIU 228,Kutisari Surabaya,putri,1200000.0,1305913.177454404,-105913.17745440407,2,Ridge
+Kost Palem Semolo Exclusive B,Semolowaru Surabaya,putri,1750000.0,1640644.2151149684,109355.78488503164,3,Ridge
+Kos Putri Dandelion Tipe A,Pacarkembang Surabaya,putri,1000000.0,517088.51202248794,482911.48797751206,4,Ridge
+Kost Elmy,Medokan Semampir Surabaya,putri,600000.0,1344908.9198539655,-744908.9198539655,4,Ridge
+Kos Putri Dandelion Tipe B,Pacarkembang Surabaya,putri,900000.0,657975.5451451221,242024.4548548779,4,Ridge
+Kost pasutri kutisari utara 5 no 9,Kutisari Surabaya,campur,600000.0,1491069.6464646459,-891069.6464646459,3,RandomForest
+Kost Putri Dafin Didi Gubeng Surabaya,Mojo Surabaya,putri,700000.0,790257.0833333331,-90257.08333333314,3,RandomForest
+Kos omah lawas,Baratajaya Surabaya,campur,800000.0,1273390.0000000005,-473390.00000000047,4,RandomForest
+Bobo Studio,DR. Soetomo Surabaya,campur,1750000.0,1773203.6008435998,-23203.600843599765,2,RandomForest
+Kost Pria Sederhana Surabaya,Kalirungkut Surabaya,putra,700000.0,988088.1746031749,-288088.1746031749,3,RandomForest
+Kos murah laki di daerah strategis merr rungkut,Kedung Baruk Surabaya,putra,750000.0,960615.9126984124,-210615.91269841243,1,RandomForest
+Kost Putri Rungkut Asri,Kalirungkut Surabaya,putri,800000.0,939805.7142857141,-139805.7142857141,1,RandomForest
+Kost Putri Bu Ratna,Lontar Surabaya,putri,600000.0,1105163.7896825396,-505163.78968253965,5,RandomForest
+"Kos Putri Bersih dan Nyaman ( Lakarsantri, Sby Barat)",Jeruk Surabaya,putri,800000.0,1161419.480519481,-361419.480519481,5,RandomForest
+Kamar Kost HS,Bendul Merisi Surabaya,putra,800000.0,1067960.0,-267960.0,2,RandomForest
+Behomy Cozynest Gayungsari,Gayungan Ketintang Surabaya,campur,2300000.0,1431945.3968253962,868054.6031746038,2,RandomForest
+Kos D8,Siwalan Kerto Surabaya,campur,1500000.0,1939013.8003663,-439013.8003662999,4,RandomForest
+Tipe Premium A,Menur Pumpungan Surabaya,putri,900000.0,1004179.7564935061,-104179.75649350614,1,RandomForest
+Tipe Standar A,Menur Pumpungan Surabaya,putri,600000.0,764972.6334776331,-164972.63347763312,1,RandomForest
+Kos Putri dekat PTC,Jeruk Surabaya,putri,800000.0,1161419.480519481,-361419.480519481,5,RandomForest
+Kost Hera Surabaya,Petemon Surabaya,putri,500000.0,1054724.5436507934,-554724.5436507934,2,RandomForest
+Tipe Premium B,Menur Pumpungan Surabaya,putri,700000.0,764972.6334776331,-64972.63347763312,1,RandomForest
+Kost Casa Sevilla Hunian Ternyaman,Jemur Wonosari Surabaya,campur,1500000.0,2011923.1585519738,-511923.15855197376,3,RandomForest
+Kos bu Made,Airlangga Surabaya,putra,1200000.0,1053291.296897547,146708.7031024529,4,RandomForest
+Kos Bu Sri Kamar A,Medokan Ayu Surabaya,putri,1000000.0,920009.9206349214,79990.07936507859,1,RandomForest
+Kost Putra Athar's,Gunung Anyar Tambak Surabaya,putra,1000000.0,817613.2142857144,182386.78571428556,2,RandomForest
+Kost Putri Kutisari SIER Tenggilis,Kutisari Surabaya,putri,1300000.0,1523098.6075036074,-223098.6075036074,5,RandomForest
+Kost Andy Sambo,Medokan Ayu Surabaya,putra,1000000.0,1707329.6031746028,-707329.6031746028,3,RandomForest
+Kost Baru Merr Boulevard,Penjaringan Sari Surabaya,putra,1300000.0,1047356.26984127,252643.73015872994,5,RandomForest
+Kost Mahasiswi Rungkut Gunung Anyar Surabaya,Rungkut Menanggal Surabaya,putri,800000.0,764972.6334776331,35027.36652236688,1,RandomForest
+Pastelle Premium Kost,Kalisari Surabaya,putra,2750000.0,1865585.0256606138,884414.9743393862,1,RandomForest
+7 Eden Kos Pria Manyar Jaya,Menur Pumpungan Surabaya,putra,1000000.0,1148402.5793650798,-148402.57936507976,3,RandomForest
+Kamar Deluxe,Menur Pumpungan Surabaya,putri,950000.0,1411574.181096681,-461574.1810966809,1,RandomForest
+Alsi Home Surabaya,Semolowaru Surabaya,putra,1900000.0,2027401.4285714286,-127401.42857142864,3,RandomForest
+Kost Kamar Besar dan Homy Tenggilis,Tengilis Mejoyo Surabaya,campur,2300000.0,1769543.6008436,530456.3991564,2,RandomForest
+Pondok Alfi,Menur Pumpungan Surabaya,campur,1700000.0,1939013.8003663,-239013.80036629993,4,RandomForest
+Kamar Mawar,Gayungan Ketintang Surabaya,putra,2500000.0,1414546.3239538237,1085453.6760461763,5,RandomForest
+Alsi Kos Surabaya,Semolowaru Surabaya,putri,2000000.0,1737965.757342073,262034.2426579271,3,RandomForest
+Emerald guesthouse Klampis Surabaya,Klampis Ngasem Surabaya,campur,1950000.0,2011923.1585519738,-61923.15855197376,3,RandomForest
+House of Felix - Kamar Standard,Kupang Krajan Surabaya,campur,1850000.0,1972203.348318348,-122203.34831834794,5,RandomForest
+kost ibu mul,Airlangga Surabaya,putri,125000.0,1022919.4444444441,-897919.4444444441,2,RandomForest
+Jaya Kost Gubeng Kertajaya 1,Gubeng Surabaya,putra,900000.0,1164658.174603175,-264658.1746031749,3,RandomForest
+Amarta Habitat Tipe Comfort,Medokan Ayu Surabaya,putra,1500000.0,1315295.6746031751,184704.32539682486,4,RandomForest
+Kost Putri Home Sweet Home Semolowaru Surabaya Timur,Semolowaru Surabaya,putri,1500000.0,1118405.9523809524,381594.0476190476,1,RandomForest
+KOST PUTRI 415,Panjang Jiwo Surabaya,putri,1500000.0,1604901.0828060831,-104901.08280608314,2,RandomForest
+Kamar AC &amp; NON AC,Ngenden Jangkungan Surabaya,putri,1000000.0,1004152.4999999998,-4152.499999999767,2,RandomForest
+KAYLA KOST PUTRI / MAHASISWI,Kalisari Surabaya,putri,2000000.0,1634547.1534021536,365452.84659784636,4,RandomForest
+Kos Putri Sekar Arum dekat Unair,Pacarkembang Surabaya,putri,1300000.0,1207246.5914640918,92753.40853590821,3,RandomForest
+Cozy One Bedroom Citraland near Universitas Ciputra,Sambikerep Surabaya,putra,2700000.0,960615.9126984124,1739384.0873015877,1,RandomForest
+Onnie Room,Menur Pumpungan Surabaya,putri,2500000.0,1506710.82972583,993289.1702741701,5,RandomForest
+Kos bu liyatin,Made Surabaya,putri,1200000.0,1735329.2888973777,-535329.2888973777,1,RandomForest
+Kamar Anggrek,Gayungan Ketintang Surabaya,putra,2500000.0,1414546.3239538237,1085453.6760461763,5,RandomForest
+Standar Room,Kupang Krajan Surabaya,campur,1600000.0,1409051.9300144298,190948.06998557015,5,RandomForest
+Metaverse Kost (Basic Room),Rungkut Menanggal Surabaya,putri,1000000.0,939805.7142857141,60194.285714285914,1,RandomForest
+Metaverse Kost (Galaxy Room),Rungkut Menanggal Surabaya,putri,1500000.0,1735329.2888973777,-235329.28889737767,1,RandomForest
+Deluxe Mezanine,Kupang Krajan Surabaya,campur,2000000.0,1409051.9300144298,590948.0699855702,5,RandomForest
+Cozy Cove Kost,Kalirungkut Surabaya,putri,1600000.0,1752566.1657786644,-152566.1657786644,2,RandomForest
+Kos-kosan maskaryo kamar type 2,Tengilis Mejoyo Surabaya,putra,800000.0,897750.8946608949,-97750.89466089488,4,RandomForest
+VVIP,Ngenden Jangkungan Surabaya,putri,1250000.0,1280145.0041625039,-30145.004162503872,2,RandomForest
+Kost Palem Semolo Premium,Semolowaru Surabaya,putri,1250000.0,1147480.467171717,102519.53282828303,3,RandomForest
+FELIZ GUESTHOUSE SURABAYA TWIN BED ROOM,Jemur Wonosari Surabaya,campur,3000000.0,1571087.7153402162,1428912.2846597838,4,RandomForest
+Griya HNN2 kos putra,Airlangga Surabaya,putra,1850000.0,1125420.7467532463,724579.2532467537,5,RandomForest
+FIDI KOST,Jagir Surabaya,putra,1800000.0,1144169.675324675,655830.3246753251,5,RandomForest
+KOST KIU228,Kutisari Surabaya,putri,1300000.0,1272676.6708291704,27323.329170829616,2,RandomForest
+Kost KIU 228,Kutisari Surabaya,putri,1100000.0,1004152.4999999998,95847.50000000023,2,RandomForest
+Kos-kosan maskaryo kamar Type 1,Tengilis Mejoyo Surabaya,putra,875000.0,897750.8946608949,-22750.894660894875,4,RandomForest
+Kost Palem Semolo Exclusive A,Semolowaru Surabaya,putri,1750000.0,1607017.8962703948,142982.1037296052,3,RandomForest
+Kos Putri Dandelion Tipe C,Pacarkembang Surabaya,putri,800000.0,746119.0891053393,53880.910894660745,4,RandomForest
+Kost Putri KIU 228,Kutisari Surabaya,putri,1200000.0,1272676.6708291704,-72676.67082917038,2,RandomForest
+Kost Palem Semolo Exclusive B,Semolowaru Surabaya,putri,1750000.0,1607017.8962703948,142982.1037296052,3,RandomForest
+Kos Putri Dandelion Tipe A,Pacarkembang Surabaya,putri,1000000.0,558420.2002164503,441579.79978354974,4,RandomForest
+Kost Elmy,Medokan Semampir Surabaya,putri,600000.0,837506.7478354976,-237506.7478354976,4,RandomForest
+Kos Putri Dandelion Tipe B,Pacarkembang Surabaya,putri,900000.0,746119.0891053393,153880.91089466074,4,RandomForest
