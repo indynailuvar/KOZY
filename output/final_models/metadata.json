@@ -1,0 +1,37 @@
+{
+  "project": "KOZY",
+  "target": "harga",
+  "features": [
+    "lokasi",
+    "jenis",
+    "ac",
+    "wifi",
+    "kmandi_dalam",
+    "lemari",
+    "meja_belajar",
+    "kasur",
+    "tv",
+    "pmotor",
+    "pmobil"
+  ],
+  "categorical_features": [
+    "lokasi",
+    "jenis"
+  ],
+  "binary_features": [
+    "ac",
+    "wifi",
+    "kmandi_dalam",
+    "lemari",
+    "meja_belajar",
+    "kasur",
+    "tv",
+    "pmotor",
+    "pmobil"
+  ],
+  "scope": "Papikost Surabaya; listing Sidoarjo dikecualikan",
+  "training_rows": 68,
+  "validation": "GroupKFold 5-fold berdasarkan koordinat dibulatkan 5 desimal",
+  "price_unit": "Mengikuti data sumber; periode harga wajib diverifikasi",
+  "sklearn_version": "1.7.2"
+}

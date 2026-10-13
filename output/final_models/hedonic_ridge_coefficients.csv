@@ -1,0 +1,45 @@
+fitur_encoded,koefisien_model,estimasi_perubahan_0_ke_1_Rp,catatan
+binary__kmandi_dalam,201010.22597535353,403594.6080999233,"Asosiasi fitur biner; perubahan 0 ke 1, fitur lain tetap, menurut model"
+categorical__lokasi_Gayungan Ketintang Surabaya,169637.79938849754,,Koefisien kategori hasil One-Hot Encoding; interpretasi bergantung pada pengodean dan regularisasi
+binary__pmotor,-161825.3559811382,-620012.1595245512,"Asosiasi fitur biner; perubahan 0 ke 1, fitur lain tetap, menurut model"
+binary__pmobil,153105.9895718293,306743.1364884657,"Asosiasi fitur biner; perubahan 0 ke 1, fitur lain tetap, menurut model"
+categorical__jenis_putra,125912.13044045163,,Koefisien kategori hasil One-Hot Encoding; interpretasi bergantung pada pengodean dan regularisasi
+binary__ac,119541.73064868482,250147.68761653898,"Asosiasi fitur biner; perubahan 0 ke 1, fitur lain tetap, menurut model"
+categorical__lokasi_Sambikerep Surabaya,104810.14362003775,,Koefisien kategori hasil One-Hot Encoding; interpretasi bergantung pada pengodean dan regularisasi
+categorical__jenis_putri,-94936.38241826107,,Koefisien kategori hasil One-Hot Encoding; interpretasi bergantung pada pengodean dan regularisasi
+binary__tv,94053.88648479154,246718.10594648018,"Asosiasi fitur biner; perubahan 0 ke 1, fitur lain tetap, menurut model"
+categorical__lokasi_Kalisari Surabaya,84417.79289526821,,Koefisien kategori hasil One-Hot Encoding; interpretasi bergantung pada pengodean dan regularisasi
+categorical__lokasi_Kedung Baruk Surabaya,-72408.52050875183,,Koefisien kategori hasil One-Hot Encoding; interpretasi bergantung pada pengodean dan regularisasi
+binary__meja_belajar,68577.82406621032,155443.06788341005,"Asosiasi fitur biner; perubahan 0 ke 1, fitur lain tetap, menurut model"
+categorical__lokasi_Pacarkembang Surabaya,57511.63261916772,,Koefisien kategori hasil One-Hot Encoding; interpretasi bergantung pada pengodean dan regularisasi
+categorical__lokasi_Kalirungkut Surabaya,-50593.31610943445,,Koefisien kategori hasil One-Hot Encoding; interpretasi bergantung pada pengodean dan regularisasi
+categorical__lokasi_Medokan Semampir Surabaya,-48905.37534619424,,Koefisien kategori hasil One-Hot Encoding; interpretasi bergantung pada pengodean dan regularisasi
+categorical__lokasi_Baratajaya Surabaya,-44982.960364084924,,Koefisien kategori hasil One-Hot Encoding; interpretasi bergantung pada pengodean dan regularisasi
+categorical__lokasi_Petemon Surabaya,-41605.249416020306,,Koefisien kategori hasil One-Hot Encoding; interpretasi bergantung pada pengodean dan regularisasi
+categorical__lokasi_Siwalan Kerto Surabaya,-40498.19835851475,,Koefisien kategori hasil One-Hot Encoding; interpretasi bergantung pada pengodean dan regularisasi
+categorical__lokasi_Kutisari Surabaya,-40430.345798408394,,Koefisien kategori hasil One-Hot Encoding; interpretasi bergantung pada pengodean dan regularisasi
+binary__lemari,-40183.955486892846,-132235.3774681509,"Asosiasi fitur biner; perubahan 0 ke 1, fitur lain tetap, menurut model"
+categorical__lokasi_Medokan Ayu Surabaya,-39711.162889031206,,Koefisien kategori hasil One-Hot Encoding; interpretasi bergantung pada pengodean dan regularisasi
+categorical__lokasi_Made Surabaya,-39507.192728014576,,Koefisien kategori hasil One-Hot Encoding; interpretasi bergantung pada pengodean dan regularisasi
+binary__kasur,38238.1334178218,226317.75753885234,"Asosiasi fitur biner; perubahan 0 ke 1, fitur lain tetap, menurut model"
+categorical__lokasi_Semolowaru Surabaya,34292.292670531395,,Koefisien kategori hasil One-Hot Encoding; interpretasi bergantung pada pengodean dan regularisasi
+categorical__lokasi_Kupang Krajan Surabaya,32240.136641824243,,Koefisien kategori hasil One-Hot Encoding; interpretasi bergantung pada pengodean dan regularisasi
+categorical__lokasi_Bendul Merisi Surabaya,-31215.413023184377,,Koefisien kategori hasil One-Hot Encoding; interpretasi bergantung pada pengodean dan regularisasi
+categorical__jenis_campur,-30975.74802219051,,Koefisien kategori hasil One-Hot Encoding; interpretasi bergantung pada pengodean dan regularisasi
+categorical__lokasi_Jeruk Surabaya,-29621.02840990833,,Koefisien kategori hasil One-Hot Encoding; interpretasi bergantung pada pengodean dan regularisasi
+categorical__lokasi_Jagir Surabaya,22810.20939312758,,Koefisien kategori hasil One-Hot Encoding; interpretasi bergantung pada pengodean dan regularisasi
+categorical__lokasi_Gubeng Surabaya,-22297.543619564614,,Koefisien kategori hasil One-Hot Encoding; interpretasi bergantung pada pengodean dan regularisasi
+categorical__lokasi_Airlangga Surabaya,-22164.57148087534,,Koefisien kategori hasil One-Hot Encoding; interpretasi bergantung pada pengodean dan regularisasi
+categorical__lokasi_Tengilis Mejoyo Surabaya,18436.697552707134,,Koefisien kategori hasil One-Hot Encoding; interpretasi bergantung pada pengodean dan regularisasi
+categorical__lokasi_DR. Soetomo Surabaya,-17777.856803541737,,Koefisien kategori hasil One-Hot Encoding; interpretasi bergantung pada pengodean dan regularisasi
+binary__wifi,-15620.1401861725,-55070.924849126546,"Asosiasi fitur biner; perubahan 0 ke 1, fitur lain tetap, menurut model"
+categorical__lokasi_Menur Pumpungan Surabaya,14699.958829424168,,Koefisien kategori hasil One-Hot Encoding; interpretasi bergantung pada pengodean dan regularisasi
+categorical__lokasi_Penjaringan Sari Surabaya,-13819.638233321679,,Koefisien kategori hasil One-Hot Encoding; interpretasi bergantung pada pengodean dan regularisasi
+categorical__lokasi_Jemur Wonosari Surabaya,13667.707649830978,,Koefisien kategori hasil One-Hot Encoding; interpretasi bergantung pada pengodean dan regularisasi
+categorical__lokasi_Panjang Jiwo Surabaya,-12242.782862046939,,Koefisien kategori hasil One-Hot Encoding; interpretasi bergantung pada pengodean dan regularisasi
+categorical__lokasi_Gunung Anyar Tambak Surabaya,9526.900911406721,,Koefisien kategori hasil One-Hot Encoding; interpretasi bergantung pada pengodean dan regularisasi
+categorical__lokasi_Lontar Surabaya,2352.878370392578,,Koefisien kategori hasil One-Hot Encoding; interpretasi bergantung pada pengodean dan regularisasi
+categorical__lokasi_Mojo Surabaya,2348.549757946095,,Koefisien kategori hasil One-Hot Encoding; interpretasi bergantung pada pengodean dan regularisasi
+categorical__lokasi_Rungkut Menanggal Surabaya,811.9418923263867,,Koefisien kategori hasil One-Hot Encoding; interpretasi bergantung pada pengodean dan regularisasi
+categorical__lokasi_Klampis Ngasem Surabaya,398.4164404366781,,Koefisien kategori hasil One-Hot Encoding; interpretasi bergantung pada pengodean dan regularisasi
+categorical__lokasi_Ngenden Jangkungan Surabaya,-181.9026820274318,,Koefisien kategori hasil One-Hot Encoding; interpretasi bergantung pada pengodean dan regularisasi
