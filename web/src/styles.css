@@ -5527,77 +5527,165 @@ body.has-actionbar .footer {
   color: var(--muted);
 }
 
-/* ajakan naik ke paket eksklusif */
-.promo-eks {
+/* popup ajakan paket eksklusif: kecil, bisa ditutup, muncul sekali per hasil */
+.popup-eks {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 900;
   display: grid;
-  gap: 10px;
-  padding: 18px;
-  border-radius: var(--r-lg);
-  background: linear-gradient(135deg, var(--blue) 0%, var(--blue-600) 100%);
-  box-shadow: 0 12px 28px -14px rgba(37, 99, 235, 0.65);
-  color: #fff;
+  gap: 12px;
+  width: 340px;
+  max-width: calc(100vw - 2 * var(--gutter));
+  padding: 16px;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow:
+    inset 0 0 0 1px var(--line),
+    0 18px 40px -16px rgba(15, 23, 42, 0.35);
+  animation: popup-eks-masuk 0.32s cubic-bezier(0.2, 0.9, 0.3, 1.15);
 }
-.promo-eks-badge {
-  justify-self: start;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 3px 10px;
-  border-radius: 99px;
-  background: rgba(255, 255, 255, 0.18);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
+@keyframes popup-eks-masuk {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
 }
-.promo-eks-t {
-  font-size: 18px;
+@media (prefers-reduced-motion: reduce) {
+  .popup-eks {
+    animation: none;
+  }
+}
+.popup-eks-x {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--muted);
+}
+.popup-eks-x:hover {
+  background: var(--soft);
+  color: var(--ink);
+}
+.popup-eks-t {
+  padding-right: 32px;
+  font-size: 16px;
   font-weight: 800;
   line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--ink);
 }
-.promo-eks-s {
-  margin-top: -4px;
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.86);
-}
-.promo-eks-poin {
+.popup-eks-foot {
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.popup-eks-foot p {
+  display: grid;
+  line-height: 1.2;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.popup-eks-foot b {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+@media (max-width: 959px) {
+  .popup-eks {
+    left: var(--gutter);
+    right: var(--gutter);
+    bottom: calc(16px + var(--safe-b));
+    width: auto;
+    max-width: none;
+  }
+  /* di atas tombol utama yang menempel di bawah layar */
+  body.has-actionbar .popup-eks {
+    bottom: calc(108px + var(--safe-b));
+  }
+}
+.promo-pratinjau {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--soft);
+  box-shadow: inset 0 0 0 1px var(--line2);
+}
+.promo-pratinjau ul {
   margin: 0;
   padding: 0;
   list-style: none;
 }
-.promo-eks-poin li {
+.promo-pratinjau li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+}
+.promo-pratinjau li + li {
+  border-top: 1px solid var(--line2);
+}
+.promo-kos {
+  display: grid;
+  min-width: 0;
+}
+.promo-kos b {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.promo-samar {
+  filter: blur(3.5px);
+  color: var(--ink2);
+  user-select: none;
+}
+.promo-kos small {
+  font-size: 12.5px;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.promo-harga-kos {
+  flex: none;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+/* baris terakhir memudar ke bawah, di atasnya label gembok */
+.promo-pratinjau::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 62%;
+  background: linear-gradient(to bottom, rgba(247, 249, 252, 0), var(--soft) 78%);
+  pointer-events: none;
+}
+.promo-gembok {
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  z-index: 1;
+  transform: translateX(-50%);
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 5px 10px;
+  padding: 6px 12px;
   border-radius: 99px;
-  background: rgba(255, 255, 255, 0.14);
-  font-size: 13px;
-  font-weight: 600;
-}
-.promo-eks-aksi {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-top: 4px;
-}
-.promo-eks-aksi p {
-  display: grid;
-  line-height: 1.25;
-}
-.promo-eks-aksi b {
-  font-size: 20px;
-  font-weight: 800;
-  font-variant-numeric: tabular-nums;
-}
-.promo-eks-aksi small {
+  background: var(--ink);
+  color: #fff;
   font-size: 12.5px;
-  color: rgba(255, 255, 255, 0.82);
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 6px 16px -6px rgba(15, 23, 42, 0.5);
 }
-.promo-eks .btn-secondary {
-  box-shadow: none;
-}
+

@@ -2,48 +2,104 @@
 //   KelasTangga   kelas harga murah/menengah/mahal hasil K-Prototypes
 //   KartuAB       kartu timbul kos A vs B + baris gap + skor TOPSIS
 //   KunciEksklusif penutup fitur untuk yang belum membeli paket
-//   PromoEksklusif ajakan naik ke paket di halaman hasil & rekomendasi area
+//   PopupEksklusif popup ajakan naik ke paket, muncul sekali saat hasil pertama tampil
+import { useEffect, useState } from 'react';
 import Icon from './Icon.jsx';
 import { Button, InfoTip } from './ui.jsx';
 import { KELAS, GAP_AB } from '../api/premium.js';
 import { labelFasilitas } from '../api/kozy.js';
-import { HARGA_MATCH } from './Sheets.jsx';
+import { HARGA_MATCH, aksesEksklusif } from './Sheets.jsx';
+import { useStore } from '../store.jsx';
 import { jarak, rp, rpSingkat } from '../lib/format.js';
 
 const angka = (x, d = 1) => x.toLocaleString('id-ID', { maximumFractionDigits: d, minimumFractionDigits: 0 });
 const bertanda = (x, f) => `${x > 0 ? '+' : x < 0 ? '−' : ''}${f(Math.abs(x))}`;
 
-// Ajakan naik ke paket eksklusif. `judul` dibuat spesifik untuk konteks halaman (angka milik pengguna),
-// `poin` maksimal 3 manfaat singkat. Halaman pemanggil yang menyembunyikannya bila paket sudah dibeli.
-export function PromoEksklusif({ judul, sub, poin = [], cta = 'Buka sekarang', onBuka }) {
+// Nama kos tidak pernah dikirim ke DOM sebelum dibayar: kata pertama tetap, sisanya diganti titik.
+const samarkan = (nama) => {
+  const [awal, ...sisa] = nama.split(/\s+/);
+  return { awal, titik: sisa.slice(0, 3).map((w) => '•'.repeat(Math.min(Math.max(w.length, 3), 7))).join(' ') || '•••••' };
+};
+
+// Popup ajakan naik ke paket eksklusif. Muncul sekali per hasil (id), sesaat setelah hasilnya tampil,
+// dan bisa ditutup. Isinya sengaja sedikit: judul pendek, 2 baris cuplikan kos asli (nama disamarkan),
+// harga, satu tombol. Tidak muncul untuk yang sudah membeli paket.
+//   id: kunci hasil (r.id) — popup yang sudah ditutup tidak muncul lagi untuk hasil yang sama
+//   pratinjau: [{ nama, sub, harga }], total: jumlah kos yang terbuka setelah membayar
+export function PopupEksklusif({ id, judul, pratinjau = [], total = 0, cta = 'Buka', onBuka }) {
+  const { state, set } = useStore();
+  const sudah = !!state.promoDitutup?.[id];
+  const [tampil, setTampil] = useState(false);
+  const punya = aksesEksklusif(state);
+
+  useEffect(() => {
+    if (sudah || punya || !id) return;
+    const t = setTimeout(() => setTampil(true), 900); // beri waktu membaca hasilnya dulu
+    return () => clearTimeout(t);
+  }, [id, sudah, punya]);
+
+  const tutup = () => {
+    setTampil(false);
+    set((s) => ({ promoDitutup: { ...s.promoDitutup, [id]: true } }));
+  };
+  useEffect(() => {
+    if (!tampil) return;
+    const esc = (e) => e.key === 'Escape' && tutup();
+    document.addEventListener('keydown', esc);
+    return () => document.removeEventListener('keydown', esc);
+  }, [tampil]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  if (!tampil || sudah || punya) return null;
+  const baris = pratinjau.slice(0, 2);
+  const sisa = Math.max(0, total - baris.length);
   return (
-    <section className="promo-eks" aria-label="Paket eksklusif KOZY">
-      <span className="promo-eks-badge">
-        <Icon name="sparkles" size={14} />
-        Paket eksklusif
-      </span>
-      <p className="promo-eks-t">{judul}</p>
-      {sub && <p className="promo-eks-s">{sub}</p>}
-      {poin.length > 0 && (
-        <ul className="promo-eks-poin">
-          {poin.map((p) => (
-            <li key={p.teks}>
-              <Icon name={p.icon} size={14} />
-              {p.teks}
-            </li>
-          ))}
-        </ul>
+    <div className="popup-eks" role="dialog" aria-modal="false" aria-labelledby="popup-eks-t">
+      <button type="button" className="popup-eks-x" aria-label="Tutup" onClick={tutup}>
+        <Icon name="x" size={18} />
+      </button>
+      <p className="popup-eks-t" id="popup-eks-t">
+        {judul}
+      </p>
+      {baris.length > 0 && (
+        <div className="promo-pratinjau">
+          <ul aria-label="Cuplikan kos yang terkunci">
+            {baris.map((k, i) => {
+              const s = samarkan(k.nama);
+              return (
+                <li key={i}>
+                  <span className="promo-kos">
+                    <b>
+                      {s.awal} <span className="promo-samar" aria-label="nama disembunyikan">{s.titik}</span>
+                    </b>
+                    <small>{k.sub}</small>
+                  </span>
+                  <span className="promo-harga-kos">{rpSingkat(k.harga)}</span>
+                </li>
+              );
+            })}
+          </ul>
+          {sisa > 0 && (
+            <span className="promo-gembok">
+              <Icon name="lock" size={12} />+{sisa} lainnya
+            </span>
+          )}
+        </div>
       )}
-      <div className="promo-eks-aksi">
+      <div className="popup-eks-foot">
         <p>
-          <b>{rp(HARGA_MATCH)}</b>
-          <small>sekali bayar · berlaku selamanya</small>
+          <b>{rp(HARGA_MATCH)}</b> sekali bayar
         </p>
-        <Button variant="secondary" size="sm" iconRight="arrowr" onClick={onBuka}>
+        <Button
+          size="sm"
+          onClick={() => {
+            tutup();
+            onBuka();
+          }}
+        >
           {cta}
         </Button>
       </div>
-    </section>
+    </div>
   );
 }
 
