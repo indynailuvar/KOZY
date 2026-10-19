@@ -12,6 +12,7 @@ import { GMAPS, KAWASAN_TERCAKUP, OLX } from '../api/kozy.js';
 import { FORECAST, GAP_AB, KELAS, funnelDariJejak, simulasiPendapatan } from '../api/premium.js';
 import { rp, tanggal } from '../lib/format.js';
 import { go } from '../router.js';
+import { useStore } from '../store.jsx';
 import { deretHarian, duaPekan, hapus as hapusJejak, hitungPer, jumlah, semua } from '../lib/jejak.js';
 
 const M = PASAR.meta;
@@ -46,6 +47,7 @@ export default function Admin({ query = {} }) {
   const [ukur, setUkur] = useState('median');
   const [skenario, setSkenario] = useState('moderat');
   const [pakaiJejak, setPakaiJejak] = useState(true);
+  const { state, set, toast } = useStore();
   const [jejak, setJejak] = useState(semua);
   // aktivitas bisa bertambah dari tab lain, jadi dibaca ulang saat halaman ini kembali aktif
   useEffect(() => {
@@ -228,6 +230,26 @@ export default function Admin({ query = {} }) {
             { id: 'aktivitas', label: 'Aktivitas pengguna', icon: 'trend' },
           ]}
         />
+      </div>
+
+      {/* Mode demo: pembayaran di aplikasi masih simulasi, jadi status paket perlu bisa dikembalikan
+          supaya popup & fitur terkunci bisa diperlihatkan lagi saat presentasi. */}
+      <div className="admin-demo">
+        <span>
+          Paket eksklusif di perangkat ini: <b>{state.premium ? 'aktif' : 'belum dibeli'}</b>
+          {Object.keys(state.promoDitutup || {}).length > 0 && ` · ${Object.keys(state.promoDitutup).length} popup sudah ditutup`}
+        </span>
+        <Button
+          size="sm"
+          variant="secondary"
+          icon="refresh"
+          onClick={() => {
+            set({ premium: false, paid: {}, promoDitutup: {}, match: null });
+            toast('Mode demo direset: paket belum dibeli, popup akan muncul lagi.');
+          }}
+        >
+          Reset untuk demo
+        </Button>
       </div>
 
       {bagian === 'data' && (
