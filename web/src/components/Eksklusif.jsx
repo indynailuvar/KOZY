@@ -2,6 +2,7 @@
 //   KelasTangga   kelas harga murah/menengah/mahal hasil K-Prototypes
 //   KartuAB       kartu timbul kos A vs B + baris gap + skor TOPSIS
 //   KunciEksklusif penutup fitur untuk yang belum membeli paket
+//   PromoEksklusif ajakan naik ke paket di halaman hasil & rekomendasi area
 import Icon from './Icon.jsx';
 import { Button, InfoTip } from './ui.jsx';
 import { KELAS, GAP_AB } from '../api/premium.js';
@@ -11,6 +12,40 @@ import { jarak, rp, rpSingkat } from '../lib/format.js';
 
 const angka = (x, d = 1) => x.toLocaleString('id-ID', { maximumFractionDigits: d, minimumFractionDigits: 0 });
 const bertanda = (x, f) => `${x > 0 ? '+' : x < 0 ? '−' : ''}${f(Math.abs(x))}`;
+
+// Ajakan naik ke paket eksklusif. `judul` dibuat spesifik untuk konteks halaman (angka milik pengguna),
+// `poin` maksimal 3 manfaat singkat. Halaman pemanggil yang menyembunyikannya bila paket sudah dibeli.
+export function PromoEksklusif({ judul, sub, poin = [], cta = 'Buka sekarang', onBuka }) {
+  return (
+    <section className="promo-eks" aria-label="Paket eksklusif KOZY">
+      <span className="promo-eks-badge">
+        <Icon name="sparkles" size={14} />
+        Paket eksklusif
+      </span>
+      <p className="promo-eks-t">{judul}</p>
+      {sub && <p className="promo-eks-s">{sub}</p>}
+      {poin.length > 0 && (
+        <ul className="promo-eks-poin">
+          {poin.map((p) => (
+            <li key={p.teks}>
+              <Icon name={p.icon} size={14} />
+              {p.teks}
+            </li>
+          ))}
+        </ul>
+      )}
+      <div className="promo-eks-aksi">
+        <p>
+          <b>{rp(HARGA_MATCH)}</b>
+          <small>sekali bayar · berlaku selamanya</small>
+        </p>
+        <Button variant="secondary" size="sm" iconRight="arrowr" onClick={onBuka}>
+          {cta}
+        </Button>
+      </div>
+    </section>
+  );
+}
 
 export function KunciEksklusif({ judul, sub, poin = [], onBuka }) {
   return (
