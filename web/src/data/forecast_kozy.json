@@ -1,0 +1,162 @@
+{
+ "meta": {
+  "judul": "Forecast pendapatan KOZY dari paket eksklusif",
+  "metode": "Simulasi Monte Carlo funnel: konversi ~ Beta (prior + data aktivitas), pembeli ~ Poisson(pengunjung × indeks musiman × konversi)",
+  "harga": 19900,
+  "model_bayar": "sekali bayar per pengguna",
+  "kenapa_bukan_holt_winters": "Holt-Winters/SARIMA butuh ≥ 2 siklus musiman (24 bulan); ulasan yang beresolusi bulan hanya mencakup 12 bulan terakhir.",
+  "keterbatasan": [
+   "Indeks musiman memakai volume ulasan Google Maps sebagai proksi permintaan kos, bukan data kunjungan KOZY.",
+   "Dengan satu siklus (12 bulan), tren dan musiman belum bisa dipisahkan sepenuhnya.",
+   "Google membulatkan waktu ulasan ('3 bulan lalu'), jadi penempatan per bulan bisa bergeser ± 1 bulan.",
+   "Pengunjung awal dan pertumbuhan adalah asumsi skenario sampai ada data kunjungan asli."
+  ]
+ },
+ "musiman": {
+  "sumber": "Ulasan Google Maps 3.125 tempat kos Surabaya",
+  "diambil": "2026-09-16",
+  "ulasan_total": 23332,
+  "duplikat_dibuang": 8557,
+  "tanpa_resolusi_bulan": 12095,
+  "hitung": [
+   201,
+   234,
+   174,
+   255,
+   236,
+   301,
+   273,
+   263,
+   181,
+   176,
+   188,
+   198
+  ],
+  "periode": [
+   "Jan 2026",
+   "Feb 2026",
+   "Mar 2026",
+   "Apr 2026",
+   "Mei 2026",
+   "Jun 2026",
+   "Jul 2026",
+   "Agu 2026",
+   "Sep 2026",
+   "Okt 2025",
+   "Nov 2025",
+   "Des 2025"
+  ],
+  "indeks": [
+   0.9,
+   1.048,
+   0.779,
+   1.142,
+   1.057,
+   1.348,
+   1.222,
+   1.178,
+   0.81,
+   0.788,
+   0.842,
+   0.887
+  ],
+  "ci95": [
+   [
+    0.776,
+    1.024
+   ],
+   [
+    0.914,
+    1.182
+   ],
+   [
+    0.663,
+    0.895
+   ],
+   [
+    1.002,
+    1.282
+   ],
+   [
+    0.922,
+    1.192
+   ],
+   [
+    1.196,
+    1.5
+   ],
+   [
+    1.077,
+    1.367
+   ],
+   [
+    1.035,
+    1.32
+   ],
+   [
+    0.692,
+    0.929
+   ],
+   [
+    0.672,
+    0.904
+   ],
+   [
+    0.721,
+    0.962
+   ],
+   [
+    0.763,
+    1.01
+   ]
+  ],
+  "uji": {
+   "metode": "Chi-square goodness of fit vs. merata",
+   "chi2": 90.5,
+   "df": 11,
+   "p": 1.35e-14
+  }
+ },
+ "mulai": {
+  "bulan": 10,
+  "tahun": 2026
+ },
+ "prior": {
+  "a": 3,
+  "b": 97,
+  "arti": "Rata-rata konversi 3% dengan bobot setara 100 pengunjung — asumsi awal, ikut bergeser begitu data aktivitas masuk."
+ },
+ "skenario": {
+  "pesimis": {
+   "label": "Pesimis",
+   "pengunjung_awal": 500,
+   "pertumbuhan": 0.0,
+   "hasil_tanpa_data_aktivitas": {
+    "total_p50": 3203900.0,
+    "total_p10": 1313400.0,
+    "total_p90": 6288400.0
+   }
+  },
+  "moderat": {
+   "label": "Moderat",
+   "pengunjung_awal": 1000,
+   "pertumbuhan": 0.02,
+   "hasil_tanpa_data_aktivitas": {
+    "total_p50": 7164000.0,
+    "total_p10": 2965100.0,
+    "total_p90": 14111090.0
+   }
+  },
+  "optimis": {
+   "label": "Optimis",
+   "pengunjung_awal": 2000,
+   "pertumbuhan": 0.04,
+   "hasil_tanpa_data_aktivitas": {
+    "total_p50": 16178700.0,
+    "total_p10": 6646600.0,
+    "total_p90": 31762390.0
+   }
+  }
+ },
+ "draws": 10000
+}

@@ -4,7 +4,9 @@ import TanyaAI from '../components/TanyaAI.jsx';
 import KozyMap from '../components/KozyMap.jsx';
 import { SpeakButton, useBacaOtomatis } from '../components/A11y.jsx';
 import { Accordion, ActionBar, Banner, Button, EmptyState, InfoTip, ListRow, PageHead, StatusBadge } from '../components/ui.jsx';
-import { HARGA_MATCH, Paywall } from '../components/Sheets.jsx';
+import { HARGA_MATCH, Paywall, aksesEksklusif } from '../components/Sheets.jsx';
+import { KelasTangga, KunciEksklusif } from '../components/Eksklusif.jsx';
+import { kelasKos } from '../api/premium.js';
 import { jenisById, kawasanById, kisaranWajar, perluDiperiksa } from '../api/kozy.js';
 import { bulat10rb, bulat50rb, persen, rp, rpSingkat, rpSuara, tanggal } from '../lib/format.js';
 import { catat } from '../lib/jejak.js';
@@ -152,7 +154,8 @@ export default function Hasil() {
   const k = { ...kawasanById(r.kawasan.id), ...r.kawasan };
   const kemahalan = r.status === 'KEMAHALAN';
   const rendah = r.meta.confidence === 'rendah';
-  const paid = !!state.paid[r.id];
+  const paid = aksesEksklusif(state, r.id);
+  const kelas = r.kelas || kelasKos(r.harga_ditawarkan, r.meta.kecamatan || r.kawasan.kec, r.input.jenis); // hasil lama belum menyimpan kelas
   const kec = r.meta.kecamatan || r.kawasan.kec;
   const jenis = jenisById(r.input.jenis);
   const hemat = Math.abs(r.selisih_rp) >= 10_000 ? Math.abs(r.selisih_rp) : 0;
@@ -260,6 +263,21 @@ export default function Hasil() {
           <Accordion title="Posisi di pasar" icon="bars">
             <PosisiPasar r={r} />
           </Accordion>
+          <Accordion title="Kelas harga kos ini" icon="bars" defaultOpen={paid}>
+            {paid ? (
+              <KelasTangga kelas={kelas} harga={r.harga_ditawarkan} />
+            ) : (
+              <KunciEksklusif
+                judul="Murah, menengah, atau mahal?"
+                sub="Lihat kelas harga kos ini dibanding 307 iklan kos Surabaya, lengkap dengan posisinya di dalam kelas."
+                onBuka={() => {
+                  tujuan.current = null;
+                  catat('eksklusif_dikunci', { fitur: 'kelas', kec });
+                  setBayar(true);
+                }}
+              />
+            )}
+          </Accordion>
         </div>
 
         <section className="card map-sec">
@@ -331,7 +349,7 @@ export default function Hasil() {
         <div className="rail-card">
           <p className="rail-t">{rail.t}</p>
           <p className="rail-s">{rail.s}</p>
-          <ActionBar note={paid ? null : `${rp(HARGA_MATCH)} · termasuk 5 kos alternatif`}>
+          <ActionBar note={paid ? null : `${rp(HARGA_MATCH)} sekali bayar · semua fitur eksklusif`}>
             <Button block icon={paid ? undefined : 'lock'} iconRight={paid ? 'arrowr' : undefined} onClick={() => buka(kemahalan ? 'tawar' : 'match')}>
               {rail.cta}
             </Button>
@@ -345,7 +363,7 @@ export default function Hasil() {
         onClose={() => setBayar(false)}
         onPaid={() => {
           setBayar(false);
-          lanjut(tujuan.current);
+          if (tujuan.current) lanjut(tujuan.current);
         }}
       />
     </div>

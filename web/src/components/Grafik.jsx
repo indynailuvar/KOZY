@@ -343,5 +343,57 @@ export function Tabel({ kolom, baris, label }) {
   );
 }
 
+// Pita: garis median dengan pita ketidakpastian 80% dan 95% (hasil simulasi, bukan satu angka pasti).
+export function Pita({ titik, format = (v) => v, label }) {
+  const W = 620;
+  const H = 240;
+  const P = { l: 52, r: 12, t: 14, b: 30 };
+  const maks = Math.max(...titik.map((t) => t.p97_5), 1);
+  const px = (i) => P.l + (i / Math.max(1, titik.length - 1)) * (W - P.l - P.r);
+  const py = (v) => H - P.b - (v / maks) * (H - P.t - P.b);
+  const area = (atas, bawah) => [...titik.map((t, i) => `${px(i)},${py(t[atas])}`), ...titik.map((t, i) => `${px(i)},${py(t[bawah])}`).reverse()].join(' ');
+  return (
+    <div className="gpita">
+      <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`${label}. ${titik.map((t) => `${t.label}: median ${format(t.p50)}, 80% ${format(t.p10)} sampai ${format(t.p90)}`).join('; ')}.`}>
+        {[0, maks / 2, maks].map((v) => (
+          <g key={v}>
+            <line x1={P.l} y1={py(v)} x2={W - P.r} y2={py(v)} className="grid" />
+            <text x={P.l - 8} y={py(v) + 4} textAnchor="end" className="tick">
+              {format(v)}
+            </text>
+          </g>
+        ))}
+        <polygon points={area('p97_5', 'p2_5')} className="pita95" />
+        <polygon points={area('p90', 'p10')} className="pita80" />
+        <polyline points={titik.map((t, i) => `${px(i)},${py(t.p50)}`).join(' ')} className="garis" />
+        {titik.map((t, i) => (
+          <circle key={t.label} cx={px(i)} cy={py(t.p50)} r={3.5} className="dot-on" />
+        ))}
+        {titik.map((t, i) =>
+          i % 2 === 0 || i === titik.length - 1 ? (
+            <text key={`l${t.label}`} x={px(i)} y={H - 8} textAnchor="middle" className="tick">
+              {t.label}
+            </text>
+          ) : null,
+        )}
+      </svg>
+      <p className="gpita-leg">
+        <span>
+          <i style={{ background: 'var(--blue)' }} />
+          Median
+        </span>
+        <span>
+          <i style={{ background: 'var(--blue-100)' }} />
+          80% kemungkinan
+        </span>
+        <span>
+          <i style={{ background: 'var(--blue-50)' }} />
+          95% kemungkinan
+        </span>
+      </p>
+    </div>
+  );
+}
+
 export const rpJuta = (v) => (v >= 1_000_000 ? `${(v / 1_000_000).toLocaleString('id-ID', { maximumFractionDigits: 2 })} jt` : `${Math.round(v / 1000)} rb`);
 export const rpPenuh = rp;
