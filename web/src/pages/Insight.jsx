@@ -4,9 +4,9 @@ import TanyaAI from '../components/TanyaAI.jsx';
 import KozyMap from '../components/KozyMap.jsx';
 import { SpeakButton, useBacaOtomatis } from '../components/A11y.jsx';
 import { Button, EmptyState, InfoTip, PageHead, ScoreRing, Segmented } from '../components/ui.jsx';
-import { Paywall, aksesEksklusif } from '../components/Sheets.jsx';
-import { PromoEksklusif } from '../components/Eksklusif.jsx';
-import { fasilitasById, hitungArea, jenisById, kebutuhanById, ringkasInsight, saranAI, tujuanById } from '../api/kozy.js';
+import { Paywall } from '../components/Sheets.jsx';
+import { PopupEksklusif } from '../components/Eksklusif.jsx';
+import { fasilitasById, hitungArea, jenisById, kebutuhanById, kosKec, ringkasInsight, saranAI, tujuanById } from '../api/kozy.js';
 import { bulat10rb, daftar, rp, rpSingkat, rpSuara } from '../lib/format.js';
 import { catat } from '../lib/jejak.js';
 import { useStore } from '../store.jsx';
@@ -77,9 +77,12 @@ export default function Insight() {
     go('/match?dari=cari');
   };
   const areaPilih = areas.find((a) => a.id === pilihId);
-  const punyaPaket = aksesEksklusif(state);
-  // satu kecamatan bisa punya beberapa area dengan daftar kos yang sama, jadi dihitung sekali per kecamatan
-  const kosCocok = [...new Map(areas.map((a) => [a.kec, a.n])).values()].reduce((s, n) => s + n, 0);
+  // kos asli yang cocok (jenis + fasilitas wajib) di kecamatan area-area ini; tiap kecamatan dihitung sekali.
+  // Diurutkan dari kecamatan area teratas, lalu harga termurah — tiga teratas jadi cuplikan promo.
+  const kosCocok = [...new Set(areas.map((a) => a.kec))]
+    .flatMap((kec) => kosKec(kec))
+    .filter((k) => (!input.jenis || k.jenis === input.jenis) && input.fasilitas.every((f) => k.fasilitas.includes(f)))
+    .sort((a, b) => (b.kec === teratas.kec) - (a.kec === teratas.kec) || a.harga - b.harga);
   const subJudul = [`Dekat ${tujuan.singkat}`, r.input.jenis ? `kos ${jenisById(r.input.jenis).label.toLowerCase()}` : null, `maks. ${rpSingkat(r.input.budgetMax)}`].filter(Boolean).join(' · ');
 
   const peta = (
@@ -139,23 +142,6 @@ export default function Insight() {
             </button>
             {sebaran && <Sebaran bins={insight.bins} />}
           </section>
-
-          {!punyaPaket && (
-            <PromoEksklusif
-              judul={kosCocok > 0 ? `${kosCocok} kos asli cocok dengan kebutuhanmu` : 'Lihat kos asli di area ini'}
-              sub={`Nama kos, harga dari iklan, titik di peta, dan tautan iklannya, mulai dari ${teratas.nama}.`}
-              poin={[
-                { icon: 'pin', teks: 'Kos asli + tautan iklan' },
-                { icon: 'scale', teks: 'Bandingkan A vs B' },
-                { icon: 'bars', teks: 'Kelas murah–mahal' },
-              ]}
-              cta="Buka kosnya"
-              onBuka={() => {
-                catat('eksklusif_dikunci', { fitur: 'promo_kawasan', kec: teratas.kec });
-                setBayar(true);
-              }}
-            />
-          )}
 
           {sisa >= 150_000 && (
             <div className="ai-tip">
@@ -247,6 +233,18 @@ export default function Insight() {
           'Apa saja yang wajib dicek sebelum bayar kos?',
           'Cara nawar harga kos',
         ]}
+      />
+
+      <PopupEksklusif
+        id={r.id}
+        judul={kosCocok.length > 0 ? `${kosCocok.length} kos asli cocok untukmu` : `Lihat kos asli di sekitar ${tujuan.singkat}`}
+        pratinjau={kosCocok.map((k) => ({ nama: k.nama, harga: k.harga, sub: `Kos ${jenisById(k.jenis).label.toLowerCase()} · Kec. ${k.kec}` }))}
+        total={kosCocok.length}
+        cta="Buka kosnya"
+        onBuka={() => {
+          catat('eksklusif_dikunci', { fitur: 'popup_kawasan', kec: teratas.kec });
+          setBayar(true);
+        }}
       />
 
       <Paywall

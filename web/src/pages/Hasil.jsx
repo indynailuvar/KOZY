@@ -5,9 +5,9 @@ import KozyMap from '../components/KozyMap.jsx';
 import { SpeakButton, useBacaOtomatis } from '../components/A11y.jsx';
 import { Accordion, ActionBar, Banner, Button, EmptyState, InfoTip, ListRow, PageHead, StatusBadge } from '../components/ui.jsx';
 import { HARGA_MATCH, Paywall, aksesEksklusif } from '../components/Sheets.jsx';
-import { KelasTangga, KunciEksklusif, PromoEksklusif } from '../components/Eksklusif.jsx';
+import { KelasTangga, KunciEksklusif, PopupEksklusif } from '../components/Eksklusif.jsx';
 import { kelasKos } from '../api/premium.js';
-import { jenisById, kawasanById, kisaranWajar, perluDiperiksa } from '../api/kozy.js';
+import { hitungWajar, jenisById, kawasanById, kisaranWajar, kosKec, labelFasilitas, perluDiperiksa } from '../api/kozy.js';
 import { bulat10rb, bulat50rb, persen, rp, rpSingkat, rpSuara, tanggal } from '../lib/format.js';
 import { catat } from '../lib/jejak.js';
 import { useStore } from '../store.jsx';
@@ -160,6 +160,17 @@ export default function Hasil() {
   const jenis = jenisById(r.input.jenis);
   const hemat = Math.abs(r.selisih_rp) >= 10_000 ? Math.abs(r.selisih_rp) : 0;
   const kisaran = r.kisaran || kisaranWajar(r.harga_wajar);
+  const jenisLabel = jenis ? jenis.label.toLowerCase() : '';
+  // kos alternatif yang sama dengan yang terbuka di KOZY Match (lolos cek harga, maks. 5) — jadi cuplikan promo
+  const batasAlt = Math.max(r.harga_ditawarkan, r.harga_wajar);
+  const alternatif = kosKec(kec)
+    .filter((x) => (!r.input.jenis || x.jenis === r.input.jenis) && r.input.fasilitas.every((f) => x.fasilitas.includes(f)) && x.harga <= batasAlt)
+    .filter((x) => {
+      const w = hitungWajar({ kec: x.kec }, { fasilitas: x.fasilitas, jenis: x.jenis });
+      return w && ((x.harga - w.harga_wajar) / w.harga_wajar) * 100 <= 10;
+    })
+    .sort((a, b) => a.harga - b.harga)
+    .slice(0, 5);
 
   const lanjut = (ke) => {
     set({
@@ -248,29 +259,6 @@ export default function Hasil() {
             </InfoTip>
           </p>
         </section>
-
-        {!paid && (
-          <PromoEksklusif
-            judul={
-              kemahalan
-                ? `Kemahalan ${rp(r.selisih_rp)}/bulan. Nego pakai data, hemat sampai ${rpSingkat(r.selisih_rp * 12)} setahun.`
-                : r.status === 'MURAH'
-                  ? `Harganya di bawah pasaran. Murah, menengah, atau mahal di kelasnya?`
-                  : `Harganya wajar. Masih ada yang lebih pas di Kec. ${kec}?`
-            }
-            poin={[
-              kemahalan ? { icon: 'file', teks: 'Kartu Tawar untuk nego' } : { icon: 'bars', teks: 'Kelas harga kos ini' },
-              { icon: 'pin', teks: '5 kos alternatif wajar' },
-              { icon: 'scale', teks: 'Bandingkan A vs B' },
-            ]}
-            cta={kemahalan ? 'Mulai nego' : 'Buka semua'}
-            onBuka={() => {
-              tujuan.current = kemahalan ? 'tawar' : null;
-              catat('eksklusif_dikunci', { fitur: 'promo_hasil', kec });
-              setBayar(true);
-            }}
-          />
-        )}
 
         {periksa && (
           <Banner icon="checkc" title="Harga bagus. Pastikan dulu sebelum transfer">
@@ -379,6 +367,25 @@ export default function Hasil() {
           </ActionBar>
         </div>
       </aside>
+
+      <PopupEksklusif
+        id={r.id}
+        judul={
+          kemahalan
+            ? `Bisa hemat ${rpSingkat(r.selisih_rp)} per bulan`
+            : alternatif.length > 0
+              ? `${alternatif.length} kos lain di ${kec} juga wajar`
+              : 'Kos ini masuk kelas harga apa?'
+        }
+        pratinjau={alternatif.map((x) => ({ nama: x.nama, harga: x.harga, sub: `Kos ${jenisById(x.jenis).label.toLowerCase()} · ${labelFasilitas(x.fasilitas).slice(0, 2).join(', ') || `Kec. ${x.kec}`}` }))}
+        total={alternatif.length}
+        cta={kemahalan ? 'Buka Kartu Tawar' : alternatif.length > 0 ? 'Lihat kosnya' : 'Buka paket'}
+        onBuka={() => {
+          tujuan.current = kemahalan ? 'tawar' : alternatif.length > 0 ? 'match' : null;
+          catat('eksklusif_dikunci', { fitur: 'popup_hasil', kec });
+          setBayar(true);
+        }}
+      />
 
       <Paywall
         open={bayar}
