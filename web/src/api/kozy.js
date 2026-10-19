@@ -17,6 +17,7 @@ import gmaps from '../data/gmaps.json';
 import olx from '../data/olx.json';
 import { BIAYA_FASILITAS, FASILITAS, JENIS_KOS, KAWASAN, KEBUTUHAN, LUAR_CAKUPAN, PASAR, PERSONA, TEMPAT } from '../data/surabaya.js';
 import { bulat10rb, bulat50rb } from '../lib/format.js';
+import { kelasKos } from './premium.js';
 
 const API = import.meta.env.VITE_API_URL;
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -280,6 +281,8 @@ export async function cekHarga(input, onStep = () => {}) {
     kawasan: { id: kawasan.id, nama: kawasan.nama, kec: kawasan.kec, jarak: kawasan.jarak, lat: kawasan.lat, lng: kawasan.lng },
     harga_ditawarkan: input.harga,
     ...result,
+    // kelas harga K-Prototypes — fitur eksklusif, halaman hasil yang memutuskan boleh tampil atau tidak
+    kelas: result.kelas || kelasKos(input.harga, kawasan.kec, input.jenis),
   };
 }
 
@@ -457,6 +460,7 @@ export async function kozyMatch({ kawasanIds, fasilitas = [], budgetMax = null, 
         selisih_persen,
         status: statusDari(selisih_persen),
         persentil: persentilDari(k.harga, k.kec),
+        kelas: kelasKos(k.harga, k.kec, k.jenis).label,
         n: stat.n,
         skor,
         sumber: k.sumber,

@@ -5,10 +5,11 @@
 //   olx.json    rumah kos DIJUAL — sisi pemilik, sengaja dipisah dari harga sewa
 import { useEffect, useMemo, useState } from 'react';
 import Icon from '../components/Icon.jsx';
-import { Angka, BarH, Corong, Garis, Heatmap, Histogram, Kartu, Sebar, Slope, Tabel, Tumpuk100, rpJuta } from '../components/Grafik.jsx';
-import { Button, PageHead, Segmented } from '../components/ui.jsx';
+import { Angka, BarH, Corong, Garis, Heatmap, Histogram, Kartu, Pita, Sebar, Slope, Tabel, Tumpuk100, rpJuta } from '../components/Grafik.jsx';
+import { Button, PageHead, Segmented, Switch } from '../components/ui.jsx';
 import { KAWASAN, FASILITAS, JENIS_KOS, PASAR } from '../data/surabaya.js';
 import { GMAPS, KAWASAN_TERCAKUP, OLX } from '../api/kozy.js';
+import { FORECAST, GAP_AB, KELAS, funnelDariJejak, simulasiPendapatan } from '../api/premium.js';
 import { rp, tanggal } from '../lib/format.js';
 import { go } from '../router.js';
 import { deretHarian, duaPekan, hapus as hapusJejak, hitungPer, jumlah, semua } from '../lib/jejak.js';
@@ -19,6 +20,12 @@ const median = (xs) => {
   return s.length % 2 ? s[(s.length - 1) / 2] : Math.round((s[s.length / 2 - 1] + s[s.length / 2]) / 2);
 };
 const persenEfek = (b) => Math.round((Math.exp(b) - 1) * 100);
+const koma = (x, d) => Number(x).toLocaleString('id-ID', { minimumFractionDigits: d, maximumFractionDigits: d });
+const SKENARIO = FORECAST.skenario;
+const uji = GAP_AB.uji_jarak_harga;
+const musim = FORECAST.musiman;
+// urut waktu: 12 bulan sampai bulan scraping ulasan
+const URUT_MUSIM = Array.from({ length: 12 }, (_, i) => (new Date(musim.diambil).getMonth() + 1 + i) % 12);
 
 const NIAT = {
   upgrade: 'Upgrade kamar',
@@ -35,8 +42,10 @@ function DaftarAtau({ data, format, label, kosong = KOSONG }) {
 }
 
 export default function Admin({ query = {} }) {
-  const bagian = query.tab === 'aktivitas' ? 'aktivitas' : 'data';
+  const bagian = query.tab === 'aktivitas' ? 'aktivitas' : query.tab === 'modelling' ? 'modelling' : 'data';
   const [ukur, setUkur] = useState('median');
+  const [skenario, setSkenario] = useState('moderat');
+  const [pakaiJejak, setPakaiJejak] = useState(true);
   const [jejak, setJejak] = useState(semua);
   // aktivitas bisa bertambah dari tab lain, jadi dibaca ulang saat halaman ini kembali aktif
   useEffect(() => {
@@ -54,6 +63,11 @@ export default function Admin({ query = {} }) {
     window.scrollTo(0, 0);
   }, [bagian]);
   const kos = PASAR.kos;
+  const funnel = useMemo(() => funnelDariJejak(jejak), [jejak]);
+  const fc = useMemo(() => {
+    const s = SKENARIO[skenario];
+    return simulasiPendapatan({ pengunjungAwal: s.pengunjung_awal, pertumbuhan: s.pertumbuhan, ...(pakaiJejak ? { sesi: funnel.sesi, pembeli: funnel.pembeli } : {}) });
+  }, [skenario, pakaiJejak, funnel]);
   const kecs = Object.entries(PASAR.kecamatan);
 
   const d = useMemo(() => {
@@ -207,9 +221,10 @@ export default function Admin({ query = {} }) {
         <Segmented
           label="Bagian dashboard"
           value={bagian}
-          onChange={(v) => go(v === 'aktivitas' ? '/admin?tab=aktivitas' : '/admin')}
+          onChange={(v) => go(v === 'aktivitas' ? '/admin?tab=aktivitas' : v === 'modelling' ? '/admin?tab=modelling' : '/admin')}
           options={[
             { id: 'data', label: 'Data pasar & model', icon: 'bars' },
+            { id: 'modelling', label: 'Model eksklusif & forecast', icon: 'sparkles' },
             { id: 'aktivitas', label: 'Aktivitas pengguna', icon: 'trend' },
           ]}
         />
@@ -545,6 +560,135 @@ export default function Admin({ query = {} }) {
                   Hapus data aktivitas
                 </Button>
               </div>
+            </Kartu>
+          </div>
+        </>
+      )}
+
+      {bagian === 'modelling' && (
+        <>
+          <Angka
+            items={[
+              {
+                nilai: `${KELAS.meta.k} kelas`,
+                label: 'kelas harga (K-Prototypes)',
+                sub: `Siluet ${koma(KELAS.meta.pemilihan_k.find((p) => p.k === KELAS.meta.k).siluet, 3)} · ARI bootstrap ${koma(KELAS.meta.stabilitas.rata, 2)}`,
+              },
+              {
+                nilai: `ρ ${koma(uji.spearman.rho, 2)}`,
+                label: 'jarak kampus vs harga (Spearman)',
+                sub: `${uji.n} kos berkoordinat · Kruskal-Wallis p ${koma(uji.kruskal_wallis.p, 2)}`,
+              },
+              {
+                nilai: rpJuta(fc.kumulatif.p50[fc.kumulatif.p50.length - 1]),
+                label: `pendapatan ${fc.label.length} bulan (median)`,
+                sub: `80%: ${rpJuta(fc.kumulatif.p10[fc.kumulatif.p10.length - 1])} – ${rpJuta(fc.kumulatif.p90[fc.kumulatif.p90.length - 1])} · skenario ${SKENARIO[skenario].label.toLowerCase()}`,
+              },
+              {
+                nilai: `${koma(fc.konversi.rata * 100, 1)}%`,
+                label: 'konversi pengunjung → pembeli',
+                sub: `95%: ${koma(fc.konversi.ci95[0] * 100, 1)}% – ${koma(fc.konversi.ci95[1] * 100, 1)}% · Beta(${koma(fc.konversi.a, 0)}, ${koma(fc.konversi.b, 0)})`,
+              },
+            ]}
+          />
+
+          <div className="grid">
+            <Kartu
+              judul="Pasar kos terbagi ke 3 kelas harga"
+              sub={`K-Prototypes · ${KELAS.meta.n} iklan · log harga + kecamatan + jenis kos`}
+              catatan={`${KELAS.meta.alasan_k} Fasilitas tidak dipakai karena hanya ada/tidak ada (0/1).`}
+              lebar
+            >
+              <Tabel
+                label="Profil kelas harga"
+                kolom={['Kelas', 'Jumlah', 'Porsi', 'Rentang harga', 'Median', 'Jenis terbanyak', 'Kecamatan terbanyak']}
+                baris={KELAS.kelas.map((k) => {
+                  const [jenis, persenJenis] = Object.entries(k.jenis).sort((a, b) => b[1] - a[1])[0];
+                  return [
+                    k.label,
+                    `${k.n} kos`,
+                    `${koma(k.bagian, 1)}%`,
+                    `${rpJuta(k.harga.min)} – ${rpJuta(k.harga.max)}`,
+                    rp(k.harga.p50),
+                    `${jenis} (${persenJenis}%)`,
+                    Object.keys(k.kec_terbanyak).slice(0, 2).join(', '),
+                  ];
+                })}
+              />
+            </Kartu>
+
+            <Kartu
+              judul="k = 3 dipilih karena kebutuhan produk, siluetnya masih layak"
+              sub="Biaya (jarak ke prototipe) dan siluet untuk k = 2 sampai 6"
+              catatan={`Uji kelompok alami (BIC Gaussian Mixture) memilih k = ${KELAS.meta.uji_kelompok_alami.k_terbaik}: harga tidak punya kelompok alami. Stabilitas k = 3: ARI ${koma(KELAS.meta.stabilitas.rata, 2)} ± ${koma(KELAS.meta.stabilitas.sd, 2)} (${KELAS.meta.stabilitas.metode}).`}
+            >
+              <Tabel
+                label="Pemilihan jumlah kelas"
+                kolom={['k', 'Biaya', 'Siluet', 'Ukuran kelas']}
+                baris={KELAS.meta.pemilihan_k.map((p) => [p.k === KELAS.meta.k ? `${p.k} (dipakai)` : p.k, koma(p.biaya, 1), koma(p.siluet, 3), p.ukuran.join(' · ')])}
+              />
+            </Kartu>
+
+            <Kartu
+              judul="Dekat kampus tidak membuat kos jauh lebih mahal"
+              sub={`Median harga per jarak ke kampus terdekat · ${uji.n} kos (${Object.entries(uji.sumber)
+                .map(([s, n]) => `${n} ${s}`)
+                .join(' + ')})`}
+              catatan={`${uji.kesimpulan} Karena itu gap A vs B memperlakukan harga dan jarak sebagai dua kriteria terpisah (TOPSIS), tanpa menganggap jarak menentukan harga.`}
+            >
+              <BarH data={uji.per_pita.map((p) => ({ label: p.label, sub: `${p.n} kos`, nilai: p.median }))} format={rpJuta} label="Median harga per pita jarak ke kampus" />
+            </Kartu>
+
+            <Kartu
+              judul="Permintaan kos memuncak Juni – Agustus"
+              sub={`Indeks musiman dari ${musim.hitung.reduce((s, x) => s + x, 0).toLocaleString('id-ID')} ulasan Google Maps (1 = rata-rata bulanan)`}
+              catatan={`Chi-square vs merata: χ² = ${koma(musim.uji.chi2, 1)}, df = ${musim.uji.df}, p < 0,001 — pola musimannya nyata. ${musim.duplikat_dibuang.toLocaleString('id-ID')} ulasan ganda dibuang.`}
+            >
+              <BarH
+                data={URUT_MUSIM.map((m) => ({ label: musim.periode[m], sub: `${musim.hitung[m]} ulasan`, nilai: musim.indeks[m], sorot: musim.indeks[m] >= 1.15 }))}
+                format={(v) => koma(v, 2)}
+                label="Indeks musiman permintaan kos per bulan"
+              />
+            </Kartu>
+
+            <Kartu
+              judul={`Pendapatan paket eksklusif ${fc.label[0]} – ${fc.label[fc.label.length - 1]}`}
+              sub={`Monte Carlo ${fc.draws.toLocaleString('id-ID')} simulasi · ${rp(fc.harga)} sekali bayar · konversi ~ Beta, pembeli ~ Poisson`}
+              catatan={`${FORECAST.meta.kenapa_bukan_holt_winters} Keterbatasan: ${FORECAST.meta.keterbatasan.join(' ')}`}
+              lebar
+            >
+              <div className="fc-atur">
+                <Segmented
+                  label="Skenario pengunjung"
+                  value={skenario}
+                  onChange={setSkenario}
+                  options={Object.entries(SKENARIO).map(([id, s]) => ({ id, label: `${s.label} · ${s.pengunjung_awal.toLocaleString('id-ID')}/bln, +${koma(s.pertumbuhan * 100, 0)}%` }))}
+                />
+                <Switch
+                  checked={pakaiJejak}
+                  onChange={setPakaiJejak}
+                  label="Perbarui konversi dengan data aktivitas"
+                  sub={`${funnel.sesi} sesi, ${funnel.dikunci} membuka fitur terkunci, ${funnel.pembeli} membayar. Pembayaran di aplikasi masih simulasi QRIS, jadi pembayaran saat uji coba ikut terhitung.`}
+                />
+              </div>
+              <Pita
+                titik={fc.label.map((l, i) => ({ label: l, p50: fc.pendapatan.p50[i], p10: fc.pendapatan.p10[i], p90: fc.pendapatan.p90[i], p2_5: fc.pendapatan.p2_5[i], p97_5: fc.pendapatan.p97_5[i] }))}
+                format={rpJuta}
+                label="Forecast pendapatan bulanan KOZY"
+              />
+              <Tabel
+                label="Forecast pendapatan per bulan"
+                kolom={['Bulan', 'Indeks musim', 'Pengunjung', 'Pembeli (median)', 'Pendapatan (median)', '80% kemungkinan', 'Kumulatif (median)']}
+                baris={fc.label.map((l, i) => [
+                  l,
+                  koma(fc.indeks[i], 2),
+                  fc.pengunjung[i].toLocaleString('id-ID'),
+                  koma(fc.pembeli.p50[i], 0),
+                  rp(fc.pendapatan.p50[i]),
+                  `${rpJuta(fc.pendapatan.p10[i])} – ${rpJuta(fc.pendapatan.p90[i])}`,
+                  rp(fc.kumulatif.p50[i]),
+                ])}
+              />
             </Kartu>
           </div>
         </>

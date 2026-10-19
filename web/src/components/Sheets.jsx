@@ -116,10 +116,13 @@ function useCountdown(active, detik = 15 * 60) {
   return `${String(Math.floor(sisa / 60)).padStart(2, '0')}:${String(sisa % 60).padStart(2, '0')}`;
 }
 
-// ---------- Paywall KOZY Match ----------
+// ---------- Paywall paket eksklusif KOZY ----------
+// Rp19.900 sekali bayar: membuka semua fitur eksklusif selamanya di akun itu.
+// `paid[id]` lama (pembelian per cek sebelum paket ini ada) tetap dihormati.
 export const HARGA_MATCH = 19_900;
+export const aksesEksklusif = (state, id = null) => !!(state.premium || (id && state.paid?.[id]));
 
-export function Paywall({ open, onClose, onPaid, purchaseId }) {
+export function Paywall({ open, onClose, onPaid, purchaseId = null, fitur = 'match' }) {
   const { state, set } = useStore();
   const [tahap, setTahap] = useState('tawar');
   const [cek, setCek] = useState(false);
@@ -134,31 +137,35 @@ export function Paywall({ open, onClose, onPaid, purchaseId }) {
     setTimeout(() => {
       setCek(false);
       setTahap('sukses');
-      catat('bayar', { produk: 'match', harga: HARGA_MATCH });
-      set((s) => ({ paid: { ...s.paid, [purchaseId]: true } }));
+      catat('bayar', { produk: 'eksklusif', fitur, harga: HARGA_MATCH });
+      set((s) => ({ premium: true, paid: purchaseId ? { ...s.paid, [purchaseId]: true } : s.paid }));
       setTimeout(() => onPaid?.(), 900);
     }, 900);
   };
 
   return (
-    <Sheet open={open} onClose={onClose} label="KOZY Match" dismissable={tahap !== 'sukses'}>
+    <Sheet open={open} onClose={onClose} label="Paket eksklusif KOZY" dismissable={tahap !== 'sukses'}>
       {tahap === 'tawar' && (
         <div className="sheet-body">
           <span className="ic-circle lg">
             <Icon name="unlock" size={22} />
           </span>
-          <h2 className="h2">Buka KOZY Match</h2>
+          <h2 className="h2">Buka paket eksklusif KOZY</h2>
           <p className="price-line">
-            <b>{rp(HARGA_MATCH)}</b> sekali cek
+            <b>{rp(HARGA_MATCH)}</b> sekali bayar, berlaku selamanya
           </p>
           <ul className="check-list">
             <li>
               <Icon name="check" size={16} strokeWidth={2.6} />
-              Peta kos yang harganya wajar di area itu
+              Kelas harga kos: murah, menengah, atau mahal
             </li>
             <li>
               <Icon name="check" size={16} strokeWidth={2.6} />
-              Nama kos, fasilitas, dan tautan ke iklan aslinya
+              Bandingkan kos A vs B: gap harga, jarak, dan rekomendasi
+            </li>
+            <li>
+              <Icon name="check" size={16} strokeWidth={2.6} />
+              Kos alternatif berharga wajar, lengkap dengan tautan iklan aslinya
             </li>
             <li>
               <Icon name="check" size={16} strokeWidth={2.6} />

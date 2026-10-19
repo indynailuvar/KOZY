@@ -1,0 +1,98 @@
+{
+ "meta": {
+  "metode": "Gap terstandar (selisih / IQR pasar) + persentil empiris di kelas K-Prototypes + TOPSIS (Hwang & Yoon, 1981)",
+  "variabel": [
+   "harga (Rp/bulan)",
+   "jarak ke tujuan (km)"
+  ],
+  "tidak_dipakai": "Fasilitas 0/1 hanya ditampilkan sebagai informasi, tidak dihitung.",
+  "kampus": [
+   "ITS",
+   "PENS",
+   "UNAIR C",
+   "UNAIR B",
+   "UNESA",
+   "UBAYA",
+   "UPN",
+   "UINSA",
+   "UNTAG"
+  ]
+ },
+ "skala": {
+  "harga": {
+   "median": 1250000.0,
+   "q1": 800000.0,
+   "q3": 1665000.0,
+   "iqr": 865000.0,
+   "n": 307,
+   "sumber": "307 iklan Mamikos + Papikost"
+  },
+  "jarak": {
+   "median": 1.33,
+   "q1": 0.78,
+   "q3": 2.79,
+   "iqr": 2.01,
+   "n": 133,
+   "sumber": "jarak ke kampus terdekat, kos berkoordinat"
+  }
+ },
+ "uji_jarak_harga": {
+  "n": 133,
+  "sumber": {
+   "Papikost": 67,
+   "Ulasan Google Maps": 66
+  },
+  "spearman": {
+   "rho": -0.192,
+   "p": 0.0269
+  },
+  "kruskal_wallis": {
+   "H": 5.61,
+   "df": 3,
+   "p": 0.1321
+  },
+  "per_pita": [
+   {
+    "label": "< 1 km",
+    "n": 46,
+    "median": 1000000
+   },
+   {
+    "label": "1–2 km",
+    "n": 37,
+    "median": 1000000
+   },
+   {
+    "label": "2–3 km",
+    "n": 18,
+    "median": 1075000
+   },
+   {
+    "label": "> 3 km",
+    "n": 32,
+    "median": 805667
+   }
+  ],
+  "kesimpulan": "Hubungan jarak ke kampus dengan harga lemah (ρ = −0,19); median harga antar pita jarak tidak berbeda signifikan (Kruskal-Wallis p = 0,13)."
+ },
+ "topsis": {
+  "kriteria": {
+   "harga": "biaya",
+   "jarak": "biaya"
+  },
+  "bobot": {
+   "seimbang": {
+    "harga": 0.5,
+    "jarak": 0.5
+   },
+   "hemat": {
+    "harga": 0.75,
+    "jarak": 0.25
+   },
+   "dekat": {
+    "harga": 0.25,
+    "jarak": 0.75
+   }
+  }
+ }
+}

@@ -5,7 +5,7 @@ import TanyaAI from '../components/TanyaAI.jsx';
 import KozyMap from '../components/KozyMap.jsx';
 import { SpeakButton, useBacaOtomatis } from '../components/A11y.jsx';
 import { Button, EmptyState, InfoTip, PageHead, ScoreRing, StatusBadge } from '../components/ui.jsx';
-import { HARGA_MATCH, Paywall } from '../components/Sheets.jsx';
+import { HARGA_MATCH, Paywall, aksesEksklusif } from '../components/Sheets.jsx';
 import { fasilitasById, hitungArea, jenisById, jumlahKosCocok, kawasanById, kebutuhanById, kosPetaDekat, kozyMatch, labelFasilitas, tujuanById } from '../api/kozy.js';
 import { daftar, jarak, persen, rp, rpSingkat, rpSuara } from '../lib/format.js';
 import { catat } from '../lib/jejak.js';
@@ -87,6 +87,7 @@ function KosDetail({ k, tujuan, dibanding, onClose, onTawar, onBanding }) {
       </div>
       <p className="note">
         Harga wajar {rp(k.harga_wajar)} ({persen(k.selisih_persen)}) · Kos {jenis.label.toLowerCase()}
+        {k.kelas && ` · Kelas ${k.kelas.toLowerCase()}`}
         {k.rating ? ` · ★ ${k.rating}` : ''}
         {k.dilihat ? ` · dilihat ${k.dilihat}×` : ''}
       </p>
@@ -224,7 +225,7 @@ export default function Match({ query }) {
   const [pilih, setPilih] = useState(null);
   const [bayar, setBayar] = useState(false);
   const mapRef = useRef(null);
-  const paid = ktx && state.paid[ktx.purchaseId];
+  const paid = ktx && aksesEksklusif(state, ktx.purchaseId);
 
   useEffect(() => {
     if (!ktx || !paid || list) return;
@@ -353,6 +354,7 @@ export default function Match({ query }) {
                   <b>{k.nama}</b>
                   <small>
                     Kos {jenisById(k.jenis).label.toLowerCase()} · {jarak(k.jarak)}
+                    {k.kelas && ` · ${k.kelas}`}
                   </small>
                 </span>
                 <span className="kr-p">

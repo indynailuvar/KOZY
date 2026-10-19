@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Icon from '../components/Icon.jsx';
 import { Button, EmptyState, ListRow, PageHead, StatusBadge } from '../components/ui.jsx';
-import { Paywall } from '../components/Sheets.jsx';
+import { Paywall, aksesEksklusif } from '../components/Sheets.jsx';
 import { kalimatTawar } from '../api/ai.js';
 import { persen, rp, tanggal } from '../lib/format.js';
 import { useStore } from '../store.jsx';
@@ -24,7 +24,7 @@ export default function KartuTawar() {
       </div>
     );
 
-  if (!state.paid[t.purchaseId])
+  if (!aksesEksklusif(state, t.purchaseId))
     return (
       <div className="page narrow">
         <PageHead judul="Kartu Tawar" onBack={kembali} />
