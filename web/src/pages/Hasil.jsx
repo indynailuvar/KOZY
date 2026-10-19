@@ -5,7 +5,7 @@ import KozyMap from '../components/KozyMap.jsx';
 import { SpeakButton, useBacaOtomatis } from '../components/A11y.jsx';
 import { Accordion, ActionBar, Banner, Button, EmptyState, InfoTip, ListRow, PageHead, StatusBadge } from '../components/ui.jsx';
 import { HARGA_MATCH, Paywall, aksesEksklusif } from '../components/Sheets.jsx';
-import { KelasTangga, KunciEksklusif } from '../components/Eksklusif.jsx';
+import { KelasTangga, KunciEksklusif, PromoEksklusif } from '../components/Eksklusif.jsx';
 import { kelasKos } from '../api/premium.js';
 import { jenisById, kawasanById, kisaranWajar, perluDiperiksa } from '../api/kozy.js';
 import { bulat10rb, bulat50rb, persen, rp, rpSingkat, rpSuara, tanggal } from '../lib/format.js';
@@ -248,6 +248,29 @@ export default function Hasil() {
             </InfoTip>
           </p>
         </section>
+
+        {!paid && (
+          <PromoEksklusif
+            judul={
+              kemahalan
+                ? `Kemahalan ${rp(r.selisih_rp)}/bulan. Nego pakai data, hemat sampai ${rpSingkat(r.selisih_rp * 12)} setahun.`
+                : r.status === 'MURAH'
+                  ? `Harganya di bawah pasaran. Murah, menengah, atau mahal di kelasnya?`
+                  : `Harganya wajar. Masih ada yang lebih pas di Kec. ${kec}?`
+            }
+            poin={[
+              kemahalan ? { icon: 'file', teks: 'Kartu Tawar untuk nego' } : { icon: 'bars', teks: 'Kelas harga kos ini' },
+              { icon: 'pin', teks: '5 kos alternatif wajar' },
+              { icon: 'scale', teks: 'Bandingkan A vs B' },
+            ]}
+            cta={kemahalan ? 'Mulai nego' : 'Buka semua'}
+            onBuka={() => {
+              tujuan.current = kemahalan ? 'tawar' : null;
+              catat('eksklusif_dikunci', { fitur: 'promo_hasil', kec });
+              setBayar(true);
+            }}
+          />
+        )}
 
         {periksa && (
           <Banner icon="checkc" title="Harga bagus. Pastikan dulu sebelum transfer">
