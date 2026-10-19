@@ -44,6 +44,11 @@ def test_endpoints():
     assert res["topsis"]["menang"] == "a"  # prioritas hemat -> yang lebih murah
     r = client.post("/gap-ab", json={"a": {"nama": "A", "harga": 900_000, "jarak": 2.0}, "b": {"nama": "B", "harga": 1_000_000, "jarak": 0.5}, "prioritas": "dekat"})
     assert r.json()["topsis"]["menang"] == "b"  # prioritas dekat -> yang lebih dekat
+    # kos Google Maps tanpa harga asli: dibandingkan dengan jarak saja
+    r = client.post("/gap-ab", json={"a": {"nama": "A", "harga": 900_000, "jarak": 2.0}, "b": {"nama": "B (GMaps)", "jarak": 0.5}, "prioritas": "hemat"})
+    res = r.json()
+    assert r.status_code == 200 and res["gap"]["harga"] is None and res["b"]["kelas"] is None
+    assert res["topsis"]["pakai_harga"] is False and res["topsis"]["menang"] == "b"
 
     print("\nTesting POST /forecast-pendapatan...")
     r = client.post("/forecast-pendapatan", json={"pengunjung_awal": 1000, "pertumbuhan": 0.02, "draws": 2000})

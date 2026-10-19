@@ -143,7 +143,6 @@ export function Footer() {
         <nav className="footer-links" aria-label="Tautan footer">
           <a href="#/cek">Cek harga</a>
           <a href="#/cari">Cari kos</a>
-          <a href="#/bandingkan">Bandingkan kos</a>
           <a href="#/edukasi">Edukasi</a>
           <a href="#/tentang">Tentang</a>
           <a href="#/pemilik">Untuk pemilik</a>

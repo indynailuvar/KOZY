@@ -5489,3 +5489,40 @@ body.has-actionbar .footer {
   gap: 8px;
   font-size: 14px;
 }
+
+/* bandingkan langsung dari daftar KOZY Match */
+.kr-wrap {
+  position: relative;
+}
+.kr-wrap .kos-row {
+  padding-bottom: 42px;
+}
+.kos-row.is-banding {
+  box-shadow: inset 0 0 0 2px var(--blue-200);
+}
+.kr-banding {
+  position: absolute;
+  left: 14px;
+  bottom: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink2);
+  cursor: pointer;
+}
+.kr-banding input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--blue);
+}
+.sheet.sheet-lebar {
+  max-width: 720px;
+}
+.ab-harga.is-kosong {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--muted);
+}
