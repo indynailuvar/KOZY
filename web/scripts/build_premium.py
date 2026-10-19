@@ -45,6 +45,7 @@ K_DICOBA = range(2, 7)
 K_PILIH = 3  # kebutuhan produk: murah / menengah / mahal
 N_INIT = 20
 N_BOOT = 100
+K_TETANGGA = 10  # kisaran harga di sekitar kos Google Maps (informasi saja, tidak ikut gap)
 LABEL = ["Murah", "Menengah", "Mahal"]
 NAMA_BULAN = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"]
 
@@ -235,6 +236,15 @@ def bangun_gap(kos):
     per_pita = [{"label": str(lbl), "n": int(len(g)), "median": int(g.harga.median())} for lbl, g in df.groupby(pita, observed=True)]
     print(f"  {len(df)} kos berkoordinat · Spearman ρ={rho.statistic:.3f} (p={rho.pvalue:.3f}) · Kruskal-Wallis H={kw.statistic:.2f} (p={kw.pvalue:.3f})")
 
+    # Uji leave-one-out: tiap kos ditaksir dari median K tetangga terdekatnya (dirinya tidak ikut)
+    lat, lng, hg = df.lat.values, df.lng.values, df.harga.values.astype(float)
+    tebak = np.array([np.median(hg[np.argsort(np.where(np.arange(len(df)) == i, np.inf, haversine(lat[i], lng[i], lat, lng)))[:K_TETANGGA]]) for i in range(len(df))])
+    galat = np.abs(tebak - hg) / hg * 100
+    loo = {"mape": round(float(galat.mean()), 1), "median_ape": round(float(np.median(galat)), 1), "dalam_20persen": round(float((galat <= 20).mean() * 100), 1)}
+    loo_kota = round(float(np.mean([abs(np.median(np.delete(hg, i)) - hg[i]) / hg[i] * 100 for i in range(len(hg))])), 1)
+    loo["mape_median_kota"] = loo_kota
+    print(f"  taksiran {K_TETANGGA} tetangga (leave-one-out): MAPE {loo['mape']}%, median galat {loo['median_ape']}%, {loo['dalam_20persen']}% kos meleset ≤ 20%")
+
     harga_all = np.array([k["harga"] for k in kos], float)
     q1h, q3h = np.percentile(harga_all, [25, 75])
     q1j, q3j = np.percentile(df.jarak, [25, 75])
@@ -261,6 +271,16 @@ def bangun_gap(kos):
                 + ("tidak berbeda signifikan" if kw.pvalue >= 0.05 else "berbeda signifikan")
                 + f" (Kruskal-Wallis p = {koma(kw.pvalue, 2)})."
             ),
+        },
+        # Titik kos berharga asli di sekitar kos Google Maps. Hanya untuk INFORMASI kisaran harga:
+        # uji leave-one-out menunjukkan taksiran dari tetangga tidak lebih baik daripada median kota,
+        # jadi kos Google Maps dibandingkan dengan jarak saja. [lat, lng, harga, 0 Papikost / 1 ulasan]
+        "tetangga": {
+            "k": K_TETANGGA,
+            "metode": f"Kuartil harga {K_TETANGGA} kos berharga asli terdekat (jarak haversine), hanya sebagai informasi.",
+            "kesimpulan": f"Taksiran dari {K_TETANGGA} tetangga (MAPE {koma(loo['mape'], 1)}%) tidak lebih baik dari median kota (MAPE {koma(loo_kota, 1)}%): lokasi saja tidak cukup menaksir harga, jadi kos tanpa harga asli dibandingkan dengan jarak saja.",
+            "uji_loo": loo,
+            "titik": [[round(r.lat, 6), round(r.lng, 6), int(r.harga), 0 if r.sumber == "Papikost" else 1] for r in df.itertuples()],
         },
         "topsis": {
             "kriteria": {"harga": "biaya", "jarak": "biaya"},

@@ -78,13 +78,27 @@ function KartuKos({ huruf, k, menang, skor }) {
       {menang && <span className="ab-pita">Disarankan</span>}
       <span className="vs-letter">{huruf}</span>
       <b className="ab-nama">{k.nama}</b>
-      <p className="ab-harga">
-        {rp(k.harga)}
-        <small>/bulan</small>
-      </p>
+      {k.harga != null ? (
+        <p className="ab-harga">
+          {rp(k.harga)}
+          <small>/bulan</small>
+        </p>
+      ) : (
+        <p className="ab-harga is-kosong">Harga belum diketahui</p>
+      )}
       <p className="ab-jarak">{k.jarak != null ? jarak(k.jarak) : 'Jarak belum diisi'}</p>
-      <span className={`ab-kelas kelas-${k.kelas.id}`}>Kelas {k.kelas.label.toLowerCase()}</span>
-      <p className="ab-pos">Persentil {k.kelas.persentil} di kelasnya</p>
+      {k.kelas ? (
+        <>
+          <span className={`ab-kelas kelas-${k.kelas.id}`}>Kelas {k.kelas.label.toLowerCase()}</span>
+          <p className="ab-pos">Persentil {k.kelas.persentil} di kelasnya</p>
+        </>
+      ) : (
+        k.sekitar && (
+          <p className="ab-pos">
+            Kos berharga asli di sekitarnya: {rpSingkat(k.sekitar.p25)} – {rpSingkat(k.sekitar.p75)} (informasi, tidak dihitung)
+          </p>
+        )
+      )}
       <p className="ab-skor">
         Skor TOPSIS <b>{angka(skor, 2)}</b>
       </p>
@@ -95,9 +109,15 @@ function KartuKos({ huruf, k, menang, skor }) {
 export function KartuAB({ hasil }) {
   const { a, b, gap, topsis, uji_pasar: uji } = hasil;
   const s = GAP_AB.skala;
-  const lebihMahal = gap.harga.selisih_rp > 0 ? b : a;
+  const tanpaHarga = [a, b].filter((k) => k.harga == null).map((k) => k.nama);
+  const lebihMahal = gap.harga && (gap.harga.selisih_rp > 0 ? b : a);
   const baris = [
-    {
+    !gap.harga && {
+      label: 'Harga',
+      nilai: 'Belum bisa dibandingkan',
+      sub: `Harga ${tanpaHarga.join(' dan ')} belum ada di sumbernya`,
+    },
+    gap.harga && {
       label: 'Harga',
       nilai: gap.harga.selisih_rp === 0 ? 'Sama' : `${lebihMahal.nama} ${rp(Math.abs(gap.harga.selisih_rp))} lebih mahal`,
       sub:
@@ -110,11 +130,12 @@ export function KartuAB({ hasil }) {
       nilai: Math.abs(gap.jarak.selisih_km) < 0.05 ? 'Sama' : `${gap.jarak.selisih_km > 0 ? a.nama : b.nama} ${jarak(Math.abs(gap.jarak.selisih_km))} lebih dekat`,
       sub: Math.abs(gap.jarak.selisih_km) < 0.05 ? null : `${angka(Math.abs(gap.jarak.selisih_iqr), 2)} IQR pasar`,
     },
-    {
-      label: 'Posisi di kelas',
-      nilai: a.kelas.id === b.kelas.id ? `Sama-sama kelas ${a.kelas.label.toLowerCase()}` : `${a.kelas.label} vs ${b.kelas.label.toLowerCase()}`,
-      sub: `Persentil ${a.kelas.persentil} vs ${b.kelas.persentil} (${bertanda(gap.persentil_poin, (x) => x)} poin)`,
-    },
+    a.kelas &&
+      b.kelas && {
+        label: 'Posisi di kelas',
+        nilai: a.kelas.id === b.kelas.id ? `Sama-sama kelas ${a.kelas.label.toLowerCase()}` : `${a.kelas.label} vs ${b.kelas.label.toLowerCase()}`,
+        sub: `Persentil ${a.kelas.persentil} vs ${b.kelas.persentil} (${bertanda(gap.persentil_poin, (x) => x)} poin)`,
+      },
   ].filter(Boolean);
 
   return (
@@ -156,8 +177,12 @@ export function KartuAB({ hasil }) {
       <section className="card">
         <h3 className="card-t">Kenapa {topsis.menang === 'a' ? a.nama : b.nama} disarankan</h3>
         <p className="note">
-          TOPSIS menimbang harga ({Math.round((topsis.bobot.harga / (topsis.bobot.harga + (topsis.pakai_jarak ? topsis.bobot.jarak : 0))) * 100)}%)
-          {topsis.pakai_jarak ? ` dan jarak (${Math.round(topsis.bobot.jarak * 100)}%)` : ' saja, karena jarak salah satu kos belum diisi'}. Skor 1 berarti paling dekat ke pilihan ideal (termurah dan terdekat).
+          {topsis.pakai_harga === false
+            ? `TOPSIS hanya menimbang jarak, karena harga ${tanpaHarga.join(' dan ')} belum diketahui. Harga tidak ditaksir: dari data, lokasi saja tidak cukup untuk menebak harga kos.`
+            : `TOPSIS menimbang harga (${Math.round((topsis.bobot.harga / (topsis.bobot.harga + (topsis.pakai_jarak ? topsis.bobot.jarak : 0))) * 100)}%)${
+                topsis.pakai_jarak ? ` dan jarak (${Math.round(topsis.bobot.jarak * 100)}%)` : ' saja, karena jarak salah satu kos belum diisi'
+              }.`}{' '}
+          Skor 1 berarti paling dekat ke pilihan ideal (termurah dan terdekat).
         </p>
         <div className="ab-skor-bar">
           {[

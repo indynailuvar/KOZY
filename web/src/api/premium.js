@@ -76,12 +76,36 @@ export const PRIORITAS_GAP = [
   { id: 'dekat', label: 'Paling dekat', sub: 'Jarak ke tujuan paling pendek', icon: 'pin' },
 ];
 
-// a, b: { nama, harga, jarak (km, boleh null), kec?, jenis? }
+// Kisaran harga kos berharga asli di sekitar satu titik — INFORMASI saja, tidak ikut gap.
+// (Uji leave-one-out: taksiran dari tetangga tidak lebih baik daripada median kota.)
+const KM_RAD = Math.PI / 180;
+const jarakKm = (la1, lo1, la2, lo2) => {
+  const h = Math.sin(((la2 - la1) * KM_RAD) / 2) ** 2 + Math.cos(la1 * KM_RAD) * Math.cos(la2 * KM_RAD) * Math.sin(((lo2 - lo1) * KM_RAD) / 2) ** 2;
+  return 2 * 6371 * Math.asin(Math.sqrt(h));
+};
+export function kisaranSekitar(lat, lng) {
+  const { k, titik } = GAP_AB.tetangga;
+  const dekat = titik
+    .map(([la, lo, h]) => ({ h, d: jarakKm(lat, lng, la, lo) }))
+    .sort((x, y) => x.d - y.d)
+    .slice(0, k);
+  const hs = dekat.map((x) => x.h).sort((x, y) => x - y);
+  const q = (p) => {
+    const pos = (hs.length - 1) * p;
+    const lo = Math.floor(pos);
+    return hs[lo] + (hs[Math.min(lo + 1, hs.length - 1)] - hs[lo]) * (pos - lo);
+  };
+  return { p25: q(0.25), p50: q(0.5), p75: q(0.75), n: hs.length, radius: dekat[dekat.length - 1]?.d ?? null };
+}
+
+// a, b: { nama, harga (null = belum diketahui), jarak (km, boleh null), kec?, jenis? }
+// Harga yang belum diketahui tidak ditaksir: gap harga & kelas dilewati, TOPSIS memakai jarak saja.
 export function gapAB(a, b, prioritas = 'seimbang') {
   const skala = GAP_AB.skala;
-  const ka = kelasKos(a.harga, a.kec, a.jenis);
-  const kb = kelasKos(b.harga, b.kec, b.jenis);
-  const dHarga = b.harga - a.harga;
+  const ka = a.harga != null ? kelasKos(a.harga, a.kec, a.jenis) : null;
+  const kb = b.harga != null ? kelasKos(b.harga, b.kec, b.jenis) : null;
+  const adaHarga = a.harga != null && b.harga != null;
+  const dHarga = adaHarga ? b.harga - a.harga : null;
   const adaJarak = a.jarak != null && b.jarak != null;
   const dJarak = adaJarak ? b.jarak - a.jarak : null;
   const bobot = GAP_AB.topsis.bobot[prioritas] || GAP_AB.topsis.bobot.seimbang;
@@ -96,11 +120,11 @@ export function gapAB(a, b, prioritas = 'seimbang') {
     a: { ...a, kelas: ka },
     b: { ...b, kelas: kb },
     gap: {
-      harga: { selisih_rp: dHarga, selisih_persen: (dHarga / a.harga) * 100, selisih_iqr: dHarga / skala.harga.iqr, setahun_rp: dHarga * 12 },
+      harga: adaHarga ? { selisih_rp: dHarga, selisih_persen: (dHarga / a.harga) * 100, selisih_iqr: dHarga / skala.harga.iqr, setahun_rp: dHarga * 12 } : null,
       jarak: adaJarak ? { selisih_km: dJarak, selisih_iqr: dJarak / skala.jarak.iqr } : null,
-      persentil_poin: kb.persentil - ka.persentil,
+      persentil_poin: ka && kb ? kb.persentil - ka.persentil : null,
     },
-    topsis: { prioritas, bobot, skor: { a: ca, b: cb }, menang: ca >= cb ? 'a' : 'b', pakai_jarak: adaJarak },
+    topsis: { prioritas, bobot, skor: { a: ca, b: cb }, menang: ca >= cb ? 'a' : 'b', pakai_jarak: adaJarak, pakai_harga: adaHarga },
     uji_pasar: GAP_AB.uji_jarak_harga,
   };
 }

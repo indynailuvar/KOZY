@@ -129,7 +129,7 @@ class KelasRequest(BaseModel):
 
 class KosAB(BaseModel):
     nama: str = "Kos"
-    harga: float = Field(..., ge=100000, le=20000000)
+    harga: Optional[float] = Field(None, ge=100000, le=20000000, description="Kosong = harga belum diketahui (kos Google Maps)")
     jarak: Optional[float] = Field(None, ge=0, le=100, description="Jarak ke tujuan (km)")
     kec: Optional[str] = None
     jenis: Optional[str] = None

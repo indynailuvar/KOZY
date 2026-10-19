@@ -93,19 +93,27 @@ def topsis(alternatif: List[Dict[str, float]], bobot: Dict[str, float]) -> List[
 
 
 def gap_ab(model_kelas: dict, gap: dict, a: dict, b: dict, prioritas: str = "seimbang") -> dict:
-    """Bandingkan dua kos hanya dengan variabel kontinu: harga (Rp) dan jarak (km)."""
+    """Bandingkan dua kos hanya dengan variabel kontinu: harga (Rp) dan jarak (km).
+
+    Harga None = belum diketahui (kos Google Maps). Harganya tidak ditaksir — uji leave-one-out
+    menunjukkan taksiran dari kos sekitar tidak lebih baik dari median kota — jadi gap harga & kelas
+    dilewati dan TOPSIS memakai jarak saja.
+    """
     skala = gap["skala"]
     hasil = {}
     for kunci, kos in (("a", a), ("b", b)):
-        hasil[kunci] = {**kos, "kelas": kelas_kos(model_kelas, kos["harga"], kos.get("kec"), kos.get("jenis"))}
+        kls = kelas_kos(model_kelas, kos["harga"], kos.get("kec"), kos.get("jenis")) if kos.get("harga") is not None else None
+        hasil[kunci] = {**kos, "kelas": kls}
 
-    d_harga = b["harga"] - a["harga"]
-    harga = {
-        "selisih_rp": round(d_harga),
-        "selisih_persen": round(d_harga / a["harga"] * 100, 1),
-        "selisih_iqr": round(d_harga / skala["harga"]["iqr"], 2),
-        "setahun_rp": round(d_harga * 12),
-    }
+    harga = None
+    if a.get("harga") is not None and b.get("harga") is not None:
+        d_harga = b["harga"] - a["harga"]
+        harga = {
+            "selisih_rp": round(d_harga),
+            "selisih_persen": round(d_harga / a["harga"] * 100, 1),
+            "selisih_iqr": round(d_harga / skala["harga"]["iqr"], 2),
+            "setahun_rp": round(d_harga * 12),
+        }
     jarak = None
     if a.get("jarak") is not None and b.get("jarak") is not None:
         d_jarak = b["jarak"] - a["jarak"]
@@ -117,8 +125,12 @@ def gap_ab(model_kelas: dict, gap: dict, a: dict, b: dict, prioritas: str = "sei
     return {
         "a": hasil["a"],
         "b": hasil["b"],
-        "gap": {"harga": harga, "jarak": jarak, "persentil_poin": hasil["b"]["kelas"]["persentil"] - hasil["a"]["kelas"]["persentil"]},
-        "topsis": {"prioritas": prioritas, "bobot": bobot, "skor": {"a": round(cc[0], 3), "b": round(cc[1], 3)}, "menang": menang, "pakai_jarak": jarak is not None},
+        "gap": {
+            "harga": harga,
+            "jarak": jarak,
+            "persentil_poin": hasil["b"]["kelas"]["persentil"] - hasil["a"]["kelas"]["persentil"] if hasil["a"]["kelas"] and hasil["b"]["kelas"] else None,
+        },
+        "topsis": {"prioritas": prioritas, "bobot": bobot, "skor": {"a": round(cc[0], 3), "b": round(cc[1], 3)}, "menang": menang, "pakai_jarak": jarak is not None, "pakai_harga": harga is not None},
         "uji_pasar": gap["uji_jarak_harga"],
     }
 

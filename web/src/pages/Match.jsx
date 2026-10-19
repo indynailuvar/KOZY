@@ -4,9 +4,11 @@ import Kamar360 from '../components/Kamar360.jsx';
 import TanyaAI from '../components/TanyaAI.jsx';
 import KozyMap from '../components/KozyMap.jsx';
 import { SpeakButton, useBacaOtomatis } from '../components/A11y.jsx';
-import { Button, EmptyState, InfoTip, PageHead, ScoreRing, StatusBadge } from '../components/ui.jsx';
+import { Button, EmptyState, InfoTip, PageHead, ScoreRing, Segmented, Sheet, StatusBadge } from '../components/ui.jsx';
+import { KartuAB } from '../components/Eksklusif.jsx';
 import { HARGA_MATCH, Paywall, aksesEksklusif } from '../components/Sheets.jsx';
-import { fasilitasById, hitungArea, jenisById, jumlahKosCocok, kawasanById, kebutuhanById, kosPetaDekat, kozyMatch, labelFasilitas, tujuanById } from '../api/kozy.js';
+import { fasilitasById, haversine, hitungArea, jenisById, jumlahKosCocok, kawasanById, kebutuhanById, kosPetaDekat, kozyMatch, labelFasilitas, tujuanById } from '../api/kozy.js';
+import { PRIORITAS_GAP, gapAB, kelasKos, kisaranSekitar } from '../api/premium.js';
 import { daftar, jarak, persen, rp, rpSingkat, rpSuara } from '../lib/format.js';
 import { catat } from '../lib/jejak.js';
 import { useStore } from '../store.jsx';
@@ -87,7 +89,7 @@ function KosDetail({ k, tujuan, dibanding, onClose, onTawar, onBanding }) {
       </div>
       <p className="note">
         Harga wajar {rp(k.harga_wajar)} ({persen(k.selisih_persen)}) · Kos {jenis.label.toLowerCase()}
-        {k.kelas && ` · Kelas ${k.kelas.toLowerCase()}`}
+        {` · Kelas ${(k.kelas || kelasKos(k.harga, k.kec, k.jenis).label).toLowerCase()}`}
         {k.rating ? ` · ★ ${k.rating}` : ''}
         {k.dilihat ? ` · dilihat ${k.dilihat}×` : ''}
       </p>
@@ -224,6 +226,8 @@ export default function Match({ query }) {
   const [list, setList] = useState(state.match?.key === ktx?.key ? state.match.list : null);
   const [pilih, setPilih] = useState(null);
   const [bayar, setBayar] = useState(false);
+  const [banding, setBanding] = useState(false);
+  const [prioritas, setPrioritas] = useState('seimbang');
   const mapRef = useRef(null);
   const paid = ktx && aksesEksklusif(state, ktx.purchaseId);
 
@@ -267,6 +271,20 @@ export default function Match({ query }) {
   // titik Google Maps di sekitar area ini: lokasinya asli, harganya masih perkiraan model
   const sekitar = kosPetaDekat(ktx.pusat, 1.5, 6);
   const bandingIds = state.bandingkan.map((k) => k.id);
+  // Kos Google Maps ikut dibandingkan dengan harga KOSONG (bukan perkiraan model): taksiran dari
+  // kos sekitar terbukti tidak lebih baik dari median kota, jadi gap & TOPSIS-nya memakai jarak saja.
+  const kosGmaps = (g) => ({
+    id: g.id,
+    nama: g.nama,
+    harga: null,
+    jarak: ktx.tujuan ? haversine(ktx.tujuan, g) * 1.25 : g.jarak,
+    kec: g.kec,
+    jenis: g.jenis,
+    fasilitas: [],
+    sekitar: kisaranSekitar(g.lat, g.lng),
+    sumber: 'Google Maps',
+  });
+  const idBoleh = new Set([...(list || []).map((k) => k.id), ...sekitar.map((g) => g.id)]);
   const markers = [
     ...markerTujuan(ktx.tujuan),
     ...(list || []).map((k) => ({ id: k.id, kind: 'price', lat: k.lat, lng: k.lng, label: rpSingkat(k.harga).replace(/^Rp\s/, ''), selected: k.id === pilih, title: k.nama })),
@@ -279,7 +297,7 @@ export default function Match({ query }) {
   const toggleBanding = (k) =>
     set((s) => {
       const ada = s.bandingkan.some((x) => x.id === k.id);
-      return { bandingkan: ada ? s.bandingkan.filter((x) => x.id !== k.id) : [...s.bandingkan.filter((x) => list.some((l) => l.id === x.id)), k].slice(-2) };
+      return { bandingkan: ada ? s.bandingkan.filter((x) => x.id !== k.id) : [...s.bandingkan.filter((x) => idBoleh.has(x.id)), k].slice(-2) };
     });
   const buatTawar = (k) => {
     catat('kartu_tawar', { status: k.status, kec: k.kec });
@@ -302,7 +320,7 @@ export default function Match({ query }) {
     });
     go('/kartu-tawar');
   };
-  const dipilih = state.bandingkan.filter((x) => list?.some((l) => l.id === x.id));
+  const dipilih = state.bandingkan.filter((x) => idBoleh.has(x.id));
 
   return (
     <div className="page match">
@@ -349,43 +367,60 @@ export default function Match({ query }) {
             </EmptyState>
           ) : (
             list.map((k) => (
-              <button key={k.id} type="button" className={`kos-row ${k.id === pilih ? 'is-on' : ''}`} onClick={() => pilihKos(k.id)}>
-                <span className="kr-t">
-                  <b>{k.nama}</b>
-                  <small>
-                    Kos {jenisById(k.jenis).label.toLowerCase()} · {jarak(k.jarak)}
-                    {k.kelas && ` · ${k.kelas}`}
-                  </small>
-                </span>
-                <span className="kr-p">
-                  <b>{rp(k.harga)}</b>
-                  <StatusBadge status={k.status} size="sm" />
-                </span>
-                {bandingIds.includes(k.id) && <Icon name="scale" size={16} className="kr-flag" />}
-              </button>
+              <div key={k.id} className="kr-wrap">
+                <button type="button" className={`kos-row ${k.id === pilih ? 'is-on' : ''} ${bandingIds.includes(k.id) ? 'is-banding' : ''}`} onClick={() => pilihKos(k.id)}>
+                  <span className="kr-t">
+                    <b>{k.nama}</b>
+                    <small>
+                      Kos {jenisById(k.jenis).label.toLowerCase()} · {jarak(k.jarak)} · Kelas {(k.kelas || kelasKos(k.harga, k.kec, k.jenis).label).toLowerCase()}
+                    </small>
+                  </span>
+                  <span className="kr-p">
+                    <b>{rp(k.harga)}</b>
+                    <StatusBadge status={k.status} size="sm" />
+                  </span>
+                </button>
+                <label className="kr-banding">
+                  <input type="checkbox" checked={bandingIds.includes(k.id)} onChange={() => toggleBanding(k)} />
+                  Bandingkan
+                </label>
+              </div>
             ))
           )}
+          {list?.length === 1 && sekitar.length > 0 && <p className="note">Baru 1 kos berharga asli di sini. Kos Google Maps di bawah bisa ikut dibandingkan, dari jaraknya saja.</p>}
           {sekitar.length > 0 && (
             <section className="sekitar">
               <p className="sec-label">Kos lain di sekitar · Google Maps</p>
               <p className="note">Harga kos ini belum ada di sumbernya. Angka di bawah adalah perkiraan model untuk kos dengan fasilitas rata-rata di kecamatan ini, bukan harga dari pemilik.</p>
               {sekitar.map((g) => (
-                <a key={g.id} className={`kos-row is-est ${g.id === pilih ? 'is-on' : ''}`} href={g.link || '#'} target="_blank" rel="noopener noreferrer" onClick={() => catat('gmaps_dibuka', { kec: g.kec })}>
-                  <span className="kr-t">
-                    <b>{g.nama}</b>
-                    <small>
-                      {jarak(g.jarak)}
-                      {g.rating ? ` · ★ ${g.rating}` : ''}
-                      {g.keyakinan === 'rendah' ? ' · perkiraan kasar' : ''}
-                    </small>
-                  </span>
-                  <span className="kr-p">
-                    <b>
-                      ≈ {rpSingkat(g.rendah)} – {rpSingkat(g.tinggi)}
-                    </b>
-                    <em className="tag-est">perkiraan</em>
-                  </span>
-                </a>
+                <div key={g.id} className="kr-wrap">
+                  <a
+                    className={`kos-row is-est ${g.id === pilih ? 'is-on' : ''} ${bandingIds.includes(g.id) ? 'is-banding' : ''}`}
+                    href={g.link || '#'}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => catat('gmaps_dibuka', { kec: g.kec })}
+                  >
+                    <span className="kr-t">
+                      <b>{g.nama}</b>
+                      <small>
+                        {jarak(g.jarak)}
+                        {g.rating ? ` · ★ ${g.rating}` : ''}
+                        {g.keyakinan === 'rendah' ? ' · perkiraan kasar' : ''}
+                      </small>
+                    </span>
+                    <span className="kr-p">
+                      <b>
+                        ≈ {rpSingkat(g.rendah)} – {rpSingkat(g.tinggi)}
+                      </b>
+                      <em className="tag-est">perkiraan</em>
+                    </span>
+                  </a>
+                  <label className="kr-banding">
+                    <input type="checkbox" checked={bandingIds.includes(g.id)} onChange={() => toggleBanding(kosGmaps(g))} />
+                    Bandingkan (jarak saja)
+                  </label>
+                </div>
               ))}
             </section>
           )}
@@ -407,11 +442,21 @@ export default function Match({ query }) {
       {dipilih.length > 0 && (
         <div className="compare-bar" role="status">
           <span>{dipilih.length === 2 ? `${dipilih[0].nama} vs ${dipilih[1].nama}` : `${dipilih[0].nama} dipilih · pilih 1 lagi`}</span>
-          <Button size="sm" disabled={dipilih.length !== 2} onClick={() => (dipilih.length === 2 ? go('/bandingkan') : toast('Pilih 1 kos lagi'))}>
+          <Button size="sm" disabled={dipilih.length !== 2} onClick={() => (dipilih.length === 2 ? setBanding(true) : toast('Pilih 1 kos lagi'))}>
             Bandingkan
           </Button>
         </div>
       )}
+
+      <Sheet open={banding && dipilih.length === 2} onClose={() => setBanding(false)} label="Bandingkan kos A dan B" className="sheet-lebar">
+        {dipilih.length === 2 && (
+          <div className="sheet-body">
+            <h2 className="h2">Bandingkan kos</h2>
+            <Segmented label="Prioritas" value={prioritas} onChange={setPrioritas} options={PRIORITAS_GAP.map((p) => ({ id: p.id, label: p.label }))} />
+            <KartuAB hasil={gapAB(dipilih[0], dipilih[1], prioritas)} />
+          </div>
+        )}
+      </Sheet>
 
     </div>
   );
