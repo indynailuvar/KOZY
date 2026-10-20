@@ -25,3 +25,6 @@ web/node_modules/
 web/dist/
 web/.vite/
 .venv/
+
+# KOZY internal modeling bundle: keep local
+/output/kozy_modeling_bundle_v1.pkl
