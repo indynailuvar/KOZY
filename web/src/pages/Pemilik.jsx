@@ -400,6 +400,36 @@ function Dashboard() {
       )}
 
       <section className="card">
+        <h2 className="card-t">Proyeksi Musiman & Tren Omzet</h2>
+        <p className="muted small" style={{ marginBottom: 12 }}>
+          Berdasarkan kalender akademik mahasiswa Surabaya (ITS, UNAIR, UNESA, UPN) dengan model Holt-Winters.
+        </p>
+        <dl className="trio">
+          <div>
+            <dt>Puncak Season</dt>
+            <dd>
+              Juli – Sep
+              <small>Penerimaan Maba</small>
+            </dd>
+          </div>
+          <div>
+            <dt>Target Okupansi Puncak</dt>
+            <dd>
+              95–100%
+              <small>Kamar terisi maksimal</small>
+            </dd>
+          </div>
+          <div>
+            <dt>Estimasi Omzet Puncak</dt>
+            <dd>
+              {currTipe?.harga ? rpSingkat(currTipe.harga * (currTipe.kamar || totalKamar)) : '–'}
+              <small>Per bulan saat penuh</small>
+            </dd>
+          </div>
+        </dl>
+      </section>
+
+      <section className="card">
         <h2 className="card-t">Badge Harga Wajar</h2>
         <div className="badge-row">
           <div className="fpb" dangerouslySetInnerHTML={{ __html: badgeSvg(k.nama) }} aria-hidden="true" />

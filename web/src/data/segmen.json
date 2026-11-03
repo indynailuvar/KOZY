@@ -440,5 +440,55 @@
   0,
   0,
   0
- ]
+ ],
+ "kprototypes_3klaster": {
+  "metode": "K-Prototypes Huang (1997) dengan 3 Klaster",
+  "klaster": [
+   {
+    "nama": "Kos Eksklusif / Premium",
+    "n": 88,
+    "bagian": 28.7,
+    "harga": {
+     "p25": 1700000.0,
+     "p50": 1900000.0,
+     "p75": 2300000.0,
+     "min": 1350000.0,
+     "max": 4000000.0
+    },
+    "skor_fasilitas_rata": 86.9,
+    "kecamatan_terbanyak": "Sukolilo",
+    "jenis_terbanyak": "campur"
+   },
+   {
+    "nama": "Kos Menengah / Standar",
+    "n": 102,
+    "bagian": 33.2,
+    "harga": {
+     "p25": 1100000.0,
+     "p50": 1300000.0,
+     "p75": 1500000.0,
+     "min": 800000.0,
+     "max": 1800000.0
+    },
+    "skor_fasilitas_rata": 81.4,
+    "kecamatan_terbanyak": "Wonokromo",
+    "jenis_terbanyak": "putri"
+   },
+   {
+    "nama": "Kos Murah / Ekonomis",
+    "n": 117,
+    "bagian": 38.1,
+    "harga": {
+     "p25": 650000.0,
+     "p50": 750000.0,
+     "p75": 900000.0,
+     "min": 350000.0,
+     "max": 2700000.0
+    },
+    "skor_fasilitas_rata": 43.3,
+    "kecamatan_terbanyak": "Sukolilo",
+    "jenis_terbanyak": "putri"
+   }
+  ]
+ }
 }
