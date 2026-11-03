@@ -8,7 +8,7 @@ const M = PASAR.meta;
 const CARA = [
   `Kami mengumpulkan iklan kos di Surabaya. Saat ini terkumpul ${M.n} iklan dari ${M.sumber}, diambil ${tanggal(M.diambil)}.`,
   'Model hedonic memperkirakan pengaruh kecamatan, jenis kos, dan tiap fasilitas terhadap harga.',
-  `Saat diuji ulang dengan data yang tidak dipakai melatih, perkiraan model meleset rata-rata ± ${rp(M.mae)} (${M.mape}%). Angka itu kami tampilkan apa adanya.`,
+  `Saat diuji ulang dengan data yang tidak dipakai melatih, perkiraan model meleset rata-rata ± ${rp(M.mae)} (${String(M.mape).replace('.', ',')}%). Angka itu kami tampilkan apa adanya.`,
   'Harga disebut wajar kalau selisihnya di bawah 15% dari perkiraan, seukuran meleset khas model. Di luar itu baru ditandai kemahalan atau murah.',
   'Kalau data di suatu kecamatan belum terkumpul, KOZY bilang belum ada data. Kami tidak menebak.',
 ];

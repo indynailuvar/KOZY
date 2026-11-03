@@ -8,10 +8,14 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import Icon from '../components/Icon.jsx';
 import Kamar360, { jumlahSisi } from '../components/Kamar360.jsx';
 import { DaftarTipe, EditorTipe, galatTipe, tipeBaru } from '../components/TipeKamar.jsx';
+import Lembar from '../components/Lembar.jsx';
+import Belum from '../components/Belum.jsx';
+import { Angka, BarH, Kartu } from '../components/Grafik.jsx';
+import { TIDAK_DIKUMPULKAN, fasilitasTertinggal, pencari, persaingan, saranTarget } from '../api/pemilik.js';
 import { AmountInput, Banner, Button, InfoTip, Options, PageHead, Question, Segmented, Sheet, StatusBadge, Switch, Wizard } from '../components/ui.jsx';
 import { LoginPanel } from '../components/Sheets.jsx';
 import { OPSI_JENIS } from './CekWizard.jsx';
-import { analisisPemilik, jenisById, kawasanById, kenaliLokasi, saranLokasi } from '../api/kozy.js';
+import { analisisPemilik, fasilitasById, jenisById, kawasanById, kenaliLokasi, saranLokasi } from '../api/kozy.js';
 import { BIAYA_FASILITAS, DATA_UPDATED } from '../data/surabaya.js';
 import { ringkasFoto } from '../lib/foto.js';
 import { bulat10rb, daftar, rp, rpSingkat, tanggal } from '../lib/format.js';
@@ -229,6 +233,129 @@ function Klaim() {
   );
 }
 
+// ───────────────────────────────── Siapa yang mencari kos di daerah ini
+// Datanya berasal dari pencarian pengguna di aplikasi, jadi awalnya kosong dan
+// terisi sendiri seiring pemakaian. Umur, gaji, dan jumlah kendaraan TIDAK
+// pernah dikumpulkan — itu disebutkan terus terang, bukan dikarang.
+function ProfilPencari({ kec }) {
+  const u = useMemo(() => pencari(kec), [kec]);
+  return (
+    <>
+      <Angka
+        items={[
+          { nilai: u.nPencarian, label: 'orang mencari kos', sub: 'lewat Cari Kos' },
+          { nilai: u.nCek, label: `cek harga di Kec. ${kec}`, sub: 'kos incaran dinilai' },
+          { nilai: u.butuhAkses, label: 'butuh akses disabilitas', sub: 'dari yang mencari' },
+        ]}
+      />
+      {u.kosong ? (
+        <Belum keadaan="kosong" judul="Belum ada yang mencari kos di sini" syarat="satu orang saja memakai Cari Kos atau Cek Harga, angkanya langsung muncul di sini.">
+          Profil pencari dihitung dari pemakaian aplikasi, bukan dari survei. Jadi angkanya nol sampai ada yang memakainya — bukan karena tidak ada peminat.
+        </Belum>
+      ) : (
+        <>
+          {u.persona.length > 0 && (
+            <Kartu judul="Kalangan yang mencari" sub="Dari persona yang dipilih saat mencari kos">
+              <BarH data={u.persona} format={(v) => `${v} orang`} label="Kalangan pencari kos" />
+            </Kartu>
+          )}
+          {u.budget && (
+            <Kartu judul={`Budget tengah pencari ${rp(u.budget.p50)}`} sub={`Dari ${u.budget.n} pencarian. Ini gambaran kemampuan bayar yang paling dekat yang dimiliki aplikasi`}>
+              <dl className="trio">
+                <div>
+                  <dt>Hemat (p25)</dt>
+                  <dd>{rpSingkat(u.budget.p25)}</dd>
+                </div>
+                <div>
+                  <dt>Tengah</dt>
+                  <dd>{rpSingkat(u.budget.p50)}</dd>
+                </div>
+                <div>
+                  <dt>Longgar (p75)</dt>
+                  <dd>{rpSingkat(u.budget.p75)}</dd>
+                </div>
+              </dl>
+            </Kartu>
+          )}
+          {u.jenisDicari.length > 0 && (
+            <Kartu judul="Jenis kos yang dicari" sub="Putra, putri, atau campur">
+              <BarH data={u.jenisDicari} format={(v) => `${v}`} label="Jenis kos yang dicari" />
+            </Kartu>
+          )}
+        </>
+      )}
+
+      <Belum keadaan="mustahil" judul="Umur, gaji, dan jumlah kendaraan tidak tersedia" syarat="ketiganya harus ditanyakan dulu di aplikasi, dan itu menambah langkah bagi pencari kos.">
+        {TIDAK_DIKUMPULKAN.map((x) => x.label).join(', ')} tidak pernah dikumpulkan KOZY. Yang paling mendekati gambaran kemampuan bayar adalah <b>budget</b> yang dipasang pencari.
+      </Belum>
+    </>
+  );
+}
+
+// ───────────────────────────────── Persaingan di kecamatan yang sama
+function Persaingan({ kec, jenis, semua }) {
+  const c = useMemo(() => persaingan(kec, jenis), [kec, jenis]);
+  if (!c) return <Belum keadaan="kosong" judul={`Belum ada data kos di Kec. ${kec}`} />;
+  const labelJenis = jenisById(jenis)?.label.toLowerCase() || 'sejenis';
+  const fas = Object.entries(c.fasilitas).map(([id, v]) => ({ label: fasilitasById(id)?.label || id, nilai: v }))
+    .sort((a, b) => b.nilai - a.nilai);
+  fas[0].sorot = true;
+  return (
+    <>
+      <Angka
+        items={[
+          { nilai: c.nSejenis, label: `kos ${labelJenis} jadi pesaing langsung`, sub: `dari ${c.n} kos yang harganya terdata` },
+          { nilai: c.hargaSejenis ? rpSingkat(c.hargaSejenis.p50) : '–', label: 'harga tengah pesaing', sub: c.hargaSejenis ? `${rpSingkat(c.hargaSejenis.p25)} – ${rpSingkat(c.hargaSejenis.p75)}` : 'belum ada harganya' },
+        ]}
+      />
+      {semua.length > 0 && (
+        <Kartu
+          judul="Harga kamu dibanding harga wajarnya, semua tipe sekaligus"
+          sub="Harga wajar dihitung dengan menahan kecamatan, jenis kos, dan fasilitas tiap tipe tetap sama"
+        >
+          <BarH
+            data={semua.map((x) => ({ label: x.nama, nilai: Math.round(x.a.selisih_persen), sub: `wajarnya ${rpSingkat(x.a.harga_wajar)}`, sorot: x.a.status === 'KEMAHALAN' }))}
+            format={(v) => (v > 0 ? `${v}% di atas wajar` : `${Math.abs(v)}% di bawah wajar`)}
+            label="Selisih harga tiap tipe terhadap harga wajarnya"
+          />
+        </Kartu>
+      )}
+      <Kartu judul={`${fas[0].nilai}% pesaing punya ${fas[0].label}`} sub="Fasilitas yang sudah jadi standar di kecamatan ini">
+        <BarH data={fas} format={(v) => `${v}%`} label="Fasilitas yang dimiliki pesaing" />
+      </Kartu>
+    </>
+  );
+}
+
+// ───────────────────────────────── Saran penargetan
+function SaranTarget({ kec, tipe, jenis, semua }) {
+  const saran = useMemo(() => saranTarget(kec, tipe, jenis, semua), [kec, tipe, jenis, semua]);
+  const tertinggal = useMemo(() => fasilitasTertinggal(kec, tipe), [kec, tipe]);
+  if (!saran.length) return <Belum keadaan="kosong" judul="Belum ada saran" syarat="lengkapi tipe kamar dan harga dulu." />;
+  return (
+    <>
+      <div className="list-card">
+        {saran.map((x, i) => (
+          <div className="saran-row" key={i}>
+            <span className="ic-circle sm">
+              <Icon name={x.icon} size={16} />
+            </span>
+            <span>
+              <b>{x.judul}</b>
+              <small>{x.isi}</small>
+            </span>
+          </div>
+        ))}
+      </div>
+      {tertinggal.length > 0 && (
+        <Kartu judul="Fasilitas yang sudah umum di sini tapi belum kamu punya" sub="Persentase pesaing yang sudah menyediakannya">
+          <BarH data={tertinggal.map((t) => ({ label: t.label, nilai: t.pasar, sub: `harga wajar ${t.efek > 0 ? '+' : ''}${t.efek}%` }))} format={(v) => `${v}%`} label="Fasilitas yang tertinggal" />
+        </Kartu>
+      )}
+    </>
+  );
+}
+
 function Dashboard() {
   const { state, set, toast } = useStore();
   const p = state.pemilik;
@@ -284,171 +411,194 @@ function Dashboard() {
   };
 
   return (
-    <div className="page narrow">
+    <div className="page">
       <PageHead judul="Kos kamu" sub={`${k.nama}, ${k.kec}${jenis ? ` · Kos ${jenis.label.toLowerCase()}` : ''}`} aksi={<span className="tag-ok">Terverifikasi</span>} />
 
-      <section className="card">
-        <h2 className="card-t">Ringkasan kos</h2>
-        <dl className="trio">
-          <div>
-            <dt>Tipe kamar</dt>
-            <dd>{p.tipe.length}</dd>
-          </div>
-          <div>
-            <dt>Kamar kosong</dt>
-            <dd>
-              {totalSisa}
-              <small>dari {totalKamar}</small>
-            </dd>
-          </div>
-          <div>
-            <dt>Rentang harga</dt>
-            <dd>{harga.length ? (Math.min(...harga) === Math.max(...harga) ? rpSingkat(harga[0]) : `${rpSingkat(Math.min(...harga))}–${rpSingkat(Math.max(...harga))}`) : '–'}</dd>
-          </div>
-        </dl>
-      </section>
-
-      {kemahalan.length > 0 && (
-        <Banner tone="warn" icon="alert" title={`${kemahalan.length} tipe kamar di atas harga pasaran`}>
-          {daftar(kemahalan.map((x) => x.nama))} harganya di atas kewajaran kecamatan ini. Badge Harga Wajar baru bisa diunduh kalau semua tipe sudah wajar.
-        </Banner>
-      )}
-
-      <section className="card">
-        <div className="card-row">
-          <h2 className="card-t">Tipe kamar</h2>
-          <span className="muted small">{foto.jumlah ? `${foto.jumlah} foto${foto.kb ? ` · ${foto.kb} KB` : ''}` : 'belum ada foto'}</span>
-        </div>
-        <DaftarTipe tipe={p.tipe} onUbah={setEdit} onTambah={() => setEdit({ ...tipeBaru(p.tipe.length), baru: true })} />
-      </section>
-
-      {p.tipe.length > 1 && (
-        <div className="tipe-pick">
-          <Segmented label="Lihat analisis tipe" value={t.id} onChange={setPilih} options={p.tipe.map((x) => ({ id: x.id, label: x.nama }))} />
-        </div>
-      )}
-
-      {jumlahSisi(t.foto) > 0 && (
+      {/* Halaman ini TIDAK pernah menaut ke dashboard internal KOZY di
+          #/internal, dan tidak memuat satu pun angka dari sana. Yang dibaca
+          pemilik hanyalah pasarnya sendiri: siapa yang mencari kos di
+          daerahnya dan dia bersaing dengan siapa. */}
+      <Lembar
+        label="Dashboard pemilik"
+        lembar={[
+          {
+            id: 'kos',
+            judul: 'Kos kamu',
+            isi: (
+              <>
         <section className="card">
-          <h2 className="card-t">Foto {t.nama}</h2>
-          <p className="card-s">Beginilah calon penyewa melihat kamarnya — bisa diputar ke empat sisi.</p>
-          <Kamar360 foto={t.foto} nama={t.nama} tinggi="sm" />
-        </section>
-      )}
-
-      <section className="card owner-pos">
-        <div className="card-row">
-          <h2 className="card-t">Posisi harga {t.nama}</h2>
-          <StatusBadge status={a.status} size="sm" />
-        </div>
-        <Gauge persentil={a.persentil} />
-        <p className="center muted">
-          Lebih mahal dari <b>{a.persentil} dari 100</b> kos serupa
-        </p>
-        <dl className="duo">
-          <div>
-            <dt>Harga kamu</dt>
-            <dd>
-              {rp(t.harga)}
-              <button type="button" className="text-btn sm" onClick={() => setEdit(t)}>
-                Ubah
-              </button>
-            </dd>
-          </div>
-          <div>
-            <dt>Harga wajar</dt>
-            <dd className="t-blue">{rp(a.harga_wajar)}</dd>
-          </div>
-        </dl>
-        <p className="v-basis">
-          {a.n} iklan kos di Kec. {a.kec} · data {tanggal(DATA_UPDATED)}
-          <InfoTip label="Cara menghitung">Dihitung dari iklan kos di kecamatan yang sama, dengan jenis kos dan fasilitas tipe ini.</InfoTip>
-        </p>
-      </section>
-
-      {a.simulasi.length > 0 && (
-        <section className="card">
-          <h2 className="card-t">Kalau {t.nama} ditambah fasilitas</h2>
-          <p className="card-s">Nyalakan untuk melihat perkiraan harga wajar yang baru.</p>
-          <div className="switch-list">
-            {(semuaSim ? a.simulasi : [...a.simulasi].sort((x, y) => y.tambah - x.tambah).slice(0, 4)).map((s) => (
-              <Switch
-                key={s.id}
-                label={s.label}
-                sub={`Harga wajar naik ± ${rpSingkat(s.tambah)}/bulan · ${s.punya_pct}% kos di kecamatan ini punya`}
-                checked={tambah.includes(s.id)}
-                onChange={() => setTambah((x) => (x.includes(s.id) ? x.filter((y) => y !== s.id) : [...x, s.id]))}
-              />
-            ))}
-          </div>
-          {a.simulasi.length > 4 && (
-            <button type="button" className="text-btn" onClick={() => setSemuaSim((v) => !v)}>
-              {semuaSim ? 'Tampilkan lebih sedikit' : `Lihat semua ${a.simulasi.length} fasilitas`}
-            </button>
-          )}
-          {sim.length > 0 && (
-            <div className="sim-res">
-              <p>
-                Dengan {daftar(sim.map((s) => s.label))}, harga wajar {t.nama} menjadi <b>{rp(bulat10rb(a.harga_wajar + simTambah))}</b>.
-              </p>
-              <small>
-                Perkiraan biaya {rp(simBiaya)} per kamar · balik modal ± {Math.ceil(simBiaya / simTambah)} bulan
-              </small>
+          <h2 className="card-t">Ringkasan kos</h2>
+          <dl className="trio">
+            <div>
+              <dt>Tipe kamar</dt>
+              <dd>{p.tipe.length}</dd>
             </div>
-          )}
+            <div>
+              <dt>Kamar kosong</dt>
+              <dd>
+                {totalSisa}
+                <small>dari {totalKamar}</small>
+              </dd>
+            </div>
+            <div>
+              <dt>Rentang harga</dt>
+              <dd>{harga.length ? (Math.min(...harga) === Math.max(...harga) ? rpSingkat(harga[0]) : `${rpSingkat(Math.min(...harga))}–${rpSingkat(Math.max(...harga))}`) : '–'}</dd>
+            </div>
+          </dl>
         </section>
-      )}
-
-      <section className="card">
-        <h2 className="card-t">Proyeksi Musiman & Tren Omzet</h2>
-        <p className="muted small" style={{ marginBottom: 12 }}>
-          Berdasarkan kalender akademik mahasiswa Surabaya (ITS, UNAIR, UNESA, UPN) dengan model Holt-Winters.
-        </p>
-        <dl className="trio">
-          <div>
-            <dt>Puncak Season</dt>
-            <dd>
-              Juli – Sep
-              <small>Penerimaan Maba</small>
-            </dd>
+        {kemahalan.length > 0 && (
+          <Banner tone="warn" icon="alert" title={`${kemahalan.length} tipe kamar di atas harga pasaran`}>
+            {daftar(kemahalan.map((x) => x.nama))} harganya di atas kewajaran kecamatan ini. Badge Harga Wajar baru bisa diunduh kalau semua tipe sudah wajar.
+          </Banner>
+        )}
+        <section className="card">
+          <div className="card-row">
+            <h2 className="card-t">Tipe kamar</h2>
+            <span className="muted small">{foto.jumlah ? `${foto.jumlah} foto${foto.kb ? ` · ${foto.kb} KB` : ''}` : 'belum ada foto'}</span>
           </div>
-          <div>
-            <dt>Target Okupansi Puncak</dt>
-            <dd>
-              95–100%
-              <small>Kamar terisi maksimal</small>
-            </dd>
+          <DaftarTipe tipe={p.tipe} onUbah={setEdit} onTambah={() => setEdit({ ...tipeBaru(p.tipe.length), baru: true })} />
+        </section>
+              </>
+            ),
+          },
+          {
+            id: 'harga',
+            judul: 'Posisi harga',
+            isi: (
+              <>
+        {p.tipe.length > 1 && (
+          <div className="tipe-pick">
+            <Segmented label="Lihat analisis tipe" value={t.id} onChange={setPilih} options={p.tipe.map((x) => ({ id: x.id, label: x.nama }))} />
           </div>
-          <div>
-            <dt>Estimasi Omzet Puncak</dt>
-            <dd>
-              {currTipe?.harga ? rpSingkat(currTipe.harga * (currTipe.kamar || totalKamar)) : '–'}
-              <small>Per bulan saat penuh</small>
-            </dd>
+        )}
+        {jumlahSisi(t.foto) > 0 && (
+          <section className="card">
+            <h2 className="card-t">Foto {t.nama}</h2>
+            <p className="card-s">Beginilah calon penyewa melihat kamarnya — bisa diputar ke empat sisi.</p>
+            <Kamar360 foto={t.foto} nama={t.nama} tinggi="sm" />
+          </section>
+        )}
+        <section className="card owner-pos">
+          <div className="card-row">
+            <h2 className="card-t">Posisi harga {t.nama}</h2>
+            <StatusBadge status={a.status} size="sm" />
           </div>
-        </dl>
-      </section>
-
-      <section className="card">
-        <h2 className="card-t">Badge Harga Wajar</h2>
-        <div className="badge-row">
-          <div className="fpb" dangerouslySetInnerHTML={{ __html: badgeSvg(k.nama) }} aria-hidden="true" />
-          <div>
-            <p className="muted small">
-              {bolehBadge ? (
-                'Pasang di iklan atau pintu kos. Badge tidak bisa dibeli dan diperbarui tiap bulan.'
-              ) : (
-                <>
-                  Turunkan {daftar(kemahalan.map((x) => x.nama))} ke maksimal <b>{rp(bulat10rb(kemahalan[0].a.harga_wajar * 1.1))}</b> untuk mendapatkannya.
-                </>
-              )}
-            </p>
-            <Button icon="download" size="sm" variant="secondary" disabled={!bolehBadge} onClick={unduh}>
-              Unduh badge
-            </Button>
+          <Gauge persentil={a.persentil} />
+          <p className="center muted">
+            Lebih mahal dari <b>{a.persentil} dari 100</b> kos serupa
+          </p>
+          <dl className="duo">
+            <div>
+              <dt>Harga kamu</dt>
+              <dd>
+                {rp(t.harga)}
+                <button type="button" className="text-btn sm" onClick={() => setEdit(t)}>
+                  Ubah
+                </button>
+              </dd>
+            </div>
+            <div>
+              <dt>Harga wajar</dt>
+              <dd className="t-blue">{rp(a.harga_wajar)}</dd>
+            </div>
+          </dl>
+          <p className="v-basis">
+            {a.n} iklan kos di Kec. {a.kec} · data {tanggal(DATA_UPDATED)}
+            <InfoTip label="Cara menghitung">Dihitung dari iklan kos di kecamatan yang sama, dengan jenis kos dan fasilitas tipe ini.</InfoTip>
+          </p>
+        </section>
+              </>
+            ),
+          },
+          {
+            id: 'naik',
+            judul: 'Menaikkan harga',
+            isi: (
+              <>
+        {a.simulasi.length > 0 && (
+          <section className="card">
+            <h2 className="card-t">Kalau {t.nama} ditambah fasilitas</h2>
+            <p className="card-s">Nyalakan untuk melihat perkiraan harga wajar yang baru.</p>
+            <div className="switch-list">
+              {(semuaSim ? a.simulasi : [...a.simulasi].sort((x, y) => y.tambah - x.tambah).slice(0, 4)).map((s) => (
+                <Switch
+                  key={s.id}
+                  label={s.label}
+                  sub={`Harga wajar naik ± ${rpSingkat(s.tambah)}/bulan · ${s.punya_pct}% kos di kecamatan ini punya`}
+                  checked={tambah.includes(s.id)}
+                  onChange={() => setTambah((x) => (x.includes(s.id) ? x.filter((y) => y !== s.id) : [...x, s.id]))}
+                />
+              ))}
+            </div>
+            {a.simulasi.length > 4 && (
+              <button type="button" className="text-btn" onClick={() => setSemuaSim((v) => !v)}>
+                {semuaSim ? 'Tampilkan lebih sedikit' : `Lihat semua ${a.simulasi.length} fasilitas`}
+              </button>
+            )}
+            {sim.length > 0 && (
+              <div className="sim-res">
+                <p>
+                  Dengan {daftar(sim.map((s) => s.label))}, harga wajar {t.nama} menjadi <b>{rp(bulat10rb(a.harga_wajar + simTambah))}</b>.
+                </p>
+                <small>
+                  Perkiraan biaya {rp(simBiaya)} per kamar · balik modal ± {Math.ceil(simBiaya / simTambah)} bulan
+                </small>
+              </div>
+            )}
+          </section>
+        )}
+        <section className="card">
+          <h2 className="card-t">Badge Harga Wajar</h2>
+          <div className="badge-row">
+            <div className="fpb" dangerouslySetInnerHTML={{ __html: badgeSvg(k.nama) }} aria-hidden="true" />
+            <div>
+              <p className="muted small">
+                {bolehBadge ? (
+                  'Pasang di iklan atau pintu kos. Badge tidak bisa dibeli dan diperbarui tiap bulan.'
+                ) : (
+                  <>
+                    Turunkan {daftar(kemahalan.map((x) => x.nama))} ke maksimal <b>{rp(bulat10rb(kemahalan[0].a.harga_wajar * 1.1))}</b> untuk mendapatkannya.
+                  </>
+                )}
+              </p>
+              <Button icon="download" size="sm" variant="secondary" disabled={!bolehBadge} onClick={unduh}>
+                Unduh badge
+              </Button>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+              </>
+            ),
+          },
+          {
+            id: 'pencari',
+            judul: 'Siapa yang cari',
+            isi: (
+              <>
+                <ProfilPencari kec={k.kec} />
+              </>
+            ),
+          },
+          {
+            id: 'saing',
+            judul: 'Persaingan',
+            isi: (
+              <>
+                <Persaingan kec={k.kec} jenis={p.jenis} semua={semua} />
+              </>
+            ),
+          },
+          {
+            id: 'target',
+            judul: 'Saran penargetan',
+            isi: (
+              <>
+                <SaranTarget kec={k.kec} tipe={p.tipe} jenis={p.jenis} semua={semua} />
+              </>
+            ),
+          },
+        ]}
+      />
 
       <EditorTipe open={!!edit} awal={edit || tipeBaru(0)} onSimpan={simpanTipe} onBatal={() => setEdit(null)} onHapus={edit && !edit.baru ? hapusTipe : null} />
 

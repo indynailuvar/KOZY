@@ -1,10 +1,10 @@
 """
 KOZY Backend API (FastAPI)
-Menghubungkan model cek harga dan tiga komponen fitur eksklusif KOZY ke antarmuka web:
-  1. kelas harga murah/menengah/mahal  (K-Prototypes)
-  2. gap kos A vs kos B                (gap terstandar + persentil + TOPSIS)
-  3. forecast pendapatan KOZY          (Monte Carlo + Beta-Binomial + indeks musiman)
-Ketiganya tanpa regresi dan tanpa variabel fasilitas 0/1 (lihat api/premium.py).
+  /vonis                 harga wajar, regresi hedonic log-linear (Ridge) dari pasar.json
+  /modeling/segment      segmen harga, K-Prototypes (bundle modeling)
+  /modeling/price-gap    gap harga terhadap median & IQR kecamatan x jenis (bundle modeling)
+  /modeling/summary      ringkasan kedua metode di atas
+  /forecast/omzet-paket  proyeksi omzet paket, Chronos-2 di atas histori dummy
 """
 
 import json
@@ -25,16 +25,24 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
-from premium import HARGA_EKSKLUSIF, gap_ab, kelas_kos, simulasi_pendapatan
 
 # Paths
 ROOT_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = ROOT_DIR / "web" / "src" / "data"
 OUTPUT_DIR = ROOT_DIR / "output"
-MODEL_BUNDLE_PATH = Path(os.environ.get(
-    "KOZY_MODEL_BUNDLE_PATH",
-    str(ROOT_DIR.parent / "web" / "kozy_modeling_bundle_v1.pkl"),
-)).expanduser()
+# harga paket KOZY Match, sama dengan HARGA_MATCH di frontend
+HARGA_EKSKLUSIF = 19_900
+
+
+def cari_bundle() -> Path:
+    """KOZY_MODEL_BUNDLE_PATH > bundle lengkap di laptop tim > bundle publik di repo"""
+    if os.environ.get("KOZY_MODEL_BUNDLE_PATH"):
+        return Path(os.environ["KOZY_MODEL_BUNDLE_PATH"]).expanduser()
+    lokal = ROOT_DIR.parent / "web" / "kozy_modeling_bundle_v1.pkl"
+    return lokal if lokal.is_file() else OUTPUT_DIR / "kozy_modeling_bundle_public_v1.pkl"
+
+
+MODEL_BUNDLE_PATH = cari_bundle()
 
 # Load JSON datasets
 def load_json(path: Path) -> dict:
@@ -44,13 +52,22 @@ def load_json(path: Path) -> dict:
         return json.load(f)
 
 PASAR_DATA = load_json(DATA_DIR / "pasar.json")
-# dibuat oleh web/scripts/build_premium.py
-KELAS_DATA = load_json(DATA_DIR / "kelas.json")
-GAP_AB_DATA = load_json(DATA_DIR / "gap_ab.json")
-FORECAST_DATA = load_json(DATA_DIR / "forecast_kozy.json")
+
+def seragamkan(bundle: dict) -> dict:
+    """Bundle publik menyimpan hanya ringkasan agregat dengan nama kunci *_aggregate.
+    Samakan dengan nama kunci bundle lengkap supaya endpoint cukup membaca satu bentuk."""
+    info, seg, gap = bundle["bundle_info"], bundle["segmentation"], bundle["price_gap_analysis"]
+    info.setdefault("jumlah_listing_sumber", info.get("jumlah_listing_training"))
+    info.setdefault("dibuat", None)
+    seg.setdefault("profile", seg.get("profile_aggregate"))
+    seg.setdefault("metadata", {"model": "K-Prototypes", "jumlah_listing": info["jumlah_listing_sumber"], **seg.get("metrics", {})})
+    gap.setdefault("benchmark", gap.get("benchmark_aggregate"))
+    gap.setdefault("keterbatasan", gap.get("catatan", []))
+    return bundle
+
 
 try:
-    MODELING_BUNDLE = joblib.load(MODEL_BUNDLE_PATH) if MODEL_BUNDLE_PATH.is_file() else None
+    MODELING_BUNDLE = seragamkan(joblib.load(MODEL_BUNDLE_PATH)) if MODEL_BUNDLE_PATH.is_file() else None
     MODEL_BUNDLE_ERROR = None
 except Exception as exc:
     MODELING_BUNDLE = None
@@ -72,7 +89,7 @@ def chronos2_pipeline():
 app = FastAPI(
     title="KOZY Analytics & Modelling Backend",
     version="2.0.0",
-    description="Backend service KOZY untuk cek kewajaran harga, kelas harga K-Prototypes, gap kos A vs B, dan forecast pendapatan paket eksklusif."
+    description="Backend KOZY: harga wajar (Ridge), segmen K-Prototypes, gap median & IQR, dan forecast omzet Chronos-2."
 )
 
 # CORS
@@ -151,37 +168,6 @@ class VonisRequest(BaseModel):
     lokasi: Optional[str] = None
 
 
-class KelasRequest(BaseModel):
-    harga: float = Field(..., ge=100000, le=20000000, description="Harga sewa bulanan kos")
-    kecamatan: Optional[str] = None
-    jenis: Optional[str] = None
-
-
-class KosAB(BaseModel):
-    nama: str = "Kos"
-    harga: Optional[float] = Field(None, ge=100000, le=20000000, description="Kosong = harga belum diketahui (kos Google Maps)")
-    jarak: Optional[float] = Field(None, ge=0, le=100, description="Jarak ke tujuan (km)")
-    kec: Optional[str] = None
-    jenis: Optional[str] = None
-
-
-class GapABRequest(BaseModel):
-    a: KosAB
-    b: KosAB
-    prioritas: str = Field("seimbang", description="seimbang | hemat | dekat")
-
-
-class ForecastRequest(BaseModel):
-    pengunjung_awal: float = Field(1000, ge=0, description="Pengunjung baru per bulan di bulan pertama")
-    pertumbuhan: float = Field(0.02, ge=-0.5, le=1, description="Pertumbuhan pengunjung per bulan (0,02 = 2%)")
-    sesi: int = Field(0, ge=0, description="Jumlah sesi pengunjung yang teramati (data aktivitas)")
-    pembeli: int = Field(0, ge=0, description="Jumlah sesi yang membayar paket eksklusif")
-    prior_a: float = Field(3, gt=0)
-    prior_b: float = Field(97, gt=0)
-    horizon: int = Field(12, ge=1, le=36)
-    draws: int = Field(10_000, ge=500, le=50_000)
-
-
 class ForecastOmzetRequest(BaseModel):
     pembeli_awal: int = Field(6, ge=0, le=5000, description="Pembeli bulanan dummy pada awal periode historis")
     pertumbuhan_persen: float = Field(3.0, ge=-5, le=10, description="Asumsi pertumbuhan dummy per bulan")
@@ -204,10 +190,9 @@ def health_check():
         "service": "KOZY Backend API",
         "data_loaded": {
             "pasar_n": PASAR_DATA.get("meta", {}).get("n", 0),
-            "kelas_n": KELAS_DATA.get("meta", {}).get("n", 0),
-            "gap_ab_n": GAP_AB_DATA.get("uji_jarak_harga", {}).get("n", 0),
-            "forecast_musiman": bool(FORECAST_DATA.get("musiman")),
+            "pasar_metode": PASAR_DATA.get("meta", {}).get("metode"),
             "modeling_bundle": MODELING_BUNDLE is not None,
+            "modeling_bundle_file": MODEL_BUNDLE_PATH.name,
         }
     }
 
@@ -393,7 +378,7 @@ def forecast_omzet_paket(req: ForecastOmzetRequest):
 def vonis_harga(req: VonisRequest):
     """
     Endpoint utama penilaian kewajaran harga kos.
-    Menghitung harga wajar log-linear hedonic, ditambah kelas harga K-Prototypes.
+    Menghitung harga wajar dengan regresi hedonic log-linear (Ridge).
     """
     kec = req.kecamatan
     harga = req.harga
@@ -438,53 +423,7 @@ def vonis_harga(req: VonisRequest):
             "mae": PASAR_DATA.get("meta", {}).get("mae", 279000),
             "anomali": abs(selisih_persen) > 60
         },
-        # fitur eksklusif: frontend hanya menampilkannya ke pemilik paket
-        "kelas": kelas_kos(KELAS_DATA, harga, kec, jenis),
     }
-
-
-@app.get("/kelas")
-def get_kelas_model():
-    """Ringkasan model K-Prototypes: pemilihan k, uji, stabilitas, profil 3 kelas."""
-    return {**KELAS_DATA, "kelas": [{k: v for k, v in c.items() if k != "harga_urut"} for c in KELAS_DATA.get("kelas", [])]}
-
-
-@app.post("/kelas")
-def klasifikasi_kelas(req: KelasRequest):
-    """Fitur eksklusif 1 — masukkan satu kos ke kelas murah/menengah/mahal (prototipe terdekat)."""
-    return kelas_kos(KELAS_DATA, req.harga, req.kecamatan, req.jenis)
-
-
-@app.post("/gap-ab")
-def gap_kos_ab(req: GapABRequest):
-    """Fitur eksklusif 2 — gap harga & jarak kos A vs B, posisi di kelas, dan rekomendasi TOPSIS."""
-    return gap_ab(KELAS_DATA, GAP_AB_DATA, req.a.model_dump(), req.b.model_dump(), req.prioritas)
-
-
-@app.get("/forecast-pendapatan")
-def get_forecast_meta():
-    """Indeks musiman, uji chi-square, prior, dan skenario bawaan forecast pendapatan."""
-    return FORECAST_DATA
-
-
-@app.post("/forecast-pendapatan")
-def forecast_pendapatan(req: ForecastRequest):
-    """Forecast pendapatan KOZY dari paket eksklusif (Monte Carlo funnel)."""
-    mulai = FORECAST_DATA["mulai"]
-    hasil = simulasi_pendapatan(
-        FORECAST_DATA["musiman"]["indeks"],
-        mulai["bulan"],
-        req.pengunjung_awal,
-        req.pertumbuhan,
-        req.prior_a,
-        req.prior_b,
-        sesi=req.sesi,
-        pembeli=req.pembeli,
-        harga=HARGA_EKSKLUSIF,
-        horizon=req.horizon,
-        draws=req.draws,
-    )
-    return {"mulai": mulai, **hasil}
 
 
 if __name__ == "__main__":

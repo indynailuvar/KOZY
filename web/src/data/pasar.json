@@ -16,82 +16,95 @@
   "min_iklan_kec": 5,
   "berkoordinat": 67,
   "ada_sisa_kamar": 67,
-  "mae": 279000,
-  "mape": 21.0,
-  "r2_log": 0.663,
-  "catatan": "Harga sewa bulanan dari iklan Mamikos dan Papikost. Luas kamar dan nomor pemilik tidak ada di kedua sumber; koordinat hanya ada di Papikost.",
-  "modelling_terhubung": true,
-  "modelling_versi": "Multivariate Gap + K-Prototypes Clustering + Holt-Winters Forecasting"
+  "metode": "Regresi hedonic log-linear, estimasi Ridge",
+  "alpha": 5.6234,
+  "uji": "uji silang bersarang 25 lipatan (alpha dipilih ulang di tiap lipatan latih)",
+  "mae": 277000,
+  "mape": 20.8,
+  "r2_log": 0.66,
+  "pembanding_ols": {
+   "mae": 279000,
+   "mape": 21.0,
+   "selisih_mape": -0.18,
+   "t_berpasangan": -2.27,
+   "ridge_menang": 20,
+   "lipatan": 25
+  },
+  "catatan": "Harga sewa bulanan dari iklan Mamikos dan Papikost. Luas kamar dan nomor pemilik tidak ada di kedua sumber; koordinat hanya ada di Papikost."
  },
  "model": {
   "bentuk": "log-linear",
-  "intercept": 13.276765343845515,
+  "estimasi": "ridge",
+  "alpha": 5.6234,
+  "intercept": 13.377467981071412,
   "kec": {
-   "Gayungan": 0.1579304926029169,
-   "Gubeng": -0.029127092694091195,
-   "Gunung Anyar": 0.1579304926029169,
-   "Lakarsantri": 0.1579304926029169,
-   "Mulyorejo": 0.1579304926029169,
-   "Rungkut": -0.07156515037259192,
-   "Sambikerep": 0.1579304926029169,
-   "Sawahan": 0.1579304926029169,
-   "Sukolilo": 0.01688545080476546,
-   "Tambaksari": 0.1579304926029169,
-   "Tegalsari": 0.1579304926029169,
-   "Tenggilis Mejoyo": -0.12298301007072891,
-   "Wonocolo": 0.061626167275831034,
-   "Wonokromo": -0.03602520844353589
+   "Gayungan": 0.12464738444502377,
+   "Gubeng": -0.02083749763917357,
+   "Gunung Anyar": 0.12464738444502377,
+   "Lakarsantri": 0.12464738444502377,
+   "Mulyorejo": 0.12464738444502377,
+   "Rungkut": -0.049617505327796255,
+   "Sambikerep": 0.12464738444502377,
+   "Sawahan": 0.12464738444502377,
+   "Sukolilo": 0.011980777369577169,
+   "Tambaksari": 0.12464738444502377,
+   "Tegalsari": 0.12464738444502377,
+   "Tenggilis Mejoyo": -0.09844202102243318,
+   "Wonocolo": 0.05799950184671908,
+   "Wonokromo": -0.033869003849945525
   },
   "fasilitas": {
-   "km": 0.2431819858539987,
-   "ac": 0.45652006784480004,
-   "wifi": 0.04863217411935618,
-   "kasur": 0.17401684539068868,
-   "kloset": 0.10823146857869166,
-   "akses24": -0.005628026912381692
+   "km": 0.24469980532506844,
+   "ac": 0.4189634154576745,
+   "wifi": 0.05199991453296824,
+   "kasur": 0.09143824578776531,
+   "kloset": 0.10767858896025959,
+   "akses24": -0.005521614791507846
   },
   "jenis": {
    "putra": 0.0,
-   "putri": -0.04624215867461072,
-   "campur": 0.160051124178359
+   "putri": -0.04430039486683993,
+   "campur": 0.1567136832831615
   }
  },
  "model_penuh": {
   "koefisien": {
-   "intercept": 13.228744131848552,
-   "kec:Rungkut": -0.04243805767850073,
-   "kec:Sukolilo": 0.04601254349885665,
-   "kec:Tenggilis Mejoyo": -0.09385591737663772,
-   "kec:Wonocolo": 0.09075325996992223,
-   "kec:Wonokromo": -0.006898115749444697,
-   "kec:lainnya": 0.18705758529700808,
-   "fas:km": 0.2431819858539987,
-   "fas:ac": 0.45652006784480004,
-   "fas:wifi": 0.04863217411935618,
-   "fas:kasur": 0.17401684539068868,
-   "fas:kloset": 0.10823146857869166,
-   "fas:akses24": -0.005628026912381692,
-   "jenis:putri": -0.04624215867461072,
-   "jenis:campur": 0.160051124178359,
-   "situs:Papikost": 0.08657454665644207
+   "intercept": 13.395361677366576,
+   "kec:Gubeng": -0.019674874185157187,
+   "kec:Rungkut": -0.048454881873779866,
+   "kec:Sukolilo": 0.013143400823593554,
+   "kec:Tenggilis Mejoyo": -0.0972793975684168,
+   "kec:Wonocolo": 0.05916212530073547,
+   "kec:Wonokromo": -0.03270638039592914,
+   "kec:lainnya": 0.12581000789904015,
+   "fas:km": 0.24469980532506844,
+   "fas:ac": 0.4189634154576745,
+   "fas:wifi": 0.05199991453296824,
+   "fas:kasur": 0.09143824578776531,
+   "fas:kloset": 0.10767858896025959,
+   "fas:akses24": -0.005521614791507846,
+   "jenis:putra": -0.03747109613875318,
+   "jenis:putri": -0.08177149100559311,
+   "jenis:campur": 0.1192425871444083,
+   "situs:Papikost": 0.08437815450147998
   },
   "efek_kec_sebelum_dipusatkan": {
-   "Gubeng": 0.0,
-   "Rungkut": -0.04243805767850073,
-   "Sukolilo": 0.04601254349885665,
-   "Tenggilis Mejoyo": -0.09385591737663772,
-   "Wonocolo": 0.09075325996992223,
-   "Wonokromo": -0.006898115749444697,
-   "Gayungan": 0.18705758529700808,
-   "Gunung Anyar": 0.18705758529700808,
-   "Lakarsantri": 0.18705758529700808,
-   "Mulyorejo": 0.18705758529700808,
-   "Sambikerep": 0.18705758529700808,
-   "Sawahan": 0.18705758529700808,
-   "Tambaksari": 0.18705758529700808,
-   "Tegalsari": 0.18705758529700808
+   "Gubeng": -0.019674874185157187,
+   "Rungkut": -0.048454881873779866,
+   "Sukolilo": 0.013143400823593554,
+   "Tenggilis Mejoyo": -0.0972793975684168,
+   "Wonocolo": 0.05916212530073547,
+   "Wonokromo": -0.03270638039592914,
+   "Gayungan": 0.12581000789904015,
+   "Gunung Anyar": 0.12581000789904015,
+   "Lakarsantri": 0.12581000789904015,
+   "Mulyorejo": 0.12581000789904015,
+   "Sambikerep": 0.12581000789904015,
+   "Sawahan": 0.12581000789904015,
+   "Tambaksari": 0.12581000789904015,
+   "Tegalsari": 0.12581000789904015
   },
-  "pergeseran_pusat": 0.029127092694091195,
+  "pergeseran_pusat": 0.0011626234540163855,
   "bagian_papikost": 0.2182410423452769,
   "kecamatan_kelompok_lainnya": [
    "Gayungan",
@@ -615,14 +628,7 @@
    "promo": null,
    "lat": -7.3358512,
    "lng": 112.7182307,
-   "url": "https://papikost.com/kost/behomy-cozynest-gayungsari",
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 50.0,
-   "gap_score": -2.25,
-   "gap_nominal_rp": 1500000.0,
-   "gap_persen": 187.5,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": "https://papikost.com/kost/behomy-cozynest-gayungsari"
   },
   {
    "sumber": "Papikost",
@@ -648,14 +654,7 @@
    "promo": null,
    "lat": -7.3219777714724765,
    "lng": 112.72587954998015,
-   "url": "https://papikost.com/kost/kamar-mawar",
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 66.7,
-   "gap_score": -1.73,
-   "gap_nominal_rp": 1200000.0,
-   "gap_persen": 92.3,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": "https://papikost.com/kost/kamar-mawar"
   },
   {
    "sumber": "Papikost",
@@ -681,14 +680,7 @@
    "promo": null,
    "lat": -7.3219777714724765,
    "lng": 112.72587954998015,
-   "url": "https://papikost.com/kost/kamar-anggrek",
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 66.7,
-   "gap_score": -1.73,
-   "gap_nominal_rp": 1200000.0,
-   "gap_persen": 92.3,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": "https://papikost.com/kost/kamar-anggrek"
   },
   {
    "sumber": "Mamikos",
@@ -707,14 +699,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": 0.46,
-   "gap_nominal_rp": -250000.0,
-   "gap_persen": -33.3,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -735,14 +720,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 66.7,
-   "gap_score": 1.65,
-   "gap_nominal_rp": -750000.0,
-   "gap_persen": -57.7,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -762,14 +740,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": 0.76,
-   "gap_nominal_rp": -200000.0,
-   "gap_persen": -25.0,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -789,14 +760,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": 0.58,
-   "gap_nominal_rp": -150000.0,
-   "gap_persen": -18.8,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -816,14 +780,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": 0.58,
-   "gap_nominal_rp": -150000.0,
-   "gap_persen": -18.8,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -841,14 +798,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 16.7,
-   "gap_score": -0.99,
-   "gap_nominal_rp": 50000.0,
-   "gap_persen": 7.7,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -867,14 +817,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": -0.29,
-   "gap_nominal_rp": -50000.0,
-   "gap_persen": -6.7,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Papikost",
@@ -898,14 +841,7 @@
    "promo": null,
    "lat": -7.26968548,
    "lng": 112.759864,
-   "url": "https://papikost.com/kost/kost-putri-dafin-didi-gubeng-surabaya",
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": -0.29,
-   "gap_nominal_rp": -50000.0,
-   "gap_persen": -6.7,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": "https://papikost.com/kost/kost-putri-dafin-didi-gubeng-surabaya"
   },
   {
    "sumber": "Mamikos",
@@ -924,14 +860,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": -0.59,
-   "gap_nominal_rp": 50000.0,
-   "gap_persen": 6.7,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Papikost",
@@ -957,14 +886,7 @@
    "promo": null,
    "lat": -7.296959175631529,
    "lng": 112.7570863609958,
-   "url": "https://papikost.com/kost/kos-omah-lawas",
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": 0.11,
-   "gap_nominal_rp": 0.0,
-   "gap_persen": 0.0,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": "https://papikost.com/kost/kos-omah-lawas"
   },
   {
    "sumber": "Mamikos",
@@ -986,14 +908,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 1.38,
-   "gap_nominal_rp": -548000.0,
-   "gap_persen": -39.1,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran I: Best Value (Fasilitas Tinggi, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -1012,14 +927,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": -0.85,
-   "gap_nominal_rp": 150000.0,
-   "gap_persen": 20.0,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -1040,14 +948,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 66.7,
-   "gap_score": 0.55,
-   "gap_nominal_rp": -400000.0,
-   "gap_persen": -30.8,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -1069,14 +970,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 1.25,
-   "gap_nominal_rp": -500000.0,
-   "gap_persen": -35.7,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran I: Best Value (Fasilitas Tinggi, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Papikost",
@@ -1101,14 +995,7 @@
    "promo": null,
    "lat": -7.2760394696824,
    "lng": 112.75116473436356,
-   "url": "https://papikost.com/kost/jaya-kost-gubeng-kertajaya-1",
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": -0.15,
-   "gap_nominal_rp": 100000.0,
-   "gap_persen": 12.5,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": "https://papikost.com/kost/jaya-kost-gubeng-kertajaya-1"
   },
   {
    "sumber": "Mamikos",
@@ -1130,14 +1017,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 1.19,
-   "gap_nominal_rp": -475000.0,
-   "gap_persen": -33.9,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran I: Best Value (Fasilitas Tinggi, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -1157,14 +1037,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": -0.27,
-   "gap_nominal_rp": 150000.0,
-   "gap_persen": 18.8,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -1184,14 +1057,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": -0.39,
-   "gap_nominal_rp": 200000.0,
-   "gap_persen": 25.0,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -1214,14 +1080,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 100.0,
-   "gap_score": 1.72,
-   "gap_nominal_rp": -655000.0,
-   "gap_persen": -39.6,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran I: Best Value (Fasilitas Tinggi, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -1244,14 +1103,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 100.0,
-   "gap_score": 1.51,
-   "gap_nominal_rp": -555000.0,
-   "gap_persen": -33.5,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran I: Best Value (Fasilitas Tinggi, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -1273,14 +1125,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.7,
-   "gap_nominal_rp": -250000.0,
-   "gap_persen": -17.9,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran I: Best Value (Fasilitas Tinggi, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -1301,14 +1146,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 66.7,
-   "gap_score": -0.09,
-   "gap_nominal_rp": -100000.0,
-   "gap_persen": -7.7,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -1330,14 +1168,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.61,
-   "gap_nominal_rp": -200000.0,
-   "gap_persen": -14.3,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -1358,14 +1189,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 66.7,
-   "gap_score": -0.09,
-   "gap_nominal_rp": -100000.0,
-   "gap_persen": -7.7,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Papikost",
@@ -1390,14 +1214,7 @@
    "promo": null,
    "lat": -7.2783885747516806,
    "lng": 112.76000797748566,
-   "url": "https://papikost.com/kost/kos-bu-made",
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": -0.79,
-   "gap_nominal_rp": 400000.0,
-   "gap_persen": 50.0,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": "https://papikost.com/kost/kos-bu-made"
   },
   {
    "sumber": "Mamikos",
@@ -1419,14 +1236,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.56,
-   "gap_nominal_rp": -175000.0,
-   "gap_persen": -12.5,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -1448,14 +1258,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.43,
-   "gap_nominal_rp": -100000.0,
-   "gap_persen": -7.1,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -1477,14 +1280,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.43,
-   "gap_nominal_rp": -100000.0,
-   "gap_persen": -7.1,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -1506,14 +1302,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.43,
-   "gap_nominal_rp": -100000.0,
-   "gap_persen": -7.1,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -1535,14 +1324,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.43,
-   "gap_nominal_rp": -100000.0,
-   "gap_persen": -7.1,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -1565,14 +1347,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": 1.05,
-   "gap_nominal_rp": -305000.0,
-   "gap_persen": -18.4,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -1594,14 +1369,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.27,
-   "gap_nominal_rp": 0.0,
-   "gap_persen": 0.0,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -1623,14 +1391,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.27,
-   "gap_nominal_rp": 0.0,
-   "gap_persen": 0.0,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -1653,14 +1414,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.97,
-   "gap_nominal_rp": -255000.0,
-   "gap_persen": -15.4,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -1682,14 +1436,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.11,
-   "gap_nominal_rp": 100000.0,
-   "gap_persen": 7.1,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -1712,14 +1459,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.81,
-   "gap_nominal_rp": -155000.0,
-   "gap_persen": -9.4,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -1742,14 +1482,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.81,
-   "gap_nominal_rp": -155000.0,
-   "gap_persen": -9.4,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -1771,14 +1504,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.11,
-   "gap_nominal_rp": 100000.0,
-   "gap_persen": 7.1,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -1801,14 +1527,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.81,
-   "gap_nominal_rp": -154990.0,
-   "gap_persen": -9.4,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -1830,14 +1549,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.07,
-   "gap_nominal_rp": 125000.0,
-   "gap_persen": 8.9,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -1860,14 +1572,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.78,
-   "gap_nominal_rp": -130000.0,
-   "gap_persen": -7.9,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -1890,14 +1595,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.59,
-   "gap_nominal_rp": 0.0,
-   "gap_persen": 0.0,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Papikost",
@@ -1925,14 +1623,7 @@
    "promo": null,
    "lat": -7.295116,
    "lng": 112.7618451,
-   "url": "https://papikost.com/kost/pondok-alfi",
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 66.7,
-   "gap_score": -0.87,
-   "gap_nominal_rp": 400000.0,
-   "gap_persen": 30.8,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": "https://papikost.com/kost/pondok-alfi"
   },
   {
    "sumber": "Mamikos",
@@ -1954,14 +1645,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 83.3,
-   "gap_score": -0.23,
-   "gap_nominal_rp": 350000.0,
-   "gap_persen": 25.0,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -1984,14 +1668,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.41,
-   "gap_nominal_rp": 145000.0,
-   "gap_persen": 8.8,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Papikost",
@@ -2018,14 +1695,7 @@
    "promo": null,
    "lat": -7.2774883,
    "lng": 112.7547777,
-   "url": "https://papikost.com/kost/griya-hnn2-kos-putra",
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 66.7,
-   "gap_score": -1.06,
-   "gap_nominal_rp": 550000.0,
-   "gap_persen": 42.3,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": "https://papikost.com/kost/griya-hnn2-kos-putra"
   },
   {
    "sumber": "Mamikos",
@@ -2048,14 +1718,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.23,
-   "gap_nominal_rp": 295000.0,
-   "gap_persen": 17.8,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -2078,14 +1741,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.17,
-   "gap_nominal_rp": 345000.0,
-   "gap_persen": 20.8,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -2107,14 +1763,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 83.3,
-   "gap_score": -0.75,
-   "gap_nominal_rp": 800000.0,
-   "gap_persen": 57.1,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -2136,14 +1785,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 83.3,
-   "gap_score": -1.03,
-   "gap_nominal_rp": 1100000.0,
-   "gap_persen": 78.6,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -2165,14 +1807,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 83.3,
-   "gap_score": -1.03,
-   "gap_nominal_rp": 1100000.0,
-   "gap_persen": 78.6,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -2194,14 +1829,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 83.3,
-   "gap_score": -1.04,
-   "gap_nominal_rp": 1115000.0,
-   "gap_persen": 79.6,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -2224,14 +1852,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": -0.74,
-   "gap_nominal_rp": 1345000.0,
-   "gap_persen": 81.3,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -2254,14 +1875,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": -1.38,
-   "gap_nominal_rp": 2345000.0,
-   "gap_persen": 141.7,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Papikost",
@@ -2285,14 +1899,7 @@
    "promo": null,
    "lat": -7.3353585608627965,
    "lng": 112.77542352670935,
-   "url": "https://papikost.com/kost/kost-mahasiswi-rungkut-gunung-anyar-surabaya",
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": -0.59,
-   "gap_nominal_rp": 50000.0,
-   "gap_persen": 6.7,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": "https://papikost.com/kost/kost-mahasiswi-rungkut-gunung-anyar-surabaya"
   },
   {
    "sumber": "Papikost",
@@ -2316,14 +1923,7 @@
    "promo": null,
    "lat": -7.335223,
    "lng": 112.809624,
-   "url": "https://papikost.com/kost/kost-putra-athars",
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": -1.09,
-   "gap_nominal_rp": 250000.0,
-   "gap_persen": 33.3,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": "https://papikost.com/kost/kost-putra-athars"
   },
   {
    "sumber": "Papikost",
@@ -2348,14 +1948,7 @@
    "promo": null,
    "lat": -7.3361995426474715,
    "lng": 112.77809908613392,
-   "url": "https://papikost.com/kost/metaverse-kost-basic-room",
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": -1.09,
-   "gap_nominal_rp": 250000.0,
-   "gap_persen": 33.3,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": "https://papikost.com/kost/metaverse-kost-basic-room"
   },
   {
    "sumber": "Papikost",
@@ -2382,14 +1975,7 @@
    "promo": null,
    "lat": -7.3361995426474715,
    "lng": 112.77809908613392,
-   "url": "https://papikost.com/kost/metaverse-kost-galaxy-room",
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 66.7,
-   "gap_score": -0.59,
-   "gap_nominal_rp": 200000.0,
-   "gap_persen": 15.4,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": "https://papikost.com/kost/metaverse-kost-galaxy-room"
   },
   {
    "sumber": "Papikost",
@@ -2412,14 +1998,7 @@
    "promo": null,
    "lat": -7.303908,
    "lng": 112.646734,
-   "url": "https://papikost.com/kost/kos-putri-bersih-dan-nyaman-lakarsantri-sby-barat",
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": -0.59,
-   "gap_nominal_rp": 50000.0,
-   "gap_persen": 6.7,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": "https://papikost.com/kost/kos-putri-bersih-dan-nyaman-lakarsantri-sby-barat"
   },
   {
    "sumber": "Papikost",
@@ -2442,14 +2021,7 @@
    "promo": null,
    "lat": -7.303908,
    "lng": 112.646734,
-   "url": "https://papikost.com/kost/kos-putri-dekat-ptc",
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": -0.59,
-   "gap_nominal_rp": 50000.0,
-   "gap_persen": 6.7,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": "https://papikost.com/kost/kos-putri-dekat-ptc"
   },
   {
    "sumber": "Papikost",
@@ -2476,14 +2048,7 @@
    "promo": null,
    "lat": -7.2716888,
    "lng": 112.804311,
-   "url": "https://papikost.com/kost/kayla-kost-putri-mahasiswi",
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 66.7,
-   "gap_score": -1.23,
-   "gap_nominal_rp": 700000.0,
-   "gap_persen": 53.8,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": "https://papikost.com/kost/kayla-kost-putri-mahasiswi"
   },
   {
    "sumber": "Papikost",
@@ -2511,14 +2076,7 @@
    "promo": null,
    "lat": -7.265486224964494,
    "lng": 112.79544462757484,
-   "url": "https://papikost.com/kost/pastelle-premium-kost",
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 66.7,
-   "gap_score": -1.95,
-   "gap_nominal_rp": 1450000.0,
-   "gap_persen": 111.5,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": "https://papikost.com/kost/pastelle-premium-kost"
   },
   {
    "sumber": "Mamikos",
@@ -2538,14 +2096,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": 0.58,
-   "gap_nominal_rp": -150000.0,
-   "gap_persen": -18.8,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Papikost",
@@ -2569,14 +2120,7 @@
    "promo": null,
    "lat": -7.32181509548724,
    "lng": 112.76306130688681,
-   "url": "https://papikost.com/kost/kost-pria-sederhana-surabaya",
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": -0.29,
-   "gap_nominal_rp": -50000.0,
-   "gap_persen": -6.7,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": "https://papikost.com/kost/kost-pria-sederhana-surabaya"
   },
   {
    "sumber": "Papikost",
@@ -2595,14 +2139,7 @@
    "promo": null,
    "lat": -7.3181049058094665,
    "lng": 112.78180360794067,
-   "url": "https://papikost.com/kost/kos-murah-laki-di-daerah-strategis-merr-rungkut",
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 16.7,
-   "gap_score": -1.15,
-   "gap_nominal_rp": 100000.0,
-   "gap_persen": 15.4,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": "https://papikost.com/kost/kos-murah-laki-di-daerah-strategis-merr-rungkut"
   },
   {
    "sumber": "Papikost",
@@ -2627,14 +2164,7 @@
    "promo": null,
    "lat": -7.326843,
    "lng": 112.776241,
-   "url": "https://papikost.com/kost/kost-putri-rungkut-asri",
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": -0.59,
-   "gap_nominal_rp": 50000.0,
-   "gap_persen": 6.7,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": "https://papikost.com/kost/kost-putri-rungkut-asri"
   },
   {
    "sumber": "Mamikos",
@@ -2656,14 +2186,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 1.02,
-   "gap_nominal_rp": -400000.0,
-   "gap_persen": -28.6,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran I: Best Value (Fasilitas Tinggi, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -2686,14 +2209,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 100.0,
-   "gap_score": 1.72,
-   "gap_nominal_rp": -655000.0,
-   "gap_persen": -39.6,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran I: Best Value (Fasilitas Tinggi, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Papikost",
@@ -2718,14 +2234,7 @@
    "promo": null,
    "lat": -7.3322688,
    "lng": 112.7962218,
-   "url": "https://papikost.com/kost/kos-bu-sri-kamar-a",
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": -0.39,
-   "gap_nominal_rp": 200000.0,
-   "gap_persen": 25.0,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": "https://papikost.com/kost/kos-bu-sri-kamar-a"
   },
   {
    "sumber": "Papikost",
@@ -2750,14 +2259,7 @@
    "promo": null,
    "lat": -7.328018311977341,
    "lng": 112.79662093676507,
-   "url": "https://papikost.com/kost/kost-andy-sambo",
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 66.7,
-   "gap_score": 0.32,
-   "gap_nominal_rp": -300000.0,
-   "gap_persen": -23.1,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": "https://papikost.com/kost/kost-andy-sambo"
   },
   {
    "sumber": "Papikost",
@@ -2783,14 +2285,7 @@
    "promo": null,
    "lat": -7.323061661777231,
    "lng": 112.78377127640852,
-   "url": "https://papikost.com/kost/kost-baru-merr-boulevard",
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": -0.97,
-   "gap_nominal_rp": 500000.0,
-   "gap_persen": 62.5,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": "https://papikost.com/kost/kost-baru-merr-boulevard"
   },
   {
    "sumber": "Mamikos",
@@ -2811,14 +2306,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 66.7,
-   "gap_score": -0.31,
-   "gap_nominal_rp": 25000.0,
-   "gap_persen": 1.9,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -2841,14 +2329,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.97,
-   "gap_nominal_rp": -255000.0,
-   "gap_persen": -15.4,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Papikost",
@@ -2869,14 +2350,7 @@
    "promo": null,
    "lat": -7.3304388,
    "lng": 112.7968705,
-   "url": "https://papikost.com/kost/amarta-habitat-tipe-comfort",
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 16.7,
-   "gap_score": -2.7,
-   "gap_nominal_rp": 850000.0,
-   "gap_persen": 130.8,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": "https://papikost.com/kost/amarta-habitat-tipe-comfort"
   },
   {
    "sumber": "Papikost",
@@ -2904,14 +2378,7 @@
    "promo": null,
    "lat": -7.3237404,
    "lng": 112.7629419,
-   "url": "https://papikost.com/kost/cozy-cove-kost",
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 66.7,
-   "gap_score": -0.73,
-   "gap_nominal_rp": 300000.0,
-   "gap_persen": 23.1,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": "https://papikost.com/kost/cozy-cove-kost"
   },
   {
    "sumber": "Mamikos",
@@ -2933,14 +2400,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 83.3,
-   "gap_score": -0.1,
-   "gap_nominal_rp": 250000.0,
-   "gap_persen": 17.9,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -2963,14 +2423,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.34,
-   "gap_nominal_rp": 195000.0,
-   "gap_persen": 11.8,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -2993,14 +2446,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.34,
-   "gap_nominal_rp": 195000.0,
-   "gap_persen": 11.8,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -3022,14 +2468,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 83.3,
-   "gap_score": -0.36,
-   "gap_nominal_rp": 450000.0,
-   "gap_persen": 32.1,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Papikost",
@@ -3051,14 +2490,7 @@
    "promo": null,
    "lat": -7.2819604114359375,
    "lng": 112.67427653074265,
-   "url": "https://papikost.com/kost/kost-putri-bu-ratna",
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 16.7,
-   "gap_score": -0.65,
-   "gap_nominal_rp": -50000.0,
-   "gap_persen": -7.7,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": "https://papikost.com/kost/kost-putri-bu-ratna"
   },
   {
    "sumber": "Papikost",
@@ -3085,14 +2517,7 @@
    "promo": null,
    "lat": -7.279964351879207,
    "lng": 112.62778043746947,
-   "url": "https://papikost.com/kost/kos-bu-liyatin",
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 66.7,
-   "gap_score": -0.09,
-   "gap_nominal_rp": -100000.0,
-   "gap_persen": -7.7,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": "https://papikost.com/kost/kos-bu-liyatin"
   },
   {
    "sumber": "Papikost",
@@ -3121,14 +2546,7 @@
    "promo": null,
    "lat": -7.2676446,
    "lng": 112.63691,
-   "url": "https://papikost.com/kost/house-of-felix-kamar-standard",
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 66.7,
-   "gap_score": -1.06,
-   "gap_nominal_rp": 550000.0,
-   "gap_persen": 42.3,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": "https://papikost.com/kost/house-of-felix-kamar-standard"
   },
   {
    "sumber": "Papikost",
@@ -3147,14 +2565,7 @@
    "promo": null,
    "lat": -7.274451581264419,
    "lng": 112.6499354839325,
-   "url": "https://papikost.com/kost/cozy-one-bedroom-citraland-near-universitas-ciputra",
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 16.7,
-   "gap_score": -4.01,
-   "gap_nominal_rp": 2050000.0,
-   "gap_persen": 315.4,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": "https://papikost.com/kost/cozy-one-bedroom-citraland-near-universitas-ciputra"
   },
   {
    "sumber": "Papikost",
@@ -3177,14 +2588,7 @@
    "promo": null,
    "lat": -7.26374458698596,
    "lng": 112.7240894437,
-   "url": "https://papikost.com/kost/kost-hera-surabaya",
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": 0.46,
-   "gap_nominal_rp": -250000.0,
-   "gap_persen": -33.3,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": "https://papikost.com/kost/kost-hera-surabaya"
   },
   {
    "sumber": "Papikost",
@@ -3210,14 +2614,7 @@
    "promo": null,
    "lat": -7.271993161725186,
    "lng": 112.72672444581984,
-   "url": "https://papikost.com/kost/standar-room",
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 66.7,
-   "gap_score": -0.73,
-   "gap_nominal_rp": 300000.0,
-   "gap_persen": 23.1,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": "https://papikost.com/kost/standar-room"
   },
   {
    "sumber": "Papikost",
@@ -3243,14 +2640,7 @@
    "promo": null,
    "lat": -7.271993161725186,
    "lng": 112.72672444581984,
-   "url": "https://papikost.com/kost/deluxe-mezanine",
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 66.7,
-   "gap_score": -1.23,
-   "gap_nominal_rp": 700000.0,
-   "gap_persen": 53.8,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": "https://papikost.com/kost/deluxe-mezanine"
   },
   {
    "sumber": "Mamikos",
@@ -3268,14 +2658,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 16.7,
-   "gap_score": -0.0,
-   "gap_nominal_rp": -200000.0,
-   "gap_persen": -30.8,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -3295,14 +2678,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": 1.4,
-   "gap_nominal_rp": -350000.0,
-   "gap_persen": -43.8,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -3321,14 +2697,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": 0.46,
-   "gap_nominal_rp": -250000.0,
-   "gap_persen": -33.3,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -3350,14 +2719,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 83.3,
-   "gap_score": 2.57,
-   "gap_nominal_rp": -900000.0,
-   "gap_persen": -64.3,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran I: Best Value (Fasilitas Tinggi, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -3376,14 +2738,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": 0.25,
-   "gap_nominal_rp": -200000.0,
-   "gap_persen": -26.7,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -3404,14 +2759,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 66.7,
-   "gap_score": 1.65,
-   "gap_nominal_rp": -750000.0,
-   "gap_persen": -57.7,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -3430,14 +2778,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": 0.15,
-   "gap_nominal_rp": -175000.0,
-   "gap_persen": -23.3,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -3455,14 +2796,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 16.7,
-   "gap_score": -0.65,
-   "gap_nominal_rp": -50000.0,
-   "gap_persen": -7.7,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -3482,14 +2816,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": 0.76,
-   "gap_nominal_rp": -200000.0,
-   "gap_persen": -25.0,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Papikost",
@@ -3513,14 +2840,7 @@
    "promo": null,
    "lat": -7.2983632,
    "lng": 112.763602,
-   "url": "https://papikost.com/kost/tipe-standar-a",
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": 0.05,
-   "gap_nominal_rp": -150000.0,
-   "gap_persen": -20.0,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": "https://papikost.com/kost/tipe-standar-a"
   },
   {
    "sumber": "Papikost",
@@ -3542,14 +2862,7 @@
    "promo": null,
    "lat": -7.309423,
    "lng": 112.7783642,
-   "url": "https://papikost.com/kost/kost-elmy",
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": 0.05,
-   "gap_nominal_rp": -150000.0,
-   "gap_persen": -20.0,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": "https://papikost.com/kost/kost-elmy"
   },
   {
    "sumber": "Mamikos",
@@ -3568,14 +2881,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": -0.04,
-   "gap_nominal_rp": -125000.0,
-   "gap_persen": -16.7,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -3593,14 +2899,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 16.7,
-   "gap_score": -0.83,
-   "gap_nominal_rp": 0.0,
-   "gap_persen": 0.0,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -3619,14 +2918,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": -0.13,
-   "gap_nominal_rp": -100000.0,
-   "gap_persen": -13.3,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -3645,14 +2937,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": -0.13,
-   "gap_nominal_rp": -100000.0,
-   "gap_persen": -13.3,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -3672,14 +2957,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": 0.49,
-   "gap_nominal_rp": -125000.0,
-   "gap_persen": -15.6,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -3698,14 +2976,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": -0.23,
-   "gap_nominal_rp": -70000.0,
-   "gap_persen": -9.3,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -3724,14 +2995,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": -0.23,
-   "gap_nominal_rp": -70000.0,
-   "gap_persen": -9.3,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -3751,14 +3015,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": 0.41,
-   "gap_nominal_rp": -100000.0,
-   "gap_persen": -12.5,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -3779,14 +3036,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 66.7,
-   "gap_score": 1.11,
-   "gap_nominal_rp": -600000.0,
-   "gap_persen": -46.2,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Papikost",
@@ -3810,14 +3060,7 @@
    "promo": null,
    "lat": -7.2983632,
    "lng": 112.763602,
-   "url": "https://papikost.com/kost/tipe-premium-b",
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": -0.29,
-   "gap_nominal_rp": -50000.0,
-   "gap_persen": -6.7,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": "https://papikost.com/kost/tipe-premium-b"
   },
   {
    "sumber": "Mamikos",
@@ -3838,14 +3081,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 66.7,
-   "gap_score": 1.03,
-   "gap_nominal_rp": -575000.0,
-   "gap_persen": -44.2,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -3865,14 +3101,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": 0.26,
-   "gap_nominal_rp": -50000.0,
-   "gap_persen": -6.2,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -3891,14 +3120,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": -0.44,
-   "gap_nominal_rp": 0.0,
-   "gap_persen": 0.0,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -3917,14 +3139,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": -0.44,
-   "gap_nominal_rp": 0.0,
-   "gap_persen": 0.0,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -3943,14 +3158,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": -0.44,
-   "gap_nominal_rp": 0.0,
-   "gap_persen": 0.0,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -3970,14 +3178,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": 0.25,
-   "gap_nominal_rp": -47000.0,
-   "gap_persen": -5.9,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -3997,14 +3198,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": 0.18,
-   "gap_nominal_rp": -25000.0,
-   "gap_persen": -3.1,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -4023,14 +3217,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": -0.52,
-   "gap_nominal_rp": 25000.0,
-   "gap_persen": 3.3,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -4049,14 +3236,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": -0.59,
-   "gap_nominal_rp": 50000.0,
-   "gap_persen": 6.7,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -4076,14 +3256,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": 0.11,
-   "gap_nominal_rp": 0.0,
-   "gap_persen": 0.0,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -4104,14 +3277,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 66.7,
-   "gap_score": 0.81,
-   "gap_nominal_rp": -500000.0,
-   "gap_persen": -38.5,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -4133,14 +3299,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 1.52,
-   "gap_nominal_rp": -600000.0,
-   "gap_persen": -42.9,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran I: Best Value (Fasilitas Tinggi, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -4159,14 +3318,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": -0.59,
-   "gap_nominal_rp": 50000.0,
-   "gap_persen": 6.7,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -4186,14 +3338,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": 0.11,
-   "gap_nominal_rp": 0.0,
-   "gap_persen": 0.0,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -4213,14 +3358,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": 0.11,
-   "gap_nominal_rp": 0.0,
-   "gap_persen": 0.0,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -4241,14 +3379,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 66.7,
-   "gap_score": 0.81,
-   "gap_nominal_rp": -497000.0,
-   "gap_persen": -38.2,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -4268,14 +3399,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": 0.04,
-   "gap_nominal_rp": 25000.0,
-   "gap_persen": 3.1,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -4295,14 +3419,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": -0.05,
-   "gap_nominal_rp": 60000.0,
-   "gap_persen": 7.5,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -4322,14 +3439,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": -0.15,
-   "gap_nominal_rp": 100000.0,
-   "gap_persen": 12.5,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -4350,14 +3460,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 66.7,
-   "gap_score": 0.55,
-   "gap_nominal_rp": -400000.0,
-   "gap_persen": -30.8,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -4377,14 +3480,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": -0.15,
-   "gap_nominal_rp": 100000.0,
-   "gap_persen": 12.5,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Papikost",
@@ -4408,14 +3504,7 @@
    "promo": null,
    "lat": -7.2983632,
    "lng": 112.763602,
-   "url": "https://papikost.com/kost/tipe-premium-a",
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": -0.85,
-   "gap_nominal_rp": 150000.0,
-   "gap_persen": 20.0,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": "https://papikost.com/kost/tipe-premium-a"
   },
   {
    "sumber": "Mamikos",
@@ -4434,14 +3523,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": -0.97,
-   "gap_nominal_rp": 200000.0,
-   "gap_persen": 26.7,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Papikost",
@@ -4467,14 +3549,7 @@
    "promo": null,
    "lat": -7.2983632,
    "lng": 112.763602,
-   "url": "https://papikost.com/kost/kamar-deluxe",
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 66.7,
-   "gap_score": 0.43,
-   "gap_nominal_rp": -350000.0,
-   "gap_persen": -26.9,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": "https://papikost.com/kost/kamar-deluxe"
   },
   {
    "sumber": "Mamikos",
@@ -4495,14 +3570,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 66.7,
-   "gap_score": 0.37,
-   "gap_nominal_rp": -325000.0,
-   "gap_persen": -25.0,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -4522,14 +3590,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": -0.33,
-   "gap_nominal_rp": 175000.0,
-   "gap_persen": 21.9,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -4550,14 +3611,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 66.7,
-   "gap_score": 0.37,
-   "gap_nominal_rp": -325000.0,
-   "gap_persen": -25.0,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -4578,14 +3632,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 66.7,
-   "gap_score": 0.32,
-   "gap_nominal_rp": -300000.0,
-   "gap_persen": -23.1,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -4606,14 +3653,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 66.7,
-   "gap_score": 0.32,
-   "gap_nominal_rp": -300000.0,
-   "gap_persen": -23.1,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -4634,14 +3674,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 66.7,
-   "gap_score": 0.32,
-   "gap_nominal_rp": -300000.0,
-   "gap_persen": -23.1,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Papikost",
@@ -4666,14 +3699,7 @@
    "promo": null,
    "lat": -7.297024793336967,
    "lng": 112.77231395244598,
-   "url": "https://papikost.com/kost/7-eden-kos-pria-manyar-jaya",
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": -0.39,
-   "gap_nominal_rp": 200000.0,
-   "gap_persen": 25.0,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": "https://papikost.com/kost/7-eden-kos-pria-manyar-jaya"
   },
   {
    "sumber": "Papikost",
@@ -4698,14 +3724,7 @@
    "promo": null,
    "lat": -7.302205,
    "lng": 112.766977,
-   "url": "https://papikost.com/kost/kamar-ac-andamp-non-ac",
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": -0.39,
-   "gap_nominal_rp": 200000.0,
-   "gap_persen": 25.0,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": "https://papikost.com/kost/kamar-ac-andamp-non-ac"
   },
   {
    "sumber": "Mamikos",
@@ -4725,14 +3744,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": -0.6,
-   "gap_nominal_rp": 300000.0,
-   "gap_persen": 37.5,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -4755,14 +3767,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 100.0,
-   "gap_score": 1.35,
-   "gap_nominal_rp": -475000.0,
-   "gap_persen": -28.7,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran I: Best Value (Fasilitas Tinggi, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -4784,14 +3789,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.61,
-   "gap_nominal_rp": -200000.0,
-   "gap_persen": -14.3,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -4813,14 +3811,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.61,
-   "gap_nominal_rp": -200000.0,
-   "gap_persen": -14.3,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -4843,14 +3834,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 100.0,
-   "gap_score": 1.22,
-   "gap_nominal_rp": -405000.0,
-   "gap_persen": -24.5,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -4872,14 +3856,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.52,
-   "gap_nominal_rp": -150000.0,
-   "gap_persen": -10.7,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Papikost",
@@ -4905,14 +3882,7 @@
    "promo": null,
    "lat": -7.302205,
    "lng": 112.766977,
-   "url": "https://papikost.com/kost/vvip",
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 66.7,
-   "gap_score": -0.18,
-   "gap_nominal_rp": -50000.0,
-   "gap_persen": -3.8,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": "https://papikost.com/kost/vvip"
   },
   {
    "sumber": "Papikost",
@@ -4938,14 +3908,7 @@
    "promo": null,
    "lat": -7.2861,
    "lng": 112.7695,
-   "url": "https://papikost.com/kost/kost-palem-semolo-premium",
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": -0.88,
-   "gap_nominal_rp": 450000.0,
-   "gap_persen": 56.2,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": "https://papikost.com/kost/kost-palem-semolo-premium"
   },
   {
    "sumber": "Mamikos",
@@ -4968,14 +3931,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 100.0,
-   "gap_score": 1.13,
-   "gap_nominal_rp": -355000.0,
-   "gap_persen": -21.5,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -4997,14 +3953,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.43,
-   "gap_nominal_rp": -100000.0,
-   "gap_persen": -7.1,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -5024,14 +3973,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": -0.97,
-   "gap_nominal_rp": 500000.0,
-   "gap_persen": 62.5,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -5053,14 +3995,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.43,
-   "gap_nominal_rp": -100000.0,
-   "gap_persen": -7.1,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -5082,14 +4017,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.43,
-   "gap_nominal_rp": -100000.0,
-   "gap_persen": -7.1,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -5112,14 +4040,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.97,
-   "gap_nominal_rp": -255000.0,
-   "gap_persen": -15.4,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -5138,14 +4059,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": -1.84,
-   "gap_nominal_rp": 650000.0,
-   "gap_persen": 86.7,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -5167,14 +4081,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.27,
-   "gap_nominal_rp": 0.0,
-   "gap_persen": 0.0,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -5193,14 +4100,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": -1.84,
-   "gap_nominal_rp": 650000.0,
-   "gap_persen": 86.7,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -5223,14 +4123,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.97,
-   "gap_nominal_rp": -255000.0,
-   "gap_persen": -15.4,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -5250,14 +4143,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": -1.14,
-   "gap_nominal_rp": 600000.0,
-   "gap_persen": 75.0,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -5280,14 +4166,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.97,
-   "gap_nominal_rp": -255000.0,
-   "gap_persen": -15.4,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -5309,14 +4188,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.11,
-   "gap_nominal_rp": 100000.0,
-   "gap_persen": 7.1,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -5336,14 +4208,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": -1.29,
-   "gap_nominal_rp": 700000.0,
-   "gap_persen": 87.5,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Papikost",
@@ -5369,14 +4234,7 @@
    "promo": null,
    "lat": -7.3053171,
    "lng": 112.7743487,
-   "url": "https://papikost.com/kost/kost-putri-home-sweet-home-semolowaru-surabaya-timur",
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": -1.29,
-   "gap_nominal_rp": 700000.0,
-   "gap_persen": 87.5,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": "https://papikost.com/kost/kost-putri-home-sweet-home-semolowaru-surabaya-timur"
   },
   {
    "sumber": "Mamikos",
@@ -5398,14 +4256,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.11,
-   "gap_nominal_rp": 100001.0,
-   "gap_persen": 7.1,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -5428,14 +4279,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.78,
-   "gap_nominal_rp": -135000.0,
-   "gap_persen": -8.2,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -5458,14 +4302,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.74,
-   "gap_nominal_rp": -105000.0,
-   "gap_persen": -6.3,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -5486,14 +4323,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 66.7,
-   "gap_score": -0.66,
-   "gap_nominal_rp": 250000.0,
-   "gap_persen": 19.2,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -5514,14 +4344,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 66.7,
-   "gap_score": -0.66,
-   "gap_nominal_rp": 250000.0,
-   "gap_persen": 19.2,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -5543,14 +4366,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 83.3,
-   "gap_score": -0.03,
-   "gap_nominal_rp": 200000.0,
-   "gap_persen": 14.3,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -5573,14 +4389,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.67,
-   "gap_nominal_rp": -55000.0,
-   "gap_persen": -3.3,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -5601,14 +4410,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 66.7,
-   "gap_score": -0.84,
-   "gap_nominal_rp": 375000.0,
-   "gap_persen": 28.8,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -5631,14 +4433,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.53,
-   "gap_nominal_rp": 45000.0,
-   "gap_persen": 2.7,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -5661,14 +4456,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.47,
-   "gap_nominal_rp": 95000.0,
-   "gap_persen": 5.7,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Papikost",
@@ -5695,14 +4483,7 @@
    "promo": null,
    "lat": -7.2861,
    "lng": 112.7695,
-   "url": "https://papikost.com/kost/kost-palem-semolo-exclusive-a",
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 66.7,
-   "gap_score": -0.94,
-   "gap_nominal_rp": 450000.0,
-   "gap_persen": 34.6,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": "https://papikost.com/kost/kost-palem-semolo-exclusive-a"
   },
   {
    "sumber": "Papikost",
@@ -5729,14 +4510,7 @@
    "promo": null,
    "lat": -7.2861,
    "lng": 112.7695,
-   "url": "https://papikost.com/kost/kost-palem-semolo-exclusive-b",
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 66.7,
-   "gap_score": -0.94,
-   "gap_nominal_rp": 450000.0,
-   "gap_persen": 34.6,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": "https://papikost.com/kost/kost-palem-semolo-exclusive-b"
   },
   {
    "sumber": "Mamikos",
@@ -5759,14 +4533,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.41,
-   "gap_nominal_rp": 145000.0,
-   "gap_persen": 8.8,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -5788,14 +4555,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 83.3,
-   "gap_score": -0.3,
-   "gap_nominal_rp": 400000.0,
-   "gap_persen": 28.6,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -5818,14 +4578,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.41,
-   "gap_nominal_rp": 145000.0,
-   "gap_persen": 8.8,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Papikost",
@@ -5851,14 +4604,7 @@
    "promo": null,
    "lat": -7.2999787,
    "lng": 112.7718391,
-   "url": "https://papikost.com/kost/alsi-home-surabaya",
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 66.7,
-   "gap_score": -1.12,
-   "gap_nominal_rp": 600000.0,
-   "gap_persen": 46.2,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": "https://papikost.com/kost/alsi-home-surabaya"
   },
   {
    "sumber": "Papikost",
@@ -5886,14 +4632,7 @@
    "promo": null,
    "lat": -7.291026,
    "lng": 112.776156,
-   "url": "https://papikost.com/kost/emerald-guesthouse-klampis-surabaya",
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 66.7,
-   "gap_score": -1.18,
-   "gap_nominal_rp": 650000.0,
-   "gap_persen": 50.0,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": "https://papikost.com/kost/emerald-guesthouse-klampis-surabaya"
   },
   {
    "sumber": "Mamikos",
@@ -5915,14 +4654,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 83.3,
-   "gap_score": -0.53,
-   "gap_nominal_rp": 600000.0,
-   "gap_persen": 42.9,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -5945,14 +4677,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.17,
-   "gap_nominal_rp": 345000.0,
-   "gap_persen": 20.8,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Papikost",
@@ -5980,14 +4705,7 @@
    "promo": null,
    "lat": -7.2999787,
    "lng": 112.7718391,
-   "url": "https://papikost.com/kost/alsi-kos-surabaya",
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 66.7,
-   "gap_score": -1.23,
-   "gap_nominal_rp": 700000.0,
-   "gap_persen": 53.8,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": "https://papikost.com/kost/alsi-kos-surabaya"
   },
   {
    "sumber": "Mamikos",
@@ -6010,14 +4728,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": -0.04,
-   "gap_nominal_rp": 545000.0,
-   "gap_persen": 32.9,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -6040,14 +4751,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": -0.04,
-   "gap_nominal_rp": 545000.0,
-   "gap_persen": 32.9,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -6070,14 +4774,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": -0.07,
-   "gap_nominal_rp": 570000.0,
-   "gap_persen": 34.4,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -6099,14 +4796,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 83.3,
-   "gap_score": -0.84,
-   "gap_nominal_rp": 900000.0,
-   "gap_persen": 64.3,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -6129,14 +4819,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": -0.14,
-   "gap_nominal_rp": 645000.0,
-   "gap_persen": 39.0,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -6159,14 +4842,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": -0.14,
-   "gap_nominal_rp": 645000.0,
-   "gap_persen": 39.0,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -6188,14 +4864,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 83.3,
-   "gap_score": -0.84,
-   "gap_nominal_rp": 900000.0,
-   "gap_persen": 64.3,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Papikost",
@@ -6222,14 +4891,7 @@
    "promo": null,
    "lat": -7.295142246175472,
    "lng": 112.76799157261848,
-   "url": "https://papikost.com/kost/onnie-room",
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 66.7,
-   "gap_score": -1.73,
-   "gap_nominal_rp": 1200000.0,
-   "gap_persen": 92.3,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": "https://papikost.com/kost/onnie-room"
   },
   {
    "sumber": "Mamikos",
@@ -6252,14 +4914,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": -0.74,
-   "gap_nominal_rp": 1345000.0,
-   "gap_persen": 81.3,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -6282,14 +4937,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": -0.74,
-   "gap_nominal_rp": 1345000.0,
-   "gap_persen": 81.3,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -6311,14 +4959,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 83.3,
-   "gap_score": -1.62,
-   "gap_nominal_rp": 1850000.0,
-   "gap_persen": 132.1,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Papikost",
@@ -6342,14 +4983,7 @@
    "promo": null,
    "lat": -7.25957023809304,
    "lng": 112.77139596641064,
-   "url": "https://papikost.com/kost/kos-putri-dandelion-tipe-c",
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": -0.59,
-   "gap_nominal_rp": 50000.0,
-   "gap_persen": 6.7,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": "https://papikost.com/kost/kos-putri-dandelion-tipe-c"
   },
   {
    "sumber": "Papikost",
@@ -6373,14 +5007,7 @@
    "promo": null,
    "lat": -7.25957023809304,
    "lng": 112.77139596641064,
-   "url": "https://papikost.com/kost/kos-putri-dandelion-tipe-b",
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": -0.85,
-   "gap_nominal_rp": 150000.0,
-   "gap_persen": 20.0,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": "https://papikost.com/kost/kos-putri-dandelion-tipe-b"
   },
   {
    "sumber": "Papikost",
@@ -6403,14 +5030,7 @@
    "promo": null,
    "lat": -7.25957023809304,
    "lng": 112.77139596641064,
-   "url": "https://papikost.com/kost/kos-putri-dandelion-tipe-a",
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": -1.09,
-   "gap_nominal_rp": 250000.0,
-   "gap_persen": 33.3,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": "https://papikost.com/kost/kos-putri-dandelion-tipe-a"
   },
   {
    "sumber": "Papikost",
@@ -6436,14 +5056,7 @@
    "promo": null,
    "lat": -7.263025029536,
    "lng": 112.76396814734426,
-   "url": "https://papikost.com/kost/kos-putri-sekar-arum-dekat-unair",
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 66.7,
-   "gap_score": -0.27,
-   "gap_nominal_rp": 0.0,
-   "gap_persen": 0.0,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": "https://papikost.com/kost/kos-putri-sekar-arum-dekat-unair"
   },
   {
    "sumber": "Papikost",
@@ -6471,14 +5084,7 @@
    "promo": null,
    "lat": -7.276182446295405,
    "lng": 112.73354329168795,
-   "url": "https://papikost.com/kost/bobo-studio",
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 66.7,
-   "gap_score": -0.94,
-   "gap_nominal_rp": 450000.0,
-   "gap_persen": 34.6,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": "https://papikost.com/kost/bobo-studio"
   },
   {
    "sumber": "Mamikos",
@@ -6498,14 +5104,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": 0.85,
-   "gap_nominal_rp": -225000.0,
-   "gap_persen": -28.1,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -6525,14 +5124,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": 0.85,
-   "gap_nominal_rp": -225000.0,
-   "gap_persen": -28.1,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -6552,14 +5144,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": 0.76,
-   "gap_nominal_rp": -200000.0,
-   "gap_persen": -25.0,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Papikost",
@@ -6581,14 +5166,7 @@
    "promo": null,
    "lat": -7.33213,
    "lng": 112.74381,
-   "url": "https://papikost.com/kost/kost-pasutri-kutisari-utara-5-no-9",
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": 0.05,
-   "gap_nominal_rp": -150000.0,
-   "gap_persen": -20.0,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": "https://papikost.com/kost/kost-pasutri-kutisari-utara-5-no-9"
   },
   {
    "sumber": "Mamikos",
@@ -6609,14 +5187,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 66.7,
-   "gap_score": 1.28,
-   "gap_nominal_rp": -650000.0,
-   "gap_persen": -50.0,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Papikost",
@@ -6640,14 +5211,7 @@
    "promo": null,
    "lat": -7.3227419,
    "lng": 112.7598365,
-   "url": "https://papikost.com/kost/kos-kosan-maskaryo-kamar-type-2",
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": -0.59,
-   "gap_nominal_rp": 50000.0,
-   "gap_persen": 6.7,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": "https://papikost.com/kost/kos-kosan-maskaryo-kamar-type-2"
   },
   {
    "sumber": "Mamikos",
@@ -6668,14 +5232,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 66.7,
-   "gap_score": 0.68,
-   "gap_nominal_rp": -450000.0,
-   "gap_persen": -34.6,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Papikost",
@@ -6699,14 +5256,7 @@
    "promo": null,
    "lat": -7.3227419,
    "lng": 112.7598365,
-   "url": "https://papikost.com/kost/kos-kosan-maskaryo-kamar-type-1",
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": -0.79,
-   "gap_nominal_rp": 125000.0,
-   "gap_persen": 16.7,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": "https://papikost.com/kost/kos-kosan-maskaryo-kamar-type-1"
   },
   {
    "sumber": "Mamikos",
@@ -6727,14 +5277,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 66.7,
-   "gap_score": 0.43,
-   "gap_nominal_rp": -350000.0,
-   "gap_persen": -26.9,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -6757,14 +5300,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 100.0,
-   "gap_score": 1.61,
-   "gap_nominal_rp": -605000.0,
-   "gap_persen": -36.6,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran I: Best Value (Fasilitas Tinggi, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Papikost",
@@ -6789,14 +5325,7 @@
    "promo": null,
    "lat": -7.3372721,
    "lng": 112.7497199,
-   "url": "https://papikost.com/kost/kost-kiu-228",
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": -0.6,
-   "gap_nominal_rp": 300000.0,
-   "gap_persen": 37.5,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": "https://papikost.com/kost/kost-kiu-228"
   },
   {
    "sumber": "Mamikos",
@@ -6818,14 +5347,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.61,
-   "gap_nominal_rp": -200000.0,
-   "gap_persen": -14.3,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Papikost",
@@ -6851,14 +5373,7 @@
    "promo": null,
    "lat": -7.3372721,
    "lng": 112.7497199,
-   "url": "https://papikost.com/kost/kost-putri-kiu-228",
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 66.7,
-   "gap_score": -0.09,
-   "gap_nominal_rp": -100000.0,
-   "gap_persen": -7.7,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": "https://papikost.com/kost/kost-putri-kiu-228"
   },
   {
    "sumber": "Papikost",
@@ -6885,14 +5400,7 @@
    "promo": null,
    "lat": -7.333773294687014,
    "lng": 112.74722036338972,
-   "url": "https://papikost.com/kost/kost-putri-kutisari-sier-tenggilis",
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 66.7,
-   "gap_score": -0.27,
-   "gap_nominal_rp": 0.0,
-   "gap_persen": 0.0,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": "https://papikost.com/kost/kost-putri-kutisari-sier-tenggilis"
   },
   {
    "sumber": "Papikost",
@@ -6918,14 +5426,7 @@
    "promo": null,
    "lat": -7.3372721,
    "lng": 112.7497199,
-   "url": "https://papikost.com/kost/kost-kiu228",
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 66.7,
-   "gap_score": -0.27,
-   "gap_nominal_rp": 0.0,
-   "gap_persen": 0.0,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": "https://papikost.com/kost/kost-kiu228"
   },
   {
    "sumber": "Papikost",
@@ -6952,14 +5453,7 @@
    "promo": null,
    "lat": -7.312439382988887,
    "lng": 112.76453554630278,
-   "url": "https://papikost.com/kost/kost-putri-415",
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 66.7,
-   "gap_score": -0.59,
-   "gap_nominal_rp": 200000.0,
-   "gap_persen": 15.4,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": "https://papikost.com/kost/kost-putri-415"
   },
   {
    "sumber": "Papikost",
@@ -6987,14 +5481,7 @@
    "promo": null,
    "lat": -7.318893216952698,
    "lng": 112.7568680641707,
-   "url": "https://papikost.com/kost/kost-kamar-besar-dan-homy-tenggilis",
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 66.7,
-   "gap_score": -1.55,
-   "gap_nominal_rp": 1000000.0,
-   "gap_persen": 76.9,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": "https://papikost.com/kost/kost-kamar-besar-dan-homy-tenggilis"
   },
   {
    "sumber": "Mamikos",
@@ -7017,14 +5504,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": -0.74,
-   "gap_nominal_rp": 1345000.0,
-   "gap_persen": 81.3,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -7046,14 +5526,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 1.52,
-   "gap_nominal_rp": -600000.0,
-   "gap_persen": -42.9,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran I: Best Value (Fasilitas Tinggi, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Papikost",
@@ -7077,14 +5550,7 @@
    "promo": null,
    "lat": -7.310097460967134,
    "lng": 112.74150609970093,
-   "url": "https://papikost.com/kost/kamar-kost-hs",
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": 0.11,
-   "gap_nominal_rp": 0.0,
-   "gap_persen": 0.0,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": "https://papikost.com/kost/kamar-kost-hs"
   },
   {
    "sumber": "Mamikos",
@@ -7104,14 +5570,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": -0.5,
-   "gap_nominal_rp": 250000.0,
-   "gap_persen": 31.2,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -7132,14 +5591,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 66.7,
-   "gap_score": 0.21,
-   "gap_nominal_rp": -250000.0,
-   "gap_persen": -19.2,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -7160,14 +5612,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 66.7,
-   "gap_score": 0.1,
-   "gap_nominal_rp": -200000.0,
-   "gap_persen": -15.4,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -7189,14 +5634,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.75,
-   "gap_nominal_rp": -275000.0,
-   "gap_persen": -19.6,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran I: Best Value (Fasilitas Tinggi, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -7218,14 +5656,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.27,
-   "gap_nominal_rp": 0.0,
-   "gap_persen": 0.0,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -7247,14 +5678,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.11,
-   "gap_nominal_rp": 100000.0,
-   "gap_persen": 7.1,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Papikost",
@@ -7282,14 +5706,7 @@
    "promo": null,
    "lat": -7.3421729,
    "lng": 112.736717,
-   "url": "https://papikost.com/kost/kos-d8",
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 66.7,
-   "gap_score": -0.59,
-   "gap_nominal_rp": 200000.0,
-   "gap_persen": 15.4,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": "https://papikost.com/kost/kos-d8"
   },
   {
    "sumber": "Papikost",
@@ -7317,14 +5734,7 @@
    "promo": null,
    "lat": -7.3283564,
    "lng": 112.7348616,
-   "url": "https://papikost.com/kost/kost-casa-sevilla-hunian-ternyaman",
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 66.7,
-   "gap_score": -0.59,
-   "gap_nominal_rp": 200000.0,
-   "gap_persen": 15.4,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": "https://papikost.com/kost/kost-casa-sevilla-hunian-ternyaman"
   },
   {
    "sumber": "Mamikos",
@@ -7347,14 +5757,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.81,
-   "gap_nominal_rp": -152500.0,
-   "gap_persen": -9.2,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -7376,14 +5779,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 83.3,
-   "gap_score": -0.03,
-   "gap_nominal_rp": 200000.0,
-   "gap_persen": 14.3,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -7406,14 +5802,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.63,
-   "gap_nominal_rp": -30000.0,
-   "gap_persen": -1.8,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -7436,14 +5825,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.53,
-   "gap_nominal_rp": 45000.0,
-   "gap_persen": 2.7,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -7465,14 +5847,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": -0.17,
-   "gap_nominal_rp": 300000.0,
-   "gap_persen": 21.4,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -7494,14 +5869,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": -0.17,
-   "gap_nominal_rp": 300000.0,
-   "gap_persen": 21.4,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -7524,14 +5892,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.53,
-   "gap_nominal_rp": 47500.0,
-   "gap_persen": 2.9,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -7554,14 +5915,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.44,
-   "gap_nominal_rp": 120000.0,
-   "gap_persen": 7.3,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -7582,14 +5936,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 66.7,
-   "gap_score": -1.0,
-   "gap_nominal_rp": 500000.0,
-   "gap_persen": 38.5,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -7611,14 +5958,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 83.3,
-   "gap_score": -0.42,
-   "gap_nominal_rp": 500000.0,
-   "gap_persen": 35.7,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -7640,14 +5980,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 83.3,
-   "gap_score": -0.42,
-   "gap_nominal_rp": 500000.0,
-   "gap_persen": 35.7,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -7669,14 +6002,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 83.3,
-   "gap_score": -0.53,
-   "gap_nominal_rp": 600000.0,
-   "gap_persen": 42.9,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -7698,14 +6024,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 83.3,
-   "gap_score": -0.53,
-   "gap_nominal_rp": 600000.0,
-   "gap_persen": 42.9,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -7728,14 +6047,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.14,
-   "gap_nominal_rp": 370000.0,
-   "gap_persen": 22.4,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -7757,14 +6069,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 83.3,
-   "gap_score": -0.84,
-   "gap_nominal_rp": 900000.0,
-   "gap_persen": 64.3,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -7786,14 +6091,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 83.3,
-   "gap_score": -0.94,
-   "gap_nominal_rp": 1000000.0,
-   "gap_persen": 71.4,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -7816,14 +6114,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": -0.33,
-   "gap_nominal_rp": 845000.0,
-   "gap_persen": 51.1,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Papikost",
@@ -7848,14 +6139,7 @@
    "promo": null,
    "lat": -7.322102411926709,
    "lng": 112.74651244282722,
-   "url": "https://papikost.com/kost/feliz-guesthouse-surabaya-twin-bed-room",
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 66.7,
-   "gap_score": -2.14,
-   "gap_nominal_rp": 1700000.0,
-   "gap_persen": 130.8,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": "https://papikost.com/kost/feliz-guesthouse-surabaya-twin-bed-room"
   },
   {
    "sumber": "Mamikos",
@@ -7875,14 +6159,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": 1.96,
-   "gap_nominal_rp": -450000.0,
-   "gap_persen": -56.2,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -7903,14 +6180,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 66.7,
-   "gap_score": 1.55,
-   "gap_nominal_rp": -725000.0,
-   "gap_persen": -55.8,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -7929,14 +6199,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": 0.05,
-   "gap_nominal_rp": -150000.0,
-   "gap_persen": -20.0,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -7957,14 +6220,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 66.7,
-   "gap_score": 1.46,
-   "gap_nominal_rp": -700000.0,
-   "gap_persen": -53.8,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -7985,14 +6241,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 66.7,
-   "gap_score": 1.34,
-   "gap_nominal_rp": -667500.0,
-   "gap_persen": -51.3,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -8011,14 +6260,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": -0.13,
-   "gap_nominal_rp": -100000.0,
-   "gap_persen": -13.3,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -8036,14 +6278,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 16.7,
-   "gap_score": -0.83,
-   "gap_nominal_rp": 0.0,
-   "gap_persen": 0.0,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -8064,14 +6299,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 66.7,
-   "gap_score": 1.28,
-   "gap_nominal_rp": -650000.0,
-   "gap_persen": -50.0,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -8091,14 +6319,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": 0.41,
-   "gap_nominal_rp": -100000.0,
-   "gap_persen": -12.5,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -8118,14 +6339,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": 0.41,
-   "gap_nominal_rp": -100000.0,
-   "gap_persen": -12.5,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -8145,14 +6359,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": 0.33,
-   "gap_nominal_rp": -75000.0,
-   "gap_persen": -9.4,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -8171,14 +6378,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": -0.37,
-   "gap_nominal_rp": -25000.0,
-   "gap_persen": -3.3,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -8198,14 +6398,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": 0.26,
-   "gap_nominal_rp": -50000.0,
-   "gap_persen": -6.2,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -8225,14 +6418,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": 0.26,
-   "gap_nominal_rp": -50000.0,
-   "gap_persen": -6.2,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -8251,14 +6437,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": -0.44,
-   "gap_nominal_rp": 0.0,
-   "gap_persen": 0.0,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -8278,14 +6457,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": 0.13,
-   "gap_nominal_rp": -5500.0,
-   "gap_persen": -0.7,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -8307,14 +6479,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 1.25,
-   "gap_nominal_rp": -500000.0,
-   "gap_persen": -35.7,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran I: Best Value (Fasilitas Tinggi, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -8335,14 +6500,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 66.7,
-   "gap_score": 0.55,
-   "gap_nominal_rp": -399999.0,
-   "gap_persen": -30.8,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -8361,14 +6519,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 33.3,
-   "gap_score": -1.04,
-   "gap_nominal_rp": 230000.0,
-   "gap_persen": 30.7,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -8390,14 +6541,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 1.02,
-   "gap_nominal_rp": -400000.0,
-   "gap_persen": -28.6,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran I: Best Value (Fasilitas Tinggi, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -8417,14 +6561,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Murah / Ekonomis",
-   "skor_fasilitas": 50.0,
-   "gap_score": -0.39,
-   "gap_nominal_rp": 200000.0,
-   "gap_persen": 25.0,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran III: Ekonomis Wajar (Fasilitas Dasar, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -8446,14 +6583,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 1.02,
-   "gap_nominal_rp": -400000.0,
-   "gap_persen": -28.6,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran I: Best Value (Fasilitas Tinggi, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -8476,14 +6606,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 100.0,
-   "gap_score": 1.72,
-   "gap_nominal_rp": -655000.0,
-   "gap_persen": -39.6,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran I: Best Value (Fasilitas Tinggi, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -8505,14 +6628,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 1.02,
-   "gap_nominal_rp": -400000.0,
-   "gap_persen": -28.6,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran I: Best Value (Fasilitas Tinggi, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -8534,14 +6650,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.8,
-   "gap_nominal_rp": -300000.0,
-   "gap_persen": -21.4,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran I: Best Value (Fasilitas Tinggi, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -8563,14 +6672,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.8,
-   "gap_nominal_rp": -300000.0,
-   "gap_persen": -21.4,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran I: Best Value (Fasilitas Tinggi, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -8592,14 +6694,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.8,
-   "gap_nominal_rp": -300000.0,
-   "gap_persen": -21.4,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran I: Best Value (Fasilitas Tinggi, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -8621,14 +6716,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.8,
-   "gap_nominal_rp": -300000.0,
-   "gap_persen": -21.4,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran I: Best Value (Fasilitas Tinggi, Harga Rendah)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -8650,14 +6738,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.61,
-   "gap_nominal_rp": -200000.0,
-   "gap_persen": -14.3,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -8679,14 +6760,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.61,
-   "gap_nominal_rp": -200000.0,
-   "gap_persen": -14.3,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -8708,14 +6782,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.43,
-   "gap_nominal_rp": -100000.0,
-   "gap_persen": -7.1,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -8737,14 +6804,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.43,
-   "gap_nominal_rp": -100000.0,
-   "gap_persen": -7.1,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -8766,14 +6826,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.27,
-   "gap_nominal_rp": 0.0,
-   "gap_persen": 0.0,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -8795,14 +6848,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.27,
-   "gap_nominal_rp": 0.0,
-   "gap_persen": 0.0,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -8825,14 +6871,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.97,
-   "gap_nominal_rp": -255000.0,
-   "gap_persen": -15.4,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -8853,14 +6892,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 66.7,
-   "gap_score": -0.44,
-   "gap_nominal_rp": 100000.0,
-   "gap_persen": 7.7,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -8882,14 +6914,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.27,
-   "gap_nominal_rp": 0.0,
-   "gap_persen": 0.0,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -8912,14 +6937,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.97,
-   "gap_nominal_rp": -255000.0,
-   "gap_persen": -15.4,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -8942,14 +6960,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.81,
-   "gap_nominal_rp": -155000.0,
-   "gap_persen": -9.4,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -8971,14 +6982,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.11,
-   "gap_nominal_rp": 100000.0,
-   "gap_persen": 7.1,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -9000,14 +7004,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.11,
-   "gap_nominal_rp": 100000.0,
-   "gap_persen": 7.1,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -9028,14 +7025,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 66.7,
-   "gap_score": -0.59,
-   "gap_nominal_rp": 200000.0,
-   "gap_persen": 15.4,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -9057,14 +7047,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.11,
-   "gap_nominal_rp": 100000.0,
-   "gap_persen": 7.1,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -9087,14 +7070,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.81,
-   "gap_nominal_rp": -155000.0,
-   "gap_persen": -9.4,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -9117,14 +7093,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.81,
-   "gap_nominal_rp": -155000.0,
-   "gap_persen": -9.4,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -9146,14 +7115,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": 0.11,
-   "gap_nominal_rp": 100000.0,
-   "gap_persen": 7.1,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -9176,14 +7138,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.74,
-   "gap_nominal_rp": -105000.0,
-   "gap_persen": -6.3,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -9205,14 +7160,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 83.3,
-   "gap_score": -0.03,
-   "gap_nominal_rp": 200000.0,
-   "gap_persen": 14.3,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -9235,14 +7183,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.53,
-   "gap_nominal_rp": 45000.0,
-   "gap_persen": 2.7,
-   "status_gap": "Best Value / Murah",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -9264,14 +7205,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 83.3,
-   "gap_score": -0.17,
-   "gap_nominal_rp": 300000.0,
-   "gap_persen": 21.4,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -9293,14 +7227,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 83.3,
-   "gap_score": -0.17,
-   "gap_nominal_rp": 300123.0,
-   "gap_persen": 21.4,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -9322,14 +7249,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": -0.23,
-   "gap_nominal_rp": 350000.0,
-   "gap_persen": 25.0,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -9351,14 +7271,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 83.3,
-   "gap_score": -0.3,
-   "gap_nominal_rp": 400000.0,
-   "gap_persen": 28.6,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -9380,14 +7293,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 83.3,
-   "gap_score": -0.3,
-   "gap_nominal_rp": 400000.0,
-   "gap_persen": 28.6,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Papikost",
@@ -9414,14 +7320,7 @@
    "promo": null,
    "lat": -7.30754761034647,
    "lng": 112.74044158411355,
-   "url": "https://papikost.com/kost/fidi-kost",
-   "cluster_segmen": "Kos Menengah / Standar",
-   "skor_fasilitas": 66.7,
-   "gap_score": -1.0,
-   "gap_nominal_rp": 500000.0,
-   "gap_persen": 38.5,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran IV: Overpriced (Fasilitas Dasar, Harga Tinggi)"
+   "url": "https://papikost.com/kost/fidi-kost"
   },
   {
    "sumber": "Mamikos",
@@ -9443,14 +7342,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 83.3,
-   "gap_score": -0.42,
-   "gap_nominal_rp": 500000.0,
-   "gap_persen": 35.7,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -9473,14 +7365,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.28,
-   "gap_nominal_rp": 245000.0,
-   "gap_persen": 14.8,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -9502,14 +7387,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 83.3,
-   "gap_score": -0.53,
-   "gap_nominal_rp": 600000.0,
-   "gap_persen": 42.9,
-   "status_gap": "Overpriced / Kemahalan",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -9532,14 +7410,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": 0.06,
-   "gap_nominal_rp": 445000.0,
-   "gap_persen": 26.9,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   },
   {
    "sumber": "Mamikos",
@@ -9562,14 +7433,7 @@
    "sisa_kamar": null,
    "lat": null,
    "lng": null,
-   "url": null,
-   "cluster_segmen": "Kos Eksklusif / Premium",
-   "skor_fasilitas": 100.0,
-   "gap_score": -0.14,
-   "gap_nominal_rp": 645000.0,
-   "gap_persen": 39.0,
-   "status_gap": "Wajar / Seimbang",
-   "kuadran_gap": "Kuadran II: Eksklusif Wajar (Fasilitas Tinggi, Harga Tinggi)"
+   "url": null
   }
  ]
 }

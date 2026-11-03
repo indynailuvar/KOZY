@@ -6,8 +6,8 @@
  "menang_signifikan": [
   "Ridge"
  ],
- "model_produksi": "OLS log-linear",
- "alasan_produksi": "Selisih semua model di bawah 1 poin MAPE; pada kos Rp 1 juta itu setara ~Rp 3.000, tidak terasa. Koefisien OLS tidak bias oleh penyusutan, sehingga faktor harga yang ditampilkan ke pengguna (mis. 'AC menaikkan 58%') tetap sahih. Ridge dilaporkan di tabel, tidak dipakai produksi.",
+ "model_produksi": "Ridge log-linear",
+ "alasan_produksi": "Selisih semua model di bawah 1 poin MAPE. Ridge dipilih karena menang di uji berpasangan dan bentuknya tetap linear, sehingga harga tetap bisa dirinci per faktor dan dikirim ke aplikasi sebagai segelintir koefisien. Konsekuensinya: koefisien yang buktinya tipis ditahan mendekati nol, jadi faktor harga yang ditampilkan adalah taksiran hati-hati, bukan taksiran tak bias.",
  "hasil": [
   {
    "model": "XGBoost",

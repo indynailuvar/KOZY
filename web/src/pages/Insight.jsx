@@ -1,13 +1,13 @@
 import { useMemo, useState } from 'react';
 import Icon from '../components/Icon.jsx';
 import TanyaAI from '../components/TanyaAI.jsx';
+import Rincian from '../components/Rincian.jsx';
+import Lembar from '../components/Lembar.jsx';
 import KozyMap from '../components/KozyMap.jsx';
 import { SpeakButton, useBacaOtomatis } from '../components/A11y.jsx';
-import { Button, EmptyState, InfoTip, PageHead, ScoreRing, Segmented } from '../components/ui.jsx';
-import { Paywall } from '../components/Sheets.jsx';
-import { PopupEksklusif } from '../components/Eksklusif.jsx';
-import { fasilitasById, hitungArea, jenisById, kebutuhanById, kosKec, ringkasInsight, saranAI, tujuanById } from '../api/kozy.js';
-import { bulat10rb, daftar, rp, rpSingkat, rpSuara } from '../lib/format.js';
+import { ActionBar, Button, EmptyState, InfoTip, PageHead, Segmented } from '../components/ui.jsx';
+import { fasilitasById, hitungArea, jenisById, kebutuhanById, ringkasInsight, saranAI, tujuanById } from '../api/kozy.js';
+import { bulat10rb, daftar, jarak, rp, rpSingkat, rpSuara } from '../lib/format.js';
 import { catat } from '../lib/jejak.js';
 import { useStore } from '../store.jsx';
 import { go } from '../router.js';
@@ -34,14 +34,12 @@ function Sebaran({ bins }) {
 }
 
 export default function Insight() {
-  const { state, set, bukaAI, toast } = useStore();
+  const { state, set, bukaAI } = useStore();
   const r = state.cari;
   const [dilepas, setDilepas] = useState([]);
   const [semua, setSemua] = useState(false);
   const [tampilan, setTampilan] = useState('daftar');
-  const [sebaran, setSebaran] = useState(false);
   const [pilihId, setPilihId] = useState(null);
-  const [bayar, setBayar] = useState(false);
 
   const input = r && { ...r.input, fasilitas: r.input.fasilitas.filter((f) => !dilepas.includes(f)) };
   const kunci = `${r?.id}:${dilepas.join()}`;
@@ -77,13 +75,9 @@ export default function Insight() {
     go('/match?dari=cari');
   };
   const areaPilih = areas.find((a) => a.id === pilihId);
-  // kos asli yang cocok (jenis + fasilitas wajib) di kecamatan area-area ini; tiap kecamatan dihitung sekali.
-  // Diurutkan dari kecamatan area teratas, lalu harga termurah — tiga teratas jadi cuplikan promo.
-  const kosCocok = [...new Set(areas.map((a) => a.kec))]
-    .flatMap((kec) => kosKec(kec))
-    .filter((k) => (!input.jenis || k.jenis === input.jenis) && input.fasilitas.every((f) => k.fasilitas.includes(f)))
-    .sort((a, b) => (b.kec === teratas.kec) - (a.kec === teratas.kec) || a.harga - b.harga);
-  const subJudul = [`Dekat ${tujuan.singkat}`, r.input.jenis ? `kos ${jenisById(r.input.jenis).label.toLowerCase()}` : null, `maks. ${rpSingkat(r.input.budgetMax)}`].filter(Boolean).join(' · ');
+  const subJudul = [`Dekat ${tujuan.singkat}`, r.input.jenis ? `kos ${jenisById(r.input.jenis).label.toLowerCase()}` : null, `maks. ${rpSingkat(r.input.budgetMax)}`]
+    .filter(Boolean)
+    .join(' · ');
 
   const peta = (
     <div className="ins-map-box">
@@ -118,144 +112,173 @@ export default function Insight() {
     </div>
   );
 
+  // Rentang bisa mengerut jadi satu angka kalau area teratas harganya seragam.
+  // Menuliskannya "Rp 1.750.000 - Rp 1.750.000" terbaca seperti salah hitung.
+  const satuHarga = insight.range[0] === insight.range[1];
+
+  const daftarArea = (
+    <>
+      {dilepas.length > 0 && (
+        <p className="undo">
+          Tanpa {daftar(dilepas.map((f) => fasilitasById(f).label))}.{' '}
+          <button type="button" className="text-btn" onClick={() => setDilepas([])}>
+            Kembalikan
+          </button>
+        </p>
+      )}
+
+      <div className="only-mob">
+        <Segmented
+          label="Tampilan"
+          value={tampilan}
+          onChange={setTampilan}
+          options={[
+            { id: 'daftar', label: 'Daftar', icon: 'list' },
+            { id: 'peta', label: 'Peta', icon: 'map' },
+          ]}
+        />
+      </div>
+
+      {tampilan === 'peta' && <div className="only-mob">{peta}</div>}
+
+      <div className={`area-list ${tampilan === 'peta' ? 'hide-mob' : ''}`}>
+        <p className="sec-label">Area paling cocok</p>
+        {tampil.map((a, i) => (
+          <button key={a.id} type="button" className={`area-row ${a.id === pilihId ? 'is-on' : ''}`} onClick={() => detail(a)} onMouseEnter={() => setPilihId(a.id)}>
+            <span className="rank">{i + 1}</span>
+            <span className="ar-t">
+              <b>
+                {a.nama}
+                <em className={`fit-${a.fit}`}>{FIT[a.fit]}</em>
+              </b>
+              {/* Jumlah kos sengaja TIDAK ditampilkan di sini: datanya hanya terurai
+                  sampai kecamatan, jadi angka yang sama akan muncul di semua kelurahan
+                  satu kecamatan dan terbaca seolah milik kelurahan itu. Jarak adalah
+                  pembeda yang benar-benar per kawasan. */}
+              <small>
+                {jarak(a.km)} dari {tujuan.singkat} · Kec. {a.kec}
+              </small>
+            </span>
+            <Icon name="right" size={18} className="lr-go" />
+          </button>
+        ))}
+        {areas.length > 4 && (
+          <button type="button" className="text-btn center" onClick={() => setSemua((s) => !s)}>
+            {semua ? 'Tampilkan lebih sedikit' : `Lihat semua ${areas.length} area`}
+          </button>
+        )}
+      </div>
+    </>
+  );
+
   return (
     <div className="page insight">
       <PageHead judul="Rekomendasi area" sub={subJudul} onBack={() => go('/cari')} aksi={<SpeakButton compact teks={ringkasSuara} label="Dengarkan ringkasan" />} />
 
+      {/* Dipecah per lembar seperti halaman hasil cek harga, supaya tiap layar
+          cuma mengurus satu hal. Daftar areanya tetap berupa daftar — memaging
+          puluhan area satu per satu justru menyulitkan membandingkan.
+          Pembungkus ins-grid dipertahankan: di layar >= 960 px ia menata lembar
+          dan peta berdampingan dua kolom. */}
       <div className="ins-grid">
         <div className="ins-main">
-          <section className="card ins-sum">
-            <p className="v-label">Harga wajar di area pilihanmu</p>
-            <p className="ins-range">
-              <span className="nw">{rp(insight.range[0])} –</span> <span className="nw">{rp(insight.range[1])}</span>
-              <small>/bulan</small>
-            </p>
-            <p className="v-basis">
-              {insight.n} iklan kos di {insight.kecs.length} kecamatan · perkiraan meleset ± {rpSingkat(insight.mae)}
-              <InfoTip label="Tentang angka ini">
-                Rentang harga diambil dari harga iklan kos yang sebenarnya, bukan tebakan. Saat diuji ulang, perkiraan model meleset rata-rata ± {rp(insight.mae)} ({insight.mape}%).
-              </InfoTip>
-            </p>
-            <button type="button" className="text-btn" aria-expanded={sebaran} onClick={() => setSebaran((s) => !s)}>
-              {sebaran ? 'Sembunyikan sebaran harga' : 'Lihat sebaran harga'}
-              <Icon name="down" size={16} style={{ transform: sebaran ? 'rotate(180deg)' : undefined }} />
-            </button>
-            {sebaran && <Sebaran bins={insight.bins} />}
-          </section>
-
-          {sisa >= 150_000 && (
-            <div className="ai-tip">
-              <span className="ic-circle sm">
-                <Icon name="sofa" size={16} />
-              </span>
-              <p>
-                <b>Sisa budget {rp(sisa)} per bulan</b>
-                Kos di {teratas.nama} umumnya {rpSingkat(teratas.p50)}, sedangkan budgetmu {rpSingkat(r.input.budgetMax)}. Sisanya bisa dipakai melengkapi kamar.
-              </p>
-              <Button size="sm" variant="secondary" onClick={() => bukaAI({ teks: `Ide upgrade kamar dengan budget ${rp(sisa)}` })}>
-                Ide belanja
-              </Button>
-            </div>
-          )}
-
-          {saran && (
-            <div className="ai-tip">
-              <span className="ic-circle sm">
-                <Icon name="sparkles" size={16} />
-              </span>
-              <p>
-                <b>Saran KOZY AI</b>
-                {saran.jenis === 'lepas' ? `Tanpa ${saran.label}, ${saran.tambah} area lagi masuk budgetmu` : `Tambah budget ${rp(saran.naik)}, ${saran.tambah} area lagi masuk budgetmu`}, misalnya {daftar(saran.nama)}.
-              </p>
-              {saran.jenis === 'lepas' && (
-                <Button size="sm" variant="secondary" onClick={() => setDilepas((d) => [...d, saran.fasilitas])}>
-                  Coba
-                </Button>
-              )}
-            </div>
-          )}
-          {dilepas.length > 0 && (
-            <p className="undo">
-              Tanpa {daftar(dilepas.map((f) => fasilitasById(f).label))}.{' '}
-              <button type="button" className="text-btn" onClick={() => setDilepas([])}>
-                Kembalikan
-              </button>
-            </p>
-          )}
-
-          <div className="only-mob">
-            <Segmented
-              label="Tampilan"
-              value={tampilan}
-              onChange={setTampilan}
-              options={[
-                { id: 'daftar', label: 'Daftar', icon: 'list' },
-                { id: 'peta', label: 'Peta', icon: 'map' },
-              ]}
-            />
-          </div>
-
-          {tampilan === 'peta' && <div className="only-mob">{peta}</div>}
-
-          <div className={`area-list ${tampilan === 'peta' ? 'hide-mob' : ''}`}>
-            <p className="sec-label">{areas.length} area dengan data</p>
-            {tampil.map((a, i) => (
-              <button key={a.id} type="button" className={`area-row ${a.id === pilihId ? 'is-on' : ''}`} onClick={() => detail(a)} onMouseEnter={() => setPilihId(a.id)}>
-                <span className="rank">{i + 1}</span>
-                <span className="ar-t">
-                  <b>{a.nama}</b>
-                  <small>{a.alasan.slice(0, 2).join(' · ') || `Kec. ${a.kec}`}</small>
-                  <span className="ar-price">
-                    {rpSingkat(a.estimasi[0])} – {rpSingkat(a.estimasi[1])}
-                    <em className={`fit-${a.fit}`}>{FIT[a.fit]}</em>
-                  </span>
-                </span>
-                <ScoreRing value={a.skor} size={42} label="Skor area" />
-                <Icon name="right" size={18} className="lr-go" />
-              </button>
-            ))}
-            {areas.length > 4 && (
-              <button type="button" className="text-btn center" onClick={() => setSemua((s) => !s)}>
-                {semua ? 'Tampilkan lebih sedikit' : `Lihat semua ${areas.length} area`}
-              </button>
-            )}
-          </div>
+          <Lembar
+            label="Rekomendasi area"
+            lembar={[
+              {
+                id: 'harga',
+                judul: 'Harga wajarnya',
+                isi: (
+                  <section className="card ins-sum">
+                    <p className="v-label">Harga wajar di area pilihanmu</p>
+                    <p className="ins-range">
+                      {satuHarga ? (
+                        <span className="nw">{rp(insight.range[0])}</span>
+                      ) : (
+                        <>
+                          <span className="nw">{rp(insight.range[0])} –</span> <span className="nw">{rp(insight.range[1])}</span>
+                        </>
+                      )}
+                      <small>/bulan</small>
+                    </p>
+                    <p className="v-basis">
+                      Dari {insight.n} iklan kos di {insight.kecs.length} kecamatan
+                      <InfoTip label="Tentang angka ini">
+                        Rentang harga diambil dari harga iklan kos yang sebenarnya, bukan tebakan. Saat diuji ulang, perkiraan model meleset rata-rata ± {rp(insight.mae)} (
+                        {String(insight.mape).replace('.', ',')}%).
+                      </InfoTip>
+                    </p>
+                  </section>
+                ),
+              },
+              { id: 'area', judul: 'Area paling cocok', isi: daftarArea },
+              {
+                id: 'rincian',
+                judul: 'Rincian',
+                isi: (
+                  <Rincian
+                    judul="Rincian"
+                    baris={[
+                      { id: 'sebaran', judul: 'Sebaran harga', sub: `${insight.n} iklan kos · meleset ± ${rpSingkat(insight.mae)}`, icon: 'bars', isi: <Sebaran bins={insight.bins} /> },
+                      sisa >= 150_000 && {
+                        id: 'sisa',
+                        judul: `Sisa budget ${rp(sisa)} per bulan`,
+                        sub: `Kos di ${teratas.nama} umumnya ${rpSingkat(teratas.p50)}`,
+                        icon: 'sofa',
+                        onClick: () => bukaAI({ teks: `Ide upgrade kamar dengan budget ${rp(sisa)}` }),
+                      },
+                      saran && {
+                        id: 'saran',
+                        judul:
+                          saran.jenis === 'lepas' ? `Tanpa ${saran.label}, ${saran.tambah} area lagi masuk budget` : `Tambah budget ${rp(saran.naik)}, ${saran.tambah} area lagi masuk`,
+                        sub: `Misalnya ${daftar(saran.nama)}`,
+                        icon: 'sparkles',
+                        onClick: saran.jenis === 'lepas' ? () => setDilepas((d) => [...d, saran.fasilitas]) : () => bukaAI({ teks: 'Cara atur budget kos' }),
+                      },
+                      {
+                        id: 'cek',
+                        judul: 'Yang wajib dicek sebelum bayar kos',
+                        sub: 'Tanya KOZY AI',
+                        icon: 'list',
+                        onClick: () => bukaAI({ teks: 'Apa saja yang wajib dicek sebelum bayar kos?' }),
+                      },
+                      { id: 'nawar', judul: 'Cara nawar harga kos', sub: 'Tanya KOZY AI', icon: 'sparkles', onClick: () => bukaAI({ teks: 'Cara nawar harga kos' }) },
+                    ]}
+                  />
+                ),
+              },
+              {
+                id: 'tutup',
+                judul: 'Sudah siap',
+                isi: (
+                  <section className="habis">
+                    <span className="ic-circle lg">
+                      <Icon name="checkc" size={22} />
+                    </span>
+                    <h2>Sudah, segitu saja</h2>
+                    <p>
+                      Terima kasih sudah memakai KOZY. Sebelum memutuskan, <b>datangi dua atau tiga kos dulu</b> supaya punya pembanding langsung — foto iklan sering berbeda dengan
+                      aslinya.
+                    </p>
+                    <button type="button" className="text-btn" onClick={() => go('/cari')}>
+                      Ubah pencarian
+                    </button>
+                  </section>
+                ),
+              },
+            ]}
+          />
         </div>
-
         <aside className="ins-map only-desk-block">{peta}</aside>
       </div>
 
-      <TanyaAI
-        dari="insight"
-        judul="Bingung pilih area yang mana?"
-        saran={[
-          sisa > 0 ? `Sisa budget ${rp(sisa)} enaknya dibuat apa?` : 'Ide upgrade kamar dari uang hemat',
-          'Apa saja yang wajib dicek sebelum bayar kos?',
-          'Cara nawar harga kos',
-        ]}
-      />
-
-      <PopupEksklusif
-        id={r.id}
-        judul={kosCocok.length > 0 ? `${kosCocok.length} kos asli cocok untukmu` : `Lihat kos asli di sekitar ${tujuan.singkat}`}
-        pratinjau={kosCocok.map((k) => ({ nama: k.nama, harga: k.harga, sub: `Kos ${jenisById(k.jenis).label.toLowerCase()} · Kec. ${k.kec}` }))}
-        total={kosCocok.length}
-        cta="Buka kosnya"
-        onBuka={() => {
-          catat('eksklusif_dikunci', { fitur: 'popup_kawasan', kec: teratas.kec });
-          setBayar(true);
-        }}
-      />
-
-      <Paywall
-        open={bayar}
-        fitur="kawasan"
-        onClose={() => setBayar(false)}
-        onPaid={() => {
-          setBayar(false);
-          toast('Paket eksklusif aktif. Pilih area untuk melihat kosnya.');
-        }}
-      />
+      {teratas && (
+        <ActionBar note={`${areas.length} area punya data · urut dari yang paling cocok`}>
+          <Button block iconRight="arrowr" onClick={() => detail(teratas)}>
+            Lihat kos di {teratas.nama}
+          </Button>
+        </ActionBar>
+      )}
     </div>
   );
 }

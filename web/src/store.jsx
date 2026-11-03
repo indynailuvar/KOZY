@@ -13,9 +13,7 @@ const initial = {
   match: null, //      { key, list }
   bandingkan: [], //   kos yang dipilih untuk dibandingkan (maks. 2)
   user: null,
-  premium: false, //   paket eksklusif Rp19.900 (sekali bayar) sudah dibeli
-  paid: {}, //         pembelian per cek dari sebelum ada paket eksklusif
-  promoDitutup: {}, // popup paket eksklusif yang sudah ditutup, per id hasil
+  paid: {},
   kontakDibuka: {},
   riwayat: [],
   pemilik: null,

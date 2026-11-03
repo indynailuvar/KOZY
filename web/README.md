@@ -60,10 +60,12 @@ Hasilnya:
 | Iklan | 307 (240 Mamikos + 67 Papikost) |
 | Kecamatan | 14, dengan 6 punya koefisien sendiri |
 | Berkoordinat asli | 67 |
-| Meleset rata-rata (uji silang 5 lipat, 5 kali ulang) | ± Rp 279.000 (21,0%) |
-| R² log | 0,663 |
+| Estimasi | Ridge, alpha 5,62 (dipilih lewat uji silang) |
+| Meleset rata-rata (uji silang bersarang 5 lipat, 5 kali ulang) | ± Rp 277.000 (20,8%) |
+| Pembanding OLS di lipatan yang sama | ± Rp 279.000 (21,0%) |
+| R² log | 0,660 |
 
-Pengaruh fasilitas: AC **+58%**, KM dalam **+28%**, kasur **+19%**, kloset duduk **+11%**, WiFi **+5%**, akses 24 jam **−1%** (praktis tidak berpengaruh). Jenis kos: campur **+17%**, putri **−5%** terhadap putra.
+Pengaruh fasilitas: AC **+52%**, KM dalam **+28%**, kloset duduk **+11%**, kasur **+10%**, WiFi **+5%**, akses 24 jam **−1%** (praktis tidak berpengaruh). Jenis kos: campur **+17%**, putri **−4%** terhadap putra.
 
 Menambah Papikost **tidak memperbaiki ketelitian** di kecamatan yang datanya sudah ada — diuji di 240 baris Mamikos yang sama persis, MAPE-nya 19,84% → 20,05%. Yang bertambah adalah **jangkauan**: 8 kecamatan yang dulu sama sekali tidak bisa dinilai, plus 67 koordinat asli untuk pin peta.
 
@@ -99,7 +101,7 @@ Artinya "harga kos berfasilitas rata-rata di kecamatan itu" — jadi sesama titi
 
 | Keyakinan | Kondisi | Rentang |
 |---|---|---|
-| sedang | kecamatannya punya koefisien sendiri | ± 21,0% (MAPE model) |
+| sedang | kecamatannya punya koefisien sendiri | ± 20,8% (MAPE model) |
 | rendah | kecamatannya masih ikut kelompok "lainnya" | ± 36,8% |
 
 Kecamatannya dicari dari koordinat lewat `scripts/geocode_titik.py` (Nominatim/OpenStreetMap). Layanannya gratis tetapi dibatasi 1 permintaan/detik, dan setelah beberapa ratus permintaan jawabannya melambat sampai ~19 detik per titik. Karena itu urutan permintaannya diatur supaya berhenti di tengah pun hasilnya sudah berguna: Papikost dulu, lalu satu wakil tiap klaster 500 m, baru sisanya. Titik yang belum sempat ditanyakan mengambil wilayah dari **tetangga berlabel terdekat dalam radius 400 m** — cara ini diuji pada titik yang sudah punya label dan **96,7% tepat**, dan tiap baris menyimpan `wilayah_dari` supaya ketahuan mana yang hasil geocoding dan mana yang dari tetangga. Titik yang tidak punya tetangga sedekat itu dibiarkan kosong, bukan ditebak asal.
@@ -124,7 +126,7 @@ imbal_hasil_kotor    = pendapatan_setahun / harga_jual
 
 Hasilnya: median harga jual Rp 4,5 miliar, 20 kamar, **Rp 165 juta per kamar**, imbal hasil kotor **8,5% per tahun**, balik modal sekitar **12 tahun**.
 
-**Batasannya besar dan selalu ikut ditampilkan:** hanya 20 iklan, dari **2 penjual saja**, diunggah pada **satu hari yang sama**, dan terpusat di kawasan kampus. Ini inventaris satu agen properti, bukan sampel pasar. Angkanya hanya gambaran kasar dan hanya tampil di dashboard admin.
+**Batasannya besar dan selalu ikut ditampilkan:** hanya 20 iklan, dari **2 penjual saja**, diunggah pada **satu hari yang sama**, dan terpusat di kawasan kampus. Ini inventaris satu agen properti, bukan sampel pasar. Angkanya hanya gambaran kasar dan hanya tampil di dashboard internal.
 
 ### Kawasan: dari koordinat, bukan tulisan tangan
 
@@ -140,7 +142,7 @@ Semua keputusan di bawah berasal dari pengujian di `notebooks/kozy_pembuktian_mo
 
 | Keputusan | Alasan terukur |
 |---|---|
-| **Model produksi = hedonic OLS log-linear** | Setelah RF/XGBoost/SVR dituning adil, jarak MAPE terbaik–terburuk hanya **0,33 poin**. Ridge menang signifikan (t = −2,6) tetapi cuma **0,29 poin** — pada kos Rp 1 juta itu ≈ Rp 3.000, tidak terasa. Koefisien Ridge bias karena penyusutan, sedangkan aplikasi menampilkan faktor harga ("AC menaikkan 58%") yang harus tak bias. |
+| **Model produksi = hedonic Ridge log-linear** | Bentuknya sama dengan OLS (harga tetap bisa dirinci per faktor, tetap 24 koefisien di `pasar.json`), tetapi koefisien yang buktinya tipis ditahan mendekati nol. Di uji silang bersarang 25 lipatan Ridge menang tipis namun konsisten: MAPE **21,01% → 20,83%** (t = −2,27, menang 20 dari 25 lipatan). Konsekuensinya harus diingat: koefisien Ridge **bukan taksiran tak bias** — Kasur turun dari +19% ke +10%, AC dari +58% ke +52% — jadi faktor harga di aplikasi dibaca sebagai taksiran hati-hati. Pembanding OLS-nya ikut disimpan di `pasar.json → meta.pembanding_ols`. |
 | **RF/XGBoost/SVR hanya tabel benchmark** | Tuner memilih `max_depth` 2–3 — melumpuhkan pohonnya sendiri, tanda tidak ada non-linearitas untuk digali. Kurva belajar sudah mendatar di n≈245. |
 | **Kecamatan dengan < 5 iklan digabung** | Koefisien dari 1–4 iklan terlalu goyah. Ini juga sudah menyelesaikan masalah yang biasanya ditangani Ridge. |
 | **Segmentasi: K-Prototypes, bukan K-Means** | Selisih silhouette **+0,000** — benar-benar imbang. Dipilih karena keterbacaan: centroid-nya punya modus kategorikal yang bisa dibaca, bukan karena lebih akurat. |
@@ -150,7 +152,7 @@ Semua keputusan di bawah berasal dari pengujian di `notebooks/kozy_pembuktian_mo
 ```
 data mentah (scrapers/)
    └─ geocode_titik.py      koordinat -> kelurahan + kecamatan
-        └─ build_pasar.py   GABUNG + saring + latih OLS + periksaGabungan()   ← satu-satunya tempat penggabungan
+        └─ build_pasar.py   GABUNG + saring + latih Ridge + periksaGabungan() ← satu-satunya tempat penggabungan
              ├─ build_segmen.py      K-Prototypes tanpa harga   -> segmen.json
              ├─ build_gmaps.py       perkiraan harga 844 titik  -> gmaps.json
              ├─ build_olx.py         sisi pemilik               -> olx.json
@@ -168,6 +170,66 @@ data mentah (scrapers/)
 - ada harga di luar rentang sewa bulanan yang wajar.
 
 Keempatnya sudah diuji benar-benar menolak, bukan sekadar ditulis.
+
+### Memakai modelnya di luar aplikasi web
+
+Tiga cara, tergantung penerimanya butuh apa.
+
+**0. Satu berkas, kirim lewat WA — `analysis/kozy_mandiri.py`** (dibuat `scripts/export_mandiri.py`)
+
+Koefisiennya ditanam langsung di dalam berkasnya. Penerima **tidak perlu clone repo, tidak perlu pasang apa pun**, cukup punya Python:
+
+```bash
+python kozy_mandiri.py
+```
+
+Sudah termasuk harga wajar, kisaran wajar, rincian faktor, vonis, persentil, dan label segmen. Ini cara paling tanpa hambatan untuk orang di luar tim.
+
+**1. Modul Python tanpa dependensi — `scripts/kozy_model.py`**
+
+Cukup bawa dua berkas: `kozy_model.py` dan `src/data/pasar.json`. Tidak perlu sklearn, numpy, atau pandas.
+
+```python
+from kozy_model import KozyModel
+m = KozyModel()
+
+m.harga_wajar("Sukolilo", "putri", ["km", "ac", "wifi", "kasur"])   # 1430000
+m.kisaran_wajar("Sukolilo", "putri", ["km", "ac"])                  # (1030000, 1390000)
+m.cek("Sukolilo", "putri", ["ac", "wifi"], harga=1_900_000)         # vonis lengkap
+m.faktor("Sukolilo", "putri", ["ac"])                               # rincian per komponen
+m.segmen("Sukolilo", "putri", ["ac"])                               # "Kos Lengkap"
+```
+
+Ambang vonisnya disamakan dengan `src/api/kozy.js`, jadi hasil Python dan aplikasi web tidak pernah berbeda.
+
+**2. Berkas pickle — `analysis/kozy_model.pkl`** (dibuat `scripts/export_model.py`)
+
+Disediakan untuk yang butuh antarmuka sklearn. Isinya berlapis supaya tidak gampang pecah: koefisien mentah berupa list biasa (selalu bisa dipakai, cukup Python polos) plus objek `LinearRegression` (hanya kalau versi sklearn-nya cocok).
+
+```python
+import pickle, numpy as np
+m = pickle.load(open("kozy_model.pkl", "rb"))
+kec, fas, jen = m["kategori"]["kecamatan"], m["kategori"]["fasilitas"], m["kategori"]["jenis"]
+
+x = ([1.0 if k == "Sukolilo" else 0.0 for k in kec]
+     + [1.0 if f in ["km","ac","wifi","kasur"] else 0.0 for f in fas]
+     + [1.0 if j == "putri" else 0.0 for j in jen])
+np.exp(m["intercept"] + np.dot(x, m["koefisien"]))      # 1425110
+```
+
+`model_sklearn.predict(X)` mengeluarkan **log(harga)**, jadi harus dibungkus `np.exp()`.
+
+**Kenapa modul lebih disarankan daripada pickle:** model produksinya cuma **24 koefisien, sekitar 821 byte**. Pickle untuk menyimpan 24 angka itu berlebihan, isinya tidak bisa diperiksa tanpa dimuat, memuatnya berarti menjalankan kode dari berkas itu, dan ia pecah kalau versi Python/numpy/sklearn penerimanya berbeda. Koefisiennya toh sudah tersimpan apa adanya di `pasar.json`.
+
+Ketiganya diuji menghasilkan angka yang sama persis, dan `cek_data.py` memverifikasi `.pkl` tetap cocok dengan `pasar.json` setiap kali dijalankan.
+
+| Cara | Jumlah berkas | Perlu pasang pustaka? | Bisa pecah antar versi? |
+|---|---|---|---|
+| `kozy_mandiri.py` | **1** | tidak | tidak |
+| `kozy_model.py` + `pasar.json` | 2 | tidak | tidak |
+| `kozy_model.pkl` | 1 | numpy (sklearn opsional) | **ya** |
+
+Semua berkas itu dibuat ulang otomatis dari `pasar.json`, jadi kalau modelnya dilatih ulang tinggal jalankan lagi skrip ekspornya — jangan pernah diedit tangan.
 
 ### Arti sel kosong di `analysis/kozy_dataset_final.csv`
 
@@ -214,17 +276,31 @@ Angka yang diisi di Cek Harga adalah **harga dari pemilik**, bukan budget penyew
 | KOZY AI | `#/ai` | chat: ide upgrade kamar, memilih kos, cara menawar, daftar cek sebelum bayar, tips keuangan |
 | Edukasi | `#/edukasi` | tips keuangan anak kos dan kalkulator budget |
 | Riwayat | `#/riwayat` | tersimpan di localStorage |
-| Pemilik | `#/pemilik` | klaim 4 langkah (lokasi, jenis kos, tipe kamar, bukti) → posisi harga **per tipe kamar**, simulasi fasilitas, unduh badge |
+| **Dashboard pemilik kos** | `#/pemilik` | klaim 4 langkah (lokasi, jenis kos, tipe kamar, bukti) → 6 lembar: posisi harga per tipe, simulasi fasilitas, badge, siapa yang mencari kos di daerahnya, persaingan, saran penargetan |
 | Tentang | `#/tentang` | metodologi, batas data, netralitas |
-| **Dashboard data** | `#/admin` | halaman internal: kualitas data dan hasil model dalam bentuk grafik |
+| **Dashboard internal KOZY** | `#/internal` | halaman tim KOZY, berkode akses: mutu dataset, aktivitas pengguna, akurasi model, ramalan |
 | Skenario presentasi | `#/demo` | halaman internal: pintasan skenario kemahalan, wajar, jauh di bawah pasaran, data sedikit, belum ada data, luar cakupan, gagal memuat |
 
-### Dashboard `#/admin`
+### Dua dashboard yang sengaja dipisah
 
-Halaman ini dipisah jadi dua bagian yang ditukar lewat tombol di atas, bukan satu halaman panjang:
+Keduanya halaman berbeda, tidak pernah saling menaut, dan tidak berbagi satu angka pun.
 
-- `#/admin` → **Data pasar & model**
-- `#/admin?tab=aktivitas` → **Aktivitas pengguna**
+| | Dashboard internal KOZY | Dashboard pemilik kos |
+|---|---|---|
+| Alamat | `#/internal` (berkode akses) | `#/pemilik` |
+| Pembacanya | tim KOZY, investor, dosen penguji | pemilik kos |
+| Isinya | mutu dan cakupan dataset, aktivitas seluruh pengguna, akurasi model, apa yang belum bisa diramalkan | pasar di sekitar kosnya sendiri: posisi harga tiap tipe, siapa yang mencari kos di daerahnya, pesaing, saran penargetan |
+
+Kode aksesnya diatur lewat `VITE_KOZY_PIN` (lihat `.env.example`); bawaannya `kozy-internal`.
+Karena KOZY berjalan sepenuhnya di peramban, kode ini menghalangi orang yang
+mengetik alamatnya langsung, bukan orang yang membuka peralatan pengembang.
+Pengamanan sungguhan menuntut datanya pindah ke server.
+
+#### Isi `#/internal`
+
+- `#/internal` → **Data pasar**
+- `#/internal?tab=aktivitas` → **Aktivitas**
+- `#/internal?tab=model` → **Model & ramalan** (akurasi, ramalan harga, kebutuhan pasar)
 
 Grafiknya mengikuti aturan *Storytelling with Data* bab 2: judul memuat pesannya, batang selalu mulai dari nol, nilai dilabeli langsung, satu warna aksen, dan tidak ada pie, donut, 3D, atau sumbu Y kedua.
 

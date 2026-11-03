@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cara K-Prototypes bekerja di KOZY</title>
+<style>
+:root{--blue:#2563eb;--blue-d:#1d4ed8;--blue-50:#eff4ff;--blue-100:#dbe6fe;--blue-200:#bfd3fb;--ink:#0f172a;--ink2:#334155;--muted:#5b6b82;--line:#e5e9f0;--soft:#f7f9fc}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:760px;margin:0 auto;padding:28px 16px 64px}
+h1{font-size:26px;line-height:1.25;margin:0 0 8px;letter-spacing:-.01em}
+h2{font-size:18px;line-height:1.3;margin:40px 0 12px}
+p{margin:0}
+.lead{color:var(--ink2)}
+.muted{color:var(--muted);font-size:14.5px}
+.proto{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card{border-radius:16px;padding:16px 18px;box-shadow:inset 0 0 0 1px var(--line);background:#fff}
+.card b{display:block;font-size:15px}
+.card .big{font-size:22px;font-weight:700;margin:6px 0 2px}
+.card.p1{background:var(--blue-50);box-shadow:inset 0 0 0 1px var(--blue-200)}
+.card.p2{background:var(--blue-d);color:#fff;box-shadow:none}
+.card.p2 .muted{color:#dbe6fe}
+.field{margin:0 0 18px}
+.field>label,.field>.lab{display:flex;justify-content:space-between;align-items:baseline;font-weight:600;margin-bottom:6px}
+.field output{font-size:20px;font-weight:700;color:var(--blue)}
+input[type=range]{width:100%;height:44px;accent-color:var(--blue)}
+.opts{display:flex;gap:8px;flex-wrap:wrap}
+.opt{min-height:44px;padding:0 16px;border-radius:12px;border:0;background:#fff;box-shadow:inset 0 0 0 1px var(--line);font:inherit;font-weight:600;color:var(--ink2);cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.opt[aria-pressed=true]{background:var(--blue);color:#fff;box-shadow:none}
+.opt:focus-visible,input:focus-visible{outline:3px solid var(--blue-200);outline-offset:2px}
+.plot{border-radius:16px;box-shadow:inset 0 0 0 1px var(--line);padding:8px 4px 4px}
+.plot svg{display:block;width:100%;height:auto}
+svg text{font-family:inherit;fill:var(--ink2);font-size:13.5px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;margin:12px 4px 0;font-size:14.5px;color:var(--ink2)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line)}
+th{font-weight:600;color:var(--muted);font-size:14px}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+tr.total td{font-weight:700;font-size:16px;border-bottom:0}
+.menang{background:var(--blue-50)}
+.bars{margin:18px 0 0;display:grid;gap:10px}
+.bar{display:grid;grid-template-columns:92px 1fr 56px;align-items:center;gap:10px;font-size:14.5px}
+.bar i{display:block;height:22px;border-radius:6px;background:var(--blue-200);min-width:4px}
+.bar.win i{background:var(--blue-d)}
+.bar b{text-align:right;font-variant-numeric:tabular-nums}
+.verdict{margin-top:22px;border-radius:16px;padding:18px 20px;background:var(--blue-50);box-shadow:inset 0 0 0 1px var(--blue-200)}
+.verdict .big{font-size:20px;font-weight:700;line-height:1.3}
+.verdict p+p{margin-top:8px;color:var(--ink2)}
+.formula{margin-top:22px;padding:12px 14px;border-radius:12px;background:var(--soft);font-size:15px;color:var(--ink2)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (max-width:560px){.proto{grid-template-columns:1fr}.bar{grid-template-columns:78px 1fr 48px}}
+</style>
+</head>
+<body>
+<main>
+  <h1>Cara K-Prototypes menempatkan sebuah kos</h1>
+  <p class="lead">Ubah harga, kecamatan, dan jenis kos di bawah. Kamu akan melihat kos itu masuk ke gerombolan (cluster) yang mana, dan kenapa.</p>
+
+  <h2>1. Hasil pengelompokan 307 kos: dua patokan</h2>
+  <p class="muted" style="margin-bottom:12px">Setiap gerombolan punya satu kos patokan (prototipe) di pusatnya: harga rata-ratanya, serta kecamatan dan jenis yang paling sering muncul.</p>
+  <div class="proto" id="proto"></div>
+
+  <h2>2. Kos yang ingin kamu uji</h2>
+  <div class="field">
+    <label for="harga">Harga per bulan <output id="hargaOut" for="harga"></output></label>
+    <input id="harga" type="range" min="350000" max="4000000" step="10000" value="1300000">
+  </div>
+  <div class="field">
+    <span class="lab" id="labKec">Kecamatan</span>
+    <div class="opts" id="optKec" role="group" aria-labelledby="labKec"></div>
+  </div>
+  <div class="field">
+    <span class="lab" id="labJenis">Jenis kos</span>
+    <div class="opts" id="optJenis" role="group" aria-labelledby="labJenis"></div>
+  </div>
+
+  <h2>3. Posisinya di antara 307 kos</h2>
+  <div class="plot"><svg id="plot" viewBox="0 0 720 330" role="img"></svg></div>
+  <div class="legend" id="legend"></div>
+  <p class="muted" style="margin-top:10px">Yang dihitung bukan jarak di gambar. Kecamatan dan jenis ikut menentukan, jadi jaraknya dihitung di tabel di bawah.</p>
+
+  <h2>4. Jarak kos ke tiap patokan</h2>
+  <table id="tabel"></table>
+  <div class="bars" id="bars" aria-hidden="true"></div>
+  <p class="muted" style="margin-top:8px">Batang lebih pendek = lebih dekat.</p>
+  <div class="verdict" id="verdict" aria-live="polite"></div>
+
+  <div class="formula">
+    <b>Rumus jarak:</b> (selisih harga)² + 0,5 × jumlah kategori yang berbeda (kecamatan, jenis).<br>
+    Harga diubah dulu ke skala log-robust (log harga, dikurangi median, dibagi IQR) supaya kos yang sangat mahal tidak mendominasi.
+    Fasilitas tidak ikut dihitung.
+  </div>
+  <p class="muted" style="margin-top:14px">Data: 307 iklan kos Mamikos dan Papikost di Surabaya.</p>
+</main>
+
+<script>
+const KOS = [[2300000,2,"campur",1],[2500000,2,"putra",1],[2500000,2,"putra",1],[500000,1,"putri",0],[550000,1,"putri",0],[600000,1,"putra",0],[650000,1,"putra",0],[650000,1,"putra",0],[700000,1,"putri",0],[700000,1,"putri",0],[700000,1,"putri",0],[800000,1,"putri",0],[800000,1,"campur",0],[852000,1,"campur",1],[900000,1,"campur",1],[900000,1,"campur",1],[900000,1,"putri",0],[900000,1,"putra",0],[925000,1,"putri",0],[950000,1,"putri",0],[1000000,1,"putra",0],[1000000,1,"campur",1],[1100000,1,"putri",0],[1150000,1,"campur",1],[1200000,1,"putra",1],[1200000,1,"putra",1],[1200000,1,"putri",0],[1200000,1,"putra",1],[1225000,1,"putri",0],[1300000,1,"campur",1],[1300000,1,"putri",1],[1300000,1,"putri",1],[1300000,1,"putri",1],[1350000,1,"campur",1],[1400000,1,"campur",1],[1400000,1,"campur",1],[1400000,1,"campur",1],[1500000,1,"putra",1],[1500000,1,"putra",1],[1500000,1,"putra",1],[1500000,1,"putra",1],[1500010,1,"putri",1],[1525000,1,"putri",1],[1525000,1,"putri",1],[1655000,1,"putri",1],[1700000,1,"campur",1],[1750000,1,"campur",1],[1800000,1,"campur",1],[1850000,1,"putra",1],[1950000,1,"putra",1],[2000000,1,"campur",1],[2200000,1,"campur",1],[2500000,1,"campur",1],[2500000,1,"putra",1],[2515000,1,"campur",1],[3000000,1,"putra",1],[4000000,1,"putra",1],[800000,2,"putri",0],[1000000,2,"putra",0],[1000000,2,"putri",0],[1500000,2,"putri",0],[800000,2,"putri",0],[800000,2,"putri",0],[2000000,2,"putri",1],[2750000,2,"putra",1],[650000,2,"putri",0],[700000,2,"putra",0],[750000,2,"putra",0],[800000,2,"putri",0],[1000000,2,"putra",0],[1000000,2,"campur",0],[1000000,2,"putri",0],[1000000,2,"putra",0],[1300000,2,"putra",1],[1325000,2,"putra",1],[1400000,2,"putra",1],[1500000,2,"putra",1],[1600000,2,"putri",1],[1650000,2,"campur",1],[1850000,2,"campur",1],[1850000,2,"campur",1],[1850000,2,"campur",1],[600000,2,"putri",0],[1200000,2,"putri",0],[1850000,2,"campur",1],[2700000,2,"putra",1],[500000,2,"putri",0],[1600000,2,"campur",1],[2000000,2,"campur",1],[450000,0,"putra",0],[450000,0,"putri",0],[500000,0,"putra",0],[500000,0,"putri",0],[550000,0,"putri",0],[550000,0,"putri",0],[575000,0,"putri",0],[600000,0,"campur",0],[600000,0,"putri",0],[600000,0,"putri",0],[600000,0,"putri",0],[625000,0,"putri",0],[650000,0,"putra",0],[650000,0,"putri",0],[650000,0,"putri",0],[675000,0,"putri",0],[680000,0,"putri",0],[680000,0,"putri",0],[700000,0,"putri",0],[700000,0,"putra",0],[700000,0,"putri",0],[725000,0,"putri",0],[750000,0,"putri",0],[750000,0,"putri",0],[750000,0,"putri",0],[750000,0,"putri",0],[753000,0,"campur",0],[775000,0,"putri",0],[775000,0,"putri",0],[800000,0,"putra",0],[800000,0,"putri",0],[800000,0,"putri",0],[800000,0,"putra",0],[800000,0,"putra",0],[800000,0,"campur",0],[800000,0,"putri",0],[803000,0,"campur",0],[825000,0,"putri",0],[860000,0,"putri",0],[900000,0,"putri",0],[900000,0,"putri",0],[900000,0,"putri",0],[900000,0,"putri",0],[950000,0,"putri",0],[950000,0,"putri",0],[975000,0,"putri",0],[975000,0,"putri",0],[975000,0,"putri",0],[1000000,0,"putri",0],[1000000,0,"putra",0],[1000000,0,"putra",0],[1000000,0,"putra",0],[1000000,0,"putri",0],[1100000,0,"putri",0],[1180000,0,"putri",0],[1200000,0,"putri",0],[1200000,0,"putri",0],[1250000,0,"putra",0],[1250000,0,"putri",0],[1250000,0,"putri",0],[1250000,0,"putri",0],[1300000,0,"putri",0],[1300000,0,"putri",0],[1300000,0,"putri",0],[1300000,0,"putri",0],[1300000,0,"putri",0],[1400000,0,"putri",0],[1400000,0,"putri",0],[1400000,0,"putri",0],[1400000,0,"putri",0],[1400000,0,"putra",0],[1400000,0,"putri",0],[1400000,0,"putra",0],[1500000,0,"putri",0],[1500000,0,"putri",0],[1500000,0,"putri",0],[1500001,0,"putri",0],[1520000,0,"putri",0],[1550000,0,"putri",0],[1550000,0,"campur",1],[1550000,0,"putri",0],[1600000,0,"campur",1],[1600000,0,"putri",0],[1675000,0,"putri",0],[1700000,0,"campur",1],[1750000,0,"campur",1],[1750000,0,"putri",0],[1750000,0,"putri",0],[1800000,0,"putri",0],[1800000,0,"putri",0],[1800000,0,"campur",1],[1900000,0,"putra",1],[1950000,0,"campur",1],[2000000,0,"putri",1],[2000000,0,"putri",1],[2000000,0,"putri",1],[2200000,0,"campur",1],[2200000,0,"campur",1],[2225000,0,"putri",1],[2300000,0,"putri",1],[2300000,0,"campur",1],[2300000,0,"campur",1],[2300000,0,"putri",1],[2500000,0,"putri",1],[3000000,0,"campur",1],[3000000,0,"campur",1],[3250000,0,"campur",1],[800000,2,"putri",0],[900000,2,"putri",0],[1000000,2,"putri",0],[1300000,2,"putri",0],[1750000,2,"campur",1],[575000,2,"putri",0],[575000,2,"putri",0],[600000,2,"putri",0],[600000,2,"campur",0],[650000,2,"putri",0],[800000,2,"putra",0],[850000,2,"putri",0],[875000,2,"putra",0],[950000,2,"putri",0],[1050000,2,"putra",0],[1100000,2,"putri",0],[1200000,2,"campur",1],[1200000,2,"putri",0],[1300000,2,"putri",0],[1300000,2,"putri",0],[1500000,2,"putri",0],[2300000,2,"campur",1],[3000000,2,"campur",1],[800000,2,"putra",0],[800000,2,"putra",0],[1050000,2,"putri",0],[1050000,2,"putra",0],[1100000,2,"campur",1],[1125000,2,"putri",0],[1400000,2,"putri",0],[1500000,2,"putri",0],[1500000,2,"campur",1],[1500000,2,"campur",1],[1502500,2,"putra",1],[1600000,2,"campur",1],[1625000,2,"campur",1],[1700000,2,"campur",1],[1700000,2,"putri",1],[1700000,2,"putri",1],[1702500,2,"campur",1],[1775000,2,"campur",1],[1800000,2,"campur",1],[1900000,2,"putri",1],[1900000,2,"putri",1],[2000000,2,"campur",1],[2000000,2,"campur",1],[2025000,2,"campur",1],[2300000,2,"campur",1],[2400000,2,"putri",1],[2500000,2,"campur",1],[3000000,2,"campur",1],[350000,2,"putra",0],[575000,2,"putra",0],[600000,2,"putri",0],[600000,2,"putra",0],[632500,2,"putri",0],[650000,2,"campur",0],[650000,2,"putra",0],[650000,2,"putra",0],[700000,2,"putri",0],[700000,2,"putra",0],[725000,2,"putri",0],[725000,2,"putri",0],[750000,2,"putra",0],[750000,2,"putri",0],[750000,2,"putra",0],[794500,2,"putri",0],[900000,2,"putri",0],[900001,2,"putri",0],[980000,2,"putri",0],[1000000,2,"putra",0],[1000000,2,"putri",0],[1000000,2,"putra",0],[1000000,2,"putri",0],[1000000,2,"putri",0],[1100000,2,"putra",0],[1100000,2,"putra",0],[1100000,2,"putra",0],[1100000,2,"putri",0],[1200000,2,"putri",0],[1200000,2,"putra",0],[1300000,2,"campur",1],[1300000,2,"putri",0],[1400000,2,"campur",1],[1400000,2,"putri",0],[1400000,2,"putra",1],[1400000,2,"putri",0],[1400000,2,"campur",1],[1400000,2,"putra",1],[1500000,2,"putri",0],[1500000,2,"campur",1],[1500000,2,"putri",0],[1500000,2,"putra",1],[1500000,2,"putri",0],[1500000,2,"putri",0],[1500000,2,"putra",1],[1500000,2,"putri",0],[1550000,2,"putri",0],[1600000,2,"campur",1],[1700000,2,"campur",1],[1700000,2,"campur",1],[1700123,2,"campur",1],[1750000,2,"putri",1],[1800000,2,"campur",1],[1800000,2,"putri",1],[1800000,2,"putra",1],[1900000,2,"campur",1],[1900000,2,"campur",1],[2000000,2,"campur",1],[2100000,2,"campur",1],[2300000,2,"campur",1]]; // [harga, baris kecamatan (0 Sukolilo, 1 Gubeng, 2 lain), jenis, gerombolan]
+const M = { med: 14.038654109278484, iqr: 0.7329506383672388, gamma: 0.5 };
+const P = [
+  { nama: 'Patokan 1', label: 'Harga relatif lebih rendah', z: -0.41696866006793537, kec: 0, jenis: 'putri', n: 186 },
+  { nama: 'Patokan 2', label: 'Harga relatif lebih tinggi', z: 0.4740242070381152, kec: 1, jenis: 'campur', n: 121 },
+];
+P.forEach(p => { p.harga = Math.round(Math.exp(p.z * M.iqr + M.med)); });
+const KEC = [{ id: 0, nama: 'Sukolilo' }, { id: 1, nama: 'Gubeng' }, { id: 2, nama: 'Kecamatan lain', contoh: 'mis. Wonokromo' }];
+const JENIS = ['putra', 'putri', 'campur'];
+const cap = s => s[0].toUpperCase() + s.slice(1);
+const koma = (x, d = 2) => x.toFixed(d).replace('.', ',');
+const rpS = n => (n >= 1e6 ? 'Rp' + (n / 1e6).toLocaleString('id-ID', { maximumFractionDigits: 2 }) + ' jt' : 'Rp' + Math.round(n / 1000).toLocaleString('id-ID') + ' rb');
+const rpP = n => 'Rp' + Math.round(n).toLocaleString('id-ID');
+const S = { harga: 1300000, kec: 0, jenis: 'putri' };
+
+// ---- inti: persis cara model menempatkan satu kos ------------------------------------------
+function hitung(s) {
+  const z = (Math.log(s.harga) - M.med) / M.iqr;
+  const d = P.map(p => {
+    const dz = (z - p.z) ** 2;
+    const dk = s.kec === p.kec ? 0 : M.gamma;
+    const dj = s.jenis === p.jenis ? 0 : M.gamma;
+    return { dz, dk, dj, total: dz + dk + dj };
+  });
+  const menang = d[0].total <= d[1].total ? 0 : 1;
+  const k0 = d[0].dk + d[0].dj, k1 = d[1].dk + d[1].dj;
+  const zb = (k1 - k0 + P[1].z ** 2 - P[0].z ** 2) / (2 * (P[1].z - P[0].z));
+  return { z, d, menang, batas: Math.exp(zb * M.iqr + M.med) };
+}
+
+// ---- gambar --------------------------------------------------------------------------------
+const W = 720, H = 330, ML = 132, MR = 16, MT = 16, MB = 44, X0 = 300000, X1 = 4100000;
+const rowH = (H - MT - MB) / 3;
+const X = h => ML + (h - X0) / (X1 - X0) * (W - ML - MR);
+const Y = k => MT + rowH * (k + 0.5);
+function bentuk(j, cx, cy, r, attr) {
+  if (j === 'putra') return `<rect x="${cx - r}" y="${cy - r}" width="${2 * r}" height="${2 * r}" ${attr}/>`;
+  if (j === 'putri') return `<circle cx="${cx}" cy="${cy}" r="${r}" ${attr}/>`;
+  return `<polygon points="${cx},${cy - r * 1.2} ${cx + r * 1.1},${cy + r * .85} ${cx - r * 1.1},${cy + r * .85}" ${attr}/>`;
+}
+const bintang = (cx, cy, r) => {
+  const t = [];
+  for (let i = 0; i < 10; i++) {
+    const a = -Math.PI / 2 + i * Math.PI / 5, q = i % 2 ? r * .45 : r;
+    t.push((cx + q * Math.cos(a)).toFixed(1) + ',' + (cy + q * Math.sin(a)).toFixed(1));
+  }
+  return t.join(' ');
+};
+let base = '';
+function gambarDasar() {
+  const cnt = [0, 0, 0];
+  KOS.forEach(k => cnt[k[1]]++);
+  let s = '';
+  for (let k = 0; k < 3; k++) {
+    s += `<line x1="${ML}" x2="${W - MR}" y1="${MT + rowH * k}" y2="${MT + rowH * k}" stroke="#e5e9f0"/>`;
+    s += `<text x="${ML - 10}" y="${Y(k) - 2}" text-anchor="end" font-weight="600">${KEC[k].nama}</text>`;
+    s += `<text x="${ML - 10}" y="${Y(k) + 15}" text-anchor="end" style="fill:#5b6b82;font-size:12.5px">${cnt[k]} kos${k === 2 ? ' (12 kec.)' : ''}</text>`;
+  }
+  s += `<line x1="${ML}" x2="${W - MR}" y1="${H - MB}" y2="${H - MB}" stroke="#e5e9f0"/>`;
+  for (let h = 500000; h <= 4000000; h += 500000) {
+    s += `<line x1="${X(h)}" x2="${X(h)}" y1="${MT}" y2="${H - MB}" stroke="#eef1f5"/>`;
+    s += `<text x="${X(h)}" y="${H - MB + 20}" text-anchor="middle">${koma(h / 1e6, 1)} jt</text>`;
+  }
+  KOS.forEach((k, i) => {
+    const cy = Y(k[1]) + (((i * 97) % 61) / 61 - .5) * rowH * .72;
+    const gelap = k[3] === 1;
+    s += bentuk(k[2], X(k[0]), cy, 5, `fill="${gelap ? '#1d4ed8' : '#dbe6fe'}" stroke="${gelap ? '#1d4ed8' : '#2563eb'}" stroke-width="1.2" opacity=".92"`);
+  });
+  P.forEach(p => {
+    s += `<circle cx="${X(p.harga)}" cy="${Y(p.kec)}" r="17" fill="none" stroke="#0f172a" stroke-width="1.8" stroke-dasharray="4 3"/>`;
+    s += `<text x="${X(p.harga)}" y="${Y(p.kec) - 24}" text-anchor="middle" font-weight="700" style="fill:#0f172a;paint-order:stroke;stroke:#fff;stroke-width:4px">${p.nama}</text>`;
+  });
+  return s;
+}
+function gambar(r) {
+  const cx = X(S.harga), cy = Y(S.kec);
+  const label = `<text x="${Math.min(cx, W - 50)}" y="${cy + 30}" text-anchor="middle" font-weight="700" style="fill:#0f172a;paint-order:stroke;stroke:#fff;stroke-width:4px">kosmu</text>`;
+  const el = document.getElementById('plot');
+  el.innerHTML = base + `<polygon points="${bintang(cx, cy, 13)}" fill="#0f172a" stroke="#fff" stroke-width="2"/>` + label;
+  el.setAttribute('aria-label', `Kos ${S.jenis} di ${KEC[S.kec].nama.toLowerCase()} seharga ${rpP(S.harga)} berada paling dekat dengan ${P[r.menang].nama}.`);
+}
+
+// ---- bagian halaman ------------------------------------------------------------------------
+function isiTetap() {
+  document.getElementById('proto').innerHTML = P.map((p, i) => `
+    <div class="card ${i ? 'p2' : 'p1'}">
+      <b>${p.nama} · ${p.label.toLowerCase()}</b>
+      <div class="big">${rpS(p.harga)}</div>
+      <div>${KEC[p.kec].nama}, kos ${p.jenis}</div>
+      <div class="muted">${p.n} dari 307 kos masuk sini</div>
+    </div>`).join('');
+  const icon = j => `<svg viewBox="-9 -9 18 18" width="16" height="16" aria-hidden="true">${bentuk(j, 0, 0, 6, 'fill="currentColor"')}</svg>`;
+  document.getElementById('optKec').innerHTML = KEC.map(k => `<button class="opt" type="button" data-kec="${k.id}" aria-pressed="false">${k.nama}${k.contoh ? ` <span style="font-weight:400">(${k.contoh})</span>` : ''}</button>`).join('');
+  document.getElementById('optJenis').innerHTML = JENIS.map(j => `<button class="opt" type="button" data-jenis="${j}" aria-pressed="false">${icon(j)} ${cap(j)}</button>`).join('');
+  const lg = j => `<span><svg viewBox="-9 -9 18 18" width="16" height="16" aria-hidden="true">${bentuk(j, 0, 0, 6, 'fill="#5b6b82"')}</svg>${cap(j)}</span>`;
+  document.getElementById('legend').innerHTML =
+    JENIS.map(j => lg(j)).join('') +
+    `<span><svg viewBox="-9 -9 18 18" width="16" height="16" aria-hidden="true"><circle r="6" fill="#dbe6fe" stroke="#2563eb" stroke-width="1.5"/></svg>Gerombolan 1 (lebih rendah)</span>` +
+    `<span><svg viewBox="-9 -9 18 18" width="16" height="16" aria-hidden="true"><circle r="6" fill="#1d4ed8"/></svg>Gerombolan 2 (lebih tinggi)</span>` +
+    `<span><svg viewBox="-10 -10 20 20" width="18" height="18" aria-hidden="true"><circle r="8" fill="none" stroke="#0f172a" stroke-width="1.5" stroke-dasharray="3 2"/></svg>Patokan</span>` +
+    `<span><svg viewBox="-10 -10 20 20" width="18" height="18" aria-hidden="true"><polygon points="${bintang(0, 0, 9)}" fill="#0f172a"/></svg>Kosmu</span>`;
+  base = gambarDasar();
+}
+function render() {
+  const r = hitung(S);
+  document.getElementById('hargaOut').textContent = rpP(S.harga);
+  document.querySelectorAll('[data-kec]').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.kec === S.kec)));
+  document.querySelectorAll('[data-jenis]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.jenis === S.jenis)));
+  gambar(r);
+
+  const c = i => (r.menang === i ? 'menang' : '');
+  const sama = (a, b) => (a === b ? 'sama, +0' : 'beda, +0,5');
+  document.getElementById('tabel').innerHTML = `
+    <caption class="sr">Perhitungan jarak kos ke dua patokan</caption>
+    <thead><tr><th></th><th class="num ${c(0)}">Patokan 1</th><th class="num ${c(1)}">Patokan 2</th></tr></thead>
+    <tbody>
+      <tr><td>Harga patokan</td>${P.map((p, i) => `<td class="num ${c(i)}">${rpS(p.harga)}</td>`).join('')}</tr>
+      <tr><td>Selisih harga (dikuadratkan)</td>${r.d.map((x, i) => `<td class="num ${c(i)}">${koma(x.dz)}</td>`).join('')}</tr>
+      <tr><td>Kecamatan (${KEC[S.kec].nama.toLowerCase()})</td>${P.map((p, i) => `<td class="num ${c(i)}">${KEC[p.kec].nama}: ${sama(S.kec, p.kec)}</td>`).join('')}</tr>
+      <tr><td>Jenis (${S.jenis})</td>${P.map((p, i) => `<td class="num ${c(i)}">${cap(p.jenis)}: ${sama(S.jenis, p.jenis)}</td>`).join('')}</tr>
+      <tr class="total"><td>Total jarak</td>${r.d.map((x, i) => `<td class="num ${c(i)}">${koma(x.total)}${r.menang === i ? ' ✓' : ''}</td>`).join('')}</tr>
+    </tbody>`;
+
+  const mx = Math.max(r.d[0].total, r.d[1].total, 0.05);
+  document.getElementById('bars').innerHTML = r.d.map((x, i) => `<div class="bar ${r.menang === i ? 'win' : ''}"><span>${P[i].nama}</span><i style="width:${Math.max(1, x.total / mx * 100)}%"></i><b>${koma(x.total)}</b></div>`).join('');
+
+  const kat = `${KEC[S.kec].id === 2 ? 'kecamatan lain' : KEC[S.kec].nama} dan kos ${S.jenis}`;
+  document.getElementById('verdict').innerHTML = `
+    <p class="big">Masuk gerombolan ${r.menang + 1}: ${P[r.menang].label.toLowerCase()}</p>
+    <p>Jaraknya ${koma(r.d[0].total)} ke patokan 1 dan ${koma(r.d[1].total)} ke patokan 2, jadi lebih dekat ke patokan ${r.menang + 1}.</p>
+    <p>Untuk ${kat}, batas kedua gerombolan ada di sekitar <b>${rpS(r.batas)}</b>. Di bawahnya masuk gerombolan 1, di atasnya gerombolan 2. Batas ini bergeser kalau kecamatan atau jenisnya diganti, karena kategori yang cocok dengan sebuah patokan membuat jaraknya lebih dekat.</p>`;
+}
+
+isiTetap();
+document.getElementById('harga').addEventListener('input', e => { S.harga = +e.target.value; render(); });
+document.addEventListener('click', e => {
+  const b = e.target.closest('button.opt');
+  if (!b) return;
+  if (b.dataset.kec !== undefined) S.kec = +b.dataset.kec;
+  if (b.dataset.jenis) S.jenis = b.dataset.jenis;
+  render();
+});
+render();
+</script>
+</body>
+</html>
