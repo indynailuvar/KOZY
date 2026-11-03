@@ -23,6 +23,14 @@
 # 3. Kecamatan dengan iklan < 5 tidak diberi koefisien sendiri (tebakannya
 #    terlalu goyah), melainkan digabung jadi satu kelompok "lainnya".
 #
+# 4. Koefisiennya diestimasi dengan RIDGE, bukan OLS biasa. Bentuk modelnya
+#    tetap sama (log-linear, bisa dirinci per faktor); bedanya koefisien yang
+#    buktinya tipis ditahan mendekati nol. Kekuatan penahannya (alpha) dipilih
+#    lewat uji silang, dan angka ketelitian yang dilaporkan memakai uji silang
+#    BERSARANG: alpha dipilih ulang di tiap lipatan latih, sehingga data uji
+#    tidak pernah ikut menentukan alpha. Pembanding OLS dihitung di lipatan
+#    yang sama persis dan ikut disimpan di meta.
+#
 # Koefisien kecamatan dipusatkan: 0 berarti "rata-rata Surabaya", bukan
 # "sama dengan kecamatan acuan". Penanda situs dilipat ke intercept pada
 # proporsi sampelnya, sehingga frontend tetap memakai rumus yang sama:
@@ -159,19 +167,52 @@ def buangKembar(rows):
     return unik
 
 
-def ujiSilang(X, y, lipat=5, ulang=5):
-    mae, mape = [], []
+ALPHA_CALON = np.logspace(-2, 2, 33)
+
+
+def ridge(X, ylog, alpha):
+    """Ridge dengan intercept (kolom 0) yang TIDAK ikut ditahan.
+    beta = (X'X + alpha*P)^-1 X'y, P = identitas kecuali untuk intercept."""
+    P = np.eye(X.shape[1])
+    P[0, 0] = 0.0
+    return np.linalg.solve(X.T @ X + alpha * P, X.T @ ylog)
+
+
+def lipatan(n, lipat, ulang, benih):
     for s in range(ulang):
-        idx = np.arange(len(y))
-        np.random.default_rng(7 + s).shuffle(idx)
+        idx = np.arange(n)
+        np.random.default_rng(benih + s).shuffle(idx)
         for f in range(lipat):
             uji = idx[f::lipat]
-            latih = np.setdiff1d(idx, uji)
-            b, *_ = np.linalg.lstsq(X[latih], np.log(y[latih]), rcond=None)
-            p = np.exp(X[uji] @ b)
-            mae.append(np.abs(y[uji] - p).mean())
-            mape.append(np.mean(np.abs(y[uji] - p) / y[uji]) * 100)
-    return float(np.mean(mae)), float(np.mean(mape))
+            yield np.setdiff1d(idx, uji), uji
+
+
+def pilihAlpha(X, ylog, ulang=1, benih=101):
+    """alpha dengan galat kuadrat (skala log) terkecil pada uji silang 5 lipat"""
+    galat = np.zeros(len(ALPHA_CALON))
+    for latih, uji in lipatan(len(ylog), 5, ulang, benih):
+        for i, a in enumerate(ALPHA_CALON):
+            galat[i] += ((X[uji] @ ridge(X[latih], ylog[latih], a) - ylog[uji]) ** 2).sum()
+    return float(ALPHA_CALON[int(np.argmin(galat))])
+
+
+def ujiSilang(X, y, lipat=5, ulang=5):
+    """Uji silang bersarang. Ridge dan OLS dinilai di lipatan yang identik
+    supaya selisihnya bisa diuji berpasangan."""
+    skor = {"ridge": {"mae": [], "mape": []}, "ols": {"mae": [], "mape": []}}
+    for latih, uji in lipatan(len(y), lipat, ulang, 7):
+        ylog = np.log(y[latih])
+        tebak = {
+            "ridge": np.exp(X[uji] @ ridge(X[latih], ylog, pilihAlpha(X[latih], ylog))),
+            "ols": np.exp(X[uji] @ np.linalg.lstsq(X[latih], ylog, rcond=None)[0]),
+        }
+        for m, p in tebak.items():
+            skor[m]["mae"].append(np.abs(y[uji] - p).mean())
+            skor[m]["mape"].append(np.mean(np.abs(y[uji] - p) / y[uji]) * 100)
+    d = np.array(skor["ridge"]["mape"]) - np.array(skor["ols"]["mape"])
+    t = float(d.mean() / (d.std(ddof=1) / np.sqrt(len(d))))
+    rata = {m: {k: float(np.mean(v)) for k, v in s.items()} for m, s in skor.items()}
+    return rata, t, int((d < 0).sum()), len(d)
 
 
 def persen(v, q):
@@ -236,30 +277,40 @@ def main():
         nKec[r["kec"]] = nKec.get(r["kec"], 0) + 1
     besar = sorted(k for k, n in nKec.items() if n >= MIN_IKLAN_KEC)
     kecil = sorted(k for k, n in nKec.items() if n < MIN_IKLAN_KEC)
-    acuan, kolomKec = besar[0], besar[1:]
+    jenisSemua = ["putra"] + JENIS_LAIN
 
     # --- rancang matriks ----------------------------------------------------
-    namaKolom = ["intercept"] + ["kec:" + k for k in kolomKec] + ["kec:lainnya"]
-    namaKolom += ["fas:" + f for f in FAS_APLIKASI] + ["jenis:" + j for j in JENIS_LAIN] + ["situs:Papikost"]
+    # Di OLS satu kategori harus dibuang sebagai acuan. Di Ridge justru semua
+    # kategori dipasang: kalau ada acuan, koefisien lain ditahan mendekati
+    # ACUAN ITU (pilihan yang sewenang-wenang); tanpa acuan, semuanya ditahan
+    # mendekati rata-rata bersama. Kolom yang jadi berlebih (satu dari kelompok
+    # kecamatan, satu dari jenis) diselesaikan oleh penahannya sendiri.
+    namaKolom = ["intercept"] + ["kec:" + k for k in besar] + ["kec:lainnya"]
+    namaKolom += ["fas:" + f for f in FAS_APLIKASI] + ["jenis:" + j for j in jenisSemua] + ["situs:Papikost"]
     X = []
     for r in rows:
-        v = [1.0] + [1.0 if r["kec"] == k else 0.0 for k in kolomKec] + [1.0 if r["kec"] in kecil else 0.0]
+        v = [1.0] + [1.0 if r["kec"] == k else 0.0 for k in besar] + [1.0 if r["kec"] in kecil else 0.0]
         v += [1.0 if f in r["fasilitas"] else 0.0 for f in FAS_APLIKASI]
-        v += [1.0 if r["jenis"] == j else 0.0 for j in JENIS_LAIN]
+        v += [1.0 if r["jenis"] == j else 0.0 for j in jenisSemua]
         v += [1.0 if r["sumber"] == "Papikost" else 0.0]
         X.append(v)
     X = np.array(X)
     y = np.array([r["harga"] for r in rows], dtype=float)
-    assert np.linalg.matrix_rank(X) == X.shape[1], "ada kolom berlebih di matriks"
+    # tepat dua kolom berlebih yang disengaja; lebih dari itu berarti ada
+    # penanda kembar (mis. penanda situs = penanda "fasilitas tidak tercatat")
+    assert np.linalg.matrix_rank(X) == X.shape[1] - 2, "ada kolom berlebih di luar yang disengaja"
 
-    beta, *_ = np.linalg.lstsq(X, np.log(y), rcond=None)
+    alpha = pilihAlpha(X, np.log(y), ulang=5)
+    assert ALPHA_CALON[0] < alpha < ALPHA_CALON[-1], "alpha terpilih di tepi rentang calon — rentangnya perlu dilebarkan"
+    beta = ridge(X, np.log(y), alpha)
     koef = dict(zip(namaKolom, (float(b) for b in beta)))
     r2 = 1 - ((np.log(y) - X @ beta) ** 2).sum() / ((np.log(y) - np.log(y).mean()) ** 2).sum()
-    mae, mape = ujiSilang(X, y)
+    skor, tRidge, ridgeMenang, nLipatan = ujiSilang(X, y)
+    mae, mape = skor["ridge"]["mae"], skor["ridge"]["mape"]
 
     # --- pusatkan efek kecamatan: 0 = rata-rata Surabaya --------------------
-    mentah = {acuan: 0.0}
-    for k in kolomKec:
+    mentah = {}
+    for k in besar:
         mentah[k] = koef["kec:" + k]
     for k in kecil:
         mentah[k] = koef["kec:lainnya"]
@@ -271,12 +322,18 @@ def main():
     bagianPapikost = sum(1 for r in rows if r["sumber"] == "Papikost") / len(rows)
     lipat = koef["situs:Papikost"] * bagianPapikost
 
+    # jenis tetap ditulis relatif terhadap putra supaya rumus di aplikasi tidak
+    # berubah; bagian putra-nya pindah ke intercept (fungsinya tetap sama persis)
+    dasarJenis = koef["jenis:putra"]
+
     model = {
         "bentuk": "log-linear",
-        "intercept": koef["intercept"] + geser + lipat,
+        "estimasi": "ridge",
+        "alpha": round(alpha, 4),
+        "intercept": koef["intercept"] + geser + lipat + dasarJenis,
         "kec": efekKec,
         "fasilitas": {f: koef["fas:" + f] for f in FAS_APLIKASI},
-        "jenis": dict([("putra", 0.0)] + [(j, koef["jenis:" + j]) for j in JENIS_LAIN]),
+        "jenis": dict([("putra", 0.0)] + [(j, koef["jenis:" + j] - dasarJenis) for j in JENIS_LAIN]),
     }
 
     # --- sebaran asli tiap kecamatan ---------------------------------------
@@ -332,9 +389,20 @@ def main():
             "min_iklan_kec": MIN_IKLAN_KEC,
             "berkoordinat": sum(1 for r in rows if r["lat"]),
             "ada_sisa_kamar": sum(1 for r in rows if r.get("sisa_kamar") is not None),
+            "metode": "Regresi hedonic log-linear, estimasi Ridge",
+            "alpha": round(alpha, 4),
+            "uji": "uji silang bersarang %d lipatan (alpha dipilih ulang di tiap lipatan latih)" % nLipatan,
             "mae": int(round(mae, -3)),
             "mape": round(mape, 1),
             "r2_log": round(float(r2), 3),
+            "pembanding_ols": {
+                "mae": int(round(skor["ols"]["mae"], -3)),
+                "mape": round(skor["ols"]["mape"], 1),
+                "selisih_mape": round(mape - skor["ols"]["mape"], 2),
+                "t_berpasangan": round(tRidge, 2),
+                "ridge_menang": ridgeMenang,
+                "lipatan": nLipatan,
+            },
             "catatan": "Harga sewa bulanan dari iklan Mamikos dan Papikost. Luas kamar dan nomor pemilik tidak ada di kedua sumber; koordinat hanya ada di Papikost.",
         },
         "model": model,
@@ -354,6 +422,7 @@ def main():
     print("%d iklan sewa %s dari %d kecamatan -> %s" % (len(rows), hasil["meta"]["n_sumber"], len(nKec), os.path.relpath(KELUAR, BASE)))
     print("Papikost dilewati: %d di luar %s, %d tanpa kecamatan, %d harga di luar batas" % (luarKota, KOTA, tanpaKec, luarHarga))
     print("R2(log)=%.3f  MAE uji silang=Rp%s  MAPE=%.1f%%  |  %d iklan berkoordinat" % (r2, format(int(mae), ","), mape, hasil["meta"]["berkoordinat"]))
+    print("estimasi RIDGE alpha=%.3f  |  OLS di lipatan yang sama: MAPE=%.2f%% -> Ridge %.2f%% (selisih %+.2f, t=%+.2f, menang %d/%d lipatan)" % (alpha, skor["ols"]["mape"], mape, mape - skor["ols"]["mape"], tRidge, ridgeMenang, nLipatan))
     print("kecamatan berkoefisien sendiri (n>=%d): %s" % (MIN_IKLAN_KEC, besar))
     print("kecamatan kelompok 'lainnya': %s" % kecil)
     print("pengaruh fasilitas:", {f: "%+.0f%%" % ((np.exp(koef["fas:" + f]) - 1) * 100) for f in FAS_APLIKASI})

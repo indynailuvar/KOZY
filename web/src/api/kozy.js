@@ -12,12 +12,12 @@
 // Jika VITE_API_URL diisi, cekHarga() memanggil FastAPI POST /vonis dan mengharapkan:
 // {status, harga_wajar, selisih_rp, selisih_persen, persentil, faktor[], komposisi,
 //  pasar{p10,p50,p90,n_pembanding}, meta{confidence, updated_at}}
+// Kalau server tidak menjawab, hitungan jatuh ke model yang sama di perangkat.
 
 import gmaps from '../data/gmaps.json';
 import olx from '../data/olx.json';
 import { BIAYA_FASILITAS, FASILITAS, JENIS_KOS, KAWASAN, KEBUTUHAN, LUAR_CAKUPAN, PASAR, PERSONA, TEMPAT } from '../data/surabaya.js';
 import { bulat10rb, bulat50rb } from '../lib/format.js';
-import { kelasKos } from './premium.js';
 
 const API = import.meta.env.VITE_API_URL;
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -239,14 +239,18 @@ export async function cekHarga(input, onStep = () => {}) {
 
   let result;
   if (API) {
-    const res = await fetch(`${API}/vonis`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ kawasan: kawasan.id, kecamatan: kawasan.kec, harga: input.harga, jenis: input.jenis, fasilitas: input.fasilitas, lokasi: input.lokasiTeks }),
-    });
-    if (!res.ok) throw new Error('Server KOZY sedang bermasalah.');
-    result = await res.json();
-  } else {
+    try {
+      const res = await fetch(`${API}/vonis`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ kawasan: kawasan.id, kecamatan: kawasan.kec, harga: input.harga, jenis: input.jenis, fasilitas: input.fasilitas, lokasi: input.lokasiTeks }),
+      });
+      if (res.ok) result = await res.json();
+    } catch {
+      // server tidur atau terputus: hitung di perangkat dengan model yang sama (pasar.json)
+    }
+  }
+  if (!result) {
     await wait(850);
     if (/error|gagal/i.test(input.lokasiTeks || '')) throw new Error('Koneksi terputus saat menghitung harga wajar.');
     const { harga_wajar, faktor, komposisi } = hitungWajar(kawasan, input);
@@ -281,8 +285,6 @@ export async function cekHarga(input, onStep = () => {}) {
     kawasan: { id: kawasan.id, nama: kawasan.nama, kec: kawasan.kec, jarak: kawasan.jarak, lat: kawasan.lat, lng: kawasan.lng },
     harga_ditawarkan: input.harga,
     ...result,
-    // kelas harga K-Prototypes — fitur eksklusif, halaman hasil yang memutuskan boleh tampil atau tidak
-    kelas: result.kelas || kelasKos(input.harga, kawasan.kec, input.jenis),
   };
 }
 
@@ -460,7 +462,6 @@ export async function kozyMatch({ kawasanIds, fasilitas = [], budgetMax = null, 
         selisih_persen,
         status: statusDari(selisih_persen),
         persentil: persentilDari(k.harga, k.kec),
-        kelas: kelasKos(k.harga, k.kec, k.jenis).label,
         n: stat.n,
         skor,
         sumber: k.sumber,

@@ -45,6 +45,21 @@ export default function Home() {
         </a>
       </section>
 
+      {/* Pemilik kos sebelumnya cuma bisa masuk lewat menu akun (harus login dulu),
+          laci menu, dan footer — praktis tidak ketemu dari beranda. Dibuat sebagai
+          blok tersendiri, bukan kartu mulai ketiga, supaya dua pilihan penyewa di
+          atas tetap jelas sebagai pilihan utama. */}
+      <a className="home-owner" href="#/pemilik">
+        <span className="ic-circle lg">
+          <Icon name="home" size={22} />
+        </span>
+        <span className="start-t">
+          <b>Punya kos?</b>
+          <small>Lihat posisi harga kosmu di pasar</small>
+        </span>
+        <Icon name="right" size={20} className="start-go" />
+      </a>
+
       <p className="home-trust">
         <Icon name="shieldc" size={16} />
         Netral: pemilik kos tidak bisa membayar untuk mengubah penilaian.
@@ -53,9 +68,12 @@ export default function Home() {
       <section className="home-more">
         <p className="sec-label">Fitur lainnya</p>
         <div className="list-card">
-          <ListRow icon="sparkles" title="Tanya KOZY AI" sub="Cara nawar, pilih antara 2 kos, atur uang bulanan" href="#/ai" />
-          <ListRow icon="wallet" title="Tips keuangan anak kos" sub="Tanggal tua, budget, dana darurat" href="#/edukasi" />
-          <ListRow icon="access" title="Aksesibilitas" sub="Mode suara dan teks besar" onClick={() => setAkses(true)} />
+          {/* Keterangan dipangkas: empat baris abu-abu kecil berjajar membuat
+              daftar ini terasa padat padahal judulnya sudah cukup menjelaskan. */}
+          <ListRow icon="sparkles" title="Tanya KOZY AI" href="#/ai" />
+          <ListRow icon="scale" title="Bandingkan 2 kos" href="#/bandingkan" />
+          <ListRow icon="wallet" title="Tips keuangan anak kos" href="#/edukasi" />
+          <ListRow icon="access" title="Aksesibilitas" onClick={() => setAkses(true)} />
         </div>
       </section>
 

@@ -1,0 +1,18 @@
+{
+  "_cara_isi": "Diisi dari repo indynailuvar/KOZY -> output/final_models/. Ubah siap jadi false kalau mau mengosongkan kembali. Dashboard #/internal?tab=model membacanya langsung, tidak perlu mengubah kode.",
+  "siap": true,
+  "diambil": "2026-10-13",
+  "sumber": "output/final_models/metrics_oof.csv",
+  "satuan": "WAPE",
+  "kesimpulan": "Ridge unggul tipis atas Random Forest",
+  "uji": "GroupKFold 5 lipat (kelompok = koordinat) pada 68 iklan Papikost Surabaya, 11 fitur. Angka ini tidak sebanding dengan 21% di atas: datanya 68 bukan 307, pembagian ujinya lebih ketat, dan satuan galatnya WAPE bukan MAPE",
+  "model": [
+    { "nama": "Ridge", "galat": 26.3, "mae": 353448, "r2": 0.407 },
+    { "nama": "Random Forest", "galat": 26.5, "mae": 355603, "r2": 0.348 }
+  ],
+  "per_lipatan": {
+    "model": "Ridge",
+    "nilai": [29.7, 24.4, 18.6, 26.0, 32.1]
+  },
+  "p_value": null
+}

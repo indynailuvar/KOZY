@@ -123,8 +123,22 @@ if os.path.exists(cs):
 bm = os.path.join(WEB, "analysis", "benchmark_model.json")
 if os.path.exists(bm):
     b = json.load(io.open(bm, encoding="utf-8"))
-    cek("Benchmark: model produksi adalah OLS", b["model_produksi"], "OLS log-linear")
+    cek("Benchmark: model produksi adalah Ridge", b["model_produksi"], "Ridge log-linear")
     cek("Benchmark: jarak antar model di bawah 1 poin MAPE", b["jarak_mape_terbaik_terburuk"] < 1.0, True)
+
+pk = os.path.join(WEB, "analysis", "kozy_model.pkl")
+if os.path.exists(pk):
+    import pickle as _pk, math as _m
+    bd = _pk.load(open(pk, "rb"))
+    M = pasar["model"]
+    kec, fas, jen = bd["kategori"]["kecamatan"], bd["kategori"]["fasilitas"], bd["kategori"]["jenis"]
+    contoh = ("Sukolilo", "putri", ["km", "ac", "wifi", "kasur"])
+    x = [1.0 if k == contoh[0] else 0.0 for k in kec] + [1.0 if f in contoh[2] else 0.0 for f in fas] + [1.0 if j == contoh[1] else 0.0 for j in jen]
+    dari_pkl = _m.exp(bd["intercept"] + sum(a_ * b_ for a_, b_ in zip(x, bd["koefisien"])))
+    dari_json = _m.exp(M["intercept"] + M["kec"][contoh[0]] + M["jenis"][contoh[1]] + sum(M["fasilitas"][f] for f in contoh[2]))
+    cek("Model .pkl: tebakan sama dengan pasar.json", round(dari_pkl, 4), round(dari_json, 4))
+    cek("Model .pkl: jumlah koefisien sesuai", len(bd["koefisien"]), len(M["kec"]) + len(M["fasilitas"]) + len(M["jenis"]))
+    cek("Model .pkl: bisa dipakai tanpa sklearn", bd["koefisien"] is not None and bd["intercept"] is not None, True)
 
 print("=== PEMERIKSAAN ===")
 for x in ok:
@@ -139,7 +153,7 @@ print("=== TOTAL AKHIR ===")
 print("Iklan sewa berharga asli : %d  (%d Mamikos + %d Papikost) di %d kecamatan" % (pasar["meta"]["n"], pasar["meta"]["n_sumber"]["Mamikos"], pasar["meta"]["n_sumber"]["Papikost"], pasar["meta"]["kecamatan"]))
 print("Titik lokasi Google Maps : %d dari %d (harga = perkiraan model)" % (gmaps["meta"]["n"], gmaps["meta"]["n_mentah"]))
 print("  - wilayah dari geocoding: %d, dari titik terdekat: %d" % (gmaps["meta"]["n"] - gmaps["meta"]["n_wilayah_tetangga"], gmaps["meta"]["n_wilayah_tetangga"]))
-print("Iklan rumah kos dijual   : %d (dashboard admin saja)" % olx["meta"]["n"])
+print("Iklan rumah kos dijual   : %d (dashboard internal saja)" % olx["meta"]["n"])
 kosUnik = pasar["meta"]["n"] + gmaps["meta"]["n"] - gmaps["meta"]["n_harga_asli"]
 print("Kos unik di aplikasi     : %d  (%d berharga asli + %d hanya lokasi, %d kembar dibuang)" % (kosUnik, pasar["meta"]["n"], gmaps["meta"]["n"] - gmaps["meta"]["n_harga_asli"], gmaps["meta"]["n_harga_asli"]))
 print("Kawasan bisa dipilih     : %d kelurahan di %d kecamatan" % (kaw["meta"]["n"], kaw["meta"]["kecamatan"]))

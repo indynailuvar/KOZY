@@ -19,7 +19,7 @@ import Riwayat from './pages/Riwayat.jsx';
 import Pemilik from './pages/Pemilik.jsx';
 import Tentang from './pages/Tentang.jsx';
 import Demo from './pages/Demo.jsx';
-import Admin from './pages/Admin.jsx';
+import Internal from './pages/Internal.jsx';
 
 const ROUTES = {
   '/': Home,
@@ -36,7 +36,8 @@ const ROUTES = {
   '/pemilik': Pemilik,
   '/tentang': Tentang,
   '/demo': Demo,
-  '/admin': Admin,
+  '/internal': Internal,
+  '/admin': Internal,
 };
 
 // Judul tab browser tiap halaman (juga dibacakan pembaca layar saat pindah halaman)
@@ -55,7 +56,8 @@ const JUDUL = {
   '/pemilik': 'Untuk pemilik kos',
   '/tentang': 'Tentang KOZY',
   '/demo': 'Skenario',
-  '/admin': 'Dashboard data',
+  '/internal': 'Dashboard internal',
+  '/admin': 'Dashboard internal',
 };
 
 // Chat tampil layar penuh. Formulir langkah (Wizard) menyembunyikan header lewat kelas body `wz-mode`.
@@ -105,7 +107,7 @@ export default function App() {
     document.title = `${JUDUL[path] || 'Halaman tidak ditemukan'} · KOZY`;
     if (jejakTerakhir.current !== path) {
       jejakTerakhir.current = path;
-      if (path !== '/admin') catat('halaman', { path });
+      if (!['/internal', '/admin'].includes(path)) catat('halaman', { path });
     }
     // lewati muat pertama (dan efek ganda StrictMode): fokus hanya dipindah saat halaman benar-benar berganti
     if (halamanSebelum.current === path) return;

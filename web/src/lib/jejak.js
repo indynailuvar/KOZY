@@ -1,4 +1,4 @@
-// Pencatat aktivitas pemakaian untuk analisa bisnis di halaman #/admin.
+// Pencatat aktivitas pemakaian untuk analisa bisnis di halaman #/internal.
 //
 // Sekarang tersimpan di perangkat pemakai (localStorage), karena belum ada backend.
 // Kalau VITE_ANALYTICS_URL diisi, tiap kejadian juga dikirim ke sana:

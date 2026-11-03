@@ -14,8 +14,11 @@
 #   - jarak MAPE model terbaik ke terburuk hanya ~0,3 poin
 #   - tuner memilih max_depth 2-3, artinya tidak ada non-linearitas untuk digali
 #   - kurva belajar sudah mendatar: menambah data sejenis tidak membuka jarak
-# => model produksi tetap hedonic OLS, karena koefisiennya bisa dijelaskan
-#    ke pengguna ("AC menaikkan 58%") dan tidak bias oleh penyusutan.
+# => model produksi: hedonic RIDGE. Bentuknya tetap linear, jadi koefisiennya
+#    tetap bisa dijelaskan ke pengguna ("AC menaikkan 52%"), dan dialah yang
+#    menang di uji berpasangan. Harganya: koefisien yang buktinya tipis ditahan
+#    mendekati nol (Kasur +19% -> +10%), jadi angkanya dibaca sebagai taksiran
+#    hati-hati, bukan taksiran tak bias. OLS tetap jadi baseline tabel ini.
 #
 # Jalankan:  python scripts/benchmark_model.py
 # =============================================================================
@@ -135,11 +138,12 @@ def main():
         "ambang_t": AMBANG_T,
         "jarak_mape_terbaik_terburuk": jarak,
         "menang_signifikan": menang,
-        "model_produksi": "OLS log-linear",
+        "model_produksi": "Ridge log-linear",
         "alasan_produksi": (
-            "Selisih semua model di bawah 1 poin MAPE; pada kos Rp 1 juta itu setara ~Rp 3.000, tidak terasa. "
-            "Koefisien OLS tidak bias oleh penyusutan, sehingga faktor harga yang ditampilkan ke pengguna "
-            "(mis. 'AC menaikkan 58%') tetap sahih. Ridge dilaporkan di tabel, tidak dipakai produksi."
+            "Selisih semua model di bawah 1 poin MAPE. Ridge dipilih karena menang di uji berpasangan dan "
+            "bentuknya tetap linear, sehingga harga tetap bisa dirinci per faktor dan dikirim ke aplikasi "
+            "sebagai segelintir koefisien. Konsekuensinya: koefisien yang buktinya tipis ditahan mendekati nol, "
+            "jadi faktor harga yang ditampilkan adalah taksiran hati-hati, bukan taksiran tak bias."
         ),
         "hasil": baris,
     }
@@ -152,7 +156,7 @@ def main():
         t = "" if r["t"] is None else "%+.1f" % r["t"]
         print("%-*s %7.2f%% Rp%10s %9s %7s   %s" % (lebar, r["model"], r["mape"], format(r["mae_rp"], ","), selisih, t, r["kesimpulan"]))
     print(f"\njarak terbaik-terburuk: {jarak} poin  |  menang signifikan: {menang or 'tidak ada'}")
-    print(f"-> model produksi tetap OLS log-linear (lihat alasan di benchmark_model.json)")
+    print(f"-> model produksi: Ridge log-linear (lihat alasan di benchmark_model.json)")
     print(f"tersimpan di {os.path.relpath(KELUAR, BASE)}/benchmark_model.csv dan .json")
 
 

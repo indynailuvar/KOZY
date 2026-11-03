@@ -1,44 +1,36 @@
 import { useEffect, useMemo, useState } from 'react';
 import Icon from '../components/Icon.jsx';
 import { SpeakButton } from '../components/A11y.jsx';
-import { Accordion, Button, LineInput, Options, PageHead, Question, Tiles, Wizard } from '../components/ui.jsx';
-import { Paywall, aksesEksklusif } from '../components/Sheets.jsx';
-import { KartuAB, KunciEksklusif } from '../components/Eksklusif.jsx';
-import { CEK_SEBELUM_BAYAR } from '../api/ai.js';
-import { PRIORITAS_GAP, gapAB } from '../api/premium.js';
+import { Accordion, Button, LineInput, Options, PageHead, Question, StatusBadge, Tiles, Wizard } from '../components/ui.jsx';
+import { labelYakin, putuskan } from '../api/ai.js';
 import { FASILITAS } from '../data/surabaya.js';
-import { angkaDariTeks, jarak, rp, rpSuara } from '../lib/format.js';
-import { catat } from '../lib/jejak.js';
+import { angkaDariTeks, jarak, rp, rpSigned, rpSuara } from '../lib/format.js';
 import { useStore } from '../store.jsx';
 import { go } from '../router.js';
+import { analyzePriceGap, getModelingSummary } from '../api/modeling.js';
 
-const API = import.meta.env.VITE_API_URL;
-const kosong = () => ({ nama: '', harga: '', jarak: '', fasilitas: [] });
+const POSISI_GAP = {
+  di_bawah_q1: 'Di bawah kuartil bawah',
+  dalam_iqr: 'Dalam rentang umum dataset',
+  di_atas_q3: 'Di atas kuartil atas',
+};
+
+const OPSI_PRIORITAS = [
+  { id: 'seimbang', label: 'Seimbang', sub: 'Harga, jarak, dan fasilitas sama penting', icon: 'sliders' },
+  { id: 'hemat', label: 'Paling hemat', sub: 'Harga sewa paling ringan', icon: 'wallet' },
+  { id: 'dekat', label: 'Paling dekat', sub: 'Jarak ke tujuan paling pendek', icon: 'pin' },
+  { id: 'fasilitas', label: 'Fasilitas lengkap', sub: 'Kamar paling nyaman', icon: 'sofa' },
+];
+
+const kosong = () => ({ nama: '', harga: '', jarak: '', kecamatan: '', jenis: '', fasilitas: [] });
 const namaAtau = (k, cadangan) => k.nama.trim() || cadangan;
 
 function keKos(k, cadangan) {
   const km = parseFloat(String(k.jarak).replace(',', '.'));
-  return { id: cadangan, nama: namaAtau(k, cadangan), harga: angkaDariTeks(k.harga), jarak: Number.isFinite(km) ? km : null, fasilitas: k.fasilitas };
+  return { id: cadangan, nama: namaAtau(k, cadangan), harga: angkaDariTeks(k.harga), jarak: Number.isFinite(km) ? km : null, kec: k.kec || k.kecamatan || null, jenis: k.jenis || null, fasilitas: k.fasilitas };
 }
 
-// Gap A vs B: lewat FastAPI kalau tersedia, selain itu dihitung di peramban dengan logika yang sama.
-async function hitungGap(a, b, prioritas) {
-  if (API) {
-    try {
-      const pilih = (k) => ({ nama: k.nama, harga: k.harga, jarak: k.jarak, kec: k.kec || null, jenis: k.jenis || null });
-      const res = await fetch(`${API}/gap-ab`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ a: pilih(a), b: pilih(b), prioritas }) });
-      if (res.ok) {
-        const h = await res.json();
-        return { ...h, a: { ...a, ...h.a }, b: { ...b, ...h.b } };
-      }
-    } catch {
-      /* server mati: hitung di peramban */
-    }
-  }
-  return gapAB(a, b, prioritas);
-}
-
-function IsiKos({ k, huruf, onChange, invalid }) {
+function IsiKos({ k, huruf, onChange, invalid, kategori }) {
   const ubah = (patch) => onChange({ ...k, ...patch });
   return (
     <div className="line-stack">
@@ -63,89 +55,139 @@ function IsiKos({ k, huruf, onChange, invalid }) {
         onChange={(v) => ubah({ jarak: v.replace(/[^\d.,]/g, '').slice(0, 4) })}
         placeholder="0"
       />
+      <label className="compare-select">
+        Kecamatan <span>(opsional, untuk gap pasar lokal)</span>
+        <select value={k.kecamatan} onChange={(e) => ubah({ kecamatan: e.target.value })}>
+          <option value="">Tidak dipilih</option>
+          {kategori.kecamatan.map((item) => <option key={item} value={item}>{item}</option>)}
+        </select>
+      </label>
+      <label className="compare-select">
+        Jenis kos <span>(opsional)</span>
+        <select value={k.jenis} onChange={(e) => ubah({ jenis: e.target.value })}>
+          <option value="">Tidak dipilih</option>
+          {kategori.jenis.map((item) => <option key={item} value={item}>{item[0].toUpperCase() + item.slice(1)}</option>)}
+        </select>
+      </label>
     </div>
   );
 }
 
-function Hasil({ pasangan, prioritas, onUlang, onUbah }) {
-  const { state, bukaAI } = useStore();
-  const [bayar, setBayar] = useState(false);
-  const [hasil, setHasil] = useState(null);
-  const akses = aksesEksklusif(state);
-  const [a, b] = pasangan;
+function Hasil({ hasil, pasangan, onUlang, onUbah }) {
+  const { bukaAI } = useStore();
+  const [gapPasar, setGapPasar] = useState({ loading: false, hasil: [] });
+  const { menang, kalah } = hasil;
+  const suara = `Rekomendasi KOZY AI: ${menang.nama}, ${rpSuara(menang.harga)} per bulan. Alasannya: ${hasil.alasan.join('. ')}. ${hasil.alternatif || ''}`;
+  const baris = [
+    ['Harga', (k) => rp(k.harga)],
+    ['Jarak', (k) => (k.jarak != null ? jarak(k.jarak) : '–')],
+    ['Fasilitas', (k) => `${k.fasilitas.length} dari ${FASILITAS.length}`],
+  ];
+  const kolom = [menang, kalah];
 
   useEffect(() => {
-    if (!akses) return;
-    let hidup = true;
-    hitungGap(a, b, prioritas).then((h) => hidup && setHasil(h));
+    let aktif = true;
+    const permintaan = pasangan.map((kos) => (
+      kos.kec && kos.jenis
+        ? analyzePriceGap({ harga: kos.harga, kecamatan: kos.kec, jenis: kos.jenis }).catch(() => null)
+        : Promise.resolve(null)
+    ));
+    if (!permintaan.some((p, i) => pasangan[i].kec && pasangan[i].jenis)) {
+      setGapPasar({ loading: false, hasil: [] });
+      return () => {
+        aktif = false;
+      };
+    }
+    setGapPasar({ loading: true, hasil: [] });
+    Promise.all(permintaan).then((data) => aktif && setGapPasar({ loading: false, hasil: data }));
     return () => {
-      hidup = false;
+      aktif = false;
     };
-  }, [akses, a, b, prioritas]);
-
-  const menang = hasil && (hasil.topsis.menang === 'a' ? hasil.a : hasil.b);
-  const suara = menang
-    ? `Rekomendasi KOZY untuk prioritas ${PRIORITAS_GAP.find((p) => p.id === prioritas).label}: ${menang.nama}, ${rpSuara(menang.harga)} per bulan, kelas ${menang.kelas.label}.`
-    : `${a.nama} ${rpSuara(a.harga)} per bulan. ${b.nama} ${rpSuara(b.harga)} per bulan.`;
+  }, [pasangan]);
 
   return (
     <div className="page narrow">
-      <PageHead judul="Hasil perbandingan" sub={`Prioritas: ${PRIORITAS_GAP.find((p) => p.id === prioritas).label.toLowerCase()}`} onBack={onUbah} aksi={<SpeakButton compact teks={suara} label="Dengarkan hasil" />} />
+      <PageHead judul="Hasil perbandingan" sub={`Prioritas: ${hasil.prioritas}`} onBack={onUbah} aksi={<SpeakButton compact teks={suara} label="Dengarkan hasil" />} />
 
-      {akses ? (
-        hasil ? (
-          <KartuAB hasil={hasil} />
+      <section className="card win-card" aria-live="polite">
+        <p className="v-label">KOZY AI menyarankan</p>
+        <h2>{menang.nama}</h2>
+        <p className="win-sub">
+          {rp(menang.harga)}/bulan{menang.jarak != null && ` · ${jarak(menang.jarak)}`}
+          {menang.status && <StatusBadge status={menang.status} size="sm" />}
+        </p>
+        <span className="conf">{labelYakin(hasil.yakin)}</span>
+        <ul className="check-list">
+          {hasil.alasan.map((a) => (
+            <li key={a}>
+              <Icon name="check" size={16} strokeWidth={2.6} />
+              {a}
+            </li>
+          ))}
+        </ul>
+        {hasil.alternatif && <p className="note">{hasil.alternatif}</p>}
+      </section>
+
+      <section className="card">
+        <table className="cmp-table">
+          <thead>
+            <tr>
+              <th scope="col">
+                <span className="sr-only">Aspek</span>
+              </th>
+              {kolom.map((k, i) => (
+                <th key={k.id} scope="col" className={i === 0 ? 'is-win' : ''}>
+                  {k.nama}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {baris.map(([l, f]) => (
+              <tr key={l}>
+                <th scope="row">{l}</th>
+                {kolom.map((k, i) => (
+                  <td key={k.id} className={i === 0 ? 'is-win' : ''}>
+                    {f(k)}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
+
+      <section className="card market-gap" aria-live="polite" aria-busy={gapPasar.loading}>
+        <h2 className="card-t">Benchmark harga lokal</h2>
+        <p className="note market-gap-method">Pembanding dikelompokkan menurut kecamatan dan jenis kos. Posisi harga ditentukan dari Q1–Q3 kelompok tersebut.</p>
+        {gapPasar.loading ? (
+          <p className="note">Memeriksa benchmark kecamatan…</p>
+        ) : gapPasar.hasil.some(Boolean) ? (
+          <div className="market-gap-grid">
+            {gapPasar.hasil.map((data, i) => data && (
+              <article className="market-gap-item" key={pasangan[i].id}>
+                <p className="sec-label">Kos {i === 0 ? 'A' : 'B'} · {pasangan[i].nama}</p>
+                <b>{POSISI_GAP[data.posisi_q1_q3]}</b>
+                <strong className={data.gap_rp_dari_median > 0 ? 't-red' : 't-green'}>{rpSigned(data.gap_rp_dari_median)} <small>dari median</small></strong>
+                <span>Q1–Q3 {rp(data.benchmark.q1)} – {rp(data.benchmark.q3)} · {data.benchmark.jumlah} listing</span>
+              </article>
+            ))}
+          </div>
         ) : (
-          <p className="note">Menghitung gap…</p>
-        )
-      ) : (
-        <>
-          <section className="card">
-            <table className="cmp-table">
-              <thead>
-                <tr>
-                  <th scope="col">
-                    <span className="sr-only">Aspek</span>
-                  </th>
-                  {pasangan.map((k) => (
-                    <th key={k.id} scope="col">
-                      {k.nama}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">Harga</th>
-                  {pasangan.map((k) => (
-                    <td key={k.id}>{rp(k.harga)}</td>
-                  ))}
-                </tr>
-                <tr>
-                  <th scope="row">Jarak</th>
-                  {pasangan.map((k) => (
-                    <td key={k.id}>{k.jarak != null ? jarak(k.jarak) : '–'}</td>
-                  ))}
-                </tr>
-              </tbody>
-            </table>
-          </section>
-          <KunciEksklusif
-            judul="Mana yang lebih masuk akal?"
-            sub="Paket eksklusif membandingkan kedua kos secara apple to apple:"
-            poin={['Gap harga dan jarak dalam satuan sebaran pasar', 'Kelas harga tiap kos (murah, menengah, mahal) dan posisinya di kelas', 'Rekomendasi TOPSIS sesuai prioritasmu']}
-            onBuka={() => {
-              catat('eksklusif_dikunci', { fitur: 'gap_ab' });
-              setBayar(true);
-            }}
-          />
-        </>
-      )}
+          <p className="note">Isi kecamatan dan jenis kos pada data A/B untuk melihat benchmark pasar lokal.</p>
+        )}
+        <div className="market-gap-definition">
+          <b>Cara hitung gap</b>
+          <span>Gap nominal = harga kos − median pembanding.</span>
+          <span>Gap terstandar = gap nominal ÷ IQR, dengan IQR = Q3 − Q1.</span>
+        </div>
+        <p className="note market-gap-note">Metode robust statistical benchmarking. Hasil merangkum listing yang tersedia; bukan estimasi seluruh pasar dan bukan label otomatis kemahalan.</p>
+      </section>
 
       <div className="stack">
         <Accordion title="Cek sendiri saat lihat kosnya" icon="list">
           <ul className="dot-list">
-            {CEK_SEBELUM_BAYAR.map((c) => (
+            {hasil.cek.map((c) => (
               <li key={c}>{c}</li>
             ))}
           </ul>
@@ -153,15 +195,13 @@ function Hasil({ pasangan, prioritas, onUlang, onUbah }) {
       </div>
 
       <div className="btn-col">
-        <Button variant="secondary" block icon="sparkles" onClick={() => bukaAI({ teks: `Bandingkan ${a.nama} dan ${b.nama}`, bandingkan: pasangan })}>
+        <Button variant="secondary" block icon="sparkles" onClick={() => bukaAI({ teks: `Bandingkan ${pasangan[0].nama} dan ${pasangan[1].nama}`, bandingkan: pasangan })}>
           Tanya lanjut di KOZY AI
         </Button>
         <Button variant="ghost" block onClick={onUlang}>
           Bandingkan kos lain
         </Button>
       </div>
-
-      <Paywall open={bayar} fitur="gap_ab" onClose={() => setBayar(false)} onPaid={() => setBayar(false)} />
     </div>
   );
 }
@@ -173,14 +213,23 @@ export default function Bandingkan() {
   const [b, setB] = useState(kosong);
   const [prioritas, setPrioritas] = useState('seimbang');
   const [step, setStep] = useState(1);
-  const [selesai, setSelesai] = useState(false);
+  const [hasil, setHasil] = useState(null);
   const [coba, setCoba] = useState(false);
+  const [kategori, setKategori] = useState({ kecamatan: [], jenis: [] });
+
+  useEffect(() => {
+    let aktif = true;
+    getModelingSummary().then((data) => aktif && setKategori(data.segmentasi.kategori)).catch(() => {});
+    return () => {
+      aktif = false;
+    };
+  }, []);
 
   const total = dariMatch ? 1 : 5;
   const pasangan = useMemo(() => (dariMatch ? state.bandingkan : [keKos(a, 'Kos A'), keKos(b, 'Kos B')]), [dariMatch, state.bandingkan, a, b]);
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [selesai]);
+  }, [hasil]);
 
   const galat = dariMatch
     ? {}
@@ -194,7 +243,7 @@ export default function Bandingkan() {
     if (galat[step]) return;
     setCoba(false);
     if (step < total) setStep(step + 1);
-    else setSelesai(true);
+    else setHasil(putuskan(pasangan[0], pasangan[1], prioritas));
   };
   const kembali = () => {
     setCoba(false);
@@ -207,13 +256,14 @@ export default function Bandingkan() {
     set({ bandingkan: [] });
     setA(kosong());
     setB(kosong());
-    setSelesai(false);
+    setHasil(null);
     setStep(1);
   };
 
-  if (selesai) return <Hasil pasangan={pasangan} prioritas={prioritas} onUlang={ulang} onUbah={() => setSelesai(false)} />;
+  if (hasil) return <Hasil hasil={hasil} pasangan={pasangan} onUlang={ulang} onUbah={() => setHasil(null)} />;
 
   const langkahPrioritas = dariMatch ? 1 : 5;
+  const opsi = OPSI_PRIORITAS;
   const err = coba ? galat[step] : null;
   const namaA = namaAtau(a, 'Kos A');
   const namaB = namaAtau(b, 'Kos B');
@@ -232,31 +282,31 @@ export default function Bandingkan() {
     >
       {!dariMatch && step === 1 && (
         <>
-          <Question judul="Kos pertama" sub="Isi nama, harga sewa, dan jaraknya ke tujuanmu." />
-          <IsiKos k={a} huruf="A" onChange={setA} invalid={!!err} />
+          <Question judul="Kos pertama" sub="Isi nama dan harga sewanya." />
+          <IsiKos k={a} huruf="A" onChange={setA} invalid={!!err} kategori={kategori} />
         </>
       )}
       {!dariMatch && step === 2 && (
         <>
-          <Question judul={`Fasilitas di ${namaA}`} sub="Hanya untuk catatanmu — fasilitas tidak ikut dihitung." />
+          <Question judul={`Fasilitas di ${namaA}`} sub="Pilih semua yang tersedia." />
           <Tiles label={`Fasilitas ${namaA}`} values={a.fasilitas} options={FASILITAS} onToggle={(id) => setA((k) => ({ ...k, fasilitas: k.fasilitas.includes(id) ? k.fasilitas.filter((x) => x !== id) : [...k.fasilitas, id] }))} />
         </>
       )}
       {!dariMatch && step === 3 && (
         <>
-          <Question judul="Kos kedua" sub="Isi nama, harga sewa, dan jaraknya ke tujuanmu." />
-          <IsiKos k={b} huruf="B" onChange={setB} invalid={!!err} />
+          <Question judul="Kos kedua" sub="Isi nama dan harga sewanya." />
+          <IsiKos k={b} huruf="B" onChange={setB} invalid={!!err} kategori={kategori} />
         </>
       )}
       {!dariMatch && step === 4 && (
         <>
-          <Question judul={`Fasilitas di ${namaB}`} sub="Hanya untuk catatanmu — fasilitas tidak ikut dihitung." />
+          <Question judul={`Fasilitas di ${namaB}`} sub="Pilih semua yang tersedia." />
           <Tiles label={`Fasilitas ${namaB}`} values={b.fasilitas} options={FASILITAS} onToggle={(id) => setB((k) => ({ ...k, fasilitas: k.fasilitas.includes(id) ? k.fasilitas.filter((x) => x !== id) : [...k.fasilitas, id] }))} />
         </>
       )}
       {step === langkahPrioritas && (
         <>
-          <Question judul="Apa yang paling penting buatmu?" sub="KOZY menimbang harga dan jarak kedua kos sesuai pilihan ini." />
+          <Question judul="Apa yang paling penting buatmu?" sub="KOZY AI menimbang kedua kos sesuai pilihan ini." />
           {dariMatch && (
             <div className="vs-card">
               {pasangan.map((k, i) => (
@@ -272,17 +322,12 @@ export default function Bandingkan() {
               ))}
             </div>
           )}
-          <Options label="Prioritas" value={prioritas} onChange={setPrioritas} options={PRIORITAS_GAP} />
+          <Options label="Prioritas" value={prioritas} onChange={setPrioritas} options={opsi} />
         </>
       )}
       {err && (
         <p className="err" id="wz-err" role="alert">
           {err}
-        </p>
-      )}
-      {!err && step === langkahPrioritas && !aksesEksklusif(state) && (
-        <p className="note">
-          <Icon name="lock" size={14} /> Analisis gap dan rekomendasi termasuk paket eksklusif.
         </p>
       )}
     </Wizard>

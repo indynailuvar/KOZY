@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kuartil dan analisis gap di KOZY</title>
+<style>
+:root{--blue:#2563eb;--blue-d:#1d4ed8;--blue-50:#eff4ff;--blue-100:#dbe6fe;--blue-200:#bfd3fb;--ink:#0f172a;--ink2:#334155;--muted:#5b6b82;--line:#e5e9f0;--soft:#f7f9fc}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:760px;margin:0 auto;padding:28px 16px 64px}
+h1{font-size:26px;line-height:1.25;margin:0 0 8px;letter-spacing:-.01em}
+h2{font-size:18px;line-height:1.3;margin:36px 0 12px}
+p{margin:0}
+.lead{color:var(--ink2)}
+.muted{color:var(--muted);font-size:14.5px}
+.field{margin:0 0 18px}
+.field>label{display:flex;justify-content:space-between;align-items:baseline;font-weight:600;margin-bottom:6px}
+.field output{font-size:20px;font-weight:700;color:var(--blue)}
+select{width:100%;min-height:44px;padding:0 12px;border-radius:12px;border:0;box-shadow:inset 0 0 0 1px var(--line);font:inherit;background:#fff;color:var(--ink)}
+input[type=range]{width:100%;height:44px;accent-color:var(--blue)}
+select:focus-visible,input:focus-visible{outline:3px solid var(--blue-200);outline-offset:2px}
+.plot{border-radius:16px;box-shadow:inset 0 0 0 1px var(--line);padding:8px 4px 4px}
+.plot svg{display:block;width:100%;height:auto}
+svg text{font-family:inherit;fill:var(--ink2);font-size:13.5px}
+.quarters{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+.q{border-radius:12px;padding:10px 12px;box-shadow:inset 0 0 0 1px var(--line);font-size:14.5px}
+.q i{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.q b{display:block;font-size:17px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.card{border-radius:14px;padding:12px 14px;background:var(--soft);box-shadow:inset 0 0 0 1px var(--line)}
+.card .big{font-size:20px;font-weight:700;margin-top:2px}
+.card.mid{background:var(--blue-50);box-shadow:inset 0 0 0 1px var(--blue-200)}
+.hasil{margin-top:8px;border-radius:16px;padding:16px 18px;background:var(--blue-50);box-shadow:inset 0 0 0 1px var(--blue-200)}
+.hasil .big{font-size:20px;font-weight:700;line-height:1.3}
+.baris{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--blue-100);font-size:15px}
+.baris:last-child{border-bottom:0}
+.baris b{font-variant-numeric:tabular-nums;text-align:right}
+.formula{margin-top:22px;padding:12px 14px;border-radius:12px;background:var(--soft);font-size:15px;color:var(--ink2)}
+@media (max-width:560px){.quarters{grid-template-columns:1fr 1fr}.cards{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+  <h1>Kuartil: cara analisis gap menentukan posisi harga</h1>
+  <p class="lead">Harga semua kos sejenis diurutkan dari termurah ke termahal, lalu dipotong jadi 4 bagian yang isinya sama banyak. Titik potongnya bernama Q1, median (Q2), dan Q3.</p>
+  <p class="muted" style="margin-top:8px">Titik potong ini sudah dihitung sebelumnya untuk tiap kelompok kecamatan dan jenis kos. Saat kamu membandingkan kos, aplikasi tinggal mencocokkan kelompoknya, lalu mengurangkan harga dengan median.</p>
+
+  <h2>1. Pilih kelompok dan harga kos</h2>
+  <div class="field">
+    <label for="grup">Kelompok pembanding</label>
+    <select id="grup"></select>
+  </div>
+  <div class="field">
+    <label for="harga">Harga kos yang dicek <output id="hargaOut" for="harga"></output></label>
+    <input id="harga" type="range" min="350000" max="4000000" step="10000" value="900000">
+  </div>
+
+  <h2>2. Harga semua kos di kelompok itu</h2>
+  <div class="plot"><svg id="plot" viewBox="0 0 720 190" role="img"></svg></div>
+  <div class="quarters" id="quarters"></div>
+  <p class="muted" style="margin-top:10px">Tiap titik adalah satu kos. Warna menunjukkan bagiannya. Lebarnya berbeda, tapi jumlah kosnya sama (selisih paling banyak 1).</p>
+
+  <h2>3. Tiga titik potong</h2>
+  <div class="cards" id="cards"></div>
+
+  <h2>4. Hasil untuk kosmu</h2>
+  <div class="hasil" id="hasil" aria-live="polite"></div>
+
+  <div class="formula">
+    <b>Rumus:</b> gap = harga kos − median. IQR = Q3 − Q1 (lebar separuh kos yang di tengah). Gap terstandar = gap ÷ IQR.<br>
+    Posisi: di bawah Q1, di dalam Q1 sampai Q3, atau di atas Q3. Di luar Q1 sampai Q3 belum tentu kemahalan atau kemurahan.
+  </div>
+  <p class="muted" style="margin-top:14px">Data: 11 kelompok yang punya minimal 10 kos (247 dari 307 iklan). Kelompok yang lebih kecil ditandai eksploratif di aplikasi.</p>
+</main>
+
+<script>
+const G = [{"kec":"Sukolilo","jenis":"putri","n":76,"q1":750000.0,"med":1000000.0,"q3":1500000.0,"harga":[450000,500000,550000,550000,575000,600000,600000,600000,625000,650000,650000,675000,680000,680000,700000,700000,725000,750000,750000,750000,750000,775000,775000,800000,800000,800000,825000,860000,900000,900000,900000,900000,950000,950000,975000,975000,975000,1000000,1000000,1100000,1180000,1200000,1200000,1250000,1250000,1250000,1300000,1300000,1300000,1300000,1300000,1400000,1400000,1400000,1400000,1400000,1500000,1500000,1500000,1500001,1520000,1550000,1550000,1600000,1675000,1750000,1750000,1800000,1800000,2000000,2000000,2000000,2225000,2300000,2300000,2500000]},{"kec":"Wonokromo","jenis":"putri","n":26,"q1":820875.0,"med":1050000.0,"q3":1500000.0,"harga":[600000,632500,700000,725000,725000,750000,794500,900000,900001,980000,1000000,1000000,1000000,1100000,1200000,1300000,1400000,1400000,1500000,1500000,1500000,1500000,1500000,1550000,1750000,1800000]},{"kec":"Gubeng","jenis":"putri","n":19,"q1":750000.0,"med":1100000.0,"q3":1300000.0,"harga":[500000,550000,700000,700000,700000,800000,900000,925000,950000,1100000,1200000,1225000,1300000,1300000,1300000,1500010,1525000,1525000,1655000]},{"kec":"Wonokromo","jenis":"putra","n":19,"q1":675000.0,"med":1000000.0,"q3":1300000.0,"harga":[350000,575000,600000,650000,650000,700000,750000,750000,1000000,1000000,1100000,1100000,1100000,1200000,1400000,1400000,1500000,1500000,1800000]},{"kec":"Gubeng","jenis":"campur","n":18,"q1":1037500.0,"med":1400000.0,"q3":1787500.0,"harga":[800000,852000,900000,900000,1000000,1150000,1300000,1350000,1400000,1400000,1400000,1700000,1750000,1800000,2000000,2200000,2500000,2515000]},{"kec":"Gubeng","jenis":"putra","n":17,"q1":1000000.0,"med":1500000.0,"q3":1850000.0,"harga":[600000,650000,650000,900000,1000000,1200000,1200000,1200000,1500000,1500000,1500000,1500000,1850000,1950000,2500000,3000000,4000000]},{"kec":"Sukolilo","jenis":"campur","n":17,"q1":1550000.0,"med":1800000.0,"q3":2300000.0,"harga":[600000,753000,800000,803000,1550000,1600000,1700000,1750000,1800000,1950000,2200000,2200000,2300000,2300000,3000000,3000000,3250000]},{"kec":"Wonocolo","jenis":"campur","n":15,"q1":1612500.0,"med":1775000.0,"q3":2012500.0,"harga":[1100000,1500000,1500000,1600000,1625000,1700000,1702500,1775000,1800000,2000000,2000000,2025000,2300000,2500000,3000000]},{"kec":"Wonokromo","jenis":"campur","n":15,"q1":1450000.0,"med":1700000.0,"q3":1900000.0,"harga":[650000,1300000,1400000,1400000,1500000,1600000,1700000,1700000,1700123,1800000,1900000,1900000,2000000,2100000,2300000]},{"kec":"Sukolilo","jenis":"putra","n":14,"q1":725000.0,"med":900000.0,"q3":1187500.0,"harga":[450000,500000,650000,700000,800000,800000,800000,1000000,1000000,1000000,1250000,1400000,1400000,1900000]},{"kec":"Tenggilis Mejoyo","jenis":"putri","n":11,"q1":625000.0,"med":950000.0,"q3":1250000.0,"harga":[575000,575000,600000,650000,850000,950000,1100000,1200000,1300000,1300000,1500000]}]; // {kec, jenis, n, q1, med, q3, harga[]}
+const cap = s => s[0].toUpperCase() + s.slice(1);
+const rpP = n => 'Rp' + Math.round(n).toLocaleString('id-ID');
+const rpS = n => (Math.abs(n) >= 1e6 ? (n < 0 ? '−' : '') + 'Rp' + (Math.abs(n) / 1e6).toLocaleString('id-ID', { maximumFractionDigits: 2 }) + ' jt' : (n < 0 ? '−' : '') + 'Rp' + Math.round(Math.abs(n) / 1000).toLocaleString('id-ID') + ' rb');
+const koma = (x, d = 2) => x.toFixed(d).replace('.', ',').replace('-', '−');
+const WARNA = ['#dbe6fe', '#93b4f5', '#4f83ec', '#1d4ed8'];
+const NAMA = ['Termurah 25%', '25% berikutnya', '25% berikutnya', 'Termahal 25%'];
+const S = { g: 0, harga: 900000 };
+
+// ---- inti: persis yang dilakukan API saat dua kos dibandingkan -----------------------------
+function gap(g, harga) {
+  const gapRp = harga - g.med, iqr = g.q3 - g.q1;
+  const posisi = harga < g.q1 ? 'di bawah Q1' : harga > g.q3 ? 'di atas Q3' : 'di dalam Q1 sampai Q3';
+  return { gapRp, iqr, gapIqr: gapRp / iqr, posisi };
+}
+
+// ---- gambar ---------------------------------------------------------------------------------
+const W = 720, H = 190, ML = 16, MR = 16, MT = 34, MB = 40, X0 = 300000, X1 = 4100000;
+const X = h => ML + (h - X0) / (X1 - X0) * (W - ML - MR);
+const cy0 = MT + (H - MT - MB) / 2;
+function gambar(g) {
+  const n = g.harga.length;
+  let s = `<rect x="${X(g.q1)}" y="${MT}" width="${X(g.q3) - X(g.q1)}" height="${H - MT - MB}" fill="#eff4ff"/>`;
+  for (let h = 500000; h <= 4000000; h += 500000) {
+    s += `<line x1="${X(h)}" x2="${X(h)}" y1="${MT}" y2="${H - MB}" stroke="#eef1f5"/>`;
+    s += `<text x="${X(h)}" y="${H - MB + 20}" text-anchor="middle">${koma(h / 1e6, 1)} jt</text>`;
+  }
+  s += `<line x1="${ML}" x2="${W - MR}" y1="${H - MB}" y2="${H - MB}" stroke="#e5e9f0"/>`;
+  g.harga.forEach((h, i) => {
+    const q = Math.min(3, Math.floor(i * 4 / n));
+    const cy = cy0 + (((i * 97) % 61) / 61 - .5) * (H - MT - MB) * .8;
+    s += `<circle cx="${X(h)}" cy="${cy}" r="5.5" fill="${WARNA[q]}" stroke="${q === 0 ? '#2563eb' : WARNA[q]}" stroke-width="1.2" opacity=".95"/>`;
+  });
+  [['Q1', g.q1], ['Q2', g.med], ['Q3', g.q3]].forEach(([t, v]) => {
+    s += `<line x1="${X(v)}" x2="${X(v)}" y1="${MT - 6}" y2="${H - MB}" stroke="#0f172a" stroke-width="1.8"/>`;
+    s += `<text x="${X(v)}" y="${MT - 12}" text-anchor="middle" font-weight="700" style="fill:#0f172a">${t}</text>`;
+  });
+  const hx = X(S.harga);
+  s += `<line x1="${hx}" x2="${hx}" y1="${MT}" y2="${H - MB}" stroke="#2563eb" stroke-width="2.5" stroke-dasharray="5 4"/>`;
+  s += `<polygon points="${hx - 8},${H - MB + 1} ${hx + 8},${H - MB + 1} ${hx},${H - MB - 11}" fill="#2563eb"/>`;
+  document.getElementById('plot').innerHTML = s;
+  document.getElementById('plot').setAttribute('aria-label', `Sebaran harga ${n} kos ${g.jenis} di ${g.kec}. Q1 ${rpP(g.q1)}, median ${rpP(g.med)}, Q3 ${rpP(g.q3)}. Harga yang dicek ${rpP(S.harga)}.`);
+}
+
+function render() {
+  const g = G[S.g], n = g.harga.length, r = gap(g, S.harga);
+  document.getElementById('hargaOut').textContent = rpP(S.harga);
+  gambar(g);
+
+  const batas = [g.harga[0], g.q1, g.med, g.q3, g.harga[n - 1]];
+  const jml = [0, 0, 0, 0];
+  g.harga.forEach((h, i) => jml[Math.min(3, Math.floor(i * 4 / n))]++);
+  const rentang = [`${rpS(g.harga[0])} sampai ${rpS(g.q1)}`, `${rpS(g.q1)} sampai ${rpS(g.med)}`, `${rpS(g.med)} sampai ${rpS(g.q3)}`, `${rpS(g.q3)} sampai ${rpS(g.harga[n - 1])}`];
+  document.getElementById('quarters').innerHTML = jml.map((c, i) => `<div class="q"><i style="background:${WARNA[i]};box-shadow:inset 0 0 0 1px #2563eb"></i>${NAMA[i]}<b>${c} kos</b><span class="muted">${rentang[i]}</span></div>`).join('');
+
+  document.getElementById('cards').innerHTML = `
+    <div class="card"><div>Q1 · batas bawah</div><div class="big">${rpS(g.q1)}</div><div class="muted">25% kos lebih murah dari ini</div></div>
+    <div class="card mid"><div>Q2 · median</div><div class="big">${rpS(g.med)}</div><div class="muted">separuh kos lebih murah, separuh lebih mahal</div></div>
+    <div class="card"><div>Q3 · batas atas</div><div class="big">${rpS(g.q3)}</div><div class="muted">75% kos lebih murah dari ini</div></div>`;
+
+  const arah = r.gapRp > 0 ? 'di atas' : r.gapRp < 0 ? 'di bawah' : 'tepat di';
+  document.getElementById('hasil').innerHTML = `
+    <p class="big">Harga ${rpP(S.harga)} ${r.posisi === 'di dalam Q1 sampai Q3' ? 'ada di rentang umum' : r.posisi}</p>
+    <div class="baris"><span>Gap nominal (harga − median)</span><b>${r.gapRp > 0 ? '+' : r.gapRp < 0 ? '−' : ''}${rpP(Math.abs(r.gapRp))}</b></div>
+    <div class="baris"><span>IQR (Q3 − Q1)</span><b>${rpP(r.iqr)}</b></div>
+    <div class="baris"><span>Gap terstandar (gap ÷ IQR)</span><b>${r.gapIqr > 0 ? '+' : ''}${koma(r.gapIqr, 3)}</b></div>
+    <div class="baris"><span>Posisi</span><b>${r.posisi}</b></div>
+    <p class="muted" style="margin-top:8px">Harga ini ${arah} median kelompok ${g.n} kos ${g.jenis} di ${g.kec}.</p>`;
+}
+
+const sel = document.getElementById('grup');
+sel.innerHTML = G.map((g, i) => `<option value="${i}">${g.kec}, kos ${g.jenis} (${g.n} kos)</option>`).join('');
+sel.addEventListener('change', e => { S.g = +e.target.value; render(); });
+document.getElementById('harga').addEventListener('input', e => { S.harga = +e.target.value; render(); });
+render();
+</script>
+</body>
+</html>
