@@ -6,12 +6,11 @@ import kawasanData from './kawasan.json';
 import pasar from './pasar.json';
 
 export const PASAR = pasar;
-export const MODEL = pasar.meta;
 export const DATA_UPDATED = pasar.meta.diambil;
 
-// Fasilitas yang ikut dihitung model. Papikost juga mencatat lemari, meja belajar,
-// dan parkir, tetapi hampir semua iklannya punya itu sehingga pengaruhnya tidak bisa
-// dipisahkan — datanya disimpan di `fasilitas_lain` untuk ditampilkan saja.
+// Fasilitas yang ditanyakan dan ditampilkan. Tidak ikut menghitung posisi harga:
+// di iklan hanya tercatat ada/tidak, dan sering tidak ditulis pemiliknya. Papikost
+// juga mencatat lemari, meja belajar, dan parkir — disimpan di `fasilitas_lain`.
 export const FASILITAS = [
   { id: 'km', label: 'KM Dalam', icon: 'bath' },
   { id: 'ac', label: 'AC', icon: 'snow' },
@@ -103,6 +102,3 @@ export const KAWASAN_META = kawasanData.meta;
 export const LUAR_CAKUPAN = ['sidoarjo', 'waru', 'gresik', 'driyorejo', 'taman', 'geluran', 'malang', 'bangkalan'];
 
 export const BUDGET_RANGE = { min: 300_000, max: 5_000_000, step: 50_000 };
-
-// Perkiraan biaya pasang fasilitas untuk simulasi pemilik kos (asumsi, bukan hasil scraping).
-export const BIAYA_FASILITAS = { ac: 3_500_000, wifi: 600_000, km: 6_000_000, kasur: 1_800_000, kloset: 1_500_000, akses24: 1_200_000 };

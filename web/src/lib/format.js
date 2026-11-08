@@ -1,16 +1,20 @@
 const nf = new Intl.NumberFormat('id-ID');
 
-// spasi tak terputus agar "Rp" tidak terpisah dari angkanya saat teks turun baris
-export const rp = (n) => `Rp\u00a0${nf.format(Math.round(Math.abs(n)))}`;
+// Ditulis menempel seperti di Tokopedia dan Mamikos: "Rp1.300.000".
+export const rp = (n) => `Rp${nf.format(Math.round(Math.abs(n)))}`;
 export const rpSigned = (n) => `${n < 0 ? '−' : '+'}${rp(n)}`;
 
+// "Rp1,3 jt", "Rp750 rb"; spasi tak terputus agar satuannya tidak terpisah
 export function rpSingkat(n) {
   if (n >= 1_000_000) {
     const v = n / 1_000_000;
-    return `Rp\u00a0${v.toLocaleString('id-ID', { maximumFractionDigits: 2 })}\u00a0jt`;
+    return `Rp${v.toLocaleString('id-ID', { maximumFractionDigits: 2 })} jt`;
   }
-  return `Rp\u00a0${Math.round(n / 1000)}\u00a0rb`;
+  return `Rp${Math.round(n / 1000)} rb`;
 }
+
+// "Rp550 rb–1,4 jt"; kalau kedua ujung sama cukup satu angka
+export const rpRentang = (a, b) => (Math.round(a / 1000) === Math.round(b / 1000) ? rpSingkat(a) : `${rpSingkat(a)}–${rpSingkat(b).slice(2)}`);
 
 export const persen = (x, signed = true) =>
   `${signed && x > 0 ? '+' : x < 0 ? '−' : ''}${Math.abs(x).toLocaleString('id-ID', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%`;

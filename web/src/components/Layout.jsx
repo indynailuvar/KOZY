@@ -1,23 +1,26 @@
 import { useEffect, useRef, useState } from 'react';
 import Icon from './Icon.jsx';
+import { KozyMark } from './Brand.jsx';
 import { Button, Sheet } from './ui.jsx';
 import { LoginPanel } from './Sheets.jsx';
-import { MenuAkses, PengaturanAkses } from './A11y.jsx';
+import { MenuAkses } from './A11y.jsx';
 import { useStore } from '../store.jsx';
 
 const NAV = [
   { href: '#/', label: 'Beranda', match: (p) => p === '/' },
   { href: '#/cek', label: 'Cek Harga', match: (p) => ['/cek', '/hasil', '/kartu-tawar'].includes(p) },
   { href: '#/cari', label: 'Cari Kos', match: (p) => ['/cari', '/kawasan', '/match', '/bandingkan'].includes(p) },
-  { href: '#/edukasi', label: 'Edukasi', match: (p) => p === '/edukasi' },
+  { href: '#/edukasi', label: 'Tips Hemat', match: (p) => p === '/edukasi' },
 ];
+
+// Halaman yang menampilkan nav bawah di HP. Halaman lain punya app bar
+// sendiri dengan panah kembali, seperti halaman produk di aplikasi belanja.
+export const RUTE_NAV_BAWAH = ['/', '/riwayat', '/akun'];
 
 export function Logo() {
   return (
     <a href="#/" className="logo" aria-label="KOZY beranda">
-      <span className="logo-mark">
-        <Icon name="home" size={16} strokeWidth={2.6} />
-      </span>
+      <KozyMark className="logo-mark" />
       KOZY
     </a>
   );
@@ -25,21 +28,11 @@ export function Logo() {
 
 export function Header({ path }) {
   const { state, set, toast } = useStore();
-  const [menu, setMenu] = useState(false);
   const [akun, setAkun] = useState(false);
   const [login, setLogin] = useState(false);
   const akunRef = useRef(null);
 
-  useEffect(() => {
-    setMenu(false);
-    setAkun(false);
-  }, [path]);
-  useEffect(() => {
-    if (!menu) return;
-    const onKey = (e) => e.key === 'Escape' && setMenu(false);
-    document.addEventListener('keydown', onKey);
-    return () => document.removeEventListener('keydown', onKey);
-  }, [menu]);
+  useEffect(() => setAkun(false), [path]);
   useEffect(() => {
     if (!akun) return;
     const close = (e) => !akunRef.current?.contains(e.target) && setAkun(false);
@@ -50,7 +43,6 @@ export function Header({ path }) {
   const keluar = () => {
     set({ user: null });
     setAkun(false);
-    setMenu(false);
     toast('Kamu sudah keluar');
   };
 
@@ -66,11 +58,9 @@ export function Header({ path }) {
           ))}
         </nav>
         <div className="topbar-r">
-          {/* Tombol tetap, bukan tautan di dalam laci menu: pengguna sebelumnya
-              tidak menemukan KOZY AI karena di HP dia tersembunyi di hamburger. */}
-          <a href="#/ai" className={`ai-btn ${path === '/ai' ? 'on' : ''}`} aria-label="KOZY AI" aria-current={path === '/ai' ? 'page' : undefined}>
-            <Icon name="sparkles" size={18} />
-            <span>KOZY AI</span>
+          <a href="#/ai" className={`ai-btn ${path === '/ai' ? 'on' : ''}`} aria-current={path === '/ai' ? 'page' : undefined}>
+            <Icon name="sparkles" size={16} />
+            KOZY AI
           </a>
           <MenuAkses />
           <div className="acct only-desk" ref={akunRef}>
@@ -91,44 +81,46 @@ export function Header({ path }) {
                 </div>
                 <a href="#/riwayat">Riwayat cek</a>
                 <a href="#/pemilik">Untuk pemilik kos</a>
+                <a href="#/akun">Pengaturan akun</a>
                 <button type="button" onClick={keluar}>
                   Keluar
                 </button>
               </div>
             )}
           </div>
-          <button type="button" className="icon-btn only-mob" aria-label="Menu" aria-expanded={menu} aria-controls="menu-hp" onClick={() => setMenu((o) => !o)}>
-            <Icon name={menu ? 'x' : 'menu'} size={22} />
-          </button>
         </div>
       </div>
-      {menu && (
-        <nav className="drawer" id="menu-hp" aria-label="Menu">
-          {[...NAV, { href: '#/riwayat', label: 'Riwayat cek' }, { href: '#/pemilik', label: 'Untuk pemilik kos' }, { href: '#/tentang', label: 'Tentang KOZY' }].map((n) => (
-            <a key={n.href} href={n.href}>
-              {n.label}
-              <Icon name="right" size={18} />
-            </a>
-          ))}
-          <div className="drawer-sec">
-            <p className="sec-label">Aksesibilitas</p>
-            <PengaturanAkses />
-          </div>
-          {state.user ? (
-            <Button variant="secondary" block onClick={keluar}>
-              Keluar
-            </Button>
-          ) : (
-            <Button block onClick={() => setLogin(true)}>
-              Masuk
-            </Button>
-          )}
-        </nav>
-      )}
       <Sheet open={login} onClose={() => setLogin(false)} label="Masuk">
-        <LoginPanel judul="Masuk ke KOZY" alasan="Simpan riwayat cek dan hasil pembelianmu di akun." onDone={() => setLogin(false)} />
+        <LoginPanel judul="Masuk ke KOZY" alasan="Riwayat cek dan paket yang kamu beli tersimpan di akunmu." onDone={() => setLogin(false)} />
       </Sheet>
     </header>
+  );
+}
+
+const MENU_BAWAH = [
+  { href: '#/', path: '/', icon: 'home', label: 'Beranda' },
+  { href: '#/riwayat', path: '/riwayat', icon: 'history', label: 'Riwayat' },
+  { href: '#/ai', path: '/ai', icon: 'sparkles', label: 'KOZY AI' },
+  { href: '#/akun', path: '/akun', icon: 'user', label: 'Akun' },
+];
+
+// Nav bawah di HP: melayang seperti tab bar Instagram, isinya seperti Beranda/Transaksi/Akun di Tokopedia.
+export function NavBawah({ path }) {
+  useEffect(() => {
+    document.body.classList.add('has-bnav');
+    return () => document.body.classList.remove('has-bnav');
+  }, []);
+  return (
+    <nav className="bnav" aria-label="Menu utama">
+      {MENU_BAWAH.map((m) => (
+        <a key={m.href} href={m.href} aria-current={path === m.path ? 'page' : undefined}>
+          <span className="bnav-ic">
+            <Icon name={m.icon} size={22} strokeWidth={path === m.path ? 2.4 : 2} />
+          </span>
+          {m.label}
+        </a>
+      ))}
+    </nav>
   );
 }
 
@@ -138,15 +130,15 @@ export function Footer() {
       <div className="footer-in">
         <div className="footer-brand">
           <Logo />
-          <p>Cek kewajaran harga kos di Surabaya. Netral, bukan platform iklan.</p>
+          <p>Cek harga wajar kos di Surabaya. Netral, bukan tempat iklan.</p>
         </div>
         <nav className="footer-links" aria-label="Tautan footer">
           <a href="#/cek">Cek harga</a>
           <a href="#/cari">Cari kos</a>
           <a href="#/bandingkan">Bandingkan kos</a>
-          <a href="#/edukasi">Edukasi</a>
-          <a href="#/tentang">Tentang</a>
-          <a href="#/pemilik">Untuk pemilik</a>
+          <a href="#/edukasi">Tips hemat</a>
+          <a href="#/tentang">Cara kerja KOZY</a>
+          <a href="#/pemilik">Untuk pemilik kos</a>
         </nav>
       </div>
       <p className="footer-copy">© 2026 KOZY · Surabaya</p>

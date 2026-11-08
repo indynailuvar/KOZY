@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Icon from '../components/Icon.jsx';
+import AskBar from '../components/AskBar.jsx';
+import { AiAvatar } from '../components/Brand.jsx';
 import { SpeakButton } from '../components/A11y.jsx';
 import { KeputusanKartu, PilihKos, ProdukKartu, TipsKartu, teksSuara } from '../components/ChatCards.jsx';
 import { kenaliNiat, tanyaAI } from '../api/ai.js';
@@ -9,27 +11,19 @@ import { useStore } from '../store.jsx';
 import { go } from '../router.js';
 
 const TOPIK = [
-  { icon: 'sofa', judul: 'Upgrade kamar', sub: 'Ide perabot dari uang hemat', tanya: 'Ide upgrade kamar dari uang hemat' },
-  { icon: 'scale', judul: 'Pilih kos', sub: 'Bingung antara kos A dan B', tanya: 'Bantu pilih kos A atau B' },
-  { icon: 'wallet', judul: 'Tips keuangan', sub: 'Tanggal tua & budget kos', tanya: 'Tips bertahan di tanggal tua' },
-  { icon: 'calc', judul: 'Cek harga kos', sub: 'Apakah harganya wajar?', ke: '/cek' },
+  { judul: 'Cara menawar harga kos', tanya: 'Cara nawar harga kos' },
+  { judul: 'Pilih kos A atau B', tanya: 'Bantu pilih kos A atau B' },
+  { judul: 'Tips tanggal tua', tanya: 'Tips bertahan di tanggal tua' },
+  { judul: 'Ide upgrade kamar', tanya: 'Ide upgrade kamar dari uang hemat' },
 ];
 
-function Avatar({ kecil }) {
-  return (
-    <span className={`chat-ava ${kecil ? 'sm' : ''}`} aria-hidden="true">
-      <Icon name="sparkles" size={kecil ? 14 : 30} />
-      {!kecil && <i className="chat-online" />}
-    </span>
-  );
-}
-
+// Gaya aplikasi chat: jawaban KOZY AI di gelembung putih kiri, pesanmu di
+// gelembung tosca muda kanan. Kartu data muncul di bawah gelembung jawaban.
 function PesanAI({ m, terakhir, onKirim }) {
   return (
     <div className="msg-ai">
-      <Avatar kecil />
       <div className="msg-col">
-        <div className="bubble">
+        <div className="msg-teks">
           <p>{m.teks}</p>
           {m.kartu && <SpeakButton compact teks={() => teksSuara(m)} label="Bacakan jawaban" />}
         </div>
@@ -40,13 +34,13 @@ function PesanAI({ m, terakhir, onKirim }) {
         {m.aksi?.map((a) => (
           <a key={a.ke} className="msg-link" href={`#${a.ke}`}>
             {a.label}
-            <Icon name="arrowr" size={15} />
+            <Icon name="right" size={16} />
           </a>
         ))}
         {terakhir && m.saran?.length > 0 && (
           <div className="msg-saran">
             {m.saran.map((s) => (
-              <button key={s} type="button" onClick={() => onKirim(s)}>
+              <button key={s} type="button" className="chip" onClick={() => onKirim(s)}>
                 {s}
               </button>
             ))}
@@ -115,45 +109,34 @@ export default function Chat() {
     <div className="chat">
       <div className="chat-in">
         <div className="chat-top">
-          <button type="button" className="circle-btn" onClick={kembali} aria-label="Kembali">
-            <Icon name="left" size={20} />
+          <button type="button" className="back-btn" onClick={kembali} aria-label="Kembali">
+            <Icon name="arrowl" size={22} strokeWidth={2.2} />
           </button>
+          <div className="chat-id">
+            <AiAvatar size="sm" />
+            <span>
+              <b>KOZY AI</b>
+              <small>Asisten kos kamu</small>
+            </span>
+          </div>
           {pesan.length > 0 && (
-            <button type="button" className="pill-btn" onClick={() => set({ chat: [] })}>
-              <Icon name="refresh" size={16} />
+            <button type="button" className="text-btn" onClick={() => set({ chat: [] })}>
               Mulai baru
             </button>
           )}
         </div>
 
         <div className="chat-scroll" ref={listRef} aria-live="polite">
-          <div className="chat-hero">
-            <Avatar />
-            <h1>KOZY AI</h1>
-            <p>Asisten virtual KOZY</p>
-            <small>Online · biasanya membalas dalam hitungan detik</small>
-          </div>
-
-          <div className="msg-ai">
-            <Avatar kecil />
-            <div className="msg-col">
-              <div className="bubble">
-                <p>Halo! 👋 Aku bisa bantu ide upgrade kamar, memilih kos, dan tips keuangan anak kos. Pilih topik di bawah atau tulis pertanyaanmu.</p>
-              </div>
-            </div>
-          </div>
-
           {pesan.length === 0 && (
-            <section className="topics">
-              <p className="sec-label">Topik populer</p>
-              <div className="topic-grid">
+            <section className="chat-hero" aria-labelledby="chat-salam">
+              <AiAvatar size="lg" />
+              <h1 id="chat-salam">Halo, aku KOZY AI</h1>
+              <p>Tanya soal memilih kos, cara menawar, atau mengatur uang bulanan.</p>
+              <p className="chat-topik-l">Coba tanya:</p>
+              <div className="chat-topik">
                 {TOPIK.map((t) => (
-                  <button key={t.judul} type="button" className="topic" onClick={() => (t.ke ? go(t.ke) : kirim(t.tanya))}>
-                    <span className="ic-circle">
-                      <Icon name={t.icon} size={19} />
-                    </span>
-                    <b>{t.judul}</b>
-                    <small>{t.sub}</small>
+                  <button key={t.judul} type="button" className="chip" onClick={() => kirim(t.tanya)}>
+                    {t.judul}
                   </button>
                 ))}
               </div>
@@ -171,8 +154,7 @@ export default function Chat() {
           )}
           {sibuk && (
             <div className="msg-ai">
-              <Avatar kecil />
-              <div className="bubble typing" aria-label="KOZY AI sedang mengetik">
+              <div className="msg-teks typing" role="status" aria-label="KOZY AI sedang mengetik">
                 <i />
                 <i />
                 <i />
@@ -181,19 +163,10 @@ export default function Chat() {
           )}
         </div>
 
-        <form
-          className="chat-input"
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (!sibuk) kirim(teks);
-          }}
-        >
-          <input value={teks} onChange={(e) => setTeks(e.target.value)} placeholder="Tulis pertanyaan…" aria-label="Pesan untuk KOZY AI" />
-          <button type="submit" disabled={!teks.trim() || sibuk} aria-label="Kirim">
-            <Icon name="arrowup" size={18} strokeWidth={2.4} />
-          </button>
-        </form>
-        <p className="chat-note">KOZY AI adalah AI dan bisa keliru. Cek ulang sebelum memutuskan.</p>
+        <div className="chat-bar">
+          <AskBar value={teks} onChange={setTeks} sibuk={sibuk} placeholder="Tulis pertanyaan…" onKirim={kirim} />
+          <p className="chat-note">KOZY AI bisa keliru. Cek lagi sebelum memutuskan.</p>
+        </div>
       </div>
     </div>
   );

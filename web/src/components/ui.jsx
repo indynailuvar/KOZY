@@ -1,5 +1,6 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import Icon from './Icon.jsx';
+import { KozyMark } from './Brand.jsx';
 
 export function Button({ variant = 'primary', size, icon, iconRight, block, className = '', children, ...rest }) {
   const cls = ['btn', `btn-${variant}`, size && `btn-${size}`, block && 'btn-block', className].filter(Boolean).join(' ');
@@ -13,26 +14,23 @@ export function Button({ variant = 'primary', size, icon, iconRight, block, clas
 }
 
 const STATUS = {
-  KEMAHALAN: { cls: 'st-kem', icon: 'alert', teks: 'Kemahalan' },
-  WAJAR: { cls: 'st-waj', icon: 'checkc', teks: 'Wajar' },
-  MURAH: { cls: 'st-mur', icon: 'tag', teks: 'Murah' },
+  KEMAHALAN: { cls: 'st-kem', teks: 'Kemahalan' },
+  WAJAR: { cls: 'st-waj', teks: 'Wajar' },
+  MURAH: { cls: 'st-mur', teks: 'Murah' },
 };
 
+// Label status kotak kecil. Warnanya hanya penguat: kata "Wajar/Kemahalan/Murah"
+// tetap tertulis, jadi status tidak bergantung pada warna saja.
 export function StatusBadge({ status, size }) {
   const s = STATUS[status];
-  return (
-    <span className={`badge ${s.cls} ${size === 'sm' ? 'badge-sm' : ''}`}>
-      <Icon name={s.icon} size={size === 'sm' ? 12 : 15} strokeWidth={2.4} />
-      {s.teks}
-    </span>
-  );
+  return <span className={`badge ${s.cls} ${size === 'sm' ? 'badge-sm' : ''}`}>{s.teks}</span>;
 }
 
-// Tombol kembali persegi membulat (gaya SS1)
+// Panah kembali polos di app bar
 export function BackButton({ onClick, label = 'Kembali' }) {
   return (
     <button type="button" className="back-btn" onClick={onClick} aria-label={label}>
-      <Icon name="left" size={20} strokeWidth={2.4} />
+      <Icon name="arrowl" size={22} strokeWidth={2.2} />
     </button>
   );
 }
@@ -54,9 +52,7 @@ export function Wizard({ judul, langkah, total, onBack, children, footer }) {
   return (
     <div className="wz">
       <a href="#/" className="logo wz-brand" aria-label="KOZY beranda">
-        <span className="logo-mark">
-          <Icon name="home" size={16} strokeWidth={2.6} />
-        </span>
+        <KozyMark className="logo-mark" />
         KOZY
       </a>
       <div className="wz-card">
@@ -102,8 +98,9 @@ export function Question({ judul, sub }) {
   );
 }
 
-// Pilihan tunggal berbentuk baris besar
-export function Options({ value, onChange, options, label }) {
+// Pilihan tunggal. Default berupa baris besar; dengan `kolom` (2 atau 3)
+// jadi kartu ikon kecil tanpa subjudul, seperti pilihan layanan di Gojek.
+export function Options({ value, onChange, options, label, kolom }) {
   const refs = useRef([]);
   const aktif = Math.max(0, options.findIndex((o) => o.id === value));
   const onKeyDown = (e) => {
@@ -116,7 +113,7 @@ export function Options({ value, onChange, options, label }) {
     refs.current[i]?.focus();
   };
   return (
-    <div className="opts" role="radiogroup" aria-label={label} onKeyDown={onKeyDown}>
+    <div className={`opts ${kolom ? `opts-grid k-${kolom}` : ''}`} role="radiogroup" aria-label={label} onKeyDown={onKeyDown}>
       {options.map((o, i) => {
         const on = value === o.id;
         return (
@@ -137,7 +134,7 @@ export function Options({ value, onChange, options, label }) {
             )}
             <span className="opt-t">
               <b>{o.label}</b>
-              {o.sub && <small>{o.sub}</small>}
+              {o.sub && !kolom && <small>{o.sub}</small>}
             </span>
             <span className="opt-radio" aria-hidden="true" />
           </button>
@@ -441,7 +438,7 @@ export function PageHead({ judul, sub, onBack, aksi }) {
         <h1>{judul}</h1>
         {sub && <p>{sub}</p>}
       </div>
-      {aksi}
+      {aksi && <div className="page-head-aksi">{aksi}</div>}
     </header>
   );
 }

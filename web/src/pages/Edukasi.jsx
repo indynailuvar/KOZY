@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Icon from '../components/Icon.jsx';
 import { SpeakButton } from '../components/A11y.jsx';
-import { Accordion, AmountInput, ListRow } from '../components/ui.jsx';
+import { Accordion, AmountInput, ListRow, PageHead } from '../components/ui.jsx';
 import { TIPS } from '../data/konten.js';
 import { bulat10rb, bulat50rb, rp } from '../lib/format.js';
 import { useStore } from '../store.jsx';
@@ -23,12 +23,12 @@ function Kalkulator() {
       <h2 id="calc-h" className="card-t">
         Hitung budget kos idealmu
       </h2>
-      <p className="card-s">Masukkan penghasilan atau uang saku per bulan.</p>
+      <p className="card-s">Isi penghasilan atau uang sakumu per bulan.</p>
       <AmountInput id="uang" label="Penghasilan per bulan" prefix="Rp" value={uang} onChange={setUang} placeholder="0" />
       {uang >= 100_000 ? (
         <>
           <div className="calc-res">
-            <span>Budget kos maksimal</span>
+            <span>Budget kos paling banyak</span>
             <b>
               {rp(ideal)}
               <small>/bulan</small>
@@ -56,11 +56,11 @@ function Kalkulator() {
               go('/cari');
             }}
           >
-            Cari kos sesuai budget ini <Icon name="arrowr" size={15} />
+            Cari kos dengan budget ini <Icon name="arrowr" size={15} />
           </button>
         </>
       ) : (
-        <p className="note">Aturan 30%: biaya kos sebaiknya tidak lebih dari 30% pemasukan.</p>
+        <p className="note">Patokan umum: biaya kos sebaiknya tidak lebih dari 30% pemasukan.</p>
       )}
     </section>
   );
@@ -70,10 +70,7 @@ export default function Edukasi() {
   const { bukaAI } = useStore();
   return (
     <div className="page edu">
-      <header className="intro">
-        <h1>Edukasi keuangan</h1>
-        <p>Tips singkat untuk anak kos, dari tanggal tua sampai dana darurat.</p>
-      </header>
+      <PageHead judul="Tips hemat anak kos" sub="Atur uang bulanan, dari tanggal tua sampai dana darurat" onBack={() => (window.history.length > 1 ? window.history.back() : go('/'))} />
 
       <div className="edu-grid">
         <div className="edu-main">
@@ -104,7 +101,7 @@ export default function Edukasi() {
         <aside className="edu-side">
           <Kalkulator />
           <div className="list-card">
-            <ListRow icon="sofa" title="Punya uang hemat dari kos?" sub="Minta ide upgrade kamar ke KOZY AI" onClick={() => bukaAI({ teks: 'Ide upgrade kamar dari uang hemat' })} />
+            <ListRow icon="sofa" title="Punya sisa uang dari hemat kos?" sub="Minta ide upgrade kamar ke KOZY AI" onClick={() => bukaAI({ teks: 'Ide upgrade kamar dari uang hemat' })} />
           </div>
         </aside>
       </div>

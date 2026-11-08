@@ -12,117 +12,19 @@
    "Papikost": 67
   },
   "kecamatan": 14,
-  "kecamatan_kuat": 6,
   "min_iklan_kec": 5,
+  "min_pembanding": 10,
   "berkoordinat": 67,
   "ada_sisa_kamar": 67,
-  "metode": "Regresi hedonic log-linear, estimasi Ridge",
-  "alpha": 5.6234,
-  "uji": "uji silang bersarang 25 lipatan (alpha dipilih ulang di tiap lipatan latih)",
-  "mae": 277000,
-  "mape": 20.8,
-  "r2_log": 0.66,
-  "pembanding_ols": {
-   "mae": 279000,
-   "mape": 21.0,
-   "selisih_mape": -0.18,
-   "t_berpasangan": -2.27,
-   "ridge_menang": 20,
-   "lipatan": 25
-  },
+  "metode": "Robust Statistical Benchmarking: median, Q1, Q3, dan IQR per kecamatan x jenis kos",
+  "kuantil": "interpolasi linear",
   "catatan": "Harga sewa bulanan dari iklan Mamikos dan Papikost. Luas kamar dan nomor pemilik tidak ada di kedua sumber; koordinat hanya ada di Papikost."
- },
- "model": {
-  "bentuk": "log-linear",
-  "estimasi": "ridge",
-  "alpha": 5.6234,
-  "intercept": 13.377467981071412,
-  "kec": {
-   "Gayungan": 0.12464738444502377,
-   "Gubeng": -0.02083749763917357,
-   "Gunung Anyar": 0.12464738444502377,
-   "Lakarsantri": 0.12464738444502377,
-   "Mulyorejo": 0.12464738444502377,
-   "Rungkut": -0.049617505327796255,
-   "Sambikerep": 0.12464738444502377,
-   "Sawahan": 0.12464738444502377,
-   "Sukolilo": 0.011980777369577169,
-   "Tambaksari": 0.12464738444502377,
-   "Tegalsari": 0.12464738444502377,
-   "Tenggilis Mejoyo": -0.09844202102243318,
-   "Wonocolo": 0.05799950184671908,
-   "Wonokromo": -0.033869003849945525
-  },
-  "fasilitas": {
-   "km": 0.24469980532506844,
-   "ac": 0.4189634154576745,
-   "wifi": 0.05199991453296824,
-   "kasur": 0.09143824578776531,
-   "kloset": 0.10767858896025959,
-   "akses24": -0.005521614791507846
-  },
-  "jenis": {
-   "putra": 0.0,
-   "putri": -0.04430039486683993,
-   "campur": 0.1567136832831615
-  }
- },
- "model_penuh": {
-  "koefisien": {
-   "intercept": 13.395361677366576,
-   "kec:Gubeng": -0.019674874185157187,
-   "kec:Rungkut": -0.048454881873779866,
-   "kec:Sukolilo": 0.013143400823593554,
-   "kec:Tenggilis Mejoyo": -0.0972793975684168,
-   "kec:Wonocolo": 0.05916212530073547,
-   "kec:Wonokromo": -0.03270638039592914,
-   "kec:lainnya": 0.12581000789904015,
-   "fas:km": 0.24469980532506844,
-   "fas:ac": 0.4189634154576745,
-   "fas:wifi": 0.05199991453296824,
-   "fas:kasur": 0.09143824578776531,
-   "fas:kloset": 0.10767858896025959,
-   "fas:akses24": -0.005521614791507846,
-   "jenis:putra": -0.03747109613875318,
-   "jenis:putri": -0.08177149100559311,
-   "jenis:campur": 0.1192425871444083,
-   "situs:Papikost": 0.08437815450147998
-  },
-  "efek_kec_sebelum_dipusatkan": {
-   "Gubeng": -0.019674874185157187,
-   "Rungkut": -0.048454881873779866,
-   "Sukolilo": 0.013143400823593554,
-   "Tenggilis Mejoyo": -0.0972793975684168,
-   "Wonocolo": 0.05916212530073547,
-   "Wonokromo": -0.03270638039592914,
-   "Gayungan": 0.12581000789904015,
-   "Gunung Anyar": 0.12581000789904015,
-   "Lakarsantri": 0.12581000789904015,
-   "Mulyorejo": 0.12581000789904015,
-   "Sambikerep": 0.12581000789904015,
-   "Sawahan": 0.12581000789904015,
-   "Tambaksari": 0.12581000789904015,
-   "Tegalsari": 0.12581000789904015
-  },
-  "pergeseran_pusat": 0.0011626234540163855,
-  "bagian_papikost": 0.2182410423452769,
-  "kecamatan_kelompok_lainnya": [
-   "Gayungan",
-   "Gunung Anyar",
-   "Lakarsantri",
-   "Mulyorejo",
-   "Sambikerep",
-   "Sawahan",
-   "Tambaksari",
-   "Tegalsari"
-  ],
-  "catatan": "Model apa adanya sebelum diringkas. Untuk pemeriksaan, bukan dipakai aplikasi."
  },
  "kecamatan": {
   "Gayungan": {
    "n": 3,
-   "p10": 2300000,
-   "p25": 2300000,
+   "p10": 2340000,
+   "p25": 2400000,
    "p50": 2500000,
    "p75": 2500000,
    "p90": 2500000,
@@ -151,7 +53,36 @@
     "Papikost": 3
    },
    "berkoordinat": 3,
-   "keyakinan": "rendah"
+   "keyakinan": "rendah",
+   "benchmark": {
+    "semua": {
+     "n": 3,
+     "median": 2500000,
+     "q1": 2400000,
+     "q3": 2500000,
+     "iqr": 100000,
+     "min": 2300000,
+     "max": 2500000
+    },
+    "putra": {
+     "n": 2,
+     "median": 2500000,
+     "q1": 2500000,
+     "q3": 2500000,
+     "iqr": 0,
+     "min": 2500000,
+     "max": 2500000
+    },
+    "campur": {
+     "n": 1,
+     "median": 2300000,
+     "q1": 2300000,
+     "q3": 2300000,
+     "iqr": 0,
+     "min": 2300000,
+     "max": 2300000
+    }
+   }
   },
   "Gubeng": {
    "n": 54,
@@ -159,7 +90,7 @@
    "p25": 900000,
    "p50": 1300000,
    "p75": 1525000,
-   "p90": 2200000,
+   "p90": 2140000,
    "komposisi": {
     "putra": 31,
     "putri": 35,
@@ -186,15 +117,53 @@
     "Papikost": 6
    },
    "berkoordinat": 6,
-   "keyakinan": "sedang"
+   "keyakinan": "sedang",
+   "benchmark": {
+    "semua": {
+     "n": 54,
+     "median": 1300000,
+     "q1": 900000,
+     "q3": 1525000,
+     "iqr": 625000,
+     "min": 500000,
+     "max": 4000000
+    },
+    "putra": {
+     "n": 17,
+     "median": 1500000,
+     "q1": 1000000,
+     "q3": 1850000,
+     "iqr": 850000,
+     "min": 600000,
+     "max": 4000000
+    },
+    "putri": {
+     "n": 19,
+     "median": 1100000,
+     "q1": 750000,
+     "q3": 1300000,
+     "iqr": 550000,
+     "min": 500000,
+     "max": 1655000
+    },
+    "campur": {
+     "n": 18,
+     "median": 1400000,
+     "q1": 1037500,
+     "q3": 1787500,
+     "iqr": 750000,
+     "min": 800000,
+     "max": 2515000
+    }
+   }
   },
   "Gunung Anyar": {
    "n": 4,
-   "p10": 800000,
-   "p25": 1000000,
+   "p10": 860000,
+   "p25": 950000,
    "p50": 1000000,
-   "p75": 1000000,
-   "p90": 1500000,
+   "p75": 1125000,
+   "p90": 1350000,
    "komposisi": {
     "putra": 25,
     "putri": 75,
@@ -220,7 +189,36 @@
     "Papikost": 4
    },
    "berkoordinat": 4,
-   "keyakinan": "rendah"
+   "keyakinan": "rendah",
+   "benchmark": {
+    "semua": {
+     "n": 4,
+     "median": 1000000,
+     "q1": 950000,
+     "q3": 1125000,
+     "iqr": 175000,
+     "min": 800000,
+     "max": 1500000
+    },
+    "putra": {
+     "n": 1,
+     "median": 1000000,
+     "q1": 1000000,
+     "q3": 1000000,
+     "iqr": 0,
+     "min": 1000000,
+     "max": 1000000
+    },
+    "putri": {
+     "n": 3,
+     "median": 1000000,
+     "q1": 900000,
+     "q3": 1250000,
+     "iqr": 350000,
+     "min": 800000,
+     "max": 1500000
+    }
+   }
   },
   "Lakarsantri": {
    "n": 2,
@@ -254,15 +252,35 @@
     "Papikost": 2
    },
    "berkoordinat": 2,
-   "keyakinan": "rendah"
+   "keyakinan": "rendah",
+   "benchmark": {
+    "semua": {
+     "n": 2,
+     "median": 800000,
+     "q1": 800000,
+     "q3": 800000,
+     "iqr": 0,
+     "min": 800000,
+     "max": 800000
+    },
+    "putri": {
+     "n": 2,
+     "median": 800000,
+     "q1": 800000,
+     "q3": 800000,
+     "iqr": 0,
+     "min": 800000,
+     "max": 800000
+    }
+   }
   },
   "Mulyorejo": {
    "n": 2,
-   "p10": 2000000,
-   "p25": 2000000,
-   "p50": 2000000,
-   "p75": 2750000,
-   "p90": 2750000,
+   "p10": 2075000,
+   "p25": 2187500,
+   "p50": 2375000,
+   "p75": 2562500,
+   "p90": 2675000,
    "komposisi": {
     "putra": 50,
     "putri": 50,
@@ -288,11 +306,40 @@
     "Papikost": 2
    },
    "berkoordinat": 2,
-   "keyakinan": "rendah"
+   "keyakinan": "rendah",
+   "benchmark": {
+    "semua": {
+     "n": 2,
+     "median": 2375000,
+     "q1": 2187500,
+     "q3": 2562500,
+     "iqr": 375000,
+     "min": 2000000,
+     "max": 2750000
+    },
+    "putra": {
+     "n": 1,
+     "median": 2750000,
+     "q1": 2750000,
+     "q3": 2750000,
+     "iqr": 0,
+     "min": 2750000,
+     "max": 2750000
+    },
+    "putri": {
+     "n": 1,
+     "median": 2000000,
+     "q1": 2000000,
+     "q3": 2000000,
+     "iqr": 0,
+     "min": 2000000,
+     "max": 2000000
+    }
+   }
   },
   "Rungkut": {
    "n": 17,
-   "p10": 750000,
+   "p10": 730000,
    "p25": 1000000,
    "p50": 1300000,
    "p75": 1600000,
@@ -323,15 +370,53 @@
     "Papikost": 8
    },
    "berkoordinat": 8,
-   "keyakinan": "sedang"
+   "keyakinan": "sedang",
+   "benchmark": {
+    "semua": {
+     "n": 17,
+     "median": 1300000,
+     "q1": 1000000,
+     "q3": 1600000,
+     "iqr": 600000,
+     "min": 650000,
+     "max": 1850000
+    },
+    "putra": {
+     "n": 8,
+     "median": 1150000,
+     "q1": 937500,
+     "q3": 1343750,
+     "iqr": 406250,
+     "min": 700000,
+     "max": 1500000
+    },
+    "putri": {
+     "n": 4,
+     "median": 900000,
+     "q1": 762500,
+     "q3": 1150000,
+     "iqr": 387500,
+     "min": 650000,
+     "max": 1600000
+    },
+    "campur": {
+     "n": 5,
+     "median": 1850000,
+     "q1": 1650000,
+     "q3": 1850000,
+     "iqr": 200000,
+     "min": 1000000,
+     "max": 1850000
+    }
+   }
   },
   "Sambikerep": {
    "n": 4,
-   "p10": 600000,
-   "p25": 1200000,
-   "p50": 1850000,
-   "p75": 1850000,
-   "p90": 2700000,
+   "p10": 780000,
+   "p25": 1050000,
+   "p50": 1525000,
+   "p75": 2062500,
+   "p90": 2445000,
    "komposisi": {
     "putra": 25,
     "putri": 50,
@@ -357,15 +442,53 @@
     "Papikost": 4
    },
    "berkoordinat": 4,
-   "keyakinan": "rendah"
+   "keyakinan": "rendah",
+   "benchmark": {
+    "semua": {
+     "n": 4,
+     "median": 1525000,
+     "q1": 1050000,
+     "q3": 2062500,
+     "iqr": 1012500,
+     "min": 600000,
+     "max": 2700000
+    },
+    "putra": {
+     "n": 1,
+     "median": 2700000,
+     "q1": 2700000,
+     "q3": 2700000,
+     "iqr": 0,
+     "min": 2700000,
+     "max": 2700000
+    },
+    "putri": {
+     "n": 2,
+     "median": 900000,
+     "q1": 750000,
+     "q3": 1050000,
+     "iqr": 300000,
+     "min": 600000,
+     "max": 1200000
+    },
+    "campur": {
+     "n": 1,
+     "median": 1850000,
+     "q1": 1850000,
+     "q3": 1850000,
+     "iqr": 0,
+     "min": 1850000,
+     "max": 1850000
+    }
+   }
   },
   "Sawahan": {
    "n": 3,
-   "p10": 500000,
-   "p25": 500000,
+   "p10": 720000,
+   "p25": 1050000,
    "p50": 1600000,
-   "p75": 2000000,
-   "p90": 2000000,
+   "p75": 1800000,
+   "p90": 1920000,
    "komposisi": {
     "putra": 0,
     "putri": 33,
@@ -391,15 +514,44 @@
     "Papikost": 3
    },
    "berkoordinat": 3,
-   "keyakinan": "rendah"
+   "keyakinan": "rendah",
+   "benchmark": {
+    "semua": {
+     "n": 3,
+     "median": 1600000,
+     "q1": 1050000,
+     "q3": 1800000,
+     "iqr": 750000,
+     "min": 500000,
+     "max": 2000000
+    },
+    "putri": {
+     "n": 1,
+     "median": 500000,
+     "q1": 500000,
+     "q3": 500000,
+     "iqr": 0,
+     "min": 500000,
+     "max": 500000
+    },
+    "campur": {
+     "n": 2,
+     "median": 1800000,
+     "q1": 1700000,
+     "q3": 1900000,
+     "iqr": 200000,
+     "min": 1600000,
+     "max": 2000000
+    }
+   }
   },
   "Sukolilo": {
    "n": 107,
-   "p10": 625000,
-   "p25": 753000,
+   "p10": 615000,
+   "p25": 764000,
    "p50": 1100000,
    "p75": 1550000,
-   "p90": 2000000,
+   "p90": 2080000,
    "komposisi": {
     "putra": 13,
     "putri": 71,
@@ -426,15 +578,53 @@
     "Papikost": 16
    },
    "berkoordinat": 16,
-   "keyakinan": "sedang"
+   "keyakinan": "sedang",
+   "benchmark": {
+    "semua": {
+     "n": 107,
+     "median": 1100000,
+     "q1": 764000,
+     "q3": 1550000,
+     "iqr": 786000,
+     "min": 450000,
+     "max": 3250000
+    },
+    "putra": {
+     "n": 14,
+     "median": 900000,
+     "q1": 725000,
+     "q3": 1187500,
+     "iqr": 462500,
+     "min": 450000,
+     "max": 1900000
+    },
+    "putri": {
+     "n": 76,
+     "median": 1000000,
+     "q1": 750000,
+     "q3": 1500000,
+     "iqr": 750000,
+     "min": 450000,
+     "max": 2500000
+    },
+    "campur": {
+     "n": 17,
+     "median": 1800000,
+     "q1": 1550000,
+     "q3": 2300000,
+     "iqr": 750000,
+     "min": 600000,
+     "max": 3250000
+    }
+   }
   },
   "Tambaksari": {
    "n": 4,
-   "p10": 800000,
-   "p25": 900000,
-   "p50": 1000000,
-   "p75": 1000000,
-   "p90": 1300000,
+   "p10": 830000,
+   "p25": 875000,
+   "p50": 950000,
+   "p75": 1075000,
+   "p90": 1210000,
    "komposisi": {
     "putra": 0,
     "putri": 100,
@@ -460,7 +650,27 @@
     "Papikost": 4
    },
    "berkoordinat": 4,
-   "keyakinan": "rendah"
+   "keyakinan": "rendah",
+   "benchmark": {
+    "semua": {
+     "n": 4,
+     "median": 950000,
+     "q1": 875000,
+     "q3": 1075000,
+     "iqr": 200000,
+     "min": 800000,
+     "max": 1300000
+    },
+    "putri": {
+     "n": 4,
+     "median": 950000,
+     "q1": 875000,
+     "q3": 1075000,
+     "iqr": 200000,
+     "min": 800000,
+     "max": 1300000
+    }
+   }
   },
   "Tegalsari": {
    "n": 1,
@@ -494,15 +704,35 @@
     "Papikost": 1
    },
    "berkoordinat": 1,
-   "keyakinan": "rendah"
+   "keyakinan": "rendah",
+   "benchmark": {
+    "semua": {
+     "n": 1,
+     "median": 1750000,
+     "q1": 1750000,
+     "q3": 1750000,
+     "iqr": 0,
+     "min": 1750000,
+     "max": 1750000
+    },
+    "campur": {
+     "n": 1,
+     "median": 1750000,
+     "q1": 1750000,
+     "q3": 1750000,
+     "iqr": 0,
+     "min": 1750000,
+     "max": 1750000
+    }
+   }
   },
   "Tenggilis Mejoyo": {
    "n": 18,
-   "p10": 600000,
-   "p25": 650000,
-   "p50": 950000,
-   "p75": 1300000,
-   "p90": 1500000,
+   "p10": 592500,
+   "p25": 687500,
+   "p50": 1000000,
+   "p75": 1275000,
+   "p90": 1740000,
    "komposisi": {
     "putra": 17,
     "putri": 61,
@@ -529,15 +759,53 @@
     "Papikost": 9
    },
    "berkoordinat": 9,
-   "keyakinan": "sedang"
+   "keyakinan": "sedang",
+   "benchmark": {
+    "semua": {
+     "n": 18,
+     "median": 1000000,
+     "q1": 687500,
+     "q3": 1275000,
+     "iqr": 587500,
+     "min": 575000,
+     "max": 3000000
+    },
+    "putra": {
+     "n": 3,
+     "median": 875000,
+     "q1": 837500,
+     "q3": 962500,
+     "iqr": 125000,
+     "min": 800000,
+     "max": 1050000
+    },
+    "putri": {
+     "n": 11,
+     "median": 950000,
+     "q1": 625000,
+     "q3": 1250000,
+     "iqr": 625000,
+     "min": 575000,
+     "max": 1500000
+    },
+    "campur": {
+     "n": 4,
+     "median": 1750000,
+     "q1": 1050000,
+     "q3": 2475000,
+     "iqr": 1425000,
+     "min": 600000,
+     "max": 3000000
+    }
+   }
   },
   "Wonocolo": {
    "n": 28,
    "p10": 1050000,
-   "p25": 1500000,
+   "p25": 1475000,
    "p50": 1700000,
-   "p75": 1900000,
-   "p90": 2300000,
+   "p75": 1925000,
+   "p90": 2330000,
    "komposisi": {
     "putra": 14,
     "putri": 32,
@@ -564,13 +832,51 @@
     "Papikost": 4
    },
    "berkoordinat": 4,
-   "keyakinan": "sedang"
+   "keyakinan": "sedang",
+   "benchmark": {
+    "semua": {
+     "n": 28,
+     "median": 1700000,
+     "q1": 1475000,
+     "q3": 1925000,
+     "iqr": 450000,
+     "min": 800000,
+     "max": 3000000
+    },
+    "putra": {
+     "n": 4,
+     "median": 925000,
+     "q1": 800000,
+     "q3": 1163125,
+     "iqr": 363125,
+     "min": 800000,
+     "max": 1502500
+    },
+    "putri": {
+     "n": 9,
+     "median": 1700000,
+     "q1": 1400000,
+     "q3": 1900000,
+     "iqr": 500000,
+     "min": 1050000,
+     "max": 2400000
+    },
+    "campur": {
+     "n": 15,
+     "median": 1775000,
+     "q1": 1612500,
+     "q3": 2012500,
+     "iqr": 400000,
+     "min": 1100000,
+     "max": 3000000
+    }
+   }
   },
   "Wonokromo": {
    "n": 60,
    "p10": 650000,
-   "p25": 794500,
-   "p50": 1300000,
+   "p25": 783375,
+   "p50": 1250000,
    "p75": 1500000,
    "p90": 1800000,
    "komposisi": {
@@ -599,7 +905,45 @@
     "Papikost": 1
    },
    "berkoordinat": 1,
-   "keyakinan": "sedang"
+   "keyakinan": "sedang",
+   "benchmark": {
+    "semua": {
+     "n": 60,
+     "median": 1250000,
+     "q1": 783375,
+     "q3": 1500000,
+     "iqr": 716625,
+     "min": 350000,
+     "max": 2300000
+    },
+    "putra": {
+     "n": 19,
+     "median": 1000000,
+     "q1": 675000,
+     "q3": 1300000,
+     "iqr": 625000,
+     "min": 350000,
+     "max": 1800000
+    },
+    "putri": {
+     "n": 26,
+     "median": 1050000,
+     "q1": 820875,
+     "q3": 1500000,
+     "iqr": 679125,
+     "min": 600000,
+     "max": 1800000
+    },
+    "campur": {
+     "n": 15,
+     "median": 1700000,
+     "q1": 1450000,
+     "q3": 1900000,
+     "iqr": 450000,
+     "min": 650000,
+     "max": 2300000
+    }
+   }
   }
  },
  "kos": [

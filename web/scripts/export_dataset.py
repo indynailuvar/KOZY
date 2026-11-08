@@ -6,8 +6,8 @@
 # Sempat ada DUA jalur penggabungan yang hidup berdampingan dan menghasilkan
 # angka berbeda: satu lewat scrapers/03_merge_dataset.py, satu lewat
 # scripts/build_pasar.py. Yang pertama diam-diam mengosongkan seluruh fasilitas
-# Mamikos (nama kolomnya ada_ac, yang dicari ac) sehingga MAPE model melonjak
-# dari 21% ke 35%, tanpa pesan error apa pun.
+# Mamikos (nama kolomnya ada_ac, yang dicari ac) sehingga hasil analisisnya
+# melenceng jauh, tanpa pesan error apa pun.
 #
 # Pelajarannya: logika penggabungan tidak boleh ditulis dua kali. Sekarang
 # penggabungan HANYA terjadi di build_pasar.py, lengkap dengan reverse geocoding,
@@ -20,7 +20,7 @@
 #   1      = tercatat, dan ada
 # Mengisi "tidak tercatat" dengan 0 akan membuat situs yang tidak mencatat
 # terlihat seolah-olah semua kosnya tanpa fasilitas itu — persis kesalahan yang
-# dulu membuat modelnya melenceng.
+# dulu membuat analisisnya melenceng.
 #
 # Jalankan:  python scripts/export_dataset.py   (setelah build_pasar.py)
 # =============================================================================

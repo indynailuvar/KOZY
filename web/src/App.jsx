@@ -1,8 +1,8 @@
 import { Component, useEffect, useRef, useState } from 'react';
 import { useRoute, go } from './router.js';
 import { useStore } from './store.jsx';
-import { Footer, Header } from './components/Layout.jsx';
-import { Button, EmptyState, Sheet } from './components/ui.jsx';
+import { Footer, Header, NavBawah, RUTE_NAV_BAWAH } from './components/Layout.jsx';
+import { Button, EmptyState, PageHead, Sheet } from './components/ui.jsx';
 import { PengaturanAkses } from './components/A11y.jsx';
 import { catat } from './lib/jejak.js';
 import Home from './pages/Home.jsx';
@@ -18,6 +18,7 @@ import Edukasi from './pages/Edukasi.jsx';
 import Riwayat from './pages/Riwayat.jsx';
 import Pemilik from './pages/Pemilik.jsx';
 import Tentang from './pages/Tentang.jsx';
+import Akun from './pages/Akun.jsx';
 import Demo from './pages/Demo.jsx';
 import Internal from './pages/Internal.jsx';
 
@@ -35,6 +36,7 @@ const ROUTES = {
   '/riwayat': Riwayat,
   '/pemilik': Pemilik,
   '/tentang': Tentang,
+  '/akun': Akun,
   '/demo': Demo,
   '/internal': Internal,
   '/admin': Internal,
@@ -42,19 +44,20 @@ const ROUTES = {
 
 // Judul tab browser tiap halaman (juga dibacakan pembaca layar saat pindah halaman)
 const JUDUL = {
-  '/': 'Cek harga wajar kos Surabaya',
+  '/': 'Cek harga wajar kos di Surabaya',
   '/cek': 'Cek harga kos',
   '/hasil': 'Hasil cek harga',
   '/kartu-tawar': 'Kartu Tawar',
-  '/match': 'KOZY Match',
+  '/match': 'Kos alternatif',
   '/cari': 'Cari kos',
   '/kawasan': 'Rekomendasi area',
   '/bandingkan': 'Bandingkan kos',
   '/ai': 'KOZY AI',
-  '/edukasi': 'Edukasi keuangan',
+  '/edukasi': 'Tips hemat anak kos',
   '/riwayat': 'Riwayat',
+  '/akun': 'Akun',
   '/pemilik': 'Untuk pemilik kos',
-  '/tentang': 'Tentang KOZY',
+  '/tentang': 'Cara kerja KOZY',
   '/demo': 'Skenario',
   '/internal': 'Dashboard internal',
   '/admin': 'Dashboard internal',
@@ -66,7 +69,10 @@ const FOKUS = ['/ai'];
 function NotFound() {
   return (
     <div className="page narrow">
-      <EmptyState icon="map" title="Halaman tidak ditemukan" action={<Button onClick={() => go('/')}>Ke beranda</Button>} />
+      <PageHead judul="KOZY" onBack={() => go('/')} />
+      <EmptyState icon="map" title="Halaman tidak ketemu" action={<Button onClick={() => go('/')}>Ke beranda</Button>}>
+        Tautannya mungkin salah atau halamannya sudah dipindah.
+      </EmptyState>
     </div>
   );
 }
@@ -84,8 +90,9 @@ class Pengaman extends Component {
     if (!this.state.galat) return this.props.children;
     return (
       <div className="page narrow">
-        <EmptyState icon="cloudoff" title="Halaman ini gagal dimuat" action={<Button onClick={() => go('/')}>Ke beranda</Button>}>
-          Coba muat ulang halaman. Data yang sudah kamu isi tetap tersimpan.
+        <PageHead judul="KOZY" onBack={() => go('/')} />
+        <EmptyState icon="cloudoff" title="Halaman gagal dimuat" action={<Button onClick={() => go('/')}>Ke beranda</Button>}>
+          Coba muat ulang. Isian kamu tetap tersimpan.
         </EmptyState>
       </div>
     );
@@ -125,7 +132,7 @@ export default function App() {
   }, [path]);
 
   return (
-    <div className={`app ${fokus ? 'is-focus' : ''}`}>
+    <div className={`app ${fokus ? 'is-focus' : ''} ${path === '/' ? 'is-home' : ''}`}>
       <div className="skip-links">
         <button
           type="button"
@@ -149,6 +156,7 @@ export default function App() {
         </Pengaman>
       </main>
       {!fokus && <Footer />}
+      {RUTE_NAV_BAWAH.includes(path) && <NavBawah path={path} />}
       <Sheet open={akses} onClose={() => setAkses(false)} label="Pengaturan aksesibilitas">
         <div className="sheet-body">
           <h2 className="h2">Pengaturan aksesibilitas</h2>

@@ -14,10 +14,10 @@ export function ProcessSheet({ open, title, steps, active, error, onRetry, onEdi
           <span className="ic-circle xl">
             <Icon name="cloudoff" size={28} strokeWidth={1.8} />
           </span>
-          <h2 className="h2">Analisis gagal dimuat</h2>
+          <h2 className="h2">Gagal memuat hasil</h2>
           <p className="muted">{error} Isianmu tetap tersimpan.</p>
           <Button icon="refresh" block onClick={onRetry}>
-            Coba Lagi
+            Coba lagi
           </Button>
           <Button variant="ghost" block onClick={onEdit}>
             Ubah isian
@@ -147,38 +147,34 @@ export function Paywall({ open, onClose, onPaid, purchaseId }) {
           <span className="ic-circle lg">
             <Icon name="unlock" size={22} />
           </span>
-          <h2 className="h2">Paket KOZY Lengkap</h2>
+          <h2 className="h2">Buka paket KOZY</h2>
           <p className="price-line">
-            <b>{rp(HARGA_MATCH)}</b> sekali bayar untuk cek ini
+            <b>{rp(HARGA_MATCH)}</b> sekali bayar
           </p>
           <ul className="check-list">
             <li>
               <Icon name="check" size={16} strokeWidth={2.6} />
-              Analisis cek lebih detail: segmen harga, posisi pasar, dan faktor harga
+              5 kos dengan harga wajar, lengkap dengan peta dan tautan iklan
             </li>
             <li>
               <Icon name="check" size={16} strokeWidth={2.6} />
-              Bandingkan harga, jarak, fasilitas, dan benchmark lokal antar kos
+              Bandingkan dua kos pilihanmu
             </li>
             <li>
               <Icon name="check" size={16} strokeWidth={2.6} />
-              KOZY Match: peta, hingga 5 alternatif, detail kos, dan tautan iklan asli
-            </li>
-            <li>
-              <Icon name="check" size={16} strokeWidth={2.6} />
-              Kartu Tawar berdasarkan hasil analisis
+              Kartu Tawar untuk menawar ke pemilik
             </li>
           </ul>
           <Button icon="qr" block onClick={lanjutBayar}>
             Bayar dengan QRIS
           </Button>
-          <p className="note center">Sekali bayar untuk hasil cek ini; tidak ada tagihan berulang. Pembayaran tidak mengubah penilaian.</p>
+          <p className="note center">Bukan langganan. Membayar tidak mengubah penilaian harga.</p>
         </div>
       )}
-      {tahap === 'login' && <LoginPanel alasan="Supaya hasil yang kamu beli tersimpan di akunmu." onDone={() => setTahap('qris')} />}
+      {tahap === 'login' && <LoginPanel alasan="Agar paket yang kamu beli tersimpan di akunmu." onDone={() => setTahap('qris')} />}
       {tahap === 'qris' && (
         <div className="sheet-body center">
-          <h2 className="h2">Scan untuk membayar</h2>
+          <h2 className="h2">Scan untuk bayar</h2>
           <p className="price-line">
             <b>{rp(HARGA_MATCH)}</b>
           </p>
@@ -190,9 +186,9 @@ export function Paywall({ open, onClose, onPaid, purchaseId }) {
             Selesaikan dalam <b>{waktu}</b>
           </p>
           <Button block icon={cek ? undefined : 'refresh'} disabled={cek} onClick={cekStatus}>
-            {cek ? 'Memeriksa…' : 'Cek status pembayaran'}
+            {cek ? 'Memeriksa…' : 'Saya sudah bayar'}
           </Button>
-          <p className="note">Bisa dibayar dari m-banking atau e-wallet apa pun.</p>
+          <p className="note">Bisa dari m-banking atau e-wallet apa saja.</p>
         </div>
       )}
       {tahap === 'sukses' && (
@@ -201,7 +197,7 @@ export function Paywall({ open, onClose, onPaid, purchaseId }) {
             <Icon name="check" size={32} strokeWidth={3} />
           </div>
           <h2 className="h2">Pembayaran berhasil</h2>
-          <p className="muted">Membuka hasilmu…</p>
+          <p className="muted">Membuka hasilnya…</p>
         </div>
       )}
     </Sheet>

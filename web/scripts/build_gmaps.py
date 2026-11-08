@@ -12,14 +12,17 @@
 # Yang TIDAK ada di sumber ini: harga dan fasilitas. Halaman Google Maps-nya pun
 # tidak memuat fasilitas kos (sudah diperiksa: tidak ada WiFi/AC/kamar mandi di
 # halamannya), jadi fasilitas memang tidak bisa diambil dari sini dan tidak
-# dikarang. Harga diisi sebagai PERKIRAAN dari model hedonic di pasar.json:
+# dikarang. Harga diisi dengan PEMBANDING dari pasar.json (tanpa regresi):
 #
-#   perkiraan = exp(intercept + efek_kecamatan + sigma (peluang_fasilitas x efek) + efek_jenis)
+#   estimasi = median, rendah = Q1, tinggi = Q3
 #
-# Artinya "harga kos berfasilitas rata-rata di kecamatan itu", bukan harga yang
-# dipasang pemiliknya. Tiap baris membawa rentang dan tingkat keyakinan:
-#   sedang = kecamatannya ada di data harga (Mamikos + Papikost)
-#   rendah = kecamatannya belum ada datanya, dipakai rata-rata kota
+# dari kos sejenis di kecamatan yang sama kalau jenisnya terbaca dari nama dan
+# kelompoknya cukup besar, kalau tidak dari seluruh kos di kecamatan itu.
+# Artinya "kisaran harga iklan kos di sekitar titik ini", bukan harga yang
+# dipasang pemiliknya. Tiap baris membawa tingkat keyakinan:
+#   sedang = pembandingnya minimal MIN_PEMBANDING iklan di kecamatan itu
+#   rendah = pembandingnya lebih sedikit, atau kecamatannya belum ada datanya
+#            (atau kurang dari min_iklan_kec) sehingga dipakai sebaran seluruh kota
 #
 # Titik yang ternyata kos yang sama dengan iklan Papikost ditandai, supaya
 # harga aslinya yang dipakai dan tidak terhitung dua kali.
@@ -89,6 +92,29 @@ def wilayahTetangga(lat, lng, berlabel):
     return kec, kel
 
 
+def kuantil(v, q):
+    """kuantil interpolasi linear, sama dengan build_pasar.py"""
+    v = sorted(v)
+    h = (len(v) - 1) * q
+    lo = int(h)
+    hi = min(lo + 1, len(v) - 1)
+    return v[lo] + (v[hi] - v[lo]) * (h - lo)
+
+
+def pembanding(pasar, kec, jenis):
+    """(ringkasan, dasar, lokal) untuk satu titik, mengikuti aturan aplikasi"""
+    minimal = pasar["meta"]["min_pembanding"]
+    # kecamatan dengan iklan < min_iklan_kec terlalu goyah untuk jadi acuan
+    if kec in pasar["kecamatan"] and pasar["kecamatan"][kec]["n"] >= pasar["meta"]["min_iklan_kec"]:
+        b = pasar["kecamatan"][kec]["benchmark"]
+        if jenis and jenis in b and b[jenis]["n"] >= minimal:
+            return b[jenis], "kos %s Kec. %s" % (jenis, kec), True
+        return b["semua"], "kos di Kec. %s" % kec, b["semua"]["n"] >= minimal
+    hs = [k["harga"] for k in pasar["kos"] if not jenis or k["jenis"] == jenis]
+    q1, q3 = kuantil(hs, 0.25), kuantil(hs, 0.75)
+    return {"n": len(hs), "median": kuantil(hs, 0.5), "q1": q1, "q3": q3}, "kos %sSurabaya" % (jenis + " " if jenis else ""), False
+
+
 def bacaRinci():
     """50 kos yang sempat dicatat lebih rinci: alamat + rating."""
     out = {}
@@ -109,14 +135,8 @@ def main():
     pasar = json.load(io.open(PASAR, encoding="utf-8"))
     geo = json.load(io.open(GEOCODE, encoding="utf-8"))
     rinci = bacaRinci()
-    M = pasar["model"]
-    mape = pasar["meta"]["mape"]
-    fids = list(M["fasilitas"])
-    semua = pasar["kos"]
-
-    kotaFas = {f: sum(1 for k in semua if f in k["fasilitas"]) / len(semua) * 100 for f in fids}
-    kotaJenis = {j: sum(1 for k in semua if k["jenis"] == j) / len(semua) * 100 for j in ("putra", "putri", "campur")}
-    berharga = [k for k in semua if k.get("lat")]  # iklan yang sudah punya harga asli + koordinat
+    minimal = pasar["meta"]["min_pembanding"]
+    berharga = [k for k in pasar["kos"] if k.get("lat")]  # iklan yang sudah punya harga asli + koordinat
 
     berlabel = []
     for k, v in geo.items():
@@ -149,15 +169,9 @@ def main():
                 continue
             dariTetangga += 1
 
-        adaKec = kec in M["kec"]
-        fas = pasar["kecamatan"][kec]["fasilitas"] if adaKec else kotaFas
-        komposisi = pasar["kecamatan"][kec]["komposisi"] if adaKec else kotaJenis
         nama = rapat(r["name"])
         jenis = jenisDari(nama)
-        efekJenis = M["jenis"][jenis] if jenis else sum(M["jenis"][j] * (komposisi[j] / 100) for j in komposisi)
-        log = M["intercept"] + (M["kec"][kec] if adaKec else 0.0) + sum(M["fasilitas"][f] * (fas[f] / 100) for f in fids) + efekJenis
-        titik = math.exp(log)
-        lebar = mape / 100 if adaKec else (mape * 1.75) / 100
+        b, dasar, lokal = pembanding(pasar, kec, jenis)
 
         # sudah ada iklan berharga asli di titik yang sama?
         kembar = next((k for k in berharga if jarakM(lat, lng, k["lat"], k["lng"]) <= DEKAT_M), None)
@@ -177,10 +191,12 @@ def main():
                 "ulasan": extra.get("ulasan"),
                 "link": r["link"],
                 "jenis": jenis,
-                "estimasi": bulat10rb(titik),
-                "rendah": bulat10rb(titik * (1 - lebar)),
-                "tinggi": bulat10rb(titik * (1 + lebar)),
-                "keyakinan": "sedang" if adaKec else "rendah",
+                "estimasi": bulat10rb(b["median"]),
+                "rendah": bulat10rb(b["q1"]),
+                "tinggi": bulat10rb(b["q3"]),
+                "dasar": dasar,
+                "n_pembanding": b["n"],
+                "keyakinan": "sedang" if lokal else "rendah",
                 "harga_asli": kembar["harga"] if kembar else None,
             }
         )
@@ -200,8 +216,8 @@ def main():
             "n_harga_asli": sum(1 for k in keluar if k["harga_asli"]),
             "n_rinci": sum(1 for k in keluar if k["alamat"]),
             "n_wilayah_tetangga": dariTetangga,
-            "dasar_model": "%s %d iklan" % (pasar["meta"]["sumber"], pasar["meta"]["n"]),
-            "catatan": "Harga dan fasilitas tidak ada di sumber ini, dan halaman Google Maps-nya juga tidak memuat fasilitas. Angka harga adalah perkiraan model untuk kos berfasilitas rata-rata di kecamatan itu, bukan harga yang dipasang pemilik.",
+            "dasar_harga": "%s %d iklan" % (pasar["meta"]["sumber"], pasar["meta"]["n"]),
+            "catatan": "Harga dan fasilitas tidak ada di sumber ini, dan halaman Google Maps-nya juga tidak memuat fasilitas. Angka harga adalah median dan Q1-Q3 harga iklan kos sejenis di kecamatan itu, bukan harga yang dipasang pemilik.",
         },
         "per_kecamatan": dict(sorted(perKec.items(), key=lambda x: -x[1])),
         "kos": sorted(keluar, key=lambda k: (k["kec"], k["nama"])),
@@ -211,11 +227,11 @@ def main():
     print("%d titik dari %d kecamatan -> %s" % (len(keluar), len(kecs), os.path.relpath(KELUAR, BASE)))
     print("dilewati: %d di luar %s, %d tanpa wilayah (tidak ada tetangga <%d m)" % (lewatKota, KOTA, lewatKec, TETANGGA_M))
     print("wilayah dari titik terdekat (bukan reverse geocoding): %d titik" % dariTetangga)
-    print("keyakinan sedang (kecamatan ada di data harga): %d, sisanya rendah" % hasil["meta"]["n_sedang"])
+    print("keyakinan sedang (pembanding >= %d iklan di kecamatannya): %d, sisanya rendah" % (minimal, hasil["meta"]["n_sedang"]))
     print("cocok dengan iklan berharga asli: %d titik" % hasil["meta"]["n_harga_asli"])
     print("5 kecamatan terbanyak:", dict(list(hasil["per_kecamatan"].items())[:5]))
     for k in keluar[:4]:
-        print("  %-38s %-16s Rp%9s  (%s-%s)  %s" % (k["nama"][:38], k["kec"], format(k["estimasi"], ","), format(k["rendah"], ","), format(k["tinggi"], ","), k["keyakinan"]))
+        print("  %-38s %-16s Rp%9s  (%s-%s)  %s, %s" % (k["nama"][:38], k["kec"], format(k["estimasi"], ","), format(k["rendah"], ","), format(k["tinggi"], ","), k["keyakinan"], k["dasar"]))
 
 
 if __name__ == "__main__":

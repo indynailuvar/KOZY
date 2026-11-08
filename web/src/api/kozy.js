@@ -1,25 +1,21 @@
 // Lapisan data KOZY.
 // Empat sumber, dengan peran yang berbeda-beda:
-//   pasar.json  Mamikos + Papikost — iklan SEWA berharga asli, dipakai melatih model
-//   gmaps.json  Google Maps        — titik lokasi tanpa harga, harganya perkiraan model
+//   pasar.json  Mamikos + Papikost — iklan SEWA berharga asli, dasar pembanding harga
+//   gmaps.json  Google Maps        — titik lokasi tanpa harga, ditampilkan dengan kisaran kecamatan
 //   olx.json    OLX                — rumah kos DIJUAL, hanya untuk dashboard admin,
-//                                    sengaja TIDAK ikut melatih model sewa
-// Model harga wajar = regresi hedonic log-linear:
-//   harga = exp(intercept + efek_kecamatan + Σ efek_fasilitas + efek_jenis)
-// Efek kecamatan sudah dipusatkan: 0 berarti rata-rata Surabaya.
+//                                    sengaja TIDAK ikut pembanding harga sewa
+// Kewajaran harga dinilai dengan Robust Statistical Benchmarking, tanpa regresi:
+// harga dibandingkan dengan median dan Q1–Q3 kos sejenis di kecamatan yang sama.
 // Luas kamar dan nomor pemilik tidak ada di sumber mana pun.
 //
-// Jika VITE_API_URL diisi, cekHarga() memanggil FastAPI POST /vonis dan mengharapkan:
-// {status, harga_wajar, selisih_rp, selisih_persen, persentil, faktor[], komposisi,
-//  pasar{p10,p50,p90,n_pembanding}, meta{confidence, updated_at}}
-// Kalau server tidak menjawab, hitungan jatuh ke model yang sama di perangkat.
+// Semuanya dihitung di perangkat dari pasar.json. Kuartilnya dihitung dengan cara
+// yang sama seperti bundle modeling, jadi angkanya identik dengan POST /modeling/price-gap.
 
 import gmaps from '../data/gmaps.json';
 import olx from '../data/olx.json';
-import { BIAYA_FASILITAS, FASILITAS, JENIS_KOS, KAWASAN, KEBUTUHAN, LUAR_CAKUPAN, PASAR, PERSONA, TEMPAT } from '../data/surabaya.js';
-import { bulat10rb, bulat50rb } from '../lib/format.js';
+import { FASILITAS, JENIS_KOS, KAWASAN, KEBUTUHAN, LUAR_CAKUPAN, PASAR, PERSONA, TEMPAT } from '../data/surabaya.js';
+import { bulat50rb } from '../lib/format.js';
 
-const API = import.meta.env.VITE_API_URL;
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 const clamp01 = (x) => Math.max(0, Math.min(1, x));
 const avg = (xs) => xs.reduce((s, x) => s + x, 0) / xs.length;
@@ -119,13 +115,13 @@ export function tujuanById(id) {
 // ---------- Titik kos dari Google Maps ----------
 // Sumber ini punya koordinat dan (sebagian) rating, tapi harga dan fasilitasnya kosong.
 // Halaman Google Maps-nya pun tidak memuat fasilitas kos, jadi tidak bisa dilengkapi.
-// Angka harganya perkiraan model untuk kos berfasilitas rata-rata di kecamatan itu
+// Angka harganya median dan Q1–Q3 harga iklan kos sejenis di kecamatan itu
 // (lihat scripts/build_gmaps.py) — jadi sesama kos di satu kecamatan angkanya sama.
 export const GMAPS = gmaps;
 
 // ---------- Rumah kos dijual (OLX) ----------
 // BUKAN harga sewa: ini harga jual bangunan, miliaran rupiah. Tidak pernah dipakai
-// untuk menilai harga sewa penyewa. Yang dihitung dengan model sewa hanyalah
+// untuk menilai harga sewa penyewa. Yang dihitung dari median sewa kecamatan hanyalah
 // perkiraan pendapatan bangunannya, untuk sisi pemilik/investor di dashboard admin.
 export const OLX = olx;
 
@@ -139,143 +135,109 @@ export function kosPetaDekat(titik, radiusKm = 1.5, batas = 6) {
     .slice(0, batas);
 }
 
-// ---------- Model harga wajar (hedonic dari data Mamikos) ----------
-const M = PASAR.model;
-const efekJenis = (jenis) => M.jenis[jenis] ?? 0;
-const efekFasilitas = (ids = []) => ids.reduce((s, f) => s + (M.fasilitas[f] ?? 0), 0);
+// ---------- Pembanding harga (Robust Statistical Benchmarking) ----------
+// Harga dinilai terhadap sebaran harga iklan asli yang sebanding: kos sejenis
+// (putra/putri/campur) di kecamatan yang sama. Kalau kelompok itu belum sampai
+// MIN_PEMBANDING iklan, pembandingnya seluruh kos di kecamatan tersebut.
+//   acuan          median
+//   kisaran wajar  Q1 – Q3, separuh tengah harga pembanding
+//   gap            (harga − median) / IQR
+// Fasilitas tidak ikut menghitung: di iklan ia hanya tercatat ada/tidak dan
+// sering tidak ditulis pemiliknya, jadi "tidak ada" belum tentu benar-benar tidak ada.
+export const MIN_PEMBANDING = PASAR.meta.min_pembanding;
 
-export function prediksi(kec, { fasilitas = [], jenis = 'putra' } = {}) {
-  const k = M.kec[kec];
-  if (k === undefined) return null;
-  return Math.exp(M.intercept + k + efekFasilitas(fasilitas) + efekJenis(jenis));
+// Kuantil dengan interpolasi linear, sama seperti build_pasar.py dan bundle modeling.
+function kuantil(urut, q) {
+  const p = (urut.length - 1) * q;
+  const lo = Math.floor(p);
+  return urut[lo] + (urut[Math.ceil(p)] - urut[lo]) * (p - lo);
 }
 
-const URUT_LEVEL = { besar: 0, sedang: 1, kecil: 2 };
+// Harga pasaran tiap kecamatan untuk daftar di beranda. Hanya kecamatan dengan
+// iklan yang cukup (>= MIN_PEMBANDING); median dari 2-3 iklan bisa menyesatkan.
+export const PASAR_KEC = Object.entries(PASAR.kecamatan)
+  .map(([kec, s]) => ({ kec, ...s.benchmark.semua }))
+  .filter((x) => x.n >= MIN_PEMBANDING)
+  .sort((a, b) => b.n - a.n);
 
-// Harga wajar + daftar faktor untuk ditampilkan (besarnya pengaruh, bukan "harga per fasilitas").
-export function hitungWajar(kawasan, { fasilitas = [], jenis = null } = {}) {
-  const jn = jenis || 'putra';
-  const penuh = prediksi(kawasan.kec, { fasilitas, jenis: jn });
-  if (!penuh) return null;
-  const harga_wajar = bulat10rb(penuh);
-  const dasar = Math.exp(M.intercept + M.kec[kawasan.kec]); // kamar tanpa fasilitas tercatat, kos putra
+// Ringkasan semua iklan sewa di Surabaya, untuk angka pembuka di beranda.
+// Bukan dasar penilaian: vonis tetap per kecamatan × jenis kos.
+export const RINGKAS_KOTA = (() => {
+  const h = PASAR.kos.map((k) => k.harga).sort((a, b) => a - b);
+  return {
+    n: h.length,
+    median: kuantil(h, 0.5),
+    q1: kuantil(h, 0.25),
+    q3: kuantil(h, 0.75),
+    kecamatan: PASAR.meta.kecamatan,
+    diambil: PASAR.meta.diambil,
+  };
+})();
 
-  const faktor = [
-    {
-      key: 'lokasi',
-      label: `Lokasi di Kec. ${kawasan.kec}`,
-      icon: 'pin',
-      nilai: dasar,
-      arah: 'naik',
-    },
-  ];
-  for (const f of FASILITAS) {
-    if (!fasilitas.includes(f.id)) continue;
-    const tanpa = prediksi(kawasan.kec, { fasilitas: fasilitas.filter((x) => x !== f.id), jenis: jn });
-    faktor.push({ key: f.id, label: f.label, icon: f.icon, nilai: penuh - tanpa, arah: penuh >= tanpa ? 'naik' : 'turun' });
-  }
-  const j = jenisById(jn);
-  if (M.jenis[jn]) {
-    const tanpa = prediksi(kawasan.kec, { fasilitas, jenis: 'putra' });
-    faktor.push({ key: 'jenis', label: `Kos ${j.label.toLowerCase()}`, icon: 'user', nilai: penuh - tanpa, arah: penuh >= tanpa ? 'naik' : 'turun' });
-  }
-
-  const berlevel = faktor
-    .map((f, i) => {
-      const porsi = Math.abs(f.nilai) / penuh;
-      return { ...f, i, level: porsi >= 0.3 ? 'besar' : porsi >= 0.1 ? 'sedang' : 'kecil' };
-    })
-    .sort((a, b) => URUT_LEVEL[a.level] - URUT_LEVEL[b.level] || Math.abs(b.nilai) - Math.abs(a.nilai));
-
-  const lokasi = Math.round((dasar / penuh) * 100);
-  return { harga_wajar, faktor: berlevel, komposisi: { lokasi, kamar: 100 - lokasi } };
-}
-
-// Sebaran harga asli di kecamatan tersebut (bukan hasil model).
-export function pasarDari(kec) {
+export function pembanding(kec, jenis = null) {
   const s = statKec(kec);
-  return s ? { p10: s.p10, p25: s.p25, p50: s.p50, p75: s.p75, p90: s.p90, n_pembanding: s.n } : null;
+  if (!s) return null;
+  const sejenis = jenis ? s.benchmark[jenis] : null;
+  const pakaiJenis = !!sejenis && sejenis.n >= MIN_PEMBANDING;
+  return { ...(pakaiJenis ? sejenis : s.benchmark.semua), kec, jenis: pakaiJenis ? jenis : null, n_sejenis: sejenis?.n ?? 0 };
 }
 
-// Posisi harga di antara kos asli sekecamatan.
-export function persentilDari(harga, kec) {
-  const hs = kosKec(kec).map((k) => k.harga);
+const hargaPembanding = (b) => kosKec(b.kec).filter((k) => !b.jenis || k.jenis === b.jenis).map((k) => k.harga);
+
+// Posisi harga di antara harga pembanding: berapa dari 100 yang lebih murah.
+function persentilDi(harga, hs) {
   if (!hs.length) return 50;
   const lebihMurah = hs.filter((h) => h < harga).length;
   return Math.max(1, Math.min(99, Math.round((lebihMurah / hs.length) * 100)));
 }
 
-// Ambang disamakan dengan ketelitian model itu sendiri: separuh iklan nyata meleset
-// kurang dari 15% dari perkiraan, jadi selisih di bawah itu belum pantas disebut kemahalan.
-export const BATAS_WAJAR = 15;
+// Di atas Q3 berarti lebih mahal dari tiga perempat kos pembanding; di bawah Q1
+// lebih murah dari tiga perempatnya. Di antara keduanya: separuh tengah pasar.
+export const statusDari = (harga, b) => (harga > b.q3 ? 'KEMAHALAN' : harga < b.q1 ? 'MURAH' : 'WAJAR');
 
-export function statusDari(selisihPersen) {
-  if (selisihPersen > BATAS_WAJAR) return 'KEMAHALAN';
-  if (selisihPersen < -BATAS_WAJAR) return 'MURAH';
-  return 'WAJAR';
+export function nilaiHarga(harga, b) {
+  const selisih_rp = harga - b.median;
+  const hs = hargaPembanding(b);
+  // di luar pagar Tukey (1,5 × IQR dari kuartil) atau di luar semua harga pembanding
+  const ekstrem = harga > b.q3 + 1.5 * b.iqr || harga > b.max ? 'atas' : harga < b.q1 - 1.5 * b.iqr || harga < b.min ? 'bawah' : null;
+  return {
+    status: statusDari(harga, b),
+    median: b.median,
+    kisaran: [b.q1, b.q3],
+    selisih_rp,
+    selisih_persen: (selisih_rp / b.median) * 100,
+    gap_iqr: b.iqr ? selisih_rp / b.iqr : null,
+    persentil: persentilDi(harga, hs),
+    // hitungan mentah untuk ditampilkan apa adanya ("54 dari 76 kos"), lebih jujur
+    // daripada persen kalau pembandingnya sedikit
+    n_lebih_murah: hs.filter((h) => h < harga).length,
+    n_lebih_mahal: hs.filter((h) => h > harga).length,
+    ekstrem,
+  };
 }
 
-// Kisaran harga yang masih dianggap wajar untuk satu kamar.
-export const kisaranWajar = (wajar) => [bulat10rb(wajar * (1 - BATAS_WAJAR / 100)), bulat10rb(wajar * (1 + BATAS_WAJAR / 100))];
+// Harga jauh di bawah pasaran tetap kabar baik (hemat), tetapi kalau sampai lebih
+// murah dari semua pembanding, layak dipastikan dulu: fasilitas sesuai iklan,
+// tidak ada biaya tersembunyi.
+export const perluDiperiksa = (r) => r.ekstrem === 'bawah';
 
-// Harga jauh di bawah pasaran tetap kabar baik (hemat), tetapi selisih sebesar itu
-// layak dipastikan dulu: fasilitas sesuai iklan, tidak ada biaya tersembunyi.
-export const BATAS_PERIKSA = -30;
-export const perluDiperiksa = (r) => r.selisih_persen <= BATAS_PERIKSA;
-
-const confidenceDari = (n) => (n >= 40 ? 'tinggi' : n >= 15 ? 'sedang' : 'rendah');
+// n >= MIN_PEMBANDING sama dengan kelompok "Prioritas" di bundle modeling
+const confidenceDari = (n) => (n >= 30 ? 'tinggi' : n >= MIN_PEMBANDING ? 'sedang' : 'rendah');
 
 // ---------- Cek kos incaran ----------
-export const LANGKAH_CEK = ['Memvalidasi lokasi', 'Menemukan kos pembanding', 'Menghitung harga wajar', 'Memeriksa anomali'];
+export const LANGKAH_CEK = ['Mengenali lokasi', 'Mencari kos sejenis di sekitar', 'Menghitung harga pasaran', 'Menyiapkan hasil'];
 
 export async function cekHarga(input, onStep = () => {}) {
   const kawasan = kawasanById(input.kawasanId);
-  const stat = statKec(kawasan.kec);
+  const b = pembanding(kawasan.kec, input.jenis);
   onStep(0);
   await wait(650);
-  onStep(1, { n: stat.n, kec: kawasan.kec });
+  onStep(1, { n: b.n, kec: kawasan.kec });
   await wait(850);
   onStep(2);
-
-  let result;
-  if (API) {
-    try {
-      const res = await fetch(`${API}/vonis`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ kawasan: kawasan.id, kecamatan: kawasan.kec, harga: input.harga, jenis: input.jenis, fasilitas: input.fasilitas, lokasi: input.lokasiTeks }),
-      });
-      if (res.ok) result = await res.json();
-    } catch {
-      // server tidur atau terputus: hitung di perangkat dengan model yang sama (pasar.json)
-    }
-  }
-  if (!result) {
-    await wait(850);
-    if (/error|gagal/i.test(input.lokasiTeks || '')) throw new Error('Koneksi terputus saat menghitung harga wajar.');
-    const { harga_wajar, faktor, komposisi } = hitungWajar(kawasan, input);
-    const selisih_rp = input.harga - harga_wajar;
-    const selisih_persen = (selisih_rp / harga_wajar) * 100;
-    result = {
-      status: statusDari(selisih_persen),
-      harga_wajar,
-      selisih_rp,
-      selisih_persen,
-      persentil: persentilDari(input.harga, kawasan.kec),
-      kisaran: kisaranWajar(harga_wajar),
-      faktor,
-      komposisi,
-      pasar: pasarDari(kawasan.kec),
-      meta: {
-        confidence: confidenceDari(stat.n),
-        kecamatan: kawasan.kec,
-        updated_at: PASAR.meta.diambil,
-        sumber: PASAR.meta.sumber,
-        mae: PASAR.meta.mae,
-        anomali: Math.abs(selisih_persen) > 60,
-      },
-    };
-  }
+  await wait(850);
+  if (/error|gagal/i.test(input.lokasiTeks || '')) throw new Error('Koneksi terputus saat menghitung posisi harga.');
+  const nilai = nilaiHarga(input.harga, b);
   onStep(3);
   await wait(600);
   return {
@@ -284,12 +246,19 @@ export async function cekHarga(input, onStep = () => {}) {
     input,
     kawasan: { id: kawasan.id, nama: kawasan.nama, kec: kawasan.kec, jarak: kawasan.jarak, lat: kawasan.lat, lng: kawasan.lng },
     harga_ditawarkan: input.harga,
-    ...result,
+    ...nilai,
+    pembanding: b,
+    meta: {
+      confidence: confidenceDari(b.n),
+      kecamatan: kawasan.kec,
+      updated_at: PASAR.meta.diambil,
+      sumber: PASAR.meta.sumber,
+    },
   };
 }
 
 // ---------- Cari kos berdasarkan kebutuhan ----------
-export const LANGKAH_CARI = ['Membaca kebutuhanmu', 'Mencari area di sekitar tujuan', 'Mengambil harga pasar tiap area', 'Menyusun rekomendasi'];
+export const LANGKAH_CARI = ['Membaca kebutuhanmu', 'Mencari area di sekitar tujuan', 'Menghitung harga tiap area', 'Menyusun rekomendasi'];
 
 function terdekat(titik, jenis) {
   let best = null;
@@ -312,8 +281,6 @@ export function hitungArea(input) {
   return pool
     .map(({ k, km }) => {
       const stat = statKec(k.kec);
-      const wajar = hitungWajar(k, { fasilitas, jenis });
-      const harga_wajar = wajar.harga_wajar;
       // kos nyata di kecamatan ini yang cocok dengan jenis + fasilitas wajib
       const cocok = kosKec(k.kec).filter((x) => (!jenis || x.jenis === jenis) && fasilitas.every((f) => x.fasilitas.includes(f)));
       const dalamBudget = cocok.filter((x) => x.harga <= budgetMax && x.harga >= budgetMin * 0.9);
@@ -347,7 +314,6 @@ export function hitungArea(input) {
         nTotal: stat.n,
         cocok: dalamBudget.length,
         km,
-        harga_wajar,
         p10: stat.p10,
         p50: stat.p50,
         p90: stat.p90,
@@ -374,7 +340,8 @@ export function ringkasInsight(areas) {
   for (let x = mulai; x < akhir; x += step) {
     bins.push({ lo: x, hi: x + step, jumlah: harga.filter((h) => h >= x && h < x + step).length, sorot: x + step > range[0] && x < range[1] });
   }
-  return { range, n: harga.length, jumlahArea: areas.length, kecs, mae: PASAR.meta.mae, mape: PASAR.meta.mape, confidence: harga.length >= 120 ? 'tinggi' : harga.length >= 60 ? 'sedang' : 'rendah', bins };
+  const median = harga.length % 2 ? harga[(harga.length - 1) / 2] : (harga[harga.length / 2 - 1] + harga[harga.length / 2]) / 2;
+  return { range, n: harga.length, median, jumlahArea: areas.length, kecs, confidence: harga.length >= 120 ? 'tinggi' : harga.length >= 60 ? 'sedang' : 'rendah', bins };
 }
 
 export function saranAI(input) {
@@ -429,14 +396,14 @@ export async function kozyMatch({ kawasanIds, fasilitas = [], budgetMax = null, 
       const sebar = 0.0012 + r() * 0.0042;
       const titik = asli ? { lat: k.lat, lng: k.lng } : { lat: kaw.lat + Math.sin(sudut) * sebar, lng: kaw.lng + Math.cos(sudut) * sebar };
       const km = tujuan ? jarakJalan(tujuan, titik) : asli ? jarakJalan(kaw, titik) : jarakJalan(kaw, titik) + kaw.jarak;
-      const stat = statKec(k.kec);
-      const { harga_wajar } = hitungWajar({ kec: k.kec }, { fasilitas: k.fasilitas, jenis: k.jenis });
-      const selisih_persen = ((k.harga - harga_wajar) / harga_wajar) * 100;
+      // tiap kos dinilai terhadap pembanding jenisnya sendiri, sama seperti Cek Harga
+      const b = pembanding(k.kec, k.jenis);
+      const nilai = nilaiHarga(k.harga, b);
       const skor = {
-        harga: Math.max(10, Math.min(40, Math.round(34 - selisih_persen * 0.5))),
+        harga: Math.max(10, Math.min(40, Math.round(34 - nilai.selisih_persen * 0.5))),
         jarak: Math.max(5, Math.min(25, Math.round(26 - km * 4))),
         fasilitas: Math.min(25, 8 + k.fasilitas.length * 3),
-        keyakinan: stat.n >= 40 ? 10 : stat.n >= 15 ? 8 : 6,
+        keyakinan: b.n >= 30 ? 10 : b.n >= MIN_PEMBANDING ? 8 : 6,
       };
       skor.total = skor.harga + skor.jarak + skor.fasilitas + skor.keyakinan;
       return {
@@ -457,17 +424,19 @@ export async function kozyMatch({ kawasanIds, fasilitas = [], budgetMax = null, 
         promo: k.promo,
         url: k.url ?? null,
         harga: k.harga,
-        harga_wajar,
-        selisih_rp: k.harga - harga_wajar,
-        selisih_persen,
-        status: statusDari(selisih_persen),
-        persentil: persentilDari(k.harga, k.kec),
-        n: stat.n,
+        median: nilai.median,
+        kisaran: nilai.kisaran,
+        selisih_rp: nilai.selisih_rp,
+        selisih_persen: nilai.selisih_persen,
+        status: nilai.status,
+        persentil: nilai.persentil,
+        n: b.n,
+        jenisPembanding: b.jenis,
         skor,
         sumber: k.sumber,
       };
     })
-    .filter((k) => k.selisih_persen <= 10) // hanya kos yang lolos cek harga
+    .filter((k) => k.status !== 'KEMAHALAN') // hanya kos yang lolos cek harga: tidak di atas Q3 pembandingnya
     .sort((a, b) => b.skor.total - a.skor.total);
 
   return hasil.slice(0, jumlah);
@@ -481,23 +450,10 @@ export function jumlahKosCocok({ kawasanIds = [], fasilitas = [], budgetMax = nu
 }
 
 // ---------- Pemilik ----------
-export function analisisPemilik({ kawasanId, fasilitas, jenis, harga }) {
+// Semua tipe kamar satu kos punya pembanding yang sama (kecamatan dan jenis kosnya
+// sama); yang membedakan hasilnya hanya harga tiap tipe.
+export function analisisPemilik({ kawasanId, jenis, harga }) {
   const k = kawasanById(kawasanId);
-  const stat = statKec(k.kec);
-  const { harga_wajar } = hitungWajar(k, { fasilitas, jenis });
-  const selisih_persen = ((harga - harga_wajar) / harga_wajar) * 100;
-  const simulasi = FASILITAS.filter((f) => !fasilitas.includes(f.id) && (PASAR.model.fasilitas[f.id] || 0) > 0.01).map((f) => {
-    const baru = hitungWajar(k, { fasilitas: [...fasilitas, f.id], jenis }).harga_wajar;
-    const tambah = baru - harga_wajar;
-    return {
-      id: f.id,
-      label: f.label,
-      icon: f.icon,
-      tambah,
-      harga_baru: baru,
-      balik_modal: Math.ceil((BIAYA_FASILITAS[f.id] || 0) / Math.max(1, tambah)),
-      punya_pct: stat.fasilitas[f.id],
-    };
-  });
-  return { harga_wajar, pasar: pasarDari(k.kec), selisih_persen, status: statusDari(selisih_persen), persentil: persentilDari(harga, k.kec), simulasi, n: stat.n, kec: k.kec };
+  const b = pembanding(k.kec, jenis);
+  return { ...nilaiHarga(harga, b), pembanding: b, n: b.n, kec: k.kec };
 }

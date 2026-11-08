@@ -8,10 +8,9 @@
 # 1. HARGA TIDAK IKUT jadi variabel cluster.
 #    Kalau harga dipakai membentuk cluster lalu cluster itu dipakai menilai
 #    kewajaran harga, penilaiannya melingkar — di aplikasi, harga itulah yang
-#    justru sedang dipertanyakan. Diuji: cluster "pakai harga" tampak unggul
-#    (MAPE 20,9%) hanya karena mengintip jawabannya; versi jujurnya 24,7%,
-#    kalah dari hedonic 21,1%.
-#    => Cluster MELABELI, hedonic MEMVONIS. Dua peran terpisah.
+#    justru sedang dipertanyakan: cluster "pakai harga" tampak unggul hanya
+#    karena mengintip jawabannya.
+#    => Cluster MELABELI, pembanding median-IQR MENILAI. Dua peran terpisah.
 #
 # 2. K-Prototypes, bukan K-Means one-hot.
 #    Bukan karena lebih akurat — selisih silhouette keduanya +0,000, benar-benar
@@ -173,7 +172,7 @@ def main():
             "layak_untuk_label_produk": bool(terkecil >= 15.0),
             "catatan": (
                 "Harga sengaja TIDAK ikut membentuk cluster supaya penilaian kewajaran harga tidak melingkar. "
-                "Segmen hanya untuk MELABELI; vonis wajar/mahal/murah tetap dari model hedonic di pasar.json."
+                "Segmen hanya untuk MELABELI; vonis wajar/mahal/murah tetap dari pembanding median-IQR di pasar.json."
             ),
             "peringatan": None if terkecil >= 15.0 else f"Segmen terkecil cuma {terkecil}% dari data, jadi label ini lemah sebagai pembeda di produk.",
         },

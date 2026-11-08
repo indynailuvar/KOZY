@@ -16,20 +16,20 @@ export function WaitlistBox({ nama, dikenal, belumData = false }) {
           <Icon name="map" size={16} />
         </span>
         <div>
-          <b>{dikenal ? `${nama} belum tercakup` : 'Lokasi belum kami kenali'}</b>
+          <b>{dikenal ? `${nama} belum tercakup` : 'Lokasi belum dikenali'}</b>
           <p>
             {belumData
-              ? 'Data kos di kecamatan ini belum terkumpul, jadi KOZY belum bisa menilai harganya. Kami tidak menebak angka.'
+              ? 'Iklan kos di kecamatan ini belum cukup untuk dinilai. KOZY tidak menebak angka.'
               : dikenal
-                ? 'Saat ini KOZY baru menilai kos di Kota Surabaya.'
-                : 'Coba ketik nama kelurahan/kecamatan di Surabaya, atau tempel link Google Maps.'}
+                ? 'KOZY baru menilai kos di Kota Surabaya.'
+                : 'Coba ketik nama kelurahan atau kecamatan di Surabaya, atau tempel link Google Maps.'}
           </p>
         </div>
       </div>
       {(dikenal || belumData) &&
         (terkirim ? (
           <p className="waitlist-ok">
-            <Icon name="checkc" size={18} /> Kamu masuk daftar tunggu. Kami kabari saat kawasan ini siap.
+            <Icon name="checkc" size={18} /> Kamu masuk daftar tunggu. Kami kabari kalau daerah ini sudah bisa dicek.
           </p>
         ) : (
           <div className="waitlist-form">

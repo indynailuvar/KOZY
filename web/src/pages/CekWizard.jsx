@@ -64,12 +64,12 @@ export default function CekWizard({ query }) {
       lok.status === 'ok'
         ? null
         : lok.status === 'kosong'
-          ? 'Isi lokasi kos dulu.'
+          ? 'Isi lokasi kosnya dulu.'
           : lok.status === 'luar' || lok.status === 'belum-data'
             ? ' '
-            : 'Lokasi belum dikenali. Pilih dari saran atau tempel link Google Maps.',
-    2: jenis ? null : 'Pilih salah satu jenis kos.',
-    3: harga >= 100_000 ? null : 'Masukkan harga minimal Rp 100.000.',
+            : 'Lokasi belum dikenali. Pilih dari saran di bawah atau tempel link Google Maps.',
+    2: jenis ? null : 'Pilih salah satu.',
+    3: harga >= 100_000 ? null : 'Harga minimal Rp100.000.',
     4: null,
   };
 
@@ -110,7 +110,7 @@ export default function CekWizard({ query }) {
     else go('/');
   };
 
-  const langkah = LANGKAH_CEK.map((l, i) => (i === 1 && proses.info ? `Menemukan ${proses.info.n} kos pembanding di Kec. ${proses.info.kec}` : l));
+  const langkah = LANGKAH_CEK.map((l, i) => (i === 1 && proses.info ? `Ketemu ${proses.info.n} kos sejenis di Kec. ${proses.info.kec}` : l));
   const err = coba ? galat[step]?.trim() : null;
 
   return (
@@ -123,14 +123,14 @@ export default function CekWizard({ query }) {
         footer={
           <>
             <Button block iconRight={step < TOTAL ? 'arrowr' : undefined} onClick={lanjut} disabled={step === 1 && (lok.status === 'luar' || lok.status === 'belum-data')}>
-              {step < TOTAL ? 'Lanjut' : 'Cek Harga Wajar'}
+              {step < TOTAL ? 'Lanjut' : 'Cek harga'}
             </Button>
           </>
         }
       >
         {step === 1 && (
           <>
-            <Question judul="Di mana lokasi kosnya?" sub="Tempel link Google Maps, atau ketik nama daerahnya." />
+            <Question judul="Di mana lokasi kosnya?" sub="Ketik nama daerah atau tempel link Google Maps." />
             <label className={`field lg ${err ? 'is-err' : ''}`}>
               <Icon name={isLink(lokasiTeks) ? 'link' : 'search'} size={20} />
               <input
@@ -187,18 +187,18 @@ export default function CekWizard({ query }) {
 
         {step === 2 && (
           <>
-            <Question judul="Kos ini untuk siapa?" sub="Pilih jenis kosnya." />
-            <Options label="Jenis kos" value={jenis} onChange={setJenis} options={OPSI_JENIS} />
+            <Question judul="Kos ini untuk siapa?" />
+            <Options label="Jenis kos" kolom={3} value={jenis} onChange={setJenis} options={OPSI_JENIS} />
           </>
         )}
 
         {step === 3 && (
           <>
-            <Question judul="Berapa harga sewa dari pemilik?" sub="Harga per bulan yang tertulis di iklan atau disebut pemilik." />
+            <Question judul="Berapa harga sewanya?" />
             <AmountInput id="harga" label="Harga sewa dari pemilik per bulan" prefix="Rp" value={harga} onChange={setHarga} placeholder="0" invalid={!!err} />
             <p className="amount-note">per bulan</p>
             <p className="hint-link">
-              Baru punya budget, belum ada kos incaran?{' '}
+              Belum punya kos incaran?{' '}
               <a href="#/cari" className="text-btn sm">
                 Cari kos sesuai budget
               </a>
@@ -208,7 +208,7 @@ export default function CekWizard({ query }) {
 
         {step === 4 && (
           <>
-            <Question judul="Fasilitas apa saja yang ada?" sub="Pilih semua yang tersedia di kamar. Boleh dilewati." />
+            <Question judul="Ada fasilitas apa saja?" sub="Boleh dilewati." />
             <Tiles label="Fasilitas" values={fasilitas} options={FASILITAS} onToggle={(id) => setFasilitas((a) => (a.includes(id) ? a.filter((x) => x !== id) : [...a, id]))} />
           </>
         )}
@@ -222,7 +222,7 @@ export default function CekWizard({ query }) {
 
       <ProcessSheet
         open={proses.open}
-        title="Menganalisis harga…"
+        title="Mengecek harga…"
         steps={langkah}
         active={proses.active}
         error={proses.error}

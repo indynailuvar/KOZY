@@ -69,7 +69,7 @@
   ],
   "harga_dipakai": false,
   "layak_untuk_label_produk": false,
-  "catatan": "Harga sengaja TIDAK ikut membentuk cluster supaya penilaian kewajaran harga tidak melingkar. Segmen hanya untuk MELABELI; vonis wajar/mahal/murah tetap dari model hedonic di pasar.json.",
+  "catatan": "Harga sengaja TIDAK ikut membentuk cluster supaya penilaian kewajaran harga tidak melingkar. Segmen hanya untuk MELABELI; vonis wajar/mahal/murah tetap dari pembanding median-IQR di pasar.json.",
   "peringatan": "Segmen terkecil cuma 9.8% dari data, jadi label ini lemah sebagai pembeda di produk."
  },
  "segmen": [

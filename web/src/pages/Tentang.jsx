@@ -1,28 +1,24 @@
 import Icon from '../components/Icon.jsx';
 import { Button, PageHead } from '../components/ui.jsx';
 import { PASAR } from '../data/surabaya.js';
-import { rp, tanggal } from '../lib/format.js';
 import { go } from '../router.js';
 
 const M = PASAR.meta;
 const CARA = [
-  `Kami mengumpulkan iklan kos di Surabaya. Saat ini terkumpul ${M.n} iklan dari ${M.sumber}, diambil ${tanggal(M.diambil)}.`,
-  'Model hedonic memperkirakan pengaruh kecamatan, jenis kos, dan tiap fasilitas terhadap harga.',
-  `Saat diuji ulang dengan data yang tidak dipakai melatih, perkiraan model meleset rata-rata ± ${rp(M.mae)} (${String(M.mape).replace('.', ',')}%). Angka itu kami tampilkan apa adanya.`,
-  'Harga disebut wajar kalau selisihnya di bawah 15% dari perkiraan, seukuran meleset khas model. Di luar itu baru ditandai kemahalan atau murah.',
-  'Kalau data di suatu kecamatan belum terkumpul, KOZY bilang belum ada data. Kami tidak menebak.',
+  `Harga kosmu dibandingkan dengan kos sejenis (putra, putri, atau campur) di kecamatan yang sama. Kalau kos sejenisnya kurang dari ${M.min_pembanding}, semua jenis kos di kecamatan itu ikut dibandingkan.`,
+  'Harga pasaran adalah harga tengah (median), bukan rata-rata, jadi satu dua kos yang terlalu mahal atau murah tidak menggeser hasilnya.',
+  'Disebut wajar kalau masuk separuh harga di tengah (kuartil 1 sampai 3). Di atasnya kemahalan, di bawahnya murah.',
+  'Fasilitas tidak ikut dihitung karena datanya hanya mencatat ada atau tidaknya.',
+  'Kalau data di suatu kecamatan belum cukup, KOZY bilang belum ada data. Kami tidak menebak.',
 ];
 
 export default function Tentang() {
   return (
     <div className="page narrow">
-      <PageHead judul="Tentang KOZY" />
+      <PageHead judul="Cara kerja KOZY" onBack={() => (window.history.length > 1 ? window.history.back() : go('/'))} />
       <div className="prose">
         <p className="lead">Supaya kamu tidak membayar kos terlalu mahal.</p>
-        <p>
-          KOZY membantu siapa pun yang mencari kos di Surabaya, dari mahasiswa, pekerja, tenaga kesehatan, guru, hingga penyewa dengan kebutuhan akses khusus, menilai apakah harga sewa
-          masuk akal sebelum transfer uang. KOZY bukan tempat iklan kos. Kami menilai harganya dan membantu kamu memilih.
-        </p>
+        <p>KOZY membandingkan harga kos incaranmu dengan kos sejenis di sekitarnya sebelum kamu transfer. Kami bukan tempat iklan, jadi penilaiannya netral.</p>
 
         <h2>Cara kami menghitung</h2>
         <ul className="check-list">
@@ -36,8 +32,7 @@ export default function Tentang() {
 
         <h2>Batas data saat ini</h2>
         <p>
-          Sumber data belum memuat luas kamar, alamat persis, dan nomor pemilik. Karena itu KOZY tidak menghitung luas kamar, titik di peta hanya perkiraan area, dan kami
-          mengarahkan kamu ke iklan aslinya. Fasilitas yang dihitung baru {PASAR.model && Object.keys(PASAR.model.fasilitas).length} jenis, yaitu yang memang tercatat di iklan.
+          Belum ada data luas kamar dan alamat persis, jadi titik di peta hanya perkiraan area. Baru {M.kecamatan} kecamatan yang datanya cukup untuk dinilai.
         </p>
 
         <h2>Netral</h2>

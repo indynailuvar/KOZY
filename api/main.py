@@ -1,10 +1,12 @@
 """
 KOZY Backend API (FastAPI)
-  /vonis                 harga wajar, regresi hedonic log-linear (Ridge) dari pasar.json
   /modeling/segment      segmen harga, K-Prototypes (bundle modeling)
   /modeling/price-gap    gap harga terhadap median & IQR kecamatan x jenis (bundle modeling)
   /modeling/summary      ringkasan kedua metode di atas
   /forecast/omzet-paket  proyeksi omzet paket, Chronos-2 di atas histori dummy
+
+Tidak ada regresi. Cek Harga di frontend menghitung median & IQR yang sama
+langsung dari web/src/data/pasar.json, jadi tetap jalan saat server tidur.
 """
 
 import json
@@ -14,7 +16,6 @@ from datetime import date
 from functools import lru_cache
 from pathlib import Path
 from threading import Lock
-from typing import List, Optional
 import warnings
 
 warnings.filterwarnings("ignore")
@@ -89,7 +90,7 @@ def chronos2_pipeline():
 app = FastAPI(
     title="KOZY Analytics & Modelling Backend",
     version="2.0.0",
-    description="Backend KOZY: harga wajar (Ridge), segmen K-Prototypes, gap median & IQR, dan forecast omzet Chronos-2."
+    description="Backend KOZY: segmen K-Prototypes, gap harga median & IQR, dan forecast omzet Chronos-2."
 )
 
 # CORS
@@ -103,71 +104,8 @@ app.add_middleware(
 
 
 # =============================================================================
-# Helper Functions
-# =============================================================================
-BATAS_WAJAR = 15.0
-
-def bulat10rb(v: float) -> int:
-    return int(round(v / 10000.0) * 10000)
-
-def status_dari_selisih(selisih_persen: float) -> str:
-    if selisih_persen > BATAS_WAJAR:
-        return "KEMAHALAN"
-    elif selisih_persen < -BATAS_WAJAR:
-        return "MURAH"
-    return "WAJAR"
-
-def hitung_wajar_log_linear(kec: str, fasilitas: List[str], jenis: str = "putra"):
-    model = PASAR_DATA.get("model", {})
-    intercept = model.get("intercept", 13.276)
-    kec_effects = model.get("kec", {})
-    fas_effects = model.get("fasilitas", {})
-    jenis_effects = model.get("jenis", {})
-
-    kec_val = kec_effects.get(kec, 0.0)
-    fas_val = sum(fas_effects.get(f, 0.0) for f in fasilitas)
-    jenis_val = jenis_effects.get(jenis, 0.0)
-
-    prediksi_rp = math.exp(intercept + kec_val + fas_val + jenis_val)
-    harga_wajar = bulat10rb(prediksi_rp)
-
-    dasar = math.exp(intercept + kec_val)
-    faktor = [
-        {"key": "lokasi", "label": f"Lokasi di Kec. {kec}", "icon": "pin", "nilai": round(dasar), "arah": "naik", "level": "besar"}
-    ]
-    for f in ["km", "ac", "wifi", "kasur", "kloset", "akses24"]:
-        if f in fasilitas and f in fas_effects:
-            tanpa = math.exp(intercept + kec_val + (fas_val - fas_effects[f]) + jenis_val)
-            diff = prediksi_rp - tanpa
-            porsi = abs(diff) / prediksi_rp
-            level = "besar" if porsi >= 0.3 else ("sedang" if porsi >= 0.1 else "kecil")
-            label_map = {"km": "KM Dalam", "ac": "AC", "wifi": "WiFi", "kasur": "Kasur", "kloset": "Kloset Duduk", "akses24": "Akses 24 Jam"}
-            icon_map = {"km": "bath", "ac": "snow", "wifi": "wifi", "kasur": "bed", "kloset": "toilet", "akses24": "clock"}
-            faktor.append({
-                "key": f,
-                "label": label_map.get(f, f.upper()),
-                "icon": icon_map.get(f, "check"),
-                "nilai": round(diff),
-                "arah": "naik" if diff >= 0 else "turun",
-                "level": level
-            })
-
-    lokasi_pct = round((dasar / prediksi_rp) * 100)
-    return harga_wajar, faktor, {"lokasi": lokasi_pct, "kamar": 100 - lokasi_pct}
-
-
-# =============================================================================
 # Request / Response Schemas
 # =============================================================================
-class VonisRequest(BaseModel):
-    kawasan: Optional[str] = None
-    kecamatan: str = "Sukolilo"
-    harga: float = Field(..., ge=100000, le=20000000, description="Harga sewa bulanan kos")
-    jenis: str = "putra"
-    fasilitas: List[str] = []
-    lokasi: Optional[str] = None
-
-
 class ForecastOmzetRequest(BaseModel):
     pembeli_awal: int = Field(6, ge=0, le=5000, description="Pembeli bulanan dummy pada awal periode historis")
     pertumbuhan_persen: float = Field(3.0, ge=-5, le=10, description="Asumsi pertumbuhan dummy per bulan")
@@ -370,58 +308,6 @@ def forecast_omzet_paket(req: ForecastOmzetRequest):
         "ringkasan": {
             "pembeli_p50_total": sum(x["pembeli_p50"] for x in keluaran),
             "omzet_p50_total": sum(x["omzet_p50"] for x in keluaran),
-        },
-    }
-
-
-@app.post("/vonis")
-def vonis_harga(req: VonisRequest):
-    """
-    Endpoint utama penilaian kewajaran harga kos.
-    Menghitung harga wajar dengan regresi hedonic log-linear (Ridge).
-    """
-    kec = req.kecamatan
-    harga = req.harga
-    fasilitas = req.fasilitas
-    jenis = req.jenis
-
-    stat = PASAR_DATA.get("kecamatan", {}).get(kec, {"n": 20, "p10": 700000, "p25": 850000, "p50": 1100000, "p75": 1600000, "p90": 2100000})
-
-    harga_wajar, faktor, komposisi = hitung_wajar_log_linear(kec, fasilitas, jenis)
-    selisih_rp = harga - harga_wajar
-    selisih_persen = (selisih_rp / harga_wajar) * 100
-
-    # Posisi persentil
-    kos_kec = [k["harga"] for k in PASAR_DATA.get("kos", []) if k.get("kec") == kec]
-    if kos_kec:
-        persentil = max(1, min(99, round((sum(1 for h in kos_kec if h < harga) / len(kos_kec)) * 100)))
-    else:
-        persentil = 50
-
-    return {
-        "status": status_dari_selisih(selisih_persen),
-        "harga_wajar": harga_wajar,
-        "selisih_rp": round(selisih_rp),
-        "selisih_persen": round(selisih_persen, 1),
-        "persentil": persentil,
-        "kisaran": [bulat10rb(harga_wajar * 0.85), bulat10rb(harga_wajar * 1.15)],
-        "faktor": faktor,
-        "komposisi": komposisi,
-        "pasar": {
-            "p10": stat.get("p10", 700000),
-            "p25": stat.get("p25", 850000),
-            "p50": stat.get("p50", 1100000),
-            "p75": stat.get("p75", 1600000),
-            "p90": stat.get("p90", 2100000),
-            "n_pembanding": stat.get("n", 20)
-        },
-        "meta": {
-            "confidence": "tinggi" if stat.get("n", 0) >= 40 else ("sedang" if stat.get("n", 0) >= 15 else "rendah"),
-            "kecamatan": kec,
-            "updated_at": PASAR_DATA.get("meta", {}).get("diambil", "2026-10-19"),
-            "sumber": PASAR_DATA.get("meta", {}).get("sumber", "Mamikos + Papikost"),
-            "mae": PASAR_DATA.get("meta", {}).get("mae", 279000),
-            "anomali": abs(selisih_persen) > 60
         },
     }
 

@@ -14,28 +14,31 @@ export const SARAN_AWAL = ['Ide upgrade kamar dari uang hemat', 'Bantu pilih kos
 
 // Hal-hal yang cuma ketahuan kalau dilihat langsung, jadi tidak ada di data mana pun.
 export const CEK_SEBELUM_BAYAR = [
-  'Kebersihan kamar mandi & dapur',
+  'Kebersihan kamar mandi dan dapur',
   'Sinyal internet di dalam kamar',
   'Aturan jam malam dan tamu',
-  'Rincian biaya listrik & air',
+  'Rincian biaya listrik dan air',
   'Tekanan air dan kondisi stop kontak',
-  'Akses kursi roda kalau kamu membutuhkannya',
+  'Akses kursi roda, kalau kamu butuh',
 ];
 
 // ---------- Kalimat menawar ----------
 // Satu sumber, dipakai halaman Kartu Tawar sekaligus jawaban KOZY AI, supaya
 // angka dan nada kalimatnya tidak pernah berbeda antara keduanya.
-export function kalimatTawar({ harga, harga_wajar, status, persentil, n, kec }) {
-  const data = `Menurut data KOZY dari ${n} iklan kos di Kec. ${kec}, harga wajar kamar ini sekitar ${rp(harga_wajar)}/bulan.`;
+export function kalimatTawar({ harga, median, kisaran, status, persentil, n, kec, jenisPembanding }) {
+  const kos = `kos ${jenisPembanding ? `${jenisPembanding} ` : ''}di Kec. ${kec}`;
+  const data = `Data KOZY dari ${n} iklan ${kos}: harga pasarannya ${rp(median)}/bulan, umumnya ${rp(kisaran[0])}–${rp(kisaran[1])}.`;
   if (status === 'KEMAHALAN') {
-    const target = bulat10rb(harga_wajar + (harga - harga_wajar) * 0.15);
-    return [data, `Harga ${rp(harga)} lebih mahal dari ${persentil}% kos sejenis di sekitar sini.`, `Apakah bisa ${rp(target)}/bulan kalau saya langsung bayar 6 bulan?`];
+    // batas atas kisaran wajar (Q3), dibulatkan ke bawah supaya tawarannya benar-benar masuk kisaran
+    const target = Math.floor(kisaran[1] / 10_000) * 10_000;
+    return [data, `Harga ${rp(harga)} lebih mahal dari ${persentil}% kos sejenis di sekitar sini.`, `Bisa ${rp(target)}/bulan kalau saya bayar 6 bulan sekaligus?`];
   }
   if (status === 'WAJAR') {
-    const target = bulat10rb(Math.min(harga, harga_wajar) * 0.97);
-    return [data, 'Harganya sudah wajar dan saya serius ingin menyewa.', `Apakah bisa ${rp(target)}/bulan kalau saya bayar 6 bulan di depan?`];
+    // kisaran wajar cukup lebar, jadi yang ditawar cara bayarnya, bukan harganya
+    const target = bulat10rb(harga * 0.97);
+    return [data, 'Harganya sudah wajar dan saya serius mau sewa.', `Bisa ${rp(target)}/bulan kalau saya bayar 6 bulan di depan?`];
   }
-  return [data, 'Harganya sudah bagus, saya ingin segera booking.', 'Apakah ada biaya tambahan di luar sewa, seperti listrik, air, atau parkir?'];
+  return [data, 'Harganya sudah bagus, saya mau segera booking.', 'Ada biaya lain di luar sewa, seperti listrik, air, atau parkir?'];
 }
 
 // ---------- Upgrade kamar ----------
@@ -63,7 +66,7 @@ function danaDariKonteks(ktx) {
   const r = ktx.cek;
   if (!r) return null;
   if (r.selisih_rp < -10_000) return { nilai: Math.abs(r.selisih_rp), alasan: `hemat ${rp(r.selisih_rp)} per bulan dari kos incaranmu` };
-  if (r.selisih_rp > 10_000) return { nilai: r.selisih_rp, alasan: `potensi hemat ${rp(r.selisih_rp)} per bulan kalau berhasil nego ke harga wajar` };
+  if (r.selisih_rp > 10_000) return { nilai: r.selisih_rp, alasan: `peluang hemat ${rp(r.selisih_rp)} per bulan kalau berhasil menawar ke harga pasaran` };
   return null;
 }
 
@@ -72,21 +75,21 @@ function jawabUpgrade(pesan, ktx) {
   const dana = dariPesan ? { nilai: dariPesan, alasan: null } : danaDariKonteks(ktx);
   if (!dana) {
     return {
-      teks: 'Berapa dana yang mau kamu pakai untuk upgrade kamar? Aku carikan barang yang paling berguna untuk anak kos.',
-      saran: ['Budget Rp 150.000', 'Budget Rp 300.000', 'Budget Rp 500.000', 'Budget Rp 1 juta'],
+      teks: 'Mau pakai dana berapa untuk upgrade kamar? Aku carikan barang yang paling berguna.',
+      saran: ['Budget Rp150.000', 'Budget Rp300.000', 'Budget Rp500.000', 'Budget Rp1 juta'],
     };
   }
   if (dana.nilai < 25_000) {
-    return { teks: `Dengan ${rp(dana.nilai)} belum cukup untuk barang yang berguna. Coba kumpulkan hemat 2–3 bulan dulu, ya.`, saran: ['Budget Rp 150.000', 'Tips bertahan di tanggal tua'] };
+    return { teks: `${rp(dana.nilai)} belum cukup untuk barang yang berguna. Coba kumpulkan 2–3 bulan dulu, ya.`, saran: ['Budget Rp150.000', 'Tips bertahan di tanggal tua'] };
   }
   const punya = ktx.cek?.input?.fasilitas || [];
   const hasil = rekomendasiUpgrade(dana.nilai, punya);
   const pembuka = dana.alasan ? `Kamu punya ${dana.alasan}. ` : '';
-  const catatanKurang = ktx.cek && hasil.kurang.length ? ` Aku prioritaskan pengganti ${daftar(labelFasilitas(hasil.kurang.slice(0, 2)))} yang belum ada di kamarmu.` : '';
+  const catatanKurang = ktx.cek && hasil.kurang.length ? ` Aku dahulukan pengganti ${daftar(labelFasilitas(hasil.kurang.slice(0, 2)))} yang belum ada di kamarmu.` : '';
   return {
     teks: `${pembuka}Dengan ${rp(dana.nilai)}, ini barang yang paling terasa manfaatnya.${catatanKurang}`,
     kartu: { jenis: 'produk', ...hasil, budget: dana.nilai },
-    saran: ['Budget Rp 300.000', 'Budget Rp 1 juta', 'Tips belanja hemat'],
+    saran: ['Budget Rp300.000', 'Budget Rp1 juta', 'Tips belanja hemat'],
   };
 }
 
@@ -129,8 +132,8 @@ export function putuskan(a, b, prioritas = 'seimbang') {
   if (menang.jarak != null && kalah.jarak != null && kalah.jarak - menang.jarak >= 0.15) alasan.push(`${jarak(kalah.jarak - menang.jarak)} lebih dekat ke tujuanmu`);
   const lebih = menang.fasilitas.filter((f) => !kalah.fasilitas.includes(f));
   if (lebih.length) alasan.push(`Punya ${daftar(labelFasilitas(lebih))} yang tidak ada di ${kalah.nama}`);
-  if (menang.selisih_persen != null && kalah.selisih_persen != null && menang.selisih_persen + 3 < kalah.selisih_persen) alasan.push('Harganya lebih wajar menurut data pasar');
-  if (!alasan.length) alasan.push('Keduanya hampir setara; skor keseluruhannya sedikit lebih tinggi');
+  if (menang.selisih_persen != null && kalah.selisih_persen != null && menang.selisih_persen + 3 < kalah.selisih_persen) alasan.push('Harganya lebih dekat ke harga pasaran');
+  if (!alasan.length) alasan.push('Keduanya hampir setara, nilai totalnya sedikit lebih tinggi');
 
   const keunggulanKalah = [];
   if (kalah.harga < menang.harga) keunggulanKalah.push('harga');
@@ -155,18 +158,18 @@ function jawabKeputusan(pesan, ktx) {
   if (pilihan.length === 2) {
     const d = putuskan(pilihan[0], pilihan[1], prioritas);
     return {
-      teks: `Untuk prioritas ${d.prioritas}, aku sarankan ${d.menang.nama}.`,
+      teks: `Kalau kamu mengutamakan yang ${d.prioritas}, pilih ${d.menang.nama}.`,
       kartu: { jenis: 'keputusan', ...d },
       saran: ['Kalau prioritasku paling hemat?', 'Kalau prioritasku paling dekat?', 'Ide upgrade kamar dari uang hemat'],
     };
   }
   const daftarKos = ktx.daftarKos || [];
   if (daftarKos.length >= 2) {
-    return { teks: 'Pilih dua kos yang mau dibandingkan:', kartu: { jenis: 'pilihKos', kos: daftarKos } };
+    return { teks: 'Pilih dua kos yang mau dibandingkan.', kartu: { jenis: 'pilihKos', kos: daftarKos } };
   }
   return {
-    teks: 'Aku butuh data dua kos. Isi harga, jarak, dan fasilitas keduanya di halaman Bandingkan — aku bantu menimbangnya.',
-    aksi: [{ label: 'Buka halaman Bandingkan', ke: '/bandingkan' }],
+    teks: 'Aku butuh data dua kos. Isi harga, jarak, dan fasilitasnya di halaman Bandingkan, nanti aku bantu pilih.',
+    aksi: [{ label: 'Buka Bandingkan', ke: '/bandingkan' }],
   };
 }
 
@@ -181,7 +184,7 @@ function jawabTips(pesan) {
     saran: TIPS.filter((t) => t.id !== topik.id)
       .slice(0, 2)
       .map((t) => t.judul),
-    aksi: [{ label: 'Lihat semua tips keuangan', ke: '/edukasi' }],
+    aksi: [{ label: 'Lihat semua tips', ke: '/edukasi' }],
   };
 }
 
@@ -190,23 +193,23 @@ function jawabNawar(ktx) {
   const r = ktx.cek;
   if (!r) {
     return {
-      teks: 'Cek dulu harga kosnya, biar aku punya angka pembanding untuk menyusun kalimat menawar yang masuk akal.',
-      aksi: [{ label: 'Cek harga kos dulu', ke: '/cek' }],
+      teks: 'Cek dulu harga kosnya, supaya aku punya angka pasaran untuk menyusun kalimat menawar.',
+      aksi: [{ label: 'Cek harga kos', ke: '/cek' }],
       saran: SARAN_AWAL,
     };
   }
-  const t = { harga: r.harga_ditawarkan, harga_wajar: r.harga_wajar, status: r.status, persentil: r.persentil, n: r.pasar.n_pembanding, kec: r.kawasan.kec };
+  const b = r.pembanding;
+  const t = { harga: r.harga_ditawarkan, median: r.median, kisaran: r.kisaran, status: r.status, persentil: r.persentil, n: b.n, kec: r.kawasan.kec, jenisPembanding: b.jenis };
   const kalimat = kalimatTawar(t);
-  const selisih = r.harga_ditawarkan - r.harga_wajar;
   const pembuka =
     r.status === 'KEMAHALAN'
-      ? `Harganya ${rp(selisih)} di atas pasaran, jadi kamu punya alasan kuat untuk menawar. Pakai tiga kalimat ini, urut:`
+      ? `Harganya di atas ${rp(r.kisaran[1])}, batas atas harga wajar di sana. Kamu punya alasan kuat untuk menawar. Pakai tiga kalimat ini secara berurutan.`
       : r.status === 'MURAH'
-        ? 'Harganya sudah di bawah pasaran, jadi jangan menawar terlalu keras. Yang lebih penting: pastikan tidak ada biaya tersembunyi.'
-        : 'Harganya sudah wajar, jadi peluang turunnya tipis. Tawar lewat cara bayar, bukan lewat potongan harga:';
+        ? 'Harganya sudah di bawah pasaran, jadi jangan menawar terlalu keras. Yang lebih penting, pastikan tidak ada biaya tersembunyi.'
+        : 'Harganya sudah wajar, jadi peluang turunnya kecil. Tawar lewat cara bayar, bukan potongan harga.';
   return {
     teks: pembuka,
-    kartu: { jenis: 'tips', topik: { id: 'nawar', judul: 'Kalimat untuk menawar', ringkas: 'Sebutkan datanya dulu, baru angkanya.', poin: kalimat } },
+    kartu: { jenis: 'tips', topik: { id: 'nawar', judul: 'Kalimat untuk menawar', ringkas: 'Sebut datanya dulu, baru angka tawaranmu.', poin: kalimat } },
     saran: ['Apa saja yang wajib dicek sebelum bayar kos?', 'Ide upgrade kamar dari uang hemat', 'Tips bertahan di tanggal tua'],
     aksi: [{ label: 'Buka Kartu Tawar', ke: '/kartu-tawar' }],
   };
@@ -216,10 +219,10 @@ function jawabNawar(ktx) {
 function jawabCekSebelumBayar(ktx) {
   const r = ktx.cek;
   const daftarCek = [...CEK_SEBELUM_BAYAR];
-  if (r?.status === 'MURAH') daftarCek.unshift('Alasan harganya jauh di bawah pasaran — tanyakan langsung ke pemiliknya');
+  if (r?.status === 'MURAH') daftarCek.unshift('Kenapa harganya jauh di bawah pasaran? Tanyakan ke pemilik');
   return {
-    teks: 'Ini yang tidak kelihatan di iklan dan cuma ketahuan kalau kamu datang sendiri:',
-    kartu: { jenis: 'tips', topik: { id: 'cek-bayar', judul: 'Cek sebelum transfer', ringkas: 'Datangi kosnya dulu, jangan transfer dari foto saja.', poin: daftarCek } },
+    teks: 'Hal-hal ini tidak terlihat di iklan. Cek sendiri saat datang ke kosnya.',
+    kartu: { jenis: 'tips', topik: { id: 'cek-bayar', judul: 'Cek sebelum transfer', ringkas: 'Datangi kosnya dulu. Jangan transfer hanya dari foto.', poin: daftarCek } },
     saran: ['Cara nawar harga kos', 'Bantu pilih kos A atau B', 'Tips bertahan di tanggal tua'],
   };
 }
@@ -246,15 +249,15 @@ export function jawabLokal(pesan, ktx = {}) {
   if (niat === 'keputusan') return jawabKeputusan(pesan, ktx);
   if (niat === 'tips') {
     const t = TIPS.find((x) => x.judul.toLowerCase() === pesan.toLowerCase());
-    return t ? { teks: `${t.judul}: ${t.ringkas}`, kartu: { jenis: 'tips', topik: t }, aksi: [{ label: 'Lihat semua tips keuangan', ke: '/edukasi' }] } : jawabTips(pesan);
+    return t ? { teks: `${t.judul}: ${t.ringkas}`, kartu: { jenis: 'tips', topik: t }, aksi: [{ label: 'Lihat semua tips', ke: '/edukasi' }] } : jawabTips(pesan);
   }
   const t = TIPS.find((x) => x.judul.toLowerCase() === pesan.toLowerCase());
-  if (t) return { teks: `${t.judul}: ${t.ringkas}`, kartu: { jenis: 'tips', topik: t }, aksi: [{ label: 'Lihat semua tips keuangan', ke: '/edukasi' }] };
+  if (t) return { teks: `${t.judul}: ${t.ringkas}`, kartu: { jenis: 'tips', topik: t }, aksi: [{ label: 'Lihat semua tips', ke: '/edukasi' }] };
   return {
     teks:
       niat === 'sapa'
-        ? 'Halo! Aku KOZY AI. Aku bisa bantu tiga hal: ide upgrade kamar dari uang hemat, memilih antara dua kos, dan tips keuangan anak kos.'
-        : 'Aku belum paham pertanyaannya. Aku bisa bantu: ide upgrade kamar, memilih antara dua kos, atau tips keuangan anak kos.',
+        ? 'Halo, aku KOZY AI. Aku bisa bantu memilih kos, menyusun kalimat menawar, ide upgrade kamar, dan tips keuangan anak kos.'
+        : 'Maaf, aku belum paham. Coba tanya soal memilih kos, cara menawar, upgrade kamar, atau tips keuangan.',
     saran: SARAN_AWAL,
   };
 }
@@ -266,7 +269,7 @@ export async function tanyaAI(pesan, ktx = {}) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ pesan, konteks: ringkasKonteks(ktx) }),
     });
-    if (!res.ok) throw new Error('KOZY AI sedang sibuk. Coba lagi sebentar.');
+    if (!res.ok) throw new Error('KOZY AI sedang sibuk. Coba lagi sebentar lagi.');
     return res.json();
   }
   await wait(550 + Math.min(900, pesan.length * 12));
@@ -276,7 +279,7 @@ export async function tanyaAI(pesan, ktx = {}) {
 function ringkasKonteks(ktx) {
   const r = ktx.cek;
   return {
-    cek: r && { kawasan: r.kawasan?.nama, status: r.status, harga: r.harga_ditawarkan, harga_wajar: r.harga_wajar, fasilitas: r.input?.fasilitas, jenis: jenisById(r.input?.jenis)?.label },
+    cek: r && { kawasan: r.kawasan?.nama, status: r.status, harga: r.harga_ditawarkan, median_pasar: r.median, kisaran_wajar: r.kisaran, fasilitas: r.input?.fasilitas, jenis: jenisById(r.input?.jenis)?.label },
     bandingkan: ktx.bandingkan?.map((k) => ({ nama: k.nama, harga: k.harga, jarak_km: k.jarak, fasilitas: k.fasilitas.map((f) => fasilitasById(f)?.label) })),
   };
 }

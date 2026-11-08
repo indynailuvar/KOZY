@@ -10,12 +10,12 @@
 //
 // Tiga keadaan:
 //   kosong   data sudah bisa masuk, tapi belum ada yang mengisinya (mis. aktivitas)
-//   menunggu sedang dikerjakan di tempat lain (mis. akurasi model dari rekan tim)
+//   menunggu sedang dikerjakan di tempat lain (mis. data dari rekan tim)
 //   mustahil tidak bisa dihitung dengan data yang ada sekarang (mis. forecast)
 import Icon from './Icon.jsx';
 
 const GAYA = {
-  kosong: { icon: 'db', label: 'Belum ada isinya' },
+  kosong: { icon: 'db', label: 'Belum ada data' },
   menunggu: { icon: 'refresh', label: 'Menunggu data' },
   mustahil: { icon: 'alert', label: 'Belum bisa dihitung' },
 };
@@ -32,7 +32,7 @@ export default function Belum({ keadaan = 'kosong', judul, children, syarat }) {
         {children && <p>{children}</p>}
         {syarat && (
           <p className="belum-syarat">
-            <b>Supaya bisa terisi:</b> {syarat}
+            <b>Agar terisi:</b> {syarat}
           </p>
         )}
       </div>

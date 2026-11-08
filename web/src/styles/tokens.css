@@ -1,0 +1,127 @@
+/* =========================================================
+   KOZY — token desain
+   Semua ukuran dan warna di aplikasi diambil dari sini.
+
+   Susunan mengikuti aplikasi sewa dan belanja yang akrab dipakai
+   (Mamikos, Tokopedia): kartu putih, tombol sudut 8px, label kotak
+   kecil. Kulitnya kaca biru-tosca: aurora memenuhi layar, bar atas
+   dan nav bawah transparan berkabut, nav bawah melayang, ikon di
+   petak putih bergaris tosca.
+
+   Aturan yang tetap dipegang:
+   - teks paling kecil 14px; 13px hanya untuk label, nav bawah, sumbu grafik
+   - jarak kelipatan 4px, target sentuh minimal 44px
+   - merah/hijau hanya untuk status harga
+   ========================================================= */
+:root {
+  /* merek: tosca kehijauan. Teks putih di atasnya 5,2:1; sebagai teks
+     di atas aurora 4,7:1. Tautan memakai --brand-600 (5,7:1 di titik
+     aurora tergelap). */
+  --brand: #0a7a73;
+  --brand-600: #08665f;
+  --brand-700: #06524c;
+  --brand-50: #e8f6f4;
+  --brand-100: #cdeee9;
+  --brand-200: #a3ddd4;
+  --brand-ink: #0b3a3a; /* tulisan logo */
+  --grad: linear-gradient(135deg, #3b82f6 0%, #14b8a6 100%);
+
+  /* biru dipakai untuk status "murah" dan grafik */
+  --blue: #2563eb;
+  --blue-600: #1d4ed8;
+  --blue-50: #ebf2ff;
+  --blue-100: #dbe6fe;
+  --blue-200: #bfd3fb;
+
+  --ink: #1f2a37;
+  --ink2: #3e4c59;
+  --muted: #566271; /* 5,2:1 bahkan di titik aurora tergelap */
+  --muted2: #98a3af; /* hanya ikon dekoratif */
+  --ctrl: #84909d; /* garis isian, 3,2:1 */
+  --line: #e1e8ec;
+  --line2: #edf2f4;
+  --soft: #f2f7f8;
+  --bg: #eef6f8;
+
+  --red: #c0262d;
+  --red-50: #fdeeee;
+  --green: #12723a;
+  --green-50: #e7f6ec;
+  --amber: #a14f05;
+  --amber-50: #fff6e5;
+  --amber-line: #ffe0a8;
+
+  /* aurora biru-tosca memenuhi layar: dipasang di body::before yang
+     position: fixed, jadi tetap terlihat sampai bawah halaman panjang */
+  --aurora:
+    radial-gradient(65% 55% at 0% 0%, #dbeafe 0%, rgba(219, 234, 254, 0) 100%),
+    radial-gradient(60% 50% at 100% 30%, #ccf3ec 0%, rgba(204, 243, 236, 0) 100%),
+    radial-gradient(75% 50% at 25% 100%, #dff4f8 0%, rgba(223, 244, 248, 0) 100%),
+    radial-gradient(50% 40% at 100% 100%, #dbeafe 0%, rgba(219, 234, 254, 0) 100%), #eef6f8;
+
+  /* kartu: putih pekat supaya teks selalu terbaca */
+  --surface: #fff;
+  --shadow-sm: 0 1px 2px rgba(8, 60, 70, 0.04), 0 4px 16px rgba(8, 60, 70, 0.07);
+  --shadow: 0 8px 24px rgba(8, 60, 70, 0.1);
+  --shadow-lg: 0 16px 40px rgba(8, 40, 50, 0.18);
+
+  /* kaca: bar atas, tab, nav bawah, bar aksi */
+  --glass: rgba(255, 255, 255, 0.6);
+  --glass-nav: rgba(255, 255, 255, 0.65);
+  --blur: saturate(160%) blur(18px);
+  --glass-shadow: 0 4px 18px rgba(8, 60, 70, 0.06);
+  --nav-shadow: 0 8px 28px rgba(8, 60, 70, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+
+  /* petak ikon putih bergaris tosca */
+  --icon-ring: 0 2px 8px rgba(8, 60, 70, 0.08), inset 0 0 0 1px var(--brand-100);
+
+  /* tipografi */
+  --font: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --fs-cap: 13px; /* label, nav bawah, sumbu grafik */
+  --fs-sm: 14px; /* teks pendukung */
+  --fs-base: 15px; /* isi */
+  --fs-md: 16px; /* judul baris & kartu */
+  --fs-lg: 18px; /* judul bagian */
+  --fs-xl: 20px; /* judul halaman */
+  --fs-2xl: 22px; /* pertanyaan formulir */
+  --fs-hero: 30px; /* satu angka utama per layar */
+  --lh-tight: 1.2;
+  --lh-snug: 1.35;
+  --lh: 1.5;
+
+  /* jarak */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 20px;
+  --s-6: 24px;
+  --s-8: 32px;
+  --s-10: 40px;
+
+  /* bentuk */
+  --r-xs: 4px; /* label */
+  --r-sm: 6px;
+  --r: 8px; /* tombol, isian */
+  --r-lg: 16px; /* kartu */
+  --r-xl: 20px; /* lembar bawah, kartu besar */
+  --r-pill: 999px; /* chip filter */
+  --h-ctrl: 48px;
+  --h-ctrl-sm: 44px;
+
+  /* kerangka */
+  --gutter: 16px;
+  --top: 56px;
+  --tabs: 48px;
+  --bnav: 64px;
+  --safe-b: env(safe-area-inset-bottom, 0px);
+}
+
+@media (min-width: 720px) {
+  :root {
+    --gutter: 24px;
+    --fs-xl: 22px;
+    --fs-2xl: 26px;
+    --fs-hero: 36px;
+  }
+}
