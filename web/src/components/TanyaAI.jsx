@@ -1,43 +1,44 @@
-// Ajakan bertanya ke KOZY AI, dipasang di bagian bawah halaman-halaman hasil.
+// Ajakan bertanya ke KOZY AI di bagian bawah halaman hasil.
 //
-// Masalah sebelumnya bukan cuma tombolnya susah dicari, tapi orang tidak tahu
-// KOZY AI itu bisa ditanya apa. Karena itu kartu ini tidak berbunyi "Tanya AI"
-// saja, melainkan langsung menyodorkan beberapa pertanyaan nyata sesuai isi
-// halaman yang sedang dibuka. Sekali diketuk, pertanyaannya langsung terkirim.
-//
-// Letaknya sengaja sama di semua halaman supaya cepat dikenali.
+// Orang sering tidak tahu KOZY AI bisa ditanya apa, jadi kartu ini langsung
+// menyodorkan beberapa pertanyaan sesuai isi halaman. Sekali ketuk,
+// pertanyaannya terkirim. Bentuknya daftar berpanah seperti "Pertanyaan
+// populer" di pusat bantuan aplikasi belanja.
 import Icon from './Icon.jsx';
+import { AiAvatar } from './Brand.jsx';
 import { catat } from '../lib/jejak.js';
 import { useStore } from '../store.jsx';
 
-export default function TanyaAI({ judul = 'Masih bingung?', sub = 'Tanya KOZY AI. Jawabannya memakai data kos yang sama dengan halaman ini.', saran = [], konteks = null, dari = '' }) {
+export default function TanyaAI({ judul = 'Tanya KOZY AI', sub = 'Jawabannya memakai data di halaman ini.', saran = [], konteks = null, dari = '' }) {
   const { bukaAI } = useStore();
   if (!saran.length) return null;
   return (
     <section className="tanya-ai" aria-labelledby="ta-judul">
-      <span className="ta-ava" aria-hidden="true">
-        <Icon name="sparkles" size={18} />
-      </span>
-      <div className="ta-isi">
-        <b id="ta-judul">{judul}</b>
-        <p>{sub}</p>
-        <ul className="ta-chips">
-          {saran.map((s) => (
-            <li key={s}>
-              <button
-                type="button"
-                onClick={() => {
-                  catat('ai_dibuka', { dari, saran: s });
-                  bukaAI({ teks: s, ...(konteks || {}) });
-                }}
-              >
-                {s}
-                <Icon name="arrowr" size={14} />
-              </button>
-            </li>
-          ))}
-        </ul>
+      <div className="ta-head">
+        <AiAvatar />
+        <div className="ta-isi">
+          <b id="ta-judul">{judul}</b>
+          <p>{sub}</p>
+        </div>
       </div>
+      <ul className="ta-chips">
+        {saran.map((s) => (
+          <li key={s}>
+            <button
+              type="button"
+              onClick={() => {
+                catat('ai_dibuka', { dari, saran: s });
+                bukaAI({ teks: s, ...(konteks || {}) });
+              }}
+            >
+              <span>{s}</span>
+              <span className="ta-go" aria-hidden="true">
+                <Icon name="right" size={18} />
+              </span>
+            </button>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }

@@ -3,8 +3,8 @@
 // PEMILIK KOS adalah halaman yang berbeda (#/pemilik) dan isinya tidak sama:
 // pemilik membaca pasarnya sendiri, bukan mutu dataset atau aktivitas pengguna.
 // Angkanya dihitung langsung dari berkas data, tanpa angka yang ditulis tangan:
-//   pasar.json  iklan sewa berharga asli (Mamikos + Papikost) — dasar model
-//   gmaps.json  titik lokasi tanpa harga — harganya perkiraan model
+//   pasar.json  iklan sewa berharga asli (Mamikos + Papikost) — dasar pembanding harga
+//   gmaps.json  titik lokasi tanpa harga — ditampilkan dengan kisaran kos sejenis sekecamatan
 //   olx.json    rumah kos DIJUAL — sisi pemilik, sengaja dipisah dari harga sewa
 import { useEffect, useMemo, useState } from 'react';
 import Icon from '../components/Icon.jsx';
@@ -13,8 +13,7 @@ import Belum from '../components/Belum.jsx';
 import { Angka, BarH, Corong, Garis, GarisRentang, Heatmap, Histogram, Kartu, Sebar, Tabel, Tumpuk100, rpJuta } from '../components/Grafik.jsx';
 import { Button, PageHead, Segmented } from '../components/ui.jsx';
 import { KAWASAN, FASILITAS, JENIS_KOS, PASAR } from '../data/surabaya.js';
-import AKURASI from '../data/akurasi.json';
-import { GMAPS, KAWASAN_TERCAKUP, OLX, prediksi } from '../api/kozy.js';
+import { GMAPS, KAWASAN_TERCAKUP, OLX, nilaiHarga, pembanding } from '../api/kozy.js';
 import { rp, tanggal } from '../lib/format.js';
 import { go } from '../router.js';
 import { deretHarian, hapus as hapusJejak, hitungPer, jumlah, semua } from '../lib/jejak.js';
@@ -24,7 +23,6 @@ const median = (xs) => {
   const s = [...xs].sort((a, b) => a - b);
   return s.length % 2 ? s[(s.length - 1) / 2] : Math.round((s[s.length / 2 - 1] + s[s.length / 2]) / 2);
 };
-const persenEfek = (b) => Math.round((Math.exp(b) - 1) * 100);
 
 const KOSONG = 'Belum ada aktivitas. Grafik terisi sendiri begitu ada yang memakai aplikasinya.';
 
@@ -99,31 +97,22 @@ export default function Admin({ query = {}, prefix = '/internal' }) {
     const puncak = bins.reduce((a, b) => (b.jumlah > a.jumlah ? b : a), bins[0]);
     puncak.sorot = true;
 
-    const efek = Object.entries(PASAR.model.fasilitas)
-      .map(([id, b]) => ({
-        label: FASILITAS.find((f) => f.id === id)?.label || id,
-        nilai: persenEfek(b),
-      }))
-      .sort((a, b) => b.nilai - a.nilai);
-    efek[0].sorot = true;
+    // kelompok pembanding kecamatan × jenis, urut dari yang iklannya paling banyak
+    const kelompok = kecs
+      .flatMap(([kec, s]) => JENIS_KOS.filter((j) => s.benchmark[j.id]).map((j) => ({ kec, jenis: j.label, ...s.benchmark[j.id] })))
+      .sort((x, y) => y.n - x.n);
+    const prioritas = kelompok.filter((g) => g.n >= M.min_pembanding);
+    const lebarKisaran = prioritas.map((g) => ({ label: `${g.kec} · ${g.jenis.toLowerCase()}`, nilai: g.iqr, sub: `${g.n} iklan` })).sort((x, y) => y.nilai - x.nilai);
+    lebarKisaran[0].sorot = true;
 
-    // efek kecamatan dari model, dibaca sebagai selisih terhadap rata-rata kota
-    const kuat = [];
-    const lemah = [];
-    for (const [label, b] of Object.entries(PASAR.model.kec)) {
-      const n = PASAR.kecamatan[label]?.n || 0;
-      (n >= M.min_iklan_kec ? kuat : lemah).push({ label, nilai: persenEfek(b), sub: `${n} iklan` });
+    // tiap iklan dicek terhadap pembandingnya sendiri, persis seperti Cek Harga
+    const vonisIklan = { MURAH: 0, WAJAR: 0, KEMAHALAN: 0 };
+    let ekstrem = 0;
+    for (const k of kos) {
+      const v = nilaiHarga(k.harga, pembanding(k.kec, k.jenis));
+      vonisIklan[v.status]++;
+      if (v.ekstrem) ekstrem++;
     }
-    const efekKec = kuat.sort((x, y) => y.nilai - x.nilai);
-    const rentangKec = { atas: kuat[0], bawah: kuat[kuat.length - 1] };
-    if (lemah.length) {
-      efekKec.push({
-        label: `${lemah.length} kecamatan lain`,
-        nilai: lemah[0].nilai,
-        sub: `digabung, masing-masing di bawah ${M.min_iklan_kec} iklan`,
-      });
-    }
-    efekKec[0].sorot = true;
 
     // harga menurut jumlah fasilitas tercatat
     const perJumlah = [];
@@ -132,36 +121,15 @@ export default function Admin({ query = {}, prefix = '/internal' }) {
       if (g.length >= 3) perJumlah.push({ x: i, y: median(g.map((k) => k.harga)), n: g.length });
     }
 
-    // seberapa jauh tebakan model dari harga iklan yang sebenarnya, per iklan.
-    // MAPE 21% hanya satu angka rata-rata; sebarannya menunjukkan bahwa
-    // sebagian besar iklan jauh lebih dekat dari itu dan ekornya yang panjang.
-    const sebarGalat = { b10: 0, b25: 0, b50: 0, b99: 0 };
-    const galatRp = [];
-    for (const k of kos) {
-      const tebak = prediksi(k.kec, { fasilitas: k.fasilitas, jenis: k.jenis });
-      if (!tebak) continue;
-      galatRp.push(Math.abs(tebak - k.harga));
-      const g = (Math.abs(tebak - k.harga) / k.harga) * 100;
-      if (g < 10) sebarGalat.b10++;
-      else if (g < 25) sebarGalat.b25++;
-      else if (g < 50) sebarGalat.b50++;
-      else sebarGalat.b99++;
-    }
-    galatRp.sort((x, y) => x - y);
-    const nGalat = sebarGalat.b10 + sebarGalat.b25 + sebarGalat.b50 + sebarGalat.b99;
-    // 8 dari 10 iklan meleset di bawah angka ini — lebih mudah dibaca daripada MAPE
-    const galatP80 = galatRp[Math.round(0.8 * (galatRp.length - 1))];
-    const persenDekat = Math.round(((sebarGalat.b10 + sebarGalat.b25) / nGalat) * 100);
-
     const tanpaData = KAWASAN.filter((k) => !KAWASAN_TERCAKUP.includes(k));
 
     // perbandingan peran tiap sumber: apa yang dibawa, apa yang kosong
     const ADA = 'ada';
     const KOSONG_ = 'kosong';
     const sumber = [
-      ['Mamikos', M.n_sumber.Mamikos, ADA, KOSONG_, '6 jenis', 'melatih model + KOZY Match'],
-      ['Papikost', M.n_sumber.Papikost, ADA, ADA, '10 jenis', 'melatih model + pin peta asli'],
-      ['Google Maps', GMAPS.meta.n, KOSONG_, ADA, KOSONG_, 'jangkauan lokasi, harga diperkirakan'],
+      ['Mamikos', M.n_sumber.Mamikos, ADA, KOSONG_, '6 jenis', 'pembanding harga + KOZY Match'],
+      ['Papikost', M.n_sumber.Papikost, ADA, ADA, '10 jenis', 'pembanding harga + pin peta asli'],
+      ['Google Maps', GMAPS.meta.n, KOSONG_, ADA, KOSONG_, 'jangkauan lokasi, harga = kisaran kecamatan'],
       ['OLX', OLX.meta.n, 'harga jual', 'kasar', KOSONG_, 'sisi pemilik, tidak untuk harga sewa'],
     ];
 
@@ -175,9 +143,11 @@ export default function Admin({ query = {}, prefix = '/internal' }) {
       .map(([label, v]) => ({ label, nilai: median(v), sub: `${v.length} iklan` }))
       .sort((x, y) => y.nilai - x.nilai);
     if (olxKec.length) olxKec[0].sorot = true;
-    // sumber kedua: titik Google Maps (koordinatnya asli, harganya perkiraan model)
+    // sumber kedua: titik Google Maps (koordinatnya asli, harganya kisaran kos sejenis sekecamatan).
+    // Kecamatan dengan iklan < min_iklan_kec memakai kisaran kota, sama dengan scripts/build_gmaps.py.
+    const punyaKisaran = (kec) => (PASAR.kecamatan[kec]?.n || 0) >= M.min_iklan_kec;
     const perKecGmaps = Object.entries(GMAPS.kos.reduce((acc, k) => ({ ...acc, [k.kec]: (acc[k.kec] || 0) + 1 }), {}))
-      .map(([label, nilai]) => ({ label, nilai, sub: PASAR.kecamatan[label] ? 'model kecamatan' : 'rata-rata kota', sorot: !!PASAR.kecamatan[label] }))
+      .map(([label, nilai]) => ({ label, nilai, sub: punyaKisaran(label) ? 'kisaran kecamatan' : 'kisaran kota', sorot: punyaKisaran(label) }))
       .sort((x, y) => y.nilai - x.nilai);
     return {
       harga,
@@ -186,22 +156,21 @@ export default function Admin({ query = {}, prefix = '/internal' }) {
       urutData,
       bins,
       puncak,
-      efek,
-      efekKec,
-      rentangKec,
+      kelompok,
+      prioritas,
+      lebarKisaran,
+      vonisIklan,
+      ekstrem,
       perJumlah,
       tanpaData,
       kecTanpaData: [...new Set(tanpaData.map((k) => k.kec))],
-      titikTanpaModel: GMAPS.kos.filter((k) => !PASAR.kecamatan[k.kec]).length,
+      titikTanpaHarga: GMAPS.kos.filter((k) => !punyaKisaran(k.kec)).length,
       perKecGmaps,
       sumber,
       olxKec,
       berkoordinat: kos.filter((k) => k.lat).length,
       rating: kos.filter((k) => k.rating).length,
       promo: kos.filter((k) => k.promo).length,
-      sebarGalat,
-      galatP80,
-      persenDekat,
       maxHarga: Math.max(...harga),
     };
   }, [kos, kecs]);
@@ -285,7 +254,7 @@ export default function Admin({ query = {}, prefix = '/internal' }) {
           options={[
             { id: 'data', label: 'Data pasar', icon: 'bars' },
             { id: 'aktivitas', label: 'Aktivitas', icon: 'trend' },
-            { id: 'model', label: 'Model', icon: 'calc' },
+            { id: 'model', label: 'Metode', icon: 'calc' },
             { id: 'omzet', label: 'Omzet paket', icon: 'wallet' },
           ]}
         />
@@ -317,14 +286,14 @@ export default function Admin({ query = {}, prefix = '/internal' }) {
                     sub: `terendah ${rpJuta(Math.min(...d.harga))} · tertinggi ${rpJuta(d.maxHarga)}`,
                   },
                   {
-                    nilai: `± ${rpJuta(M.mae)}`,
-                    label: 'meleset rata-rata',
-                    sub: `${String(M.mape).replace('.', ',')}% dari harga, uji silang bersarang`,
+                    nilai: d.prioritas.length,
+                    label: 'kelompok pembanding siap pakai',
+                    sub: `kecamatan × jenis dengan ≥ ${M.min_pembanding} iklan, dari ${d.kelompok.length} kelompok`,
                   },
                   {
-                    nilai: `${Math.round(M.r2_log * 100)}%`,
-                    label: 'ragam harga terjelaskan',
-                    sub: 'R² model log-linear (Ridge)',
+                    nilai: `${Math.round((d.prioritas.reduce((t, g) => t + g.n, 0) / M.n) * 100)}%`,
+                    label: 'iklan di kelompok itu',
+                    sub: 'sisanya dibandingkan per kecamatan',
                   },
                 ]}
               />
@@ -353,7 +322,7 @@ export default function Admin({ query = {}, prefix = '/internal' }) {
             },
             {
               id: 'sebaran',
-              judul: 'Sebaran harga',
+              judul: 'Sebaran',
               isi: (
                 <>
               <Kartu
@@ -382,28 +351,33 @@ export default function Admin({ query = {}, prefix = '/internal' }) {
               ),
             },
             {
-              id: 'penentu',
-              judul: 'Penentu harga',
+              id: 'pembanding',
+              judul: 'Pembanding',
               isi: (
                 <>
               <Kartu
-                judul={`${d.efek[0].label} menaikkan harga paling besar, +${d.efek[0].nilai}%`}
-                sub="Pengaruh tiap fasilitas terhadap harga sewa, hasil regresi hedonic dengan estimasi Ridge"
+                judul={`${d.prioritas.length} kelompok cukup besar untuk jadi pembanding`}
+                sub={`Median dan kisaran wajar (Q1–Q3) tiap kecamatan × jenis kos. ${d.kelompok.length - d.prioritas.length} kelompok lain di bawah ${M.min_pembanding} iklan masih eksploratif, jadi kos di sana dibandingkan dengan seluruh kecamatannya`}
+                lebar
               >
-                <BarH data={d.efek} format={(v) => `${v > 0 ? '+' : ''}${v}%`} label="Pengaruh fasilitas terhadap harga" />
+                <Tabel
+                  label="Kelompok pembanding harga"
+                  kolom={['Kecamatan', 'Jenis', 'Iklan', 'Median', 'Kisaran wajar', 'IQR']}
+                  baris={d.prioritas.map((g) => [g.kec, g.jenis, g.n, rpJuta(g.median), `${rpJuta(g.q1)} – ${rpJuta(g.q3)}`, rpJuta(g.iqr)])}
+                />
               </Kartu>
               <Kartu
-                judul={`${d.rentangKec.atas.label} ${d.rentangKec.atas.nilai}% di atas rata-rata kota, ${d.rentangKec.bawah.label} ${Math.abs(d.rentangKec.bawah.nilai)}% di bawah`}
-                sub={`Selisih terhadap rata-rata Surabaya setelah jenis kos dan fasilitas disamakan. Hanya ${M.kecamatan_kuat} kecamatan yang datanya cukup untuk punya angka sendiri`}
+                judul={`Kisaran paling lebar: ${d.lebarKisaran[0].label}`}
+                sub="Lebar kisaran wajar (IQR) tiap kelompok. Makin lebar, makin beragam harga kos sejenis di sana, jadi makin longgar batas wajarnya"
               >
-                <BarH data={d.efekKec} format={(v) => `${v > 0 ? '+' : ''}${v}%`} label="Efek kecamatan terhadap harga" />
+                <BarH data={d.lebarKisaran} format={rpJuta} label="Lebar kisaran wajar tiap kelompok pembanding" />
               </Kartu>
                 </>
               ),
             },
             {
               id: 'komposisi',
-              judul: 'Profil kecamatan',
+              judul: 'Kecamatan',
               isi: (
                 <>
               <Kartu
@@ -438,7 +412,7 @@ export default function Admin({ query = {}, prefix = '/internal' }) {
             },
             {
               id: 'sumber',
-              judul: 'Sumber data',
+              judul: 'Sumber',
               isi: (
                 <>
               <Kartu
@@ -477,11 +451,11 @@ export default function Admin({ query = {}, prefix = '/internal' }) {
                   </li>
                   <li>
                     <b>Fasilitas kos tidak ada di Google Maps</b>
-                    <span>{GMAPS.meta.n} titik itu hanya bisa dipakai untuk lokasi; harganya memakai fasilitas rata-rata kecamatan.</span>
+                    <span>{GMAPS.meta.n} titik itu hanya bisa dipakai untuk lokasi; harganya ditampilkan sebagai kisaran kos sejenis di kecamatannya.</span>
                   </li>
                   <li>
-                    <b>Fasilitas yang ikut dihitung baru {FASILITAS.length} jenis</b>
-                    <span>Lemari, meja, dan parkir hampir selalu ada, jadi pengaruhnya tidak bisa dipisahkan.</span>
+                    <b>Fasilitas hanya tercatat ada atau tidak</b>
+                    <span>Karena itu fasilitas tidak dipakai menghitung posisi harga: kosong di iklan bisa berarti tidak ditulis, bukan tidak ada.</span>
                   </li>
                 </ul>
               </Kartu>
@@ -502,7 +476,7 @@ export default function Admin({ query = {}, prefix = '/internal' }) {
           lembar={[
             {
               id: 'ramai',
-              judul: 'Seberapa ramai',
+              judul: 'Ramai',
               isi: (
                 <>
               <Angka
@@ -541,7 +515,7 @@ export default function Admin({ query = {}, prefix = '/internal' }) {
             },
             {
               id: 'corong',
-              judul: 'Sampai mana',
+              judul: 'Corong',
               isi: (
                 <>
               <Kartu
@@ -581,7 +555,7 @@ export default function Admin({ query = {}, prefix = '/internal' }) {
             },
             {
               id: 'mentah',
-              judul: 'Kejadian terakhir',
+              judul: 'Terbaru',
               isi: (
                 <>
               <Kartu judul="Kejadian terakhir" sub="8 aktivitas paling baru" lebar>
@@ -631,85 +605,65 @@ export default function Admin({ query = {}, prefix = '/internal' }) {
 
       {bagian === 'model' && (
         /* Tab ini menjawab tiga pertanyaan penguji yang berbeda dari dua tab
-           sebelumnya: seberapa sering modelnya meleset, apakah ada model lain
-           yang lebih baik, dan apa yang belum bisa diramalkan. Yang belum ada
+           sebelumnya: bagaimana harga dinilai, bagaimana metodenya berperilaku
+           di data sendiri, dan apa yang belum bisa diramalkan. Yang belum ada
            datanya ditandai terus terang, bukan diisi angka tebakan. */
         <Lembar
-          label="Model dan ramalan"
+          label="Metode dan ramalan"
           lembar={[
             {
-              id: 'akurasi',
-              judul: 'Akurasi model',
+              id: 'metode',
+              judul: 'Metode',
               isi: (
                 <>
                   <Angka
                     items={[
-                      { nilai: `${String(M.mape).replace('.', ',')}%`, label: 'rata-rata meleset', sub: `setara ${rpJuta(M.mae)} dari harga` },
-                      { nilai: `${Math.round(M.r2_log * 100)}%`, label: 'ragam harga terjelaskan', sub: 'R² pada skala log' },
-                      { nilai: M.n, label: 'iklan melatih model', sub: `uji silang bersarang ${M.pembanding_ols.lipatan} lipatan` },
-                      {
-                        nilai: 'Ridge',
-                        label: 'cara koefisien dihitung',
-                        sub: `alpha ${M.alpha.toFixed(2).replace('.', ',')} · OLS di lipatan yang sama ${String(M.pembanding_ols.mape).replace('.', ',')}%`,
-                      },
+                      { nilai: 'Median & IQR', label: 'cara menilai harga', sub: 'Robust Statistical Benchmarking, tanpa regresi' },
+                      { nilai: M.min_pembanding, label: 'iklan minimal per kelompok', sub: 'di bawahnya dibandingkan per kecamatan' },
+                      { nilai: d.prioritas.length, label: 'kelompok kecamatan × jenis', sub: `mencakup ${d.prioritas.reduce((t, g) => t + g.n, 0)} dari ${M.n} iklan` },
+                      { nilai: d.ekstrem, label: 'iklan berharga ekstrem', sub: 'di luar pagar 1,5 × IQR kelompoknya' },
                     ]}
                   />
+                  <Kartu judul="Aturan yang sama dipakai di semua halaman" sub="Cek Harga, KOZY Match, Kartu Tawar, dan dashboard pemilik membaca angka yang sama" lebar>
+                    <ul className="admin-gap">
+                      <li>
+                        <b>Pembanding: kos sejenis di kecamatan yang sama</b>
+                        <span>Putra, putri, dan campur dipisah karena tingkat harganya berbeda jauh. Kelompok di bawah {M.min_pembanding} iklan diganti seluruh kecamatan.</span>
+                      </li>
+                      <li>
+                        <b>Wajar = kuartil 1 sampai kuartil 3</b>
+                        <span>Di atas Q3 ditandai kemahalan, di bawah Q1 murah. Median dipakai sebagai acuan selisih karena tidak terseret harga ekstrem.</span>
+                      </li>
+                      <li>
+                        <b>Ekstrem = di luar Q1 − 1,5 × IQR sampai Q3 + 1,5 × IQR, atau di luar harga termurah–termahal</b>
+                        <span>Harga seperti ini diberi catatan supaya dipastikan dulu, bukan otomatis dicap salah.</span>
+                      </li>
+                      <li>
+                        <b>Fasilitas tidak ikut menghitung</b>
+                        <span>Di iklan, fasilitas hanya tercatat ada atau tidak dan sering tidak ditulis, jadi tidak cukup andal untuk menggeser harga acuan.</span>
+                      </li>
+                    </ul>
+                  </Kartu>
                   <Kartu
-                    judul={`8 dari 10 iklan ditebak dalam ${rpJuta(d.galatP80)} dari harga aslinya`}
-                    sub={`${d.persenDekat}% iklan meleset di bawah 25%. Sisanya tidak bisa ditekan ke nol: dua kos yang kecamatan, jenis, dan fasilitasnya sama persis pun bisa berbeda harga 2,5 kali, dan selisih itulah yang dijual KOZY`}
+                    judul={`Kalau ${M.n} iklan itu sendiri dicek, ${d.vonisIklan.WAJAR} masuk kisaran wajar`}
+                    sub="Tiap iklan dibandingkan dengan kelompoknya sendiri. Sekitar separuh memang jatuh di Q1–Q3; itulah arti kisaran wajar"
                   >
                     <BarH
                       data={[
-                        { label: 'Meleset < 10%', nilai: d.sebarGalat.b10, sorot: true },
-                        { label: '10 – 25%', nilai: d.sebarGalat.b25 },
-                        { label: '25 – 50%', nilai: d.sebarGalat.b50 },
-                        { label: 'Meleset > 50%', nilai: d.sebarGalat.b99 },
+                        { label: 'Murah (di bawah Q1)', nilai: d.vonisIklan.MURAH },
+                        { label: 'Wajar (Q1–Q3)', nilai: d.vonisIklan.WAJAR, sorot: true },
+                        { label: 'Kemahalan (di atas Q3)', nilai: d.vonisIklan.KEMAHALAN },
                       ]}
                       format={(v) => `${v} iklan`}
-                      label="Sebaran besarnya kesalahan tebakan"
+                      label="Sebaran status iklan terhadap pembandingnya sendiri"
                     />
                   </Kartu>
-                  {AKURASI.siap ? (
-                    <>
-                      <Kartu judul={AKURASI.kesimpulan} sub={AKURASI.uji} lebar>
-                        <Tabel
-                          label="Perbandingan model"
-                          kolom={['Model', AKURASI.satuan, 'MAE', 'R²']}
-                          baris={AKURASI.model.map((m) => [m.nama, `${m.galat}%`, rpJuta(m.mae), m.r2])}
-                        />
-                      </Kartu>
-                      {/* Sebaran antar lipatan ditampilkan sebagai grafik, bukan catatan
-                          kecil, karena justru di sinilah batas keandalannya terlihat:
-                          dengan 68 baris, hasilnya ikut berubah tergantung kos mana
-                          yang kebetulan masuk data uji. */}
-                      {AKURASI.per_lipatan && (
-                        <Kartu
-                          judul={`Hasilnya goyah: ${Math.min(...AKURASI.per_lipatan.nilai)}% sampai ${Math.max(...AKURASI.per_lipatan.nilai)}% tergantung lipatan`}
-                          sub={`${AKURASI.satuan} ${AKURASI.per_lipatan.model} di tiap lipatan uji. Semakin sedikit datanya, semakin jauh jarak antar lipatan`}
-                        >
-                          <BarH
-                            data={AKURASI.per_lipatan.nilai.map((v, i) => ({ label: `Lipatan ${i + 1}`, nilai: v, sorot: v === Math.max(...AKURASI.per_lipatan.nilai) }))}
-                            format={(v) => `${v}%`}
-                            label={`${AKURASI.satuan} tiap lipatan`}
-                          />
-                        </Kartu>
-                      )}
-                    </>
-                  ) : (
-                    <Belum
-                      keadaan="menunggu"
-                      judul="Perbandingan dengan Random Forest dan kawan-kawannya belum masuk"
-                      syarat="hasil pengujiannya diisikan ke src/data/akurasi.json, lalu tabelnya muncul sendiri di sini tanpa mengubah kode."
-                    >
-                      Angka di atas adalah akurasi model regresi hedonic yang dipakai aplikasi sekarang. Perbandingannya dengan model lain sedang dikerjakan terpisah.
-                    </Belum>
-                  )}
                 </>
               ),
             },
             {
               id: 'ramalharga',
-              judul: 'Ramalan harga',
+              judul: 'Ramalan',
               isi: (
                 <>
                   <Belum
@@ -718,22 +672,22 @@ export default function Admin({ query = {}, prefix = '/internal' }) {
                     syarat={`iklan yang sama di-scrape ulang secara berkala. Dengan 3–4 putaran berjarak sebulan, kenaikannya sudah bisa dihitung.`}
                   >
                     Meramalkan kenaikan harga butuh harga yang sama diukur di dua waktu berbeda. Data sekarang baru satu kali pengambilan per sumber
-                    {' '}({Object.entries(M.diambil_per_sumber).map(([k, v]) => `${k} ${tanggal(v)}`).join(', ')}) — selisih kedua tanggal itu perbedaan antar situs, bukan
+                    {' '}({Object.entries(M.diambil_per_sumber).map(([k, v]) => `${k} ${tanggal(v)}`).join(', ')}) Selisih kedua tanggal itu perbedaan antar situs, bukan
                     perubahan harga.
                   </Belum>
                   <Kartu
                     judul="Yang sudah siap begitu data berikutnya masuk"
-                    sub="Modelnya tinggal dijalankan ulang, tidak perlu dibangun dari awal"
+                    sub="Perhitungannya tinggal dijalankan ulang, tidak perlu dibangun dari awal"
                     lebar
                   >
                     <ul className="admin-gap">
                       <li>
-                        <b>Efek kecamatan sudah terpisah dari efek fasilitas</b>
-                        <span>Jadi kenaikan harga nanti bisa dipisah: mana yang karena lokasinya naik, mana yang karena kosnya menambah fasilitas.</span>
+                        <b>Pembanding per kecamatan × jenis sudah tersusun</b>
+                        <span>Kenaikan harga nanti cukup dibaca dari median tiap kelompok antar putaran; karena median, satu-dua iklan ekstrem tidak membuat kenaikannya semu.</span>
                       </li>
                       <li>
-                        <b>Satu perintah untuk melatih ulang</b>
-                        <span>scripts/build_pasar.py membaca hasil scraping baru, melatih ulang, dan menolak jalan kalau datanya cacat.</span>
+                        <b>Satu perintah untuk menghitung ulang</b>
+                        <span>scripts/build_pasar.py membaca hasil scraping baru, menghitung ulang median dan kuartil, dan menolak jalan kalau datanya cacat.</span>
                       </li>
                       <li>
                         <b>Tanggal pengambilan sudah dicatat per sumber</b>
@@ -746,7 +700,7 @@ export default function Admin({ query = {}, prefix = '/internal' }) {
             },
             {
               id: 'ramalpasar',
-              judul: 'Kebutuhan pasar',
+              judul: 'Kebutuhan',
               isi: (
                 <>
                   {a.tanpaData.length || a.areaDicek.length ? (
@@ -760,14 +714,14 @@ export default function Admin({ query = {}, prefix = '/internal' }) {
                     <Belum
                       keadaan="kosong"
                       judul="Permintaan pengguna belum ada yang tercatat"
-                      syarat="satu orang memakai Cari Kos atau mengetik area yang belum ada datanya — permintaannya langsung masuk ke daftar ini."
+                      syarat="satu orang memakai Cari Kos atau mengetik area yang belum ada datanya."
                     >
                       Kebutuhan pasar dibaca dari apa yang dicari pengguna, bukan dari survei. Pencatatannya sudah berjalan, isinya yang masih nol.
                     </Belum>
                   )}
                   <Kartu
-                    judul={`${d.titikTanpaModel} titik kos berada di kecamatan yang belum punya harga sendiri`}
-                    sub="Titik kos yang terdata lokasinya di tiap kecamatan. Biru = kecamatannya sudah punya iklan berharga, jadi perkiraannya memakai efek kecamatan"
+                    judul={`${d.titikTanpaHarga} titik kos berada di kecamatan yang iklan berharganya belum cukup`}
+                    sub={`Titik kos yang terdata lokasinya di tiap kecamatan. Biru = kecamatannya punya minimal ${M.min_iklan_kec} iklan berharga, jadi kisarannya memakai harga kecamatan itu sendiri`}
                     lebar
                   >
                     <BarH data={potong(d.perKecGmaps)} format={(v) => `${v} titik`} label="Titik kos per kecamatan" />

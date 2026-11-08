@@ -1,112 +1,69 @@
 import { useEffect, useRef, useState } from 'react';
 import Icon from '../components/Icon.jsx';
-import TanyaAI from '../components/TanyaAI.jsx';
 import Rincian from '../components/Rincian.jsx';
 import Lembar from '../components/Lembar.jsx';
+import HeroHarga from '../components/HeroHarga.jsx';
 import { SpeakButton, useBacaOtomatis } from '../components/A11y.jsx';
-import { ActionBar, Banner, Button, EmptyState, PageHead, StatusBadge } from '../components/ui.jsx';
+import { ActionBar, Button, EmptyState, InfoTip, PageHead } from '../components/ui.jsx';
 import { HARGA_MATCH, Paywall } from '../components/Sheets.jsx';
-import { jenisById, kawasanById, kisaranWajar, perluDiperiksa } from '../api/kozy.js';
-import { bulat10rb, bulat50rb, persen, rp, rpSingkat, rpSuara, tanggal } from '../lib/format.js';
+import { jenisById, kawasanById, perluDiperiksa } from '../api/kozy.js';
+import { bulat50rb, rp, rpRentang, rpSigned, rpSingkat, rpSuara } from '../lib/format.js';
 import { catat } from '../lib/jejak.js';
 import { useStore } from '../store.jsx';
 import { go } from '../router.js';
 import { classifyPrice } from '../api/modeling.js';
 
-const LEVEL = { besar: 'Besar', sedang: 'Sedang', kecil: 'Kecil' };
 const STATUS_SUARA = { KEMAHALAN: 'kemahalan', WAJAR: 'wajar', MURAH: 'murah' };
 
-function Fakta({ r }) {
-  const tone = r.status === 'KEMAHALAN' ? 't-red' : r.status === 'MURAH' ? 't-blue' : 't-green';
-  const tanda = r.selisih_rp < 0 ? '−' : '+';
-  return (
-    <dl className="facts">
-      <div>
-        <dt>Harga dari pemilik</dt>
-        <dd>{rp(r.harga_ditawarkan)}</dd>
-      </div>
-      <div>
-        <dt>{r.selisih_rp < 0 ? 'Kamu hemat' : 'Selisihnya'}</dt>
-        <dd className={tone}>
-          {tanda}
-          {rp(Math.abs(r.selisih_rp))} <small>({persen(r.selisih_persen)})</small>
-        </dd>
-      </div>
-    </dl>
-  );
-}
+// "kos putri di Kec. Sukolilo", atau "kos di Kec. Sukolilo" kalau semua jenis ikut dibandingkan
+const labelPembanding = (b) => `kos ${b.jenis ? `${jenisById(b.jenis).label.toLowerCase()} ` : ''}di Kec. ${b.kec}`;
 
-function FaktorHarga({ r }) {
-  const { lokasi, kamar } = r.komposisi;
-  return (
-    <div className="faktor">
-      <div className="komp" role="img" aria-label={`Lokasi sekitar ${lokasi} persen, kamar dan fasilitas sekitar ${kamar} persen`}>
-        <div className="komp-bar">
-          <i style={{ width: `${lokasi}%` }} />
-        </div>
-        <div className="komp-lab">
-          <span>
-            <i className="dot a" /> Lokasi {lokasi}%
-          </span>
-          <span>
-            <i className="dot b" /> Kamar & fasilitas {kamar}%
-          </span>
-        </div>
-      </div>
-      <ul className="faktor-list">
-        {r.faktor.map((f) => (
-          <li key={f.key}>
-            <Icon name={f.icon} size={17} />
-            <span className="fk-l">{f.label}</span>
-            <span className={`fk-lv lv-${f.level}`} aria-label={`${f.arah === 'turun' ? 'Menurunkan' : 'Menaikkan'} harga, pengaruh ${LEVEL[f.level].toLowerCase()}`}>
-              {f.arah === 'turun' && <Icon name="trenddown" size={14} strokeWidth={2.6} />}
-              <em>{LEVEL[f.level]}</em>
-            </span>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
+// Sebaran harga kos sejenis: termurah sampai termahal, pita kisaran wajar,
+// titik harga pasaran, dan penanda harga kos yang dicek.
 function PosisiPasar({ r }) {
-  const { p10, p50, p90 } = r.pasar;
-  const lo = p10 * 0.85;
-  const hi = p90 * 1.12;
+  const b = r.pembanding;
+  const lo = Math.min(b.min, r.harga_ditawarkan) * 0.94;
+  const hi = Math.max(b.max, r.harga_ditawarkan) * 1.04;
   const pos = (v) => `${Math.max(2, Math.min(98, ((v - lo) / (hi - lo)) * 100))}%`;
+  const mahal = r.harga_ditawarkan >= b.median;
+  // hasil lama belum menyimpan hitungannya; dihitung balik dari persentil
+  const jumlah = (mahal ? r.n_lebih_murah : r.n_lebih_mahal) ?? Math.round(((mahal ? r.persentil : 100 - r.persentil) / 100) * b.n);
   return (
     <div className="pasar">
-      <p>
-        {r.harga_ditawarkan >= p50 ? (
-          <>
-            Lebih mahal dari <b>{r.persentil} dari 100</b> kos serupa di sekitar.
-          </>
-        ) : (
-          <>
-            Lebih murah dari <b>{100 - r.persentil} dari 100</b> kos serupa di sekitar.
-          </>
-        )}
+      <p className="big-stat">
+        <b>
+          {jumlah} dari {b.n}
+        </b>
+        <span>
+          {labelPembanding(b)} lebih {mahal ? 'murah' : 'mahal'} dari kos ini
+        </span>
       </p>
-      <div className="range">
+      <div
+        className="range"
+        role="img"
+        aria-label={`Harga kos sejenis dari ${rpSuara(b.min)} sampai ${rpSuara(b.max)}. Kisaran wajar ${rpSuara(b.q1)} sampai ${rpSuara(b.q3)}, harga pasaran ${rpSuara(
+          b.median,
+        )}. Kos ini ${rpSuara(r.harga_ditawarkan)}.`}
+      >
         <div className="range-track">
-          <i className="range-band" style={{ left: pos(p10), width: `calc(${pos(p90)} - ${pos(p10)})` }} />
-          <i className="range-mark wajar" style={{ left: pos(r.harga_wajar) }} />
+          <i className="range-band" style={{ left: pos(b.q1), width: `calc(${pos(b.q3)} - ${pos(b.q1)})` }} />
+          <i className="range-mark wajar" style={{ left: pos(b.median) }} />
           <i className="range-mark tawar" style={{ left: pos(r.harga_ditawarkan) }} />
         </div>
         <div className="range-lab">
-          <span style={{ left: pos(p10) }}>{rpSingkat(p10)}</span>
-          <span style={{ left: pos(p90) }}>{rpSingkat(p90)}</span>
+          <span style={{ left: pos(b.min) }}>{rpSingkat(b.min)}</span>
+          <span style={{ left: pos(b.max) }}>{rpSingkat(b.max)}</span>
         </div>
       </div>
       <ul className="legend">
         <li>
-          <i className="lg-dot wajar" /> Harga wajar
+          <i className="lg-dot wajar" /> Harga pasaran
         </li>
         <li>
-          <i className="lg-dot tawar" /> Harga pemilik
+          <i className="lg-dot tawar" /> Kos ini
         </li>
         <li>
-          <i className="lg-band" /> Umumnya
+          <i className="lg-band" /> Kisaran wajar
         </li>
       </ul>
     </div>
@@ -134,19 +91,26 @@ export default function Hasil() {
     };
   }, [r?.id, r?.harga_ditawarkan, r?.input?.jenis, kec]);
 
-  const periksa = !!r?.faktor && perluDiperiksa(r);
-  const ringkas = r?.faktor
-    ? `Hasil cek kos di ${r.kawasan.nama}: harganya ${STATUS_SUARA[r.status]}. Harga wajarnya sekitar ${rpSuara(
-        r.harga_wajar,
-      )} per bulan. Harga dari pemilik ${rpSuara(r.harga_ditawarkan)}, ${r.selisih_rp >= 0 ? 'lebih mahal' : 'lebih murah'} ${rpSuara(r.selisih_rp)} per bulan.`
+  const b = r?.pembanding;
+  const periksa = !!b && perluDiperiksa(r);
+  const ringkas = b
+    ? `Hasil cek kos di ${r.kawasan.nama}: harganya ${STATUS_SUARA[r.status]}. Harga pasaran ${labelPembanding(b)} sekitar ${rpSuara(r.median)} per bulan, umumnya ${rpSuara(
+        r.kisaran[0],
+      )} sampai ${rpSuara(r.kisaran[1])}. Kos ini ${rpSuara(r.harga_ditawarkan)}, ${r.selisih_rp >= 0 ? 'lebih mahal' : 'lebih murah'} ${rpSuara(r.selisih_rp)} dari harga pasaran.`
     : '';
   useBacaOtomatis(ringkas, r?.id);
 
-  if (!r?.faktor)
+  // Hasil tersimpan dari versi lama tidak punya angka yang dibutuhkan halaman ini.
+  if (!b)
     return (
       <div className="page narrow">
-        <EmptyState icon="calc" title="Belum ada hasil cek" action={<Button onClick={() => go('/cek')}>Cek Harga Sekarang</Button>}>
-          Isi data kos incaranmu untuk melihat harga wajarnya.
+        <PageHead judul="Hasil cek harga" onBack={() => go('/')} />
+        <EmptyState
+          icon="calc"
+          title={r ? 'Hasil ini perlu dicek ulang' : 'Belum ada hasil cek'}
+          action={<Button onClick={() => go(r ? '/cek?ubah=1' : '/cek')}>{r ? 'Cek ulang' : 'Cek harga sekarang'}</Button>}
+        >
+          {r ? 'Cara KOZY menghitung sudah diperbarui. Isian kosmu masih tersimpan.' : 'Isi data kos incaranmu untuk melihat apakah harganya wajar.'}
         </EmptyState>
       </div>
     );
@@ -157,7 +121,22 @@ export default function Hasil() {
   const paid = !!state.paid[r.id];
   const jenis = jenisById(r.input.jenis);
   const hemat = Math.abs(r.selisih_rp) >= 10_000 ? Math.abs(r.selisih_rp) : 0;
-  const kisaran = r.kisaran || kisaranWajar(r.harga_wajar);
+  const kisaran = r.kisaran;
+  // kotak angka kedua: hemat (hijau) kalau lebih murah, selisih kalau lebih mahal
+  const selisih =
+    Math.abs(r.selisih_rp) < 10_000
+      ? { label: 'Selisih', nilai: 'Sama' }
+      : r.selisih_rp < 0
+        ? { label: 'Hemat per bulan', nilai: rp(r.selisih_rp), nada: 't-green' }
+        : { label: 'Di atas pasaran', nilai: rpSigned(r.selisih_rp), nada: kemahalan ? 't-red' : '' };
+  // Paling banyak satu peringatan. Kalau datanya sedikit, itu yang terpenting.
+  const peringatan = rendah
+    ? `Baru ${b.n} iklan pembanding. Hasil belum pasti.`
+    : r.ekstrem === 'atas'
+      ? 'Jauh di atas semua iklan. Cek lagi angkanya.'
+      : periksa
+        ? 'Jauh di bawah pasaran. Pastikan fasilitas sesuai iklan.'
+        : null;
 
   const lanjut = (ke) => {
     set({
@@ -167,12 +146,14 @@ export default function Hasil() {
         nama: 'Kos incaranmu',
         kawasan: r.kawasan.nama,
         harga: r.harga_ditawarkan,
-        harga_wajar: r.harga_wajar,
+        median: r.median,
+        kisaran: r.kisaran,
         selisih_rp: r.selisih_rp,
         selisih_persen: r.selisih_persen,
         status: r.status,
         persentil: r.persentil,
-        n: r.pasar.n_pembanding,
+        n: b.n,
+        jenisPembanding: b.jenis,
         kec,
         updated_at: r.meta.updated_at,
       },
@@ -197,12 +178,9 @@ export default function Hasil() {
     });
     go('/cari');
   };
-  const rail =
-    r.status === 'KEMAHALAN'
-      ? { t: 'Mau menawar harganya?', s: 'Tunjukkan Kartu Tawar berisi data ini ke pemilik.', cta: 'Buat Kartu Tawar' }
-      : r.status === 'MURAH'
-        ? { t: 'Harganya di bawah pasaran', s: 'Bandingkan dengan kos lain di sekitar sebelum memutuskan.', cta: 'Lihat kos alternatif' }
-        : { t: 'Mau bandingkan dulu?', s: 'Lihat 5 kos lain yang harganya juga wajar.', cta: 'Lihat kos alternatif' };
+  const rail = kemahalan
+    ? { t: 'Mau menawar?', s: 'Bawa Kartu Tawar berisi data ini saat bertemu pemilik.', cta: 'Buat Kartu Tawar' }
+    : { t: 'Bandingkan dulu', s: 'Lihat 5 kos lain di sekitar yang harganya juga wajar.', cta: 'Lihat kos lain' };
 
   return (
     <div className="page result">
@@ -214,186 +192,145 @@ export default function Hasil() {
           aksi={<SpeakButton compact teks={ringkas} label="Dengarkan hasil" />}
         />
 
-        {/* Satu banner saja, yang paling mendesak. Menumpuk tiga peringatan
-            membuat angka utamanya terdorong keluar layar di HP. */}
-        {r.meta.anomali && r.selisih_rp > 0 ? (
-          <Banner tone="warn" icon="alert" title="Harga ini tidak biasa">
-            Pastikan harga dan fasilitas yang kamu isi sudah benar.
-          </Banner>
-        ) : rendah ? (
-          <Banner tone="warn" icon="alert" title="Data di sekitar masih sedikit">
-            Baru {r.pasar.n_pembanding} iklan kos di Kec. {r.kawasan.kec}. Anggap ini perkiraan kasar.
-          </Banner>
-        ) : null}
-
         <Lembar
           label="Hasil cek harga"
           lembar={[
             {
               id: 'vonis',
-              judul: 'Harga wajarnya',
+              judul: 'Ringkasan',
               isi: (
                 <>
-                  <section className="card verdict">
-                    <StatusBadge status={r.status} />
-                    <p className="v-label">Harga wajar kamar ini</p>
-                    <p className="v-num">
-                      {rp(r.harga_wajar)}
-                      <span>/bulan</span>
-                    </p>
-                    <p className="v-note">
-                      Wajar di kisaran {rpSingkat(kisaran[0])} – {rpSingkat(kisaran[1])}
-                    </p>
-                    <Fakta r={r} />
-                  </section>
-                  {periksa && (
-                    <Banner icon="checkc" title="Harga bagus, pastikan dulu">
-                      Selisihnya besar. Datangi kosnya sebelum transfer.
-                    </Banner>
-                  )}
-                  <section className="cluster-readout" aria-live="polite" aria-busy={clusterInfo.loading}>
-                    <div className="cluster-readout-head">
-                      <Icon name="bars" size={18} />
-                      <div>
-                        <h2>Segmen harga K-Prototypes</h2>
-                        <p>Kelompok relatif dalam dataset, bukan penilaian kualitas kos.</p>
-                      </div>
-                    </div>
-                    {clusterInfo.loading ? (
-                      <p className="note">Mengelompokkan harga kos…</p>
-                    ) : clusterInfo.data ? (
-                      <div className="cluster-readout-result">
-                        <b>{clusterInfo.data.segmen.segmen_harga}</b>
-                        <span>
-                          {clusterInfo.data.segmen.jumlah} dari {clusterInfo.data.jumlah_listing} listing · median {rp(Math.round(clusterInfo.data.segmen.median_harga / 1000) * 1000)}
-                        </span>
-                      </div>
-                    ) : (
-                      <p className="note">Segmen harga belum tersedia untuk kombinasi lokasi dan jenis kos ini.</p>
-                    )}
-                  </section>
+                  <HeroHarga
+                    status={r.status}
+                    nilai={r.median}
+                    rentang={kisaran}
+                    harga={r.harga_ditawarkan}
+                    labelHarga="Kos ini"
+                    selisih={selisih}
+                    tanda={peringatan ? [peringatan] : []}
+                    ringkas={`Harga kos ini ${STATUS_SUARA[r.status]}. Kos ini ${rp(r.harga_ditawarkan)}, harga pasaran ${rp(r.median)}.`}
+                  />
                 </>
               ),
             },
             {
-              id: 'faktor',
-              judul: 'Kenapa segini',
-              isi: (
-                <section className="card">
-                  <h2 className="card-t">Kenapa harganya segini?</h2>
-                  <FaktorHarga r={r} />
-                </section>
-              ),
-            },
-            {
               id: 'pasar',
-              judul: 'Posisi di pasar',
+              judul: 'Posisi pasar',
               isi: (
-                <section className="card">
-                  <h2 className="card-t">Posisi di pasar</h2>
-                  <PosisiPasar r={r} />
-                  <p className="note">
-                    Dasarnya {r.pasar.n_pembanding} iklan kos di Kec. {kec} ({r.meta.sumber}, {tanggal(r.meta.updated_at)}). Perkiraan model meleset rata-rata ±{' '}
-                    {rp(r.meta.mae)}, keyakinan data <b>{r.meta.confidence}</b>.
-                  </p>
-                </section>
+                <>
+                  <section className="card">
+                    <h2 className="card-t only-desk-block">Posisi di pasar</h2>
+                    <PosisiPasar r={r} />
+                    {!b.jenis && r.input.jenis && <p className="note pasar-note">Kos {jenis.label.toLowerCase()} di sini masih sedikit, jadi semua jenis kos ikut dibandingkan.</p>}
+                  </section>
+                  {/* Kelompok K-Prototypes hanya melabeli; vonisnya tetap dari median dan kuartil */}
+                  {(clusterInfo.loading || clusterInfo.data) && (
+                    <section className="cluster-readout" aria-live="polite" aria-busy={clusterInfo.loading}>
+                      <span className="ic-circle">
+                        <Icon name="bars" size={18} />
+                      </span>
+                      <span className="cluster-readout-t">
+                        <b>{clusterInfo.data ? clusterInfo.data.segmen.segmen_harga : 'Mencari kelompok…'}</b>
+                        {clusterInfo.data && (
+                          <span>
+                            {clusterInfo.data.segmen.jumlah} dari {clusterInfo.data.jumlah_listing} iklan
+                          </span>
+                        )}
+                      </span>
+                      {clusterInfo.data && (
+                        <InfoTip label="Tentang kelompok harga">
+                          Kelompok dibentuk dengan K-Prototypes dari fasilitas, kecamatan, dan jenis kos. Ini hanya label; wajar atau tidaknya tetap dari harga kos sejenis.
+                        </InfoTip>
+                      )}
+                    </section>
+                  )}
+                </>
               ),
             },
             {
               id: 'lanjut',
-              judul: 'Langkah berikutnya',
+              judul: 'Langkah lanjut',
               isi: (
                 <>
                   <Rincian
-                    judul="Langkah berikutnya"
+                    judul="Langkah lanjut"
                     baris={[
                       periksa && {
                         id: 'cek',
-                        judul: 'Yang perlu dicek saat datang',
-                        sub: 'Karena harganya jauh di bawah pasaran',
+                        judul: 'Cek ini saat datang',
                         icon: 'list',
                         isi: (
                           <ul className="dot-list">
-                            <li>Fasilitasnya sesuai iklan</li>
+                            <li>Fasilitas sesuai iklan</li>
                             <li>Biaya listrik dan air</li>
                             <li>Kondisi kamar dan kamar mandi</li>
-                            <li>
-                              Kos serupa di sini umumnya {rpSingkat(r.pasar.p10)} – {rpSingkat(r.pasar.p90)}
-                            </li>
+                            <li>Kos serupa di sini umumnya {rpRentang(kisaran[0], kisaran[1])}</li>
                           </ul>
                         ),
                       },
                       {
                         id: 'sekitar',
                         judul: 'Kos lain di sekitar sini',
-                        sub: paid ? 'Sudah terbuka' : `Kec. ${kec} · lokasi & fasilitas`,
+                        sub: paid ? 'Sudah dibuka' : '5 kos dan peta',
                         icon: paid ? 'unlock' : 'lock',
                         onClick: () => buka('match'),
                       },
                       {
                         id: 'setahun',
-                        judul: r.selisih_rp < 0 ? 'Hemat setahun' : 'Selisih setahun',
+                        judul: r.selisih_rp < 0 ? 'Hemat dalam setahun' : 'Selisih dalam setahun',
                         icon: 'wallet',
                         nilai: rp(Math.abs(r.selisih_rp * 12)),
-                        isi: <p className="note">Dari selisih {rp(Math.abs(r.selisih_rp))} per bulan dikali 12.</p>,
+                        isi: <p className="note">{rp(Math.abs(r.selisih_rp))} × 12 bulan</p>,
                       },
                       periksa && {
                         id: 'budget',
-                        judul: `${rp(r.harga_ditawarkan)} itu budgetmu, bukan harga pemilik?`,
-                        sub: 'Cari kos yang harganya pas',
-                        icon: 'wallet',
+                        judul: `${rp(r.harga_ditawarkan)} itu budgetmu?`,
+                        sub: 'Cari kos yang pas',
+                        icon: 'search',
                         onClick: cariSesuaiBudget,
                       },
                       {
                         id: 'ai',
-                        judul: r.status === 'KEMAHALAN' ? 'Cara menawar harganya' : hemat > 0 ? `Sisa ${rp(hemat)} enaknya dibuat apa?` : 'Yang wajib dicek sebelum bayar',
+                        judul: kemahalan ? 'Cara menawar harganya' : hemat > 0 ? `Sisa ${rp(hemat)} enaknya buat apa?` : 'Yang wajib dicek sebelum bayar',
                         sub: 'Tanya KOZY AI',
                         icon: 'sparkles',
                         onClick: () =>
                           bukaAI({
-                            teks:
-                              r.status === 'KEMAHALAN'
-                                ? `Cara nawar harga kos dari ${rp(r.harga_ditawarkan)} ke ${rp(r.harga_wajar)}`
-                                : hemat > 0
-                                  ? `Ide upgrade kamar dengan budget ${rp(hemat)}`
-                                  : 'Apa saja yang wajib dicek sebelum bayar kos?',
+                            teks: kemahalan
+                              ? `Cara nawar harga kos dari ${rp(r.harga_ditawarkan)} ke ${rp(kisaran[1])}`
+                              : hemat > 0
+                                ? `Ide upgrade kamar dengan budget ${rp(hemat)}`
+                                : 'Apa saja yang wajib dicek sebelum bayar kos?',
                           }),
                       },
                     ]}
                   />
 
                   <section className="habis">
-                    <span className="ic-circle lg">
-                      <Icon name="checkc" size={22} />
-                    </span>
-                    <h2>Sudah, segitu saja</h2>
-                    <p>
-                      Terima kasih sudah memakai KOZY. Satu pesan terakhir: <b>jangan transfer sebelum melihat kamarnya langsung</b>, dan minta rincian biaya listrik dan air di
-                      depan.
-                    </p>
-                    <button type="button" className="text-btn" onClick={() => go('/cek?ubah=1')}>
-                      Cek kos lain
-                    </button>
+                    <Icon name="shieldc" size={20} />
+                    <div>
+                      <p>
+                        <b>Jangan transfer sebelum lihat kamarnya.</b>
+                      </p>
+                      <button type="button" className="text-btn" onClick={() => go('/cek?ubah=1')}>
+                        Cek kos lain
+                      </button>
+                    </div>
                   </section>
                 </>
               ),
             },
           ]}
         />
-
-        <p className="trust-line">
-          <Icon name="shieldc" size={15} />
-          KOZY netral: pemilik tidak bisa membayar untuk mengubah penilaian.
-        </p>
       </div>
 
       <aside className="result-rail">
         <div className="rail-card">
           <p className="rail-t">{rail.t}</p>
           <p className="rail-s">{rail.s}</p>
-          <ActionBar note={paid ? null : `${rp(HARGA_MATCH)} · cek detail, bandingkan, 5 alternatif`}>
+          <ActionBar>
             <Button block icon={paid ? undefined : 'lock'} iconRight={paid ? 'arrowr' : undefined} onClick={() => buka(kemahalan ? 'tawar' : 'match')}>
-              {rail.cta}
+              {paid ? rail.cta : `${rail.cta} · ${rp(HARGA_MATCH)}`}
             </Button>
           </ActionBar>
         </div>

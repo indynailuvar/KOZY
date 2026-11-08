@@ -1,0 +1,731 @@
+/* =========================================================
+   Data: dashboard internal, grafik, dan penampil kamar 4 sisi
+   ========================================================= */
+.admin {
+  max-width: 1180px;
+}
+.admin-tab {
+  position: sticky;
+  top: calc(var(--top) - 1px);
+  z-index: 35;
+  margin: 0 calc(var(--gutter) * -1);
+  padding: var(--s-2) var(--gutter);
+  background: rgba(246, 245, 251, 0.78);
+}
+.admin-tab .seg {
+  max-width: 720px;
+}
+/* di dalam dashboard, tab lembar menempel di bawah segmented */
+.admin .tabs {
+  top: calc(var(--top) + 65px);
+}
+@media (max-width: 440px) {
+  .admin-tab .seg button svg {
+    display: none;
+  }
+}
+
+/* ---------- kartu grafik ---------- */
+.chart {
+  margin: 0;
+  padding: var(--s-4);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  min-width: 0;
+}
+.chart figcaption {
+  display: block;
+  margin-bottom: var(--s-4);
+}
+.chart figcaption b {
+  display: block;
+  font-size: var(--fs-md);
+  font-weight: 700;
+  line-height: var(--lh-snug);
+  letter-spacing: -0.01em;
+}
+.chart figcaption span {
+  display: block;
+  margin-top: var(--s-1);
+  max-width: 72ch;
+  font-size: var(--fs-sm);
+  line-height: var(--lh);
+  color: var(--muted);
+}
+.chart .note {
+  margin-top: var(--s-3);
+  padding-top: var(--s-3);
+  border-top: 1px solid var(--line2);
+}
+.chart .seg {
+  margin-bottom: var(--s-4);
+}
+
+/* angka besar */
+.metrik {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-2);
+}
+.metrik > div {
+  min-width: 0;
+  padding: var(--s-3) var(--s-4);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+.metrik b {
+  display: block;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: var(--lh-tight);
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+.metrik span {
+  display: block;
+  margin-top: var(--s-1);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-snug);
+  color: var(--ink2);
+}
+.metrik small {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--fs-sm);
+  color: var(--muted);
+}
+
+/* batang horizontal */
+.gbar,
+.gcorong {
+  display: grid;
+  gap: var(--s-3);
+}
+.gbar li {
+  display: grid;
+  grid-template-columns: minmax(88px, 30%) minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--s-3);
+}
+.gcorong li {
+  display: grid;
+  grid-template-columns: minmax(96px, 32%) minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--s-3);
+}
+.gbar-l {
+  font-size: var(--fs-sm);
+  color: var(--ink2);
+  line-height: var(--lh-snug);
+}
+.gbar-l small {
+  display: block;
+  font-size: var(--fs-cap);
+  color: var(--muted);
+}
+.gbar-t {
+  position: relative;
+  height: 20px;
+  border-radius: 4px;
+  background: #f3f5f9;
+}
+.gbar-b {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-radius: 4px;
+  background: var(--brand-200);
+}
+.gbar-b.is-on {
+  background: var(--brand);
+}
+.gbar-nol {
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  width: 1px;
+  background: var(--ctrl);
+}
+.gbar-v {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.gcorong .gbar-v {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.gcorong .gbar-v em {
+  font-size: var(--fs-cap);
+  font-style: normal;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+/* histogram */
+.ghist-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 168px;
+}
+.ghist-bars span {
+  position: relative;
+  flex: 1;
+  border-radius: 3px 3px 0 0;
+  background: var(--brand-200);
+}
+.ghist-bars span.is-on {
+  background: var(--brand);
+}
+.ghist-bars em {
+  position: absolute;
+  top: -18px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  color: var(--muted);
+}
+.ghist-bars span.is-on em {
+  color: var(--brand);
+}
+.ghist-ax {
+  display: flex;
+  gap: 3px;
+  margin-top: var(--s-2);
+  padding-top: var(--s-2);
+  border-top: 1px solid var(--line);
+}
+.ghist-ax span {
+  flex: 1;
+  font-size: 12px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* batang bertumpuk 100% */
+.gstack-leg {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px var(--s-4);
+  margin-bottom: var(--s-3);
+  font-size: var(--fs-sm);
+  color: var(--muted);
+}
+.gstack-leg li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.gstack-leg i {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+.gstack-row {
+  display: grid;
+  grid-template-columns: minmax(88px, 30%) minmax(0, 1fr);
+  align-items: center;
+  gap: var(--s-3);
+  margin-bottom: var(--s-2);
+}
+.gstack-l {
+  font-size: var(--fs-sm);
+  color: var(--ink2);
+}
+.gstack-t {
+  display: flex;
+  height: 22px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.gstack-t i {
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  color: #fff;
+}
+.sw-putra {
+  background: var(--brand);
+}
+.sw-putri {
+  background: #6f9bf5;
+}
+.sw-campur {
+  background: #bfd3fb;
+  color: var(--ink) !important;
+}
+
+/* heatmap & tabel */
+.gheat,
+.gtabel {
+  overflow-x: auto;
+}
+.gheat table,
+.gtabel table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+  font-variant-numeric: tabular-nums;
+}
+.gheat th,
+.gheat td {
+  padding: var(--s-2) 6px;
+  text-align: center;
+  border-bottom: 1px solid var(--line2);
+}
+.gheat thead th,
+.gtabel thead th {
+  font-size: var(--fs-cap);
+  font-weight: 600;
+  color: var(--muted);
+}
+.gheat tbody th,
+.gtabel tbody th {
+  text-align: left;
+  font-weight: 600;
+  white-space: nowrap;
+  padding-right: var(--s-3);
+}
+.gheat-leg {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin-top: var(--s-3);
+  font-size: var(--fs-cap);
+  color: var(--muted);
+}
+.gheat-leg i {
+  flex: 1;
+  max-width: 160px;
+  height: 8px;
+  border-radius: var(--r-pill);
+  background: linear-gradient(90deg, rgba(37, 99, 235, 0.06), rgba(37, 99, 235, 0.85));
+}
+.gtabel th,
+.gtabel td {
+  padding: var(--s-3) var(--s-2);
+  border-bottom: 1px solid var(--line2);
+  text-align: left;
+  white-space: nowrap;
+}
+.gtabel .num {
+  text-align: right;
+}
+.gtabel tbody tr:last-child th,
+.gtabel tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+/* sebaran, garis, lereng */
+.gscatter svg,
+.gline svg,
+.gslope svg {
+  width: 100%;
+  height: auto;
+}
+.gscatter .ax {
+  stroke: var(--line);
+  stroke-width: 1;
+}
+.gscatter .tick,
+.gline .tick,
+.gslope .tick {
+  font-size: 12px;
+  fill: var(--muted);
+}
+.gscatter .tick.lbl {
+  font-weight: 600;
+}
+.gline .tick.lbl,
+.gslope .tick.lbl {
+  font-weight: 700;
+  fill: var(--ink2);
+}
+.gscatter .dot {
+  fill: var(--brand);
+  fill-opacity: 0.18;
+}
+.gscatter .rata {
+  fill: none;
+  stroke: var(--brand);
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+}
+.gscatter .rata-dot {
+  fill: var(--brand);
+  stroke: #fff;
+  stroke-width: 2;
+}
+.gline .grid {
+  stroke: var(--line2);
+  stroke-width: 1;
+}
+.gline .garis {
+  fill: none;
+  stroke: var(--brand);
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.gline .dot-on {
+  fill: var(--brand);
+}
+.gline .dot-off {
+  fill: var(--brand-200);
+}
+.gline .grentang-band {
+  fill: var(--brand-100);
+  fill-opacity: 0.72;
+  stroke: none;
+}
+.gline.is-kosong svg,
+.gslope.is-kosong svg {
+  opacity: 0.45;
+}
+.gline.is-kosong .g-kosong,
+.gslope.is-kosong .g-kosong {
+  margin-top: var(--s-2);
+}
+.gslope .slope-line {
+  stroke: var(--brand-200);
+  stroke-width: 2;
+}
+.gslope circle {
+  fill: var(--brand-200);
+}
+.gslope .naik .slope-line,
+.gslope .naik circle {
+  stroke: var(--brand);
+  fill: var(--brand);
+}
+.gslope .turun .slope-line,
+.gslope .turun circle {
+  stroke: var(--muted2);
+  fill: var(--muted2);
+}
+.g-kosong {
+  padding: var(--s-5) var(--s-4);
+  border-radius: var(--r);
+  background: var(--soft);
+  text-align: center;
+  font-size: var(--fs-sm);
+  color: var(--muted);
+}
+
+/* daftar celah data */
+.admin-gap {
+  display: grid;
+  gap: var(--s-3);
+}
+.admin-gap li {
+  padding-left: var(--s-3);
+  border-left: 3px solid var(--brand-100);
+}
+.admin-gap b {
+  display: block;
+  font-size: var(--fs-base);
+  line-height: var(--lh-snug);
+}
+.admin-gap span {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--fs-sm);
+  line-height: var(--lh);
+  color: var(--muted);
+}
+.admin-act {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  margin-top: var(--s-3);
+  padding-top: var(--s-3);
+  border-top: 1px solid var(--line2);
+}
+
+/* forecast omzet */
+.admin-omzet-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--s-3);
+  margin-bottom: var(--s-3);
+}
+.admin-omzet-title {
+  margin: var(--s-1) 0;
+  font-size: var(--fs-lg);
+  line-height: var(--lh-snug);
+}
+.admin-dummy {
+  flex: none;
+  padding: 4px var(--s-2);
+  border-radius: var(--r-xs);
+  background: var(--amber-50);
+  color: var(--amber);
+  font-size: var(--fs-cap);
+  font-weight: 700;
+}
+.admin-omzet-form {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+  align-items: end;
+  gap: var(--s-3);
+  margin: var(--s-3) 0;
+  padding: var(--s-4);
+  border-radius: var(--r-lg);
+  background: var(--soft);
+}
+.admin-omzet-form label {
+  display: grid;
+  gap: 6px;
+  color: var(--ink2);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+}
+.admin-omzet-form input,
+.admin-omzet-form select {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0 var(--s-3);
+  border: 1px solid var(--ctrl);
+  border-radius: var(--r-sm);
+  background: #fff;
+  font-size: var(--fs-base);
+}
+.admin-omzet-input {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+.admin-omzet-input i {
+  color: var(--muted);
+  font-style: normal;
+}
+.admin-omzet-warning,
+.admin-omzet-error,
+.model-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-2);
+  margin-top: var(--s-3);
+  padding: var(--s-3);
+  border-radius: var(--r);
+  background: var(--amber-50);
+  color: var(--ink2);
+  font-size: var(--fs-sm);
+}
+.admin-omzet-warning svg {
+  flex: none;
+  margin-top: 2px;
+  color: var(--amber);
+}
+.model-notice {
+  background: var(--brand-50);
+}
+.admin-omzet-error {
+  background: var(--red-50);
+  color: var(--red);
+}
+@media (max-width: 640px) {
+  .admin-omzet-form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .admin-omzet-form > button {
+    grid-column: 1 / -1;
+  }
+}
+@media (min-width: 720px) {
+  .metrik {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media (min-width: 960px) {
+  .chart.is-wide {
+    grid-column: 1 / -1;
+  }
+  .chart {
+    padding: var(--s-5);
+  }
+  .ghist-bars {
+    height: 220px;
+  }
+  .admin .tabs {
+    top: auto;
+  }
+}
+
+/* =========================================================
+   Penampil kamar 4 sisi (mirip Street View)
+   ========================================================= */
+.k360 {
+  display: grid;
+  gap: var(--s-2);
+}
+.k360-view {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--r);
+  background: var(--soft);
+  box-shadow: inset 0 0 0 1px var(--line);
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+}
+.k360-view.is-drag {
+  cursor: grabbing;
+}
+.k360-sm .k360-view {
+  aspect-ratio: 16 / 10;
+}
+.k360-md .k360-view {
+  aspect-ratio: 4 / 3;
+}
+.k360-lg .k360-view {
+  aspect-ratio: 3 / 2;
+}
+.k360-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: k360-masuk 0.28s ease;
+  -webkit-user-drag: none;
+}
+.k360-img[data-arah='-1'] {
+  animation-name: k360-masuk-kiri;
+}
+@keyframes k360-masuk {
+  from {
+    opacity: 0.4;
+    transform: translateX(14px);
+  }
+}
+@keyframes k360-masuk-kiri {
+  from {
+    opacity: 0.4;
+    transform: translateX(-14px);
+  }
+}
+/* gelap tipis di bawah supaya label sisi tetap terbaca di foto terang */
+.k360-kabut {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 80px;
+  background: linear-gradient(to top, rgba(15, 23, 42, 0.5), transparent);
+  pointer-events: none;
+}
+.k360-kini {
+  position: absolute;
+  left: var(--s-3);
+  bottom: var(--s-3);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: var(--r-pill);
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--ink);
+  font-size: var(--fs-cap);
+  font-weight: 700;
+  line-height: 1;
+  box-shadow: var(--shadow-sm);
+}
+.k360-kini svg {
+  color: var(--brand);
+}
+.k360-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--ink);
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.2);
+}
+.k360-nav:hover {
+  background: #fff;
+}
+.k360-nav.is-kiri {
+  left: var(--s-2);
+}
+.k360-nav.is-kanan {
+  right: var(--s-2);
+}
+.k360-sisi {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+.k360-sisi button {
+  min-height: 44px;
+  padding: 0 4px;
+  border-radius: var(--r-sm);
+  background: #fff;
+  box-shadow: inset 0 0 0 1px var(--line);
+  color: var(--muted);
+  font-size: var(--fs-cap);
+  font-weight: 600;
+}
+.k360-sisi button:hover {
+  color: var(--ink2);
+}
+.k360-sisi button.is-on {
+  background: var(--brand-50);
+  box-shadow: inset 0 0 0 1.5px var(--brand);
+  color: var(--brand-600);
+  font-weight: 700;
+}
+.k360-tip {
+  color: var(--muted);
+  font-size: var(--fs-sm);
+}
+/* mode 360: empat foto jadi dinding kubus, kamera di tengah lalu diputar */
+.k360-pano {
+  touch-action: pan-y;
+}
+.k360-box {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.k360-box.is-halus {
+  transition: transform 0.42s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.k360-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+}
+.k360-face img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  -webkit-user-drag: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .k360-img {
+    animation: none;
+  }
+  .k360-box.is-halus {
+    transition: none;
+  }
+}

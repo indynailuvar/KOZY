@@ -22,8 +22,8 @@ export default function Riwayat() {
     return (
       <div className="page narrow">
         <PageHead judul="Riwayat" />
-        <EmptyState icon="history" title="Belum ada riwayat" action={<Button onClick={() => go('/cek')}>Cek Harga</Button>}>
-          Hasil cek harga dan pencarian kosmu akan muncul di sini.
+        <EmptyState icon="history" title="Belum ada riwayat" action={<Button onClick={() => go('/cek')}>Cek harga</Button>}>
+          Hasil cek harga dan pencarian kosmu akan tersimpan di sini.
         </EmptyState>
       </div>
     );
@@ -62,7 +62,7 @@ export default function Riwayat() {
           </button>
         ))}
       </div>
-      {!state.user && <p className="note center">Riwayat tersimpan di perangkat ini.</p>}
+      <p className="note center">Riwayat tersimpan di browser perangkat ini.</p>
     </div>
   );
 }

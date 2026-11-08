@@ -33,9 +33,9 @@ export const TIPS = [
     tag: ['tanggal tua', 'hemat', 'akhir bulan', 'bokek'],
     poin: [
       'Bayar kos dan kebutuhan wajib di awal bulan, baru sisanya untuk jajan.',
-      'Bagi uang jajan per minggu, bukan per bulan — lebih mudah dikontrol.',
-      'Masak nasi sendiri dan beli lauk saja; bisa hemat Rp 10.000–15.000 per hari.',
-      'Sisihkan Rp 5.000 per hari di awal bulan sebagai cadangan tanggal tua.',
+      'Bagi uang jajan per minggu, bukan per bulan. Lebih mudah dikontrol.',
+      'Masak nasi sendiri dan beli lauk saja; bisa hemat Rp10.000–15.000 per hari.',
+      'Sisihkan Rp5.000 per hari di awal bulan sebagai cadangan tanggal tua.',
       'Hindari paylater untuk belanja yang tidak mendesak.',
     ],
   },
@@ -61,7 +61,7 @@ export const TIPS = [
     poin: [
       'Targetkan dana darurat setara 3 kali biaya hidup bulanan.',
       'Simpan di rekening terpisah supaya tidak terpakai jajan.',
-      'Mulai dari kecil: Rp 100.000 per bulan tetap berarti.',
+      'Mulai dari kecil: Rp100.000 per bulan tetap berarti.',
       'Isi ulang segera setelah dana darurat terpakai.',
     ],
   },
@@ -85,7 +85,7 @@ export const TIPS = [
     icon: 'file',
     tag: ['nego', 'tawar', 'murah'],
     poin: [
-      'Bawa data harga wajar — Kartu Tawar KOZY bisa langsung ditunjukkan.',
+      'Bawa data harga pasar. Kartu Tawar KOZY bisa langsung ditunjukkan.',
       'Tawarkan bayar beberapa bulan di muka sebagai ganti potongan harga.',
       'Tanyakan biaya tambahan (listrik, air, parkir) sebelum sepakat.',
       'Minta kesepakatan tertulis, termasuk aturan uang jaminan.',

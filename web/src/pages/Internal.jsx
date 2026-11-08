@@ -4,7 +4,7 @@
 // berbeda sama sekali:
 //
 //   #/pemilik    dibaca pemilik kos. Isinya pasar di sekitar kosnya sendiri.
-//   #/internal   dibaca tim KOZY. Isinya mutu dataset, akurasi model, dan
+//   #/internal   dibaca tim KOZY. Isinya mutu dataset, metode pembanding harga, dan
 //                aktivitas seluruh pengguna.
 //
 // Keduanya tidak pernah saling menaut, dan #/internal tidak muncul di menu
@@ -60,8 +60,8 @@ export default function Internal({ query }) {
         </span>
         <h2 className="card-t">Halaman ini untuk tim KOZY</h2>
         <p>
-          Isinya mutu dataset, akurasi model, dan aktivitas seluruh pengguna. Kalau kamu pemilik kos, yang kamu cari ada di halaman{' '}
-          <a href="#/pemilik">Untuk pemilik kos</a> — di sana ada posisi harga kosmu, siapa yang mencari kos di daerahmu, dan data pesaing di sekitarmu.
+          Isinya mutu dataset, metode pembanding harga, dan aktivitas seluruh pengguna. Kalau kamu pemilik kos, yang kamu cari ada di halaman{' '}
+          <a href="#/pemilik">Untuk pemilik kos</a>.
         </p>
         <Field label="Kode akses" error={galat} htmlFor="kode">
           <input

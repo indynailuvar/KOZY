@@ -7,8 +7,8 @@ import { go } from '../router.js';
 const SKENARIO = [
   { label: 'Kos kemahalan', sub: 'Keputih · putri · Rp 1.900.000', draft: { lokasiTeks: 'Keputih', harga: 1_900_000, jenis: 'putri', fasilitas: ['km', 'ac', 'wifi', 'kasur'] } },
   { label: 'Kos wajar', sub: 'Semolowaru · putra · Rp 900.000', draft: { lokasiTeks: 'Semolowaru', harga: 900_000, jenis: 'putra', fasilitas: ['km', 'wifi', 'kasur'] } },
-  { label: 'Jauh di bawah pasaran', sub: 'Keputih · putri · Rp 700.000', draft: { lokasiTeks: 'Keputih', harga: 700_000, jenis: 'putri', fasilitas: ['km', 'ac', 'wifi', 'kasur'] } },
-  { label: 'Data sedikit', sub: 'Rungkut · campur · Rp 1.300.000', draft: { lokasiTeks: 'Rungkut', harga: 1_300_000, jenis: 'campur', fasilitas: ['km', 'wifi', 'kasur'] } },
+  { label: 'Jauh di bawah pasaran', sub: 'Keputih · putri · Rp 400.000', draft: { lokasiTeks: 'Keputih', harga: 400_000, jenis: 'putri', fasilitas: ['km', 'ac', 'wifi', 'kasur'] } },
+  { label: 'Kos sejenis sedikit', sub: 'Rungkut · campur · baru 5 iklan sejenis', draft: { lokasiTeks: 'Rungkut', harga: 1_300_000, jenis: 'campur', fasilitas: ['km', 'wifi', 'kasur'] } },
   { label: 'Kecamatan belum ada data', sub: 'Babatan, Kec. Wiyung', draft: { lokasiTeks: 'Babatan' } },
   { label: 'Data kecamatan sedikit', sub: 'Ketintang, Kec. Gayungan · 3 iklan', draft: { lokasiTeks: 'Ketintang', jenis: 'putri', harga: 1_400_000 } },
   { label: 'Di luar cakupan', sub: 'Waru, Sidoarjo', draft: { lokasiTeks: 'Waru, Sidoarjo' } },

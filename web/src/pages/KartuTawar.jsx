@@ -3,7 +3,7 @@ import Icon from '../components/Icon.jsx';
 import { Button, EmptyState, ListRow, PageHead, StatusBadge } from '../components/ui.jsx';
 import { Paywall } from '../components/Sheets.jsx';
 import { kalimatTawar } from '../api/ai.js';
-import { persen, rp, tanggal } from '../lib/format.js';
+import { persen, rp, rpRentang, tanggal } from '../lib/format.js';
 import { useStore } from '../store.jsx';
 import { go } from '../router.js';
 
@@ -15,11 +15,13 @@ export default function KartuTawar() {
   const t = state.tawar;
   const kembali = () => go(t?.dari === 'cari' ? '/match?dari=cari' : '/hasil');
 
-  if (!t)
+  // kartu yang tersimpan dari versi lama belum punya median dan kisaran pembanding
+  if (!t || t.median == null)
     return (
       <div className="page narrow">
-        <EmptyState icon="file" title="Belum ada Kartu Tawar" action={<Button onClick={() => go('/cek')}>Cek Harga</Button>}>
-          Cek harga kos incaranmu dulu, lalu buat Kartu Tawar dari hasilnya.
+        <PageHead judul="Kartu Tawar" onBack={() => go('/')} />
+        <EmptyState icon="file" title="Belum ada Kartu Tawar" action={<Button onClick={() => go('/cek')}>Cek harga</Button>}>
+          Cek harga kos incaranmu dulu. Kartu Tawar dibuat dari hasilnya.
         </EmptyState>
       </div>
     );
@@ -33,11 +35,11 @@ export default function KartuTawar() {
           title="Kartu Tawar terkunci"
           action={
             <Button icon="lock" onClick={() => setBayar(true)}>
-              Buka dengan KOZY Match
+              Buka paket
             </Button>
           }
         >
-          Buka untuk mendapatkan kartu berisi data harga dan kalimat untuk menawar.
+          Isinya data harga pasaran dan kalimat untuk menawar ke pemilik.
         </EmptyState>
         <Paywall open={bayar} purchaseId={t.purchaseId} onClose={() => setBayar(false)} onPaid={() => setBayar(false)} />
       </div>
@@ -49,25 +51,25 @@ export default function KartuTawar() {
       await navigator.clipboard.writeText(teks);
       toast('Kalimat disalin');
     } catch {
-      toast('Tidak bisa menyalin otomatis. Tahan teks untuk menyalin.');
+      toast('Gagal menyalin. Tahan teksnya untuk menyalin manual.');
     }
   };
   const bagikan = () => {
-    const teks = `Kartu Tawar KOZY\n${t.nama} (${t.kawasan})\nHarga dari pemilik: ${rp(t.harga)}\nHarga wajar: ${rp(t.harga_wajar)}\n\n${kalimat.join('\n')}\n\nCek: kozy.id/v/${kode(t.purchaseId)}`;
+    const teks = `Kartu Tawar KOZY\n${t.nama} (${t.kawasan})\nHarga dari pemilik: ${rp(t.harga)}\nHarga pasaran: ${rp(t.median)}\nKisaran wajar: ${rp(t.kisaran[0])}–${rp(t.kisaran[1])}\n\n${kalimat.join('\n')}\n\nCek keaslian: kozy.id/v/${kode(t.purchaseId)}`;
     window.open(`https://wa.me/?text=${encodeURIComponent(teks)}`, '_blank', 'noopener');
   };
 
   return (
     <div className="page narrow">
       <div className="no-print">
-        <PageHead judul="Kartu Tawar" sub="Tunjukkan kartu ini ke pemilik saat menawar." onBack={kembali} />
+        <PageHead judul="Kartu Tawar" sub="Tunjukkan ke pemilik saat menawar" onBack={kembali} />
       </div>
 
       <div className="printable">
         <article className="kartu">
           <header className="kartu-h">
             <span className="kartu-logo">KOZY</span>
-            <span>{tanggal(t.updated_at)}</span>
+            <span>{tanggal(new Date().toISOString())}</span>
           </header>
           <div className="kartu-top">
             <div>
@@ -76,19 +78,25 @@ export default function KartuTawar() {
             </div>
             <StatusBadge status={t.status} size="sm" />
           </div>
-          <dl className="duo">
+          <div className="kartu-hero">
+            <span>Harga pasaran</span>
+            <b>{rp(t.median)}</b>
+            <small>
+              Kisaran wajar {rpRentang(t.kisaran[0], t.kisaran[1])}
+            </small>
+          </div>
+          <dl className="kartu-rows">
             <div>
               <dt>Harga dari pemilik</dt>
               <dd>{rp(t.harga)}</dd>
             </div>
             <div>
-              <dt>Harga wajar</dt>
-              <dd className="t-blue">{rp(t.harga_wajar)}</dd>
+              <dt>Dibanding harga pasaran</dt>
+              <dd className={t.selisih_rp > 0 ? 't-red' : 't-green'}>{persen(t.selisih_persen)}</dd>
             </div>
           </dl>
           <p className="kartu-diff">
-            Selisih {t.selisih_rp < 0 ? '−' : '+'}
-            {rp(t.selisih_rp)} ({persen(t.selisih_persen)}) · dari {t.n} iklan kos di Kec. {t.kec}
+            {t.n} iklan kos {t.jenisPembanding ? `${t.jenisPembanding} ` : ''}di Kec. {t.kec}
           </p>
           <footer className="kartu-f">
             <Icon name="qr" size={16} />
@@ -115,11 +123,11 @@ export default function KartuTawar() {
           Simpan PDF
         </Button>
         <Button icon="chat" onClick={bagikan}>
-          Kirim via WA
+          Kirim lewat WA
         </Button>
       </div>
       <div className="list-card no-print">
-        <ListRow icon="search" title={t.dari === 'cari' ? 'Kembali ke daftar kos' : 'Lihat 5 kos alternatif'} sub="Sudah termasuk di KOZY Match" href={`#/match?dari=${t.dari || 'cek'}`} />
+        <ListRow icon="search" title={t.dari === 'cari' ? 'Kembali ke daftar kos' : 'Lihat 5 kos lain'} sub="Sudah termasuk dalam paket" href={`#/match?dari=${t.dari || 'cek'}`} />
       </div>
     </div>
   );

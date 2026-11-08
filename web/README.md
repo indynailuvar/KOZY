@@ -10,15 +10,15 @@ npm install      # sekali saja
 npm run dev      # buka http://localhost:5173
 ```
 
-## Data dan model
+## Data dan pembanding harga
 
 Empat sumber hasil scraping, dengan peran yang berbeda-beda. Tidak ada satu pun yang lengkap sendirian, jadi perannya dibagi dan tidak dicampur:
 
 | Sumber | Jumlah | Harga sewa | Koordinat | Fasilitas | Dipakai untuk |
 |---|---|---|---|---|---|
-| Mamikos | 240 iklan | ada | – | 6 jenis | melatih model + KOZY Match |
-| Papikost | 71 iklan | ada | ada | 10 jenis | melatih model + pin peta asli |
-| Google Maps | 848 titik | – | ada | – | jangkauan lokasi, harga diperkirakan model |
+| Mamikos | 240 iklan | ada | – | 6 jenis | pembanding harga + KOZY Match |
+| Papikost | 71 iklan | ada | ada | 10 jenis | pembanding harga + pin peta asli |
+| Google Maps | 848 titik | – | ada | – | jangkauan lokasi, harga = kisaran kecamatan |
 | OLX | 20 iklan | harga **jual** | kasar | – | sisi pemilik saja, **tidak** untuk harga sewa |
 
 ```
@@ -33,53 +33,55 @@ Urutan menjalankan ulang setelah ada hasil scraping baru:
 
 ```bash
 python scripts/geocode_titik.py   # cari kelurahan/kecamatan dari koordinat (bisa dihentikan kapan saja)
-python scripts/build_pasar.py     # latih model harga sewa
-python scripts/build_gmaps.py     # perkirakan harga titik Google Maps
+python scripts/build_pasar.py     # gabung iklan sewa, hitung median & kuartil tiap kelompok
+python scripts/build_gmaps.py     # beri kisaran harga titik Google Maps
 python scripts/build_olx.py       # hitung sisi pemilik dari iklan jual
 python scripts/build_kawasan.py   # susun daftar kawasan dari koordinat
 ```
 
-### Model harga sewa (Mamikos + Papikost)
+### Pembanding harga sewa (Mamikos + Papikost)
 
 Keduanya sama-sama iklan **sewa bulanan**, jadi boleh digabung: **307 iklan** (240 Mamikos + 67 Papikost) di **14 kecamatan**. Papikost menyumbang 67 dari 71 — 3 iklan ternyata di Sidoarjo dan 1 harganya Rp 125.000 (terlalu rendah untuk sewa sebulan, kemungkinan tarif harian).
 
-Rumus yang dipakai frontend: `harga = exp(intercept + efek_kecamatan + Σ efek_fasilitas + efek_jenis)`.
+Kewajaran harga dinilai dengan **Robust Statistical Benchmarking, tanpa regresi**. Harga kos dibandingkan dengan sebaran harga iklan asli yang sebanding, yaitu kos sejenis (putra/putri/campur) di kecamatan yang sama:
 
-Tiga keputusan penting, semuanya diuji uji silang 5 lipat dulu, bukan dikira-kira:
+```
+acuan          = median harga pembanding
+kisaran wajar  = Q1 – Q3 (separuh tengah harga pembanding)
+gap            = (harga − median) / IQR
+```
 
-1. **Fasilitas yang ikut dihitung hanya 6 yang dicatat Mamikos.** Papikost memang juga mencatat lemari, meja belajar, dan parkir, tetapi hampir semua iklannya punya itu sehingga pengaruhnya tidak bisa dipisahkan. Ikut dihitung malah memperburuk tebakan (MAPE 21,7% → 22,7%), jadi datanya disimpan di `fasilitas_lain` untuk ditampilkan saja.
-2. **Ada penanda situs** untuk menyerap beda tingkat harga antar situs (Papikost +9,0% dibanding Mamikos). Penanda ini sekaligus menggantikan penanda "fasilitas tidak tercatat" — keduanya bernilai sama persis, dan kalau dipasang dua-duanya kolomnya berlebih sehingga koefisiennya jadi ngawur.
-3. **Kecamatan dengan iklan kurang dari 5 tidak diberi koefisien sendiri**, melainkan digabung jadi satu kelompok. Tebakan dari 1–4 iklan terlalu goyah.
+Tiga keputusan penting:
 
-Efek kecamatan **dipusatkan**: angka 0 berarti "rata-rata Surabaya", bukan "sama dengan kecamatan acuan". Penanda situs dilipat ke intercept pada proporsi sampelnya, jadi frontend tetap memakai satu rumus yang sama tanpa perlu tahu soal situs. Koefisien mentahnya tetap disimpan di `model_penuh` untuk diperiksa.
+1. **Tidak ada regresi, dan fasilitas tidak ikut menghitung harga.** Di iklan, fasilitas hanya tercatat ada/tidak (0/1) dan sering tidak ditulis pemiliknya, jadi "0" belum tentu berarti tidak ada. Koefisien fasilitas dari data seperti itu tidak cukup andal untuk menggeser harga acuan. Persentase fasilitas tetap disimpan per kecamatan, tetapi hanya untuk dideskripsikan.
+2. **Pembandingnya kecamatan × jenis kos, minimal 10 iklan.** Putra, putri, dan campur dipisah karena tingkat harganya berbeda jauh (di Sukolilo median putri Rp 1 jt, campur Rp 1,8 jt). Kelompok di bawah 10 iklan dianggap eksploratif, dan kos di sana dibandingkan dengan seluruh kos di kecamatannya. Ambang 10 sama dengan status "Prioritas (n≥10)" di bundle modeling.
+3. **Median dan IQR, bukan rata-rata dan simpangan baku.** Satu-dua iklan yang harganya ekstrem tidak menyeret acuannya. Kuartil memakai interpolasi linear (sama dengan pandas), sehingga 32 kelompok di `pasar.json` identik dengan `price_gap_analysis` di bundle modeling backend — `cek_data.py` menghitungnya ulang dari daftar iklan setiap kali dijalankan.
 
-Hasilnya:
+Hasilnya: **11 kelompok** kecamatan × jenis punya minimal 10 iklan dan mencakup **247 dari 307 iklan** (80%).
 
-| Ukuran | Nilai |
-|---|---|
-| Iklan | 307 (240 Mamikos + 67 Papikost) |
-| Kecamatan | 14, dengan 6 punya koefisien sendiri |
-| Berkoordinat asli | 67 |
-| Estimasi | Ridge, alpha 5,62 (dipilih lewat uji silang) |
-| Meleset rata-rata (uji silang bersarang 5 lipat, 5 kali ulang) | ± Rp 277.000 (20,8%) |
-| Pembanding OLS di lipatan yang sama | ± Rp 279.000 (21,0%) |
-| R² log | 0,660 |
-
-Pengaruh fasilitas: AC **+52%**, KM dalam **+28%**, kloset duduk **+11%**, kasur **+10%**, WiFi **+5%**, akses 24 jam **−1%** (praktis tidak berpengaruh). Jenis kos: campur **+17%**, putri **−4%** terhadap putra.
-
-Menambah Papikost **tidak memperbaiki ketelitian** di kecamatan yang datanya sudah ada — diuji di 240 baris Mamikos yang sama persis, MAPE-nya 19,84% → 20,05%. Yang bertambah adalah **jangkauan**: 8 kecamatan yang dulu sama sekali tidak bisa dinilai, plus 67 koordinat asli untuk pin peta.
+| Kelompok | Iklan | Median | Kisaran wajar (Q1–Q3) |
+|---|---|---|---|
+| Sukolilo · putri | 76 | Rp 1.000.000 | Rp 750.000 – 1.500.000 |
+| Wonokromo · putri | 26 | Rp 1.050.000 | Rp 820.875 – 1.500.000 |
+| Gubeng · putri | 19 | Rp 1.100.000 | Rp 750.000 – 1.300.000 |
+| Wonokromo · putra | 19 | Rp 1.000.000 | Rp 675.000 – 1.300.000 |
+| Gubeng · campur | 18 | Rp 1.400.000 | Rp 1.037.500 – 1.787.500 |
+| Gubeng · putra | 17 | Rp 1.500.000 | Rp 1.000.000 – 1.850.000 |
+| Sukolilo · campur | 17 | Rp 1.800.000 | Rp 1.550.000 – 2.300.000 |
+| Wonocolo · campur | 15 | Rp 1.775.000 | Rp 1.612.500 – 2.012.500 |
+| Wonokromo · campur | 15 | Rp 1.700.000 | Rp 1.450.000 – 1.900.000 |
+| Sukolilo · putra | 14 | Rp 900.000 | Rp 725.000 – 1.187.500 |
+| Tenggilis Mejoyo · putri | 11 | Rp 950.000 | Rp 625.000 – 1.250.000 |
 
 Isi `src/data/pasar.json`:
 
 | Bagian | Isi |
 |---|---|
-| `meta` | sumber, tanggal ambil, jumlah per sumber, MAE, MAPE, R² |
-| `model` | koefisien siap pakai: intercept, efek kecamatan (sudah dipusatkan), efek fasilitas, efek jenis |
-| `model_penuh` | koefisien mentah sebelum diringkas, untuk pemeriksaan |
-| `kecamatan` | sebaran harga asli (p10–p90), komposisi jenis, persentase fasilitas, jumlah per sumber, tingkat keyakinan |
+| `meta` | sumber, tanggal ambil, jumlah per sumber, metode, `min_pembanding` |
+| `kecamatan` | sebaran harga asli (p10–p90), `benchmark` per jenis kos dan `semua` (n, median, q1, q3, iqr, min, max), komposisi jenis, persentase fasilitas, jumlah per sumber, tingkat keyakinan |
 | `kos` | daftar iklan asli untuk KOZY Match, lengkap dengan sumber dan koordinat bila ada |
 
-Persentase fasilitas per kecamatan **hanya dihitung dari iklan yang situsnya memang mencatat fasilitas itu**. Papikost tidak mencatat kloset dan akses 24 jam, jadi kalau ikut dihitung sebagai 0, kecamatan yang datanya hanya dari Papikost akan terlihat "tidak punya kloset" padahal artinya "tidak diketahui". Angka ini juga dipakai untuk memperkirakan harga titik Google Maps, jadi salah di sini ikut menyeret harga.
+Persentase fasilitas per kecamatan **hanya dihitung dari iklan yang situsnya memang mencatat fasilitas itu**. Papikost tidak mencatat kloset dan akses 24 jam, jadi kalau ikut dihitung sebagai 0, kecamatan yang datanya hanya dari Papikost akan terlihat "tidak punya kloset" padahal artinya "tidak diketahui".
 
 ### Google Maps: lokasi, bukan harga
 
@@ -91,18 +93,19 @@ Persentase fasilitas per kecamatan **hanya dihitung dari iklan yang situsnya mem
 
 **Fasilitasnya tidak bisa diambil dan tidak dikarang.** Halaman Google Maps-nya sudah diperiksa: dari 192 KB HTML, tidak ada satu pun kata WiFi, AC, kamar mandi, atau fasilitas. Google memang tidak menyimpan fasilitas kos.
 
-Karena harga juga kosong, angkanya adalah **perkiraan model**, tidak pernah ditampilkan sebagai harga iklan:
+Karena harga juga kosong, angkanya diambil dari **pembanding**, tidak pernah ditampilkan sebagai harga iklan:
 
 ```
-perkiraan = exp(intercept + efek_kecamatan + Σ (peluang_fasilitas × efek_fasilitas) + efek_jenis)
+estimasi = median, rendah = Q1, tinggi = Q3
+dari kos sejenis di kecamatan itu (jenis dibaca dari nama, mis. "kost putri")
 ```
 
-Artinya "harga kos berfasilitas rata-rata di kecamatan itu" — jadi sesama titik di satu kecamatan angkanya memang sama. Di aplikasi, angka ini selalu tampil sebagai **rentang** dengan label "perkiraan" dan tautan ke Google Maps untuk menanyakan harga aslinya.
+Artinya "kisaran harga iklan kos di sekitar titik ini" — jadi sesama titik di satu kecamatan angkanya memang sama. Di aplikasi, angka ini selalu tampil sebagai **rentang** dengan label "perkiraan" dan tautan ke Google Maps untuk menanyakan harga aslinya.
 
-| Keyakinan | Kondisi | Rentang |
-|---|---|---|
-| sedang | kecamatannya punya koefisien sendiri | ± 20,8% (MAPE model) |
-| rendah | kecamatannya masih ikut kelompok "lainnya" | ± 36,8% |
+| Keyakinan | Kondisi |
+|---|---|
+| sedang | pembandingnya minimal 10 iklan di kecamatan itu (321 titik) |
+| rendah | pembandingnya lebih sedikit, atau kecamatannya punya kurang dari 5 iklan berharga sehingga dipakai sebaran seluruh kota |
 
 Kecamatannya dicari dari koordinat lewat `scripts/geocode_titik.py` (Nominatim/OpenStreetMap). Layanannya gratis tetapi dibatasi 1 permintaan/detik, dan setelah beberapa ratus permintaan jawabannya melambat sampai ~19 detik per titik. Karena itu urutan permintaannya diatur supaya berhenti di tengah pun hasilnya sudah berguna: Papikost dulu, lalu satu wakil tiap klaster 500 m, baru sisanya. Titik yang belum sempat ditanyakan mengambil wilayah dari **tetangga berlabel terdekat dalam radius 400 m** — cara ini diuji pada titik yang sudah punya label dan **96,7% tepat**, dan tiap baris menyimpan `wilayah_dari` supaya ketahuan mana yang hasil geocoding dan mana yang dari tetangga. Titik yang tidak punya tetangga sedekat itu dibiarkan kosong, bukan ditebak asal.
 
@@ -114,17 +117,17 @@ Titik yang ternyata kos yang sama dengan iklan berharga asli (jarak < 60 m) dita
 ../olx_data.json  →  scripts/build_olx.py  →  src/data/olx.json
 ```
 
-Sumber ini **bukan harga sewa bulanan**. Yang diiklankan adalah **rumah kos yang dijual**, harganya Rp 1,2–7,5 **miliar**. Memberi harga sewa dengan model untuk data ini tidak masuk akal — harganya sudah ada, cuma jenis harga yang berbeda. Mencampurnya ke model sewa akan merusak seluruh perhitungan harga wajar penyewa, jadi **harga jualnya tidak pernah ikut melatih model** dan tidak pernah muncul di halaman penyewa.
+Sumber ini **bukan harga sewa bulanan**. Yang diiklankan adalah **rumah kos yang dijual**, harganya Rp 1,2–7,5 **miliar**. Mencampurnya ke data sewa akan merusak seluruh penilaian kewajaran harga untuk penyewa, jadi **harga jualnya tidak pernah ikut pembanding harga sewa** dan tidak pernah muncul di halaman penyewa.
 
-Yang dipakai justru kebalikannya: model sewa dipakai untuk memperkirakan **pendapatan** bangunan itu, lalu dibandingkan dengan harga jualnya.
+Yang dipakai justru kebalikannya: median sewa iklan di kecamatan yang sama dipakai untuk memperkirakan **pendapatan** bangunan itu, lalu dibandingkan dengan harga jualnya.
 
 ```
-perkiraan_sewa_kamar = exp(intercept + efek_kecamatan + Σ peluang_fasilitas + efek_jenis)
-pendapatan_setahun   = jumlah_kamar × perkiraan_sewa_kamar × 12
-imbal_hasil_kotor    = pendapatan_setahun / harga_jual
+sewa_kamar          = median harga sewa iklan di kecamatan itu (kota, kalau kecamatannya < 5 iklan)
+pendapatan_setahun  = jumlah_kamar × sewa_kamar × 12
+imbal_hasil_kotor   = pendapatan_setahun / harga_jual
 ```
 
-Hasilnya: median harga jual Rp 4,5 miliar, 20 kamar, **Rp 165 juta per kamar**, imbal hasil kotor **8,5% per tahun**, balik modal sekitar **12 tahun**.
+Hasilnya: median harga jual Rp 4,5 miliar, 20 kamar, **Rp 165 juta per kamar**, imbal hasil kotor **8,8% per tahun**, balik modal sekitar **11 tahun**.
 
 **Batasannya besar dan selalu ikut ditampilkan:** hanya 20 iklan, dari **2 penjual saja**, diunggah pada **satu hari yang sama**, dan terpusat di kawasan kampus. Ini inventaris satu agen properti, bukan sampel pasar. Angkanya hanya gambaran kasar dan hanya tampil di dashboard internal.
 
@@ -136,33 +139,32 @@ pasar.json + gmaps.json  →  scripts/build_kawasan.py  →  src/data/kawasan.js
 
 Daftar kelurahan yang bisa dipilih pengguna dulu ditulis tangan lengkap dengan koordinat kira-kira. Sekarang dibuat dari data: tiap titik kos sudah punya kelurahan + kecamatan, jadi titik tengah kawasan memakai **median koordinat kos yang benar-benar ada di sana**, dan jaraknya ke pusat aktivitas dihitung dari koordinat itu, bukan ditaksir. Kelurahan dengan kurang dari 3 titik dibuang supaya tidak muncul kawasan yang isinya cuma satu kos nyasar. Nama id kawasan lama dipertahankan agar pilihan yang sudah tersimpan di browser pengguna tidak hilang.
 
-### Arsitektur model — keputusan yang sudah diuji
+### Arsitektur metode — keputusan yang sudah diuji
 
-Semua keputusan di bawah berasal dari pengujian di `notebooks/kozy_pembuktian_model.ipynb`, bukan dari selera. Datanya dianggap final: 15 situs dicoba, hanya Mamikos dan Papikost yang bisa diambil.
+Datanya dianggap final: 15 situs dicoba, hanya Mamikos dan Papikost yang bisa diambil.
 
-| Keputusan | Alasan terukur |
+| Keputusan | Alasan |
 |---|---|
-| **Model produksi = hedonic Ridge log-linear** | Bentuknya sama dengan OLS (harga tetap bisa dirinci per faktor, tetap 24 koefisien di `pasar.json`), tetapi koefisien yang buktinya tipis ditahan mendekati nol. Di uji silang bersarang 25 lipatan Ridge menang tipis namun konsisten: MAPE **21,01% → 20,83%** (t = −2,27, menang 20 dari 25 lipatan). Konsekuensinya harus diingat: koefisien Ridge **bukan taksiran tak bias** — Kasur turun dari +19% ke +10%, AC dari +58% ke +52% — jadi faktor harga di aplikasi dibaca sebagai taksiran hati-hati. Pembanding OLS-nya ikut disimpan di `pasar.json → meta.pembanding_ols`. |
-| **RF/XGBoost/SVR hanya tabel benchmark** | Tuner memilih `max_depth` 2–3 — melumpuhkan pohonnya sendiri, tanda tidak ada non-linearitas untuk digali. Kurva belajar sudah mendatar di n≈245. |
-| **Kecamatan dengan < 5 iklan digabung** | Koefisien dari 1–4 iklan terlalu goyah. Ini juga sudah menyelesaikan masalah yang biasanya ditangani Ridge. |
-| **Segmentasi: K-Prototypes, bukan K-Means** | Selisih silhouette **+0,000** — benar-benar imbang. Dipilih karena keterbacaan: centroid-nya punya modus kategorikal yang bisa dibaca, bukan karena lebih akurat. |
-| **Harga TIDAK ikut membentuk cluster** | Cluster "pakai harga" tampak unggul (MAPE 20,9%) hanya karena mengintip harga yang sedang dinilai. Versi jujurnya 24,7%, kalah dari hedonic 21,1%. Cluster **melabeli**, hedonic **memvonis**. |
+| **Tanpa regresi: harga dinilai dengan median & IQR** | Variabel fasilitas di iklan hanya ada/tidak dan sering tidak ditulis, luas kamar dan jarak ke kampus tidak ada di sumber mana pun, dan baru 6 dari 14 kecamatan yang datanya cukup. Pembanding nonparametrik tidak menuntut variabel-variabel itu lengkap. |
+| **Pembanding = kecamatan × jenis, minimal 10 iklan** | Jenis kos menggeser harga paling jauh dan tercatat lengkap di kedua sumber. Di bawah 10 iklan kuartilnya terlalu goyah, jadi dipakai seluruh kecamatan. |
+| **Wajar = Q1–Q3, ekstrem = pagar Tukey** | Status hanya dari posisi terhadap kuartil. Harga di luar Q1 − 1,5·IQR … Q3 + 1,5·IQR (atau di luar harga termurah–termahal) diberi catatan untuk dipastikan, bukan otomatis dicap salah. |
+| **Segmentasi: K-Prototypes, bukan K-Means** | Datanya campuran angka dan kategori. Selisih silhouette dengan K-Means **+0,000** — benar-benar imbang; dipilih karena centroid-nya punya modus kategorikal yang bisa dibaca. |
+| **Harga TIDAK ikut membentuk cluster di `segmen.json`** | Kalau harga dipakai membentuk cluster lalu cluster itu dipakai menilai harga, penilaiannya melingkar. Cluster **melabeli**, pembanding median–IQR **menilai**. |
 | **k dipilih dengan syarat ukuran** | Cluster beranggota 7 tidak berguna sebagai label. Syarat minimal 15 anggota; di antara yang lolos, silhouette tertinggi menang → **k = 2**. |
 
 ```
 data mentah (scrapers/)
    └─ geocode_titik.py      koordinat -> kelurahan + kecamatan
-        └─ build_pasar.py   GABUNG + saring + latih Ridge + periksaGabungan() ← satu-satunya tempat penggabungan
+        └─ build_pasar.py   GABUNG + saring + median & kuartil + periksaGabungan() ← satu-satunya tempat penggabungan
              ├─ build_segmen.py      K-Prototypes tanpa harga   -> segmen.json
-             ├─ build_gmaps.py       perkiraan harga 844 titik  -> gmaps.json
+             ├─ build_gmaps.py       kisaran harga 844 titik    -> gmaps.json
              ├─ build_olx.py         sisi pemilik               -> olx.json
              ├─ build_kawasan.py     daftar kelurahan           -> kawasan.json
-             ├─ benchmark_model.py   tabel 5 model (skripsi)    -> analysis/benchmark_model.csv
              ├─ export_dataset.py    CSV datar (notebook)       -> analysis/kozy_dataset_final.csv
-             └─ cek_data.py          33 pemeriksaan dari berkas mentah
+             └─ cek_data.py          32 pemeriksaan dari berkas mentah
 ```
 
-**Penggabungan hanya boleh ada di satu tempat.** Sebelumnya ada dua jalur yang hidup berdampingan, dan yang satu diam-diam mengosongkan seluruh fasilitas Mamikos karena nama kolomnya tidak dipetakan (`ada_ac` vs `ac`) — MAPE melonjak 21% → 35% tanpa pesan error, bahkan tetap mencetak "BERHASIL". Karena itu `build_pasar.py` sekarang punya `periksaGabungan()` yang **menghentikan pipeline** kalau:
+**Penggabungan hanya boleh ada di satu tempat.** Sebelumnya ada dua jalur yang hidup berdampingan, dan yang satu diam-diam mengosongkan seluruh fasilitas Mamikos karena nama kolomnya tidak dipetakan (`ada_ac` vs `ac`) — hasilnya melenceng jauh tanpa pesan error, bahkan tetap mencetak "BERHASIL". Karena itu `build_pasar.py` sekarang punya `periksaGabungan()` yang **menghentikan pipeline** kalau:
 
 - ada fasilitas yang kosong di seluruh baris satu sumber (pemetaan kolom putus),
 - `jenis` bukan persis 3 kategori (huruf besar-kecil antar sumber),
@@ -171,65 +173,19 @@ data mentah (scrapers/)
 
 Keempatnya sudah diuji benar-benar menolak, bukan sekadar ditulis.
 
-### Memakai modelnya di luar aplikasi web
+### Memakai pembandingnya di luar aplikasi web
 
-Tiga cara, tergantung penerimanya butuh apa.
-
-**0. Satu berkas, kirim lewat WA — `analysis/kozy_mandiri.py`** (dibuat `scripts/export_mandiri.py`)
-
-Koefisiennya ditanam langsung di dalam berkasnya. Penerima **tidak perlu clone repo, tidak perlu pasang apa pun**, cukup punya Python:
-
-```bash
-python kozy_mandiri.py
-```
-
-Sudah termasuk harga wajar, kisaran wajar, rincian faktor, vonis, persentil, dan label segmen. Ini cara paling tanpa hambatan untuk orang di luar tim.
-
-**1. Modul Python tanpa dependensi — `scripts/kozy_model.py`**
-
-Cukup bawa dua berkas: `kozy_model.py` dan `src/data/pasar.json`. Tidak perlu sklearn, numpy, atau pandas.
+Semua angka pembanding sudah tersimpan apa adanya di `src/data/pasar.json`, jadi cukup Python bawaan:
 
 ```python
-from kozy_model import KozyModel
-m = KozyModel()
-
-m.harga_wajar("Sukolilo", "putri", ["km", "ac", "wifi", "kasur"])   # 1430000
-m.kisaran_wajar("Sukolilo", "putri", ["km", "ac"])                  # (1030000, 1390000)
-m.cek("Sukolilo", "putri", ["ac", "wifi"], harga=1_900_000)         # vonis lengkap
-m.faktor("Sukolilo", "putri", ["ac"])                               # rincian per komponen
-m.segmen("Sukolilo", "putri", ["ac"])                               # "Kos Lengkap"
+import json
+p = json.load(open("src/data/pasar.json", encoding="utf-8"))
+b = p["kecamatan"]["Sukolilo"]["benchmark"]["putri"]
+# {'n': 76, 'median': 1000000, 'q1': 750000, 'q3': 1500000, 'iqr': 750000, 'min': 450000, 'max': 2500000}
+gap_iqr = (1_300_000 - b["median"]) / b["iqr"]   # 0.4 -> masih di dalam Q1–Q3
 ```
 
-Ambang vonisnya disamakan dengan `src/api/kozy.js`, jadi hasil Python dan aplikasi web tidak pernah berbeda.
-
-**2. Berkas pickle — `analysis/kozy_model.pkl`** (dibuat `scripts/export_model.py`)
-
-Disediakan untuk yang butuh antarmuka sklearn. Isinya berlapis supaya tidak gampang pecah: koefisien mentah berupa list biasa (selalu bisa dipakai, cukup Python polos) plus objek `LinearRegression` (hanya kalau versi sklearn-nya cocok).
-
-```python
-import pickle, numpy as np
-m = pickle.load(open("kozy_model.pkl", "rb"))
-kec, fas, jen = m["kategori"]["kecamatan"], m["kategori"]["fasilitas"], m["kategori"]["jenis"]
-
-x = ([1.0 if k == "Sukolilo" else 0.0 for k in kec]
-     + [1.0 if f in ["km","ac","wifi","kasur"] else 0.0 for f in fas]
-     + [1.0 if j == "putri" else 0.0 for j in jen])
-np.exp(m["intercept"] + np.dot(x, m["koefisien"]))      # 1425110
-```
-
-`model_sklearn.predict(X)` mengeluarkan **log(harga)**, jadi harus dibungkus `np.exp()`.
-
-**Kenapa modul lebih disarankan daripada pickle:** model produksinya cuma **24 koefisien, sekitar 821 byte**. Pickle untuk menyimpan 24 angka itu berlebihan, isinya tidak bisa diperiksa tanpa dimuat, memuatnya berarti menjalankan kode dari berkas itu, dan ia pecah kalau versi Python/numpy/sklearn penerimanya berbeda. Koefisiennya toh sudah tersimpan apa adanya di `pasar.json`.
-
-Ketiganya diuji menghasilkan angka yang sama persis, dan `cek_data.py` memverifikasi `.pkl` tetap cocok dengan `pasar.json` setiap kali dijalankan.
-
-| Cara | Jumlah berkas | Perlu pasang pustaka? | Bisa pecah antar versi? |
-|---|---|---|---|
-| `kozy_mandiri.py` | **1** | tidak | tidak |
-| `kozy_model.py` + `pasar.json` | 2 | tidak | tidak |
-| `kozy_model.pkl` | 1 | numpy (sklearn opsional) | **ya** |
-
-Semua berkas itu dibuat ulang otomatis dari `pasar.json`, jadi kalau modelnya dilatih ulang tinggal jalankan lagi skrip ekspornya — jangan pernah diedit tangan.
+Backend menyajikan angka yang sama lewat `POST /modeling/price-gap` (dari bundle modeling), jadi hasil Python, aplikasi web, dan API tidak pernah berbeda.
 
 ### Arti sel kosong di `analysis/kozy_dataset_final.csv`
 
@@ -239,7 +195,7 @@ Semua berkas itu dibuat ulang otomatis dari `pasar.json`, jadi kalau modelnya di
 | `0` | tercatat, dan memang tidak ada |
 | `1` | tercatat, dan ada |
 
-Mengisi "tidak tercatat" dengan `0` akan membuat situs yang tidak mencatat terlihat seolah semua kosnya tanpa fasilitas itu — persis kesalahan yang dulu merusak modelnya. Mamikos tidak mencatat lemari/meja/parkir/TV; Papikost tidak mencatat kloset duduk/akses 24 jam.
+Mengisi "tidak tercatat" dengan `0` akan membuat situs yang tidak mencatat terlihat seolah semua kosnya tanpa fasilitas itu — persis kesalahan yang dulu merusak analisisnya. Mamikos tidak mencatat lemari/meja/parkir/TV; Papikost tidak mencatat kloset duduk/akses 24 jam.
 
 ### Yang masih kosong di semua sumber
 
@@ -247,19 +203,19 @@ Mengisi "tidak tercatat" dengan `0` akan membuat situs yang tidak mencatat terli
 - **Nomor pemilik** → tombol kontak diganti tautan ke iklan aslinya.
 - **Fasilitas untuk 848 titik Google Maps** → memang tidak ada di sumbernya, jadi titik itu hanya dipakai untuk lokasi.
 - **Koordinat untuk 240 iklan Mamikos** → pinnya masih sebaran perkiraan di sekitar kawasan dan diberi keterangan. Iklan Papikost sudah pakai koordinat asli.
-- **Kecamatan dengan data sangat sedikit** → tetap dinilai, tetapi ditandai keyakinan rendah plus keterangan bahwa kecamatan itu belum punya tingkat harganya sendiri.
+- **Kecamatan dengan data sangat sedikit** → tetap dibandingkan dengan iklan yang ada, tetapi ditandai keyakinan rendah plus keterangan jumlah iklannya.
 
 ### Status harga
 
-| Status | Selisih terhadap harga wajar | Tampilan |
+| Status | Posisi terhadap pembanding | Tampilan |
 |---|---|---|
-| Kemahalan | > +15% | merah, CTA Kartu Tawar |
-| Wajar | −15% s.d. +15% | hijau |
-| Murah | < −15% | biru, menampilkan "Lebih murah per bulan" dan "Hemat setahun" |
+| Kemahalan | di atas Q3 (lebih mahal dari 3 dari 4 kos sejenis) | merah, CTA Kartu Tawar |
+| Wajar | Q1 s.d. Q3 | hijau |
+| Murah | di bawah Q1 | biru, menampilkan "Kamu hemat" dan "Hemat setahun" |
 
-Ambang ±15% (`BATAS_WAJAR`) disamakan dengan ketelitian model: separuh iklan nyata meleset kurang dari 15% dari perkiraan, jadi selisih di bawah itu belum pantas disebut kemahalan.
+Angka besar di hasil adalah **harga tengah (median)** pembanding, dan selisih dihitung terhadap median itu. Kartu "Posisi di pasar" menampilkan box plot sederhana: harga termurah–termahal pembanding, pita Q1–Q3, titik median, dan harga dari pemilik.
 
-Harga murah adalah kabar baik dan ditampilkan begitu. Kalau selisihnya sangat besar (≤ −30%, `BATAS_PERIKSA`), KOZY tetap menambahkan satu catatan "Harga bagus, pastikan dulu sebelum transfer" berisi hal yang perlu dicek langsung, bukan mengubah vonisnya jadi peringatan.
+Harga murah adalah kabar baik dan ditampilkan begitu. Kalau harganya **ekstrem** — di luar pagar 1,5 × IQR atau lebih murah dari semua pembanding — KOZY menambahkan satu catatan "Harga bagus, pastikan dulu sebelum transfer" berisi hal yang perlu dicek langsung, bukan mengubah vonisnya jadi peringatan. Harga ekstrem di sisi mahal memunculkan banner "Harga ini tidak biasa".
 
 Angka yang diisi di Cek Harga adalah **harga dari pemilik**, bukan budget penyewa. Kalau ternyata itu budget, ada tautan ke Cari Kos. Sebaliknya, di halaman rekomendasi area, kalau budget lebih besar daripada harga pasaran, KOZY menghitung sisanya dan menawarkan ide belanja perabot lewat KOZY AI.
 
@@ -268,7 +224,7 @@ Angka yang diisi di Cek Harga adalah **harga dari pemilik**, bukan budget penyew
 | Halaman | URL | Isi |
 |---|---|---|
 | Beranda | `#/` | 2 pilihan: sudah punya kos incaran / sedang mencari kos |
-| Cek harga | `#/cek` → `#/hasil` | 4 langkah: lokasi, jenis kos, harga dari pemilik, fasilitas. Hasilnya status harga, kisaran wajar, faktor harga, posisi di pasar, dan peta kelurahan (pin terkunci) |
+| Cek harga | `#/cek` → `#/hasil` | 4 langkah: lokasi, jenis kos, harga dari pemilik, fasilitas. Hasilnya status harga, harga tengah dan kisaran wajar kos sejenis, segmen K-Prototypes, posisi di pasar, dan peta kelurahan (pin terkunci) |
 | KOZY Match | `#/match` | peta pin harga kos asli. Ketuk pin untuk detail, fasilitas, skor kecocokan, tautan ke iklan, Kartu Tawar, dan pilihan bandingkan |
 | Kartu Tawar | `#/kartu-tawar` | ringkasan dan 3 kalimat tawar, bisa disimpan PDF atau dikirim lewat WA |
 | Cari kos | `#/cari` → `#/kawasan` | 6 langkah: persona, dekat dengan, tujuan, budget, jenis kos, fasilitas. Hasilnya daftar/peta area dan saran KOZY AI |
@@ -276,9 +232,9 @@ Angka yang diisi di Cek Harga adalah **harga dari pemilik**, bukan budget penyew
 | KOZY AI | `#/ai` | chat: ide upgrade kamar, memilih kos, cara menawar, daftar cek sebelum bayar, tips keuangan |
 | Edukasi | `#/edukasi` | tips keuangan anak kos dan kalkulator budget |
 | Riwayat | `#/riwayat` | tersimpan di localStorage |
-| **Dashboard pemilik kos** | `#/pemilik` | klaim 4 langkah (lokasi, jenis kos, tipe kamar, bukti) → 6 lembar: posisi harga per tipe, simulasi fasilitas, badge, siapa yang mencari kos di daerahnya, persaingan, saran penargetan |
+| **Dashboard pemilik kos** | `#/pemilik` | klaim 4 langkah (lokasi, jenis kos, tipe kamar, bukti) → 6 lembar: ringkasan kos, posisi harga per tipe, badge, siapa yang mencari kos di daerahnya, persaingan, saran penargetan |
 | Tentang | `#/tentang` | metodologi, batas data, netralitas |
-| **Dashboard internal KOZY** | `#/internal` | halaman tim KOZY, berkode akses: mutu dataset, aktivitas pengguna, akurasi model, ramalan |
+| **Dashboard internal KOZY** | `#/internal` | halaman tim KOZY, berkode akses: mutu dataset, aktivitas pengguna, metode pembanding harga, ramalan |
 | Skenario presentasi | `#/demo` | halaman internal: pintasan skenario kemahalan, wajar, jauh di bawah pasaran, data sedikit, belum ada data, luar cakupan, gagal memuat |
 
 ### Dua dashboard yang sengaja dipisah
@@ -289,9 +245,9 @@ Keduanya halaman berbeda, tidak pernah saling menaut, dan tidak berbagi satu ang
 |---|---|---|
 | Alamat | `#/internal` (berkode akses) | `#/pemilik` |
 | Pembacanya | tim KOZY, investor, dosen penguji | pemilik kos |
-| Isinya | mutu dan cakupan dataset, aktivitas seluruh pengguna, akurasi model, apa yang belum bisa diramalkan | pasar di sekitar kosnya sendiri: posisi harga tiap tipe, siapa yang mencari kos di daerahnya, pesaing, saran penargetan |
+| Isinya | mutu dan cakupan dataset, aktivitas seluruh pengguna, metode pembanding harga, apa yang belum bisa diramalkan | pasar di sekitar kosnya sendiri: posisi harga tiap tipe, siapa yang mencari kos di daerahnya, pesaing, saran penargetan |
 
-Kode aksesnya diatur lewat `VITE_KOZY_PIN` (lihat `.env.example`); bawaannya `kozy-internal`.
+Kode aksesnya diatur lewat `VITE_KOZY_PIN` (lihat `.env.example`); bawaannya `kozysukses`.
 Karena KOZY berjalan sepenuhnya di peramban, kode ini menghalangi orang yang
 mengetik alamatnya langsung, bukan orang yang membuka peralatan pengembang.
 Pengamanan sungguhan menuntut datanya pindah ke server.
@@ -300,15 +256,17 @@ Pengamanan sungguhan menuntut datanya pindah ke server.
 
 - `#/internal` → **Data pasar**
 - `#/internal?tab=aktivitas` → **Aktivitas**
-- `#/internal?tab=model` → **Model & ramalan** (akurasi, ramalan harga, kebutuhan pasar)
+- `#/internal?tab=model` → **Metode & ramalan** (cara menilai harga, ramalan harga, kebutuhan pasar)
+- `#/internal?tab=omzet` → **Omzet paket** (forecast Chronos-2 dari histori dummy)
 
 Grafiknya mengikuti aturan *Storytelling with Data* bab 2: judul memuat pesannya, batang selalu mulai dari nol, nilai dilabeli langsung, satu warna aksen, dan tidak ada pie, donut, 3D, atau sumbu Y kedua.
 
 | Visual | Isi |
 |---|---|
-| Teks angka besar | jumlah iklan, median harga, meleset rata-rata, R² |
+| Teks angka besar | jumlah iklan, median harga, kelompok pembanding siap pakai, cakupannya |
 | Batang horizontal | median harga atau jumlah iklan per kecamatan (bisa ditukar) |
-| Batang horizontal | pengaruh tiap fasilitas terhadap harga, dari koefisien model |
+| Tabel border minimal | median dan kisaran wajar (Q1–Q3) tiap kelompok kecamatan × jenis |
+| Batang horizontal | lebar kisaran wajar (IQR) tiap kelompok |
 | Histogram | sebaran 307 harga iklan per Rp 250 rb |
 | Heatmap | persentase kepemilikan fasilitas per kecamatan |
 | Batang bertumpuk 100% | komposisi jenis kos per kecamatan |
@@ -316,7 +274,6 @@ Grafiknya mengikuti aturan *Storytelling with Data* bab 2: judul memuat pesannya
 | Tabel border minimal | peran tiap sumber: apa yang dibawa, apa yang kosong |
 | Batang horizontal | sebaran titik Google Maps per kecamatan |
 | Batang horizontal | harga jual rumah kos per kamar tiap kecamatan (OLX, sisi pemilik) |
-| Tabel border minimal | p10, median, p90, dan efek kecamatan |
 | Daftar celah data | apa yang masih kosong dan akibatnya ke fitur |
 
 Komponen grafiknya ada di `src/components/Grafik.jsx` dan tiap grafik punya padanan teks untuk pembaca layar.
@@ -381,7 +338,7 @@ pemilik: {
 
 Tiap tipe punya harga, jumlah kamar, jumlah kamar kosong, fasilitas, dan foto 4 sisinya sendiri. Layar wizard-nya sengaja tetap ringkas — hanya daftar tipe dan satu tombol tambah; semua isiannya masuk ke lembar terpisah.
 
-Dashboard-nya menilai **tiap tipe secara terpisah** terhadap harga pasaran kecamatannya, lengkap dengan simulasi fasilitas per tipe. Badge Harga Wajar baru bisa diunduh kalau **tidak ada satu pun tipe** yang di atas pasaran; kalau ada, tipe mana yang bermasalah disebutkan namanya.
+Dashboard-nya menilai **tiap tipe secara terpisah** terhadap pembanding yang sama (kos sejenis di kecamatannya), jadi yang membedakan hasilnya hanya harga tiap tipe. Badge Harga Wajar baru bisa diunduh kalau **tidak ada satu pun tipe** yang di atas pasaran; kalau ada, tipe mana yang bermasalah disebutkan namanya.
 
 Klaim versi lama yang cuma menyimpan satu harga otomatis dibungkus jadi satu tipe (`rapikanPemilik`), jadi pemilik yang sudah terlanjur klaim tidak kehilangan datanya.
 
@@ -392,7 +349,7 @@ Klaim versi lama yang cuma menyimpan satu harga otomatis dibungkus jadi satu tip
 Dua masalah yang diperbaiki sekaligus:
 
 1. **Susah ditemukan.** Di HP, KOZY AI dulu tenggelam di dalam menu hamburger. Sekarang dia **tombol tetap di topbar**, terlihat di HP maupun desktop, dan dikeluarkan dari daftar menu biasa supaya tidak dobel. Bukan tombol melayang (FAB) — itu menutupi isi halaman.
-2. **Tidak tahu bisa ditanya apa.** Komponen `src/components/TanyaAI.jsx` dipasang di posisi yang sama di tiap halaman hasil, dan tidak sekadar berbunyi "Tanya AI": isinya langsung 3 pertanyaan nyata sesuai isi halaman, memakai angka yang sedang dilihat pengguna. Misalnya di hasil cek kos kemahalan: *"Cara nawar harga kos dari Rp 1.900.000 ke Rp 1.430.000"*.
+2. **Tidak tahu bisa ditanya apa.** Komponen `src/components/TanyaAI.jsx` dipasang di posisi yang sama di tiap halaman hasil, dan tidak sekadar berbunyi "Tanya AI": isinya langsung 3 pertanyaan nyata sesuai isi halaman, memakai angka yang sedang dilihat pengguna. Misalnya di hasil cek kos kemahalan: *"Cara nawar harga kos dari Rp 1.900.000 ke Rp 1.500.000"* (batas atas kisaran wajar).
 
 Supaya tidak ada saran yang diketuk lalu dijawab "aku belum paham", ditambahkan dua niat baru di `src/api/ai.js`:
 
@@ -407,7 +364,7 @@ Kalimat menawar sekarang punya **satu sumber** (`kalimatTawar` di `api/ai.js`) y
 
 | Variabel | Fungsi |
 |---|---|
-| `VITE_API_URL` | Alamat FastAPI. Jika diisi, `cekHarga()` memanggil `POST /vonis` dan mengharapkan `{status, harga_wajar, selisih_rp, selisih_persen, persentil, faktor[], komposisi, pasar{p10,p50,p90,n_pembanding}, meta{confidence, kecamatan, updated_at, sumber, mae}}` |
+| `VITE_API_URL` | Alamat FastAPI untuk segmen K-Prototypes (`/modeling/segment`), gap median & IQR di Bandingkan (`/modeling/price-gap`), dan forecast Chronos-2 (`/forecast/omzet-paket`). Cek Harga tidak membutuhkannya: pembandingnya dihitung di perangkat dari `pasar.json` |
 | `VITE_AI_URL` | Endpoint chatbot. `POST {pesan, konteks}` → `{teks, kartu?, saran?, aksi?}`. Tanpa ini, KOZY AI memakai jawaban berbasis aturan di `src/api/ai.js` |
 | `VITE_ANALYTICS_URL` | Endpoint pencatat aktivitas. Kalau diisi, tiap kejadian juga dikirim `POST { jenis, waktu, sesi, ... }`. Tanpa ini, aktivitas hanya tersimpan di perangkat pemakai (localStorage) |
 | `VITE_MAP_TILE_URL` | URL tile peta. Default tile publik OpenStreetMap (cukup untuk pengembangan, **bukan** untuk trafik produksi) |

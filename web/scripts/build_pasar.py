@@ -1,5 +1,5 @@
 # =============================================================================
-# Melatih model harga sewa dan menyiapkan data pasar untuk frontend:
+# Menyiapkan data pasar dan pembanding harga untuk frontend:
 #   data/mamikos_bersih.csv      (240 iklan, harga + fasilitas, tanpa koordinat)
 #   ../papikost_surabaya_71.json (71 iklan, harga + fasilitas + koordinat)
 #     -> src/data/pasar.json
@@ -7,34 +7,25 @@
 # Kedua sumber sama-sama iklan SEWA BULANAN, jadi boleh digabung. Data OLX
 # sengaja tidak ikut: isinya rumah kos yang DIJUAL (miliaran), bukan sewa.
 #
-# Tiga keputusan penting, semuanya diuji dengan uji silang lebih dulu:
+# Kewajaran harga dinilai dengan ROBUST STATISTICAL BENCHMARKING, tanpa
+# regresi. Tiap harga dibandingkan dengan sebaran harga iklan asli yang
+# sebanding, yaitu kos sejenis (putra/putri/campur) di kecamatan yang sama:
 #
-# 1. Fasilitas yang dipakai hanya enam yang dicatat Mamikos. Papikost memang
-#    mencatat lemari, meja belajar, dan parkir, tetapi hampir semua iklannya
-#    punya fasilitas itu, jadi pengaruhnya tidak bisa dipisahkan dan malah
-#    memperburuk tebakan (MAPE naik dari 21,7% ke 22,7%). Datanya tetap
-#    disimpan di `fasilitas_lain` untuk ditampilkan, bukan untuk menghitung.
+#   acuan          = median
+#   kisaran wajar  = Q1 - Q3 (separuh tengah harga pembanding)
+#   gap            = (harga - median) / IQR
 #
-# 2. Penanda situs dipakai untuk menyerap beda tingkat harga antar situs.
-#    Penanda ini sekaligus menggantikan penanda "fasilitas tidak tercatat":
-#    keduanya bernilai sama persis, jadi kalau dipasang dua-duanya kolomnya
-#    berlebih dan koefisiennya jadi ngawur.
+# Median dan IQR dipilih karena tidak goyah oleh satu-dua iklan yang harganya
+# ekstrem. Kuartil memakai interpolasi linear, sama dengan pandas, supaya
+# angkanya identik dengan bundle modeling di backend.
 #
-# 3. Kecamatan dengan iklan < 5 tidak diberi koefisien sendiri (tebakannya
-#    terlalu goyah), melainkan digabung jadi satu kelompok "lainnya".
+# Fasilitas TIDAK ikut menghitung gap. Di iklan, fasilitas hanya tercatat
+# ada/tidak (0/1) dan sering tidak ditulis pemiliknya, jadi 0 belum tentu
+# berarti tidak ada. Persentase fasilitas tetap disimpan per kecamatan, tetapi
+# hanya untuk dideskripsikan, bukan untuk menaikkan atau menurunkan harga.
 #
-# 4. Koefisiennya diestimasi dengan RIDGE, bukan OLS biasa. Bentuk modelnya
-#    tetap sama (log-linear, bisa dirinci per faktor); bedanya koefisien yang
-#    buktinya tipis ditahan mendekati nol. Kekuatan penahannya (alpha) dipilih
-#    lewat uji silang, dan angka ketelitian yang dilaporkan memakai uji silang
-#    BERSARANG: alpha dipilih ulang di tiap lipatan latih, sehingga data uji
-#    tidak pernah ikut menentukan alpha. Pembanding OLS dihitung di lipatan
-#    yang sama persis dan ikut disimpan di meta.
-#
-# Koefisien kecamatan dipusatkan: 0 berarti "rata-rata Surabaya", bukan
-# "sama dengan kecamatan acuan". Penanda situs dilipat ke intercept pada
-# proporsi sampelnya, sehingga frontend tetap memakai rumus yang sama:
-#   harga = exp(intercept + efek_kecamatan + sigma efek_fasilitas + efek_jenis)
+# Kelompok kecamatan x jenis dengan iklan < MIN_PEMBANDING dianggap eksploratif;
+# aplikasi lalu membandingkan dengan seluruh kos di kecamatan itu.
 #
 # Jalankan:  python scripts/build_pasar.py   (perlu scripts/geocode_titik.py dulu)
 # =============================================================================
@@ -43,8 +34,6 @@ import io
 import json
 import os
 import re
-
-import numpy as np
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 AKAR = os.path.dirname(BASE)
@@ -56,7 +45,8 @@ DIAMBIL = {"Mamikos": "2026-09-16", "Papikost": "2026-09-29"}
 
 BATAS_HARGA = (200_000, 10_000_000)  # di luar ini bukan sewa bulanan yang wajar
 KOTA = "Surabaya"
-MIN_IKLAN_KEC = 5  # di bawah ini kecamatan ikut kelompok "lainnya"
+MIN_IKLAN_KEC = 5  # di bawah ini keyakinan data kecamatannya "rendah"
+MIN_PEMBANDING = 10  # sama dengan status_sampel "Prioritas (n>=10)" di bundle modeling
 
 # fasilitas yang ditanyakan ke pengguna di aplikasi (urutannya dipakai di UI)
 FAS_APLIKASI = ["km", "ac", "wifi", "kasur", "kloset", "akses24"]
@@ -80,9 +70,9 @@ PAPIKOST_FAS = {
     "tv": "tv",
     "dispenser": "dispenser",
 }
-FAS_LAIN = ["lemari", "meja", "pmotor", "pmobil", "tv", "dispenser"]  # dicatat, tidak dimodelkan
+FAS_LAIN = ["lemari", "meja", "pmotor", "pmobil", "tv", "dispenser"]  # dicatat untuk ditampilkan saja
 JENIS_CSV = {"Putra": "putra", "Putri": "putri", "Campur": "campur"}
-JENIS_LAIN = ["putri", "campur"]  # putra jadi acuan
+JENIS = ["putra", "putri", "campur"]
 
 
 def bacaMamikos():
@@ -167,57 +157,31 @@ def buangKembar(rows):
     return unik
 
 
-ALPHA_CALON = np.logspace(-2, 2, 33)
-
-
-def ridge(X, ylog, alpha):
-    """Ridge dengan intercept (kolom 0) yang TIDAK ikut ditahan.
-    beta = (X'X + alpha*P)^-1 X'y, P = identitas kecuali untuk intercept."""
-    P = np.eye(X.shape[1])
-    P[0, 0] = 0.0
-    return np.linalg.solve(X.T @ X + alpha * P, X.T @ ylog)
-
-
-def lipatan(n, lipat, ulang, benih):
-    for s in range(ulang):
-        idx = np.arange(n)
-        np.random.default_rng(benih + s).shuffle(idx)
-        for f in range(lipat):
-            uji = idx[f::lipat]
-            yield np.setdiff1d(idx, uji), uji
-
-
-def pilihAlpha(X, ylog, ulang=1, benih=101):
-    """alpha dengan galat kuadrat (skala log) terkecil pada uji silang 5 lipat"""
-    galat = np.zeros(len(ALPHA_CALON))
-    for latih, uji in lipatan(len(ylog), 5, ulang, benih):
-        for i, a in enumerate(ALPHA_CALON):
-            galat[i] += ((X[uji] @ ridge(X[latih], ylog[latih], a) - ylog[uji]) ** 2).sum()
-    return float(ALPHA_CALON[int(np.argmin(galat))])
-
-
-def ujiSilang(X, y, lipat=5, ulang=5):
-    """Uji silang bersarang. Ridge dan OLS dinilai di lipatan yang identik
-    supaya selisihnya bisa diuji berpasangan."""
-    skor = {"ridge": {"mae": [], "mape": []}, "ols": {"mae": [], "mape": []}}
-    for latih, uji in lipatan(len(y), lipat, ulang, 7):
-        ylog = np.log(y[latih])
-        tebak = {
-            "ridge": np.exp(X[uji] @ ridge(X[latih], ylog, pilihAlpha(X[latih], ylog))),
-            "ols": np.exp(X[uji] @ np.linalg.lstsq(X[latih], ylog, rcond=None)[0]),
-        }
-        for m, p in tebak.items():
-            skor[m]["mae"].append(np.abs(y[uji] - p).mean())
-            skor[m]["mape"].append(np.mean(np.abs(y[uji] - p) / y[uji]) * 100)
-    d = np.array(skor["ridge"]["mape"]) - np.array(skor["ols"]["mape"])
-    t = float(d.mean() / (d.std(ddof=1) / np.sqrt(len(d))))
-    rata = {m: {k: float(np.mean(v)) for k, v in s.items()} for m, s in skor.items()}
-    return rata, t, int((d < 0).sum()), len(d)
+def kuantil(v, q):
+    """kuantil interpolasi linear, sama dengan pandas Series.quantile bawaan"""
+    v = sorted(v)
+    h = (len(v) - 1) * q
+    lo = int(h)
+    hi = min(lo + 1, len(v) - 1)
+    return v[lo] + (v[hi] - v[lo]) * (h - lo)
 
 
 def persen(v, q):
-    v = sorted(v)
-    return int(v[max(0, min(len(v) - 1, round(q / 100 * (len(v) - 1))))])
+    return int(round(kuantil(v, q / 100)))
+
+
+def ringkas(harga):
+    """median, Q1, Q3, dan IQR satu kelompok pembanding"""
+    q1, q3 = kuantil(harga, 0.25), kuantil(harga, 0.75)
+    return {
+        "n": len(harga),
+        "median": int(round(kuantil(harga, 0.5))),
+        "q1": int(round(q1)),
+        "q3": int(round(q3)),
+        "iqr": int(round(q3 - q1)),
+        "min": min(harga),
+        "max": max(harga),
+    }
 
 
 def periksaGabungan(rows):
@@ -226,8 +190,8 @@ def periksaGabungan(rows):
     Dibuat setelah satu versi pipeline lain diam-diam mengosongkan seluruh
     fasilitas Mamikos karena nama kolomnya tidak dipetakan (ada_ac vs ac),
     lalu tetap mencetak "BERHASIL". Jumlah baris dan jumlah kolomnya pas,
-    yang rusak isinya — dan tidak ada yang memeriksa. Model jadi melenceng
-    dari MAPE 21% ke 35% tanpa ada yang sadar.
+    yang rusak isinya — dan tidak ada yang memeriksa. Hasilnya melenceng
+    jauh tanpa ada yang sadar.
 
     Aturannya: lebih baik pipeline mati sekarang daripada angka salah
     mengalir ke aplikasi dan ke skripsi.
@@ -275,73 +239,12 @@ def main():
     nKec = {}
     for r in rows:
         nKec[r["kec"]] = nKec.get(r["kec"], 0) + 1
-    besar = sorted(k for k, n in nKec.items() if n >= MIN_IKLAN_KEC)
-    kecil = sorted(k for k, n in nKec.items() if n < MIN_IKLAN_KEC)
-    jenisSemua = ["putra"] + JENIS_LAIN
-
-    # --- rancang matriks ----------------------------------------------------
-    # Di OLS satu kategori harus dibuang sebagai acuan. Di Ridge justru semua
-    # kategori dipasang: kalau ada acuan, koefisien lain ditahan mendekati
-    # ACUAN ITU (pilihan yang sewenang-wenang); tanpa acuan, semuanya ditahan
-    # mendekati rata-rata bersama. Kolom yang jadi berlebih (satu dari kelompok
-    # kecamatan, satu dari jenis) diselesaikan oleh penahannya sendiri.
-    namaKolom = ["intercept"] + ["kec:" + k for k in besar] + ["kec:lainnya"]
-    namaKolom += ["fas:" + f for f in FAS_APLIKASI] + ["jenis:" + j for j in jenisSemua] + ["situs:Papikost"]
-    X = []
-    for r in rows:
-        v = [1.0] + [1.0 if r["kec"] == k else 0.0 for k in besar] + [1.0 if r["kec"] in kecil else 0.0]
-        v += [1.0 if f in r["fasilitas"] else 0.0 for f in FAS_APLIKASI]
-        v += [1.0 if r["jenis"] == j else 0.0 for j in jenisSemua]
-        v += [1.0 if r["sumber"] == "Papikost" else 0.0]
-        X.append(v)
-    X = np.array(X)
-    y = np.array([r["harga"] for r in rows], dtype=float)
-    # tepat dua kolom berlebih yang disengaja; lebih dari itu berarti ada
-    # penanda kembar (mis. penanda situs = penanda "fasilitas tidak tercatat")
-    assert np.linalg.matrix_rank(X) == X.shape[1] - 2, "ada kolom berlebih di luar yang disengaja"
-
-    alpha = pilihAlpha(X, np.log(y), ulang=5)
-    assert ALPHA_CALON[0] < alpha < ALPHA_CALON[-1], "alpha terpilih di tepi rentang calon — rentangnya perlu dilebarkan"
-    beta = ridge(X, np.log(y), alpha)
-    koef = dict(zip(namaKolom, (float(b) for b in beta)))
-    r2 = 1 - ((np.log(y) - X @ beta) ** 2).sum() / ((np.log(y) - np.log(y).mean()) ** 2).sum()
-    skor, tRidge, ridgeMenang, nLipatan = ujiSilang(X, y)
-    mae, mape = skor["ridge"]["mae"], skor["ridge"]["mape"]
-
-    # --- pusatkan efek kecamatan: 0 = rata-rata Surabaya --------------------
-    mentah = {}
-    for k in besar:
-        mentah[k] = koef["kec:" + k]
-    for k in kecil:
-        mentah[k] = koef["kec:lainnya"]
-    total = sum(nKec.values())
-    geser = sum(mentah[k] * nKec[k] / total for k in nKec)
-    efekKec = {k: mentah[k] - geser for k in sorted(nKec)}
-
-    # penanda situs dilipat ke intercept pada proporsi sampelnya
-    bagianPapikost = sum(1 for r in rows if r["sumber"] == "Papikost") / len(rows)
-    lipat = koef["situs:Papikost"] * bagianPapikost
-
-    # jenis tetap ditulis relatif terhadap putra supaya rumus di aplikasi tidak
-    # berubah; bagian putra-nya pindah ke intercept (fungsinya tetap sama persis)
-    dasarJenis = koef["jenis:putra"]
-
-    model = {
-        "bentuk": "log-linear",
-        "estimasi": "ridge",
-        "alpha": round(alpha, 4),
-        "intercept": koef["intercept"] + geser + lipat + dasarJenis,
-        "kec": efekKec,
-        "fasilitas": {f: koef["fas:" + f] for f in FAS_APLIKASI},
-        "jenis": dict([("putra", 0.0)] + [(j, koef["jenis:" + j] - dasarJenis) for j in JENIS_LAIN]),
-    }
 
     # --- sebaran asli tiap kecamatan ---------------------------------------
     # Persentase fasilitas hanya boleh dihitung dari iklan yang situsnya memang
     # mencatat fasilitas itu. Papikost tidak mencatat kloset dan akses 24 jam, jadi
     # kalau ikut dihitung, kecamatan yang datanya cuma dari Papikost akan terlihat 0%
-    # padahal artinya "tidak diketahui". Angka ini juga dipakai build_gmaps.py untuk
-    # memperkirakan harga, jadi salah di sini ikut menyeret perkiraan harga.
+    # padahal artinya "tidak diketahui".
     kotaFas = {}
     for f in FAS_APLIKASI:
         amati = [r for r in rows if f in r["dicatat"]]
@@ -369,6 +272,11 @@ def main():
             "sumber": {s: sum(1 for r in pk if r["sumber"] == s) for s in ("Mamikos", "Papikost") if any(r["sumber"] == s for r in pk)},
             "berkoordinat": sum(1 for r in pk if r["lat"]),
             "keyakinan": "sedang" if len(pk) >= MIN_IKLAN_KEC else "rendah",
+            # pembanding harga: seluruh kecamatan + tiap jenis kos yang ada iklannya
+            "benchmark": dict(
+                [("semua", ringkas(hs))]
+                + [(j, ringkas([r["harga"] for r in pk if r["jenis"] == j])) for j in JENIS if any(r["jenis"] == j for r in pk)]
+            ),
         }
 
     for r in rows:
@@ -385,34 +293,13 @@ def main():
                 "Papikost": sum(1 for r in rows if r["sumber"] == "Papikost"),
             },
             "kecamatan": len(nKec),
-            "kecamatan_kuat": len(besar),
             "min_iklan_kec": MIN_IKLAN_KEC,
+            "min_pembanding": MIN_PEMBANDING,
             "berkoordinat": sum(1 for r in rows if r["lat"]),
             "ada_sisa_kamar": sum(1 for r in rows if r.get("sisa_kamar") is not None),
-            "metode": "Regresi hedonic log-linear, estimasi Ridge",
-            "alpha": round(alpha, 4),
-            "uji": "uji silang bersarang %d lipatan (alpha dipilih ulang di tiap lipatan latih)" % nLipatan,
-            "mae": int(round(mae, -3)),
-            "mape": round(mape, 1),
-            "r2_log": round(float(r2), 3),
-            "pembanding_ols": {
-                "mae": int(round(skor["ols"]["mae"], -3)),
-                "mape": round(skor["ols"]["mape"], 1),
-                "selisih_mape": round(mape - skor["ols"]["mape"], 2),
-                "t_berpasangan": round(tRidge, 2),
-                "ridge_menang": ridgeMenang,
-                "lipatan": nLipatan,
-            },
+            "metode": "Robust Statistical Benchmarking: median, Q1, Q3, dan IQR per kecamatan x jenis kos",
+            "kuantil": "interpolasi linear",
             "catatan": "Harga sewa bulanan dari iklan Mamikos dan Papikost. Luas kamar dan nomor pemilik tidak ada di kedua sumber; koordinat hanya ada di Papikost.",
-        },
-        "model": model,
-        "model_penuh": {
-            "koefisien": koef,
-            "efek_kec_sebelum_dipusatkan": mentah,
-            "pergeseran_pusat": float(geser),
-            "bagian_papikost": float(bagianPapikost),
-            "kecamatan_kelompok_lainnya": kecil,
-            "catatan": "Model apa adanya sebelum diringkas. Untuk pemeriksaan, bukan dipakai aplikasi.",
         },
         "kecamatan": kecamatan,
         "kos": sorted(rows, key=lambda r: (r["kec"], r["harga"])),
@@ -421,15 +308,12 @@ def main():
 
     print("%d iklan sewa %s dari %d kecamatan -> %s" % (len(rows), hasil["meta"]["n_sumber"], len(nKec), os.path.relpath(KELUAR, BASE)))
     print("Papikost dilewati: %d di luar %s, %d tanpa kecamatan, %d harga di luar batas" % (luarKota, KOTA, tanpaKec, luarHarga))
-    print("R2(log)=%.3f  MAE uji silang=Rp%s  MAPE=%.1f%%  |  %d iklan berkoordinat" % (r2, format(int(mae), ","), mape, hasil["meta"]["berkoordinat"]))
-    print("estimasi RIDGE alpha=%.3f  |  OLS di lipatan yang sama: MAPE=%.2f%% -> Ridge %.2f%% (selisih %+.2f, t=%+.2f, menang %d/%d lipatan)" % (alpha, skor["ols"]["mape"], mape, mape - skor["ols"]["mape"], tRidge, ridgeMenang, nLipatan))
-    print("kecamatan berkoefisien sendiri (n>=%d): %s" % (MIN_IKLAN_KEC, besar))
-    print("kecamatan kelompok 'lainnya': %s" % kecil)
-    print("pengaruh fasilitas:", {f: "%+.0f%%" % ((np.exp(koef["fas:" + f]) - 1) * 100) for f in FAS_APLIKASI})
+    kelompok = [(k, j, b) for k, v in kecamatan.items() for j, b in v["benchmark"].items() if j != "semua"]
+    prioritas = [x for x in kelompok if x[2]["n"] >= MIN_PEMBANDING]
+    print("kelompok kecamatan x jenis: %d, prioritas (n>=%d): %d, mencakup %d iklan" % (len(kelompok), MIN_PEMBANDING, len(prioritas), sum(b["n"] for _, _, b in prioritas)))
+    for k, j, b in sorted(prioritas, key=lambda x: -x[2]["n"]):
+        print("  %-17s %-7s n=%3d  median Rp%9s  Q1-Q3 Rp%9s - Rp%9s  IQR Rp%9s" % (k, j, b["n"], format(b["median"], ","), format(b["q1"], ","), format(b["q3"], ","), format(b["iqr"], ",")))
     print("persen fasilitas dihitung dari iklan yang mencatatnya saja; contoh Mulyorejo:", kecamatan["Mulyorejo"]["fasilitas"], "dasar:", kecamatan["Mulyorejo"]["fasilitas_dasar"])
-    print("pengaruh jenis:", {j: "%+.0f%%" % ((np.exp(model["jenis"][j]) - 1) * 100) for j in model["jenis"]})
-    print("beda situs Papikost vs Mamikos: %+.1f%%" % ((np.exp(koef["situs:Papikost"]) - 1) * 100))
-    print("efek kecamatan (0 = rata-rata kota):", {k: "%+.0f%%" % ((np.exp(v) - 1) * 100) for k, v in sorted(efekKec.items(), key=lambda x: -x[1])})
 
 
 if __name__ == "__main__":

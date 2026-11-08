@@ -3,7 +3,7 @@
 #
 # Dipakai untuk titik Google Maps yang hanya punya nama + link: koordinatnya
 # sudah ada di dalam link (!3d<lat>!4d<lng>), tetapi wilayahnya tidak. Tanpa
-# kecamatan, model harga tidak bisa dipakai, jadi titiknya perlu dikenali dulu.
+# kecamatan, pembanding harganya tidak bisa dipilih, jadi titiknya perlu dikenali dulu.
 #
 # Sumber wilayah: Nominatim (OpenStreetMap), gratis, batas 1 permintaan/detik.
 # Dalam praktiknya, setelah beberapa ratus permintaan layanannya memperlambat
@@ -11,7 +11,7 @@
 # makan berjam-jam. Karena itu urutan permintaannya diatur supaya berhenti di
 # tengah jalan pun hasilnya sudah berguna:
 #
-#   1. Titik Papikost   — dipakai melatih model, jadi harus lengkap lebih dulu.
+#   1. Titik Papikost   — ikut pembanding harga, jadi harus lengkap lebih dulu.
 #   2. Wakil klaster    — titik Google Maps dikelompokkan per radius 500 m, lalu
 #                         satu wakil tiap kelompok yang ditanyakan. Sisanya nanti
 #                         ikut wilayah tetangga terdekat di build_gmaps.py, yang

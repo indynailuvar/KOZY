@@ -14,6 +14,7 @@ def test_endpoints():
     assert r.status_code == 200, f"/health error: {r.text}"
     print("Health response:", r.json())
     assert r.json()["data_loaded"]["modeling_bundle"] is True
+    assert "Benchmarking" in r.json()["data_loaded"]["pasar_metode"]
 
     print("\nTesting bundle modeling endpoints...")
     r = client.get("/modeling/summary")
@@ -37,6 +38,9 @@ def test_endpoints():
     assert r.json()["benchmark"]["median"] == 1000000
     assert r.json()["posisi_q1_q3"] == "dalam_iqr"
 
+    print("\nTesting regresi sudah dihapus...")
+    assert client.post("/vonis", json={"kecamatan": "Sukolilo", "harga": 1300000}).status_code == 404
+
     print("\nTesting Chronos-2 package revenue forecast...")
     r = client.post("/forecast/omzet-paket", json={"pembeli_awal": 6, "pertumbuhan_persen": 3, "horizon": 3})
     assert r.status_code == 200, f"/forecast/omzet-paket error: {r.text}"
@@ -46,21 +50,6 @@ def test_endpoints():
     for bulan in forecast["forecast"]:
         assert bulan["pembeli_p10"] <= bulan["pembeli_p50"] <= bulan["pembeli_p90"]
         assert bulan["omzet_p50"] == bulan["pembeli_p50"] * forecast["harga_paket"]
-
-    print("\nTesting POST /vonis...")
-    payload = {
-        "kawasan": "gayungan",
-        "kecamatan": "Gayungan",
-        "harga": 1500000,
-        "jenis": "putri",
-        "fasilitas": ["ac", "km", "wifi"]
-    }
-    r = client.post("/vonis", json=payload)
-    assert r.status_code == 200, f"/vonis error: {r.text}"
-    res = r.json()
-    print("Vonis status:", res["status"], "Harga wajar:", res["harga_wajar"])
-    assert "kelas" not in res and "gap" not in res
-    assert "status" in res
 
     print("\nALL BACKEND API TESTS PASSED SUCCESSFULLY!")
 

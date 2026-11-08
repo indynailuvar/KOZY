@@ -13,9 +13,9 @@ import { go } from '../router.js';
 
 const OPSI_PERSONA = PERSONA.map((p) => ({
   ...p,
-  sub: { mahasiswa: 'Dekat kampus', pekerja: 'Dekat kantor & transportasi', nakes: 'Dekat rumah sakit', guru: 'Dekat sekolah', lainnya: 'Tentukan sendiri' }[p.id],
+  sub: { mahasiswa: 'Dekat kampus', pekerja: 'Dekat kantor dan angkutan umum', nakes: 'Dekat rumah sakit', guru: 'Dekat sekolah', lainnya: 'Pilih sendiri tempat tujuannya' }[p.id],
 }));
-const OPSI_JENIS_CARI = [{ id: 'semua', label: 'Semua jenis', sub: 'Tampilkan semua kos', icon: 'home' }, ...OPSI_JENIS];
+const OPSI_JENIS_CARI = [{ id: 'semua', label: 'Semua jenis', sub: 'Putra, putri, dan campur', icon: 'home' }, ...OPSI_JENIS];
 const BUDGET_CEPAT = [
   { label: '< 700 rb', v: [300_000, 700_000] },
   { label: '700 rb – 1 jt', v: [700_000, 1_000_000] },
@@ -55,12 +55,12 @@ export default function CariWizard() {
   const galat = {
     1: persona ? null : 'Pilih salah satu.',
     2: null,
-    3: tujuanId ? null : 'Pilih lokasi tujuan dari daftar.',
+    3: tujuanId ? null : 'Pilih tujuan dari daftar.',
     4:
       budget[1] < BUDGET_RANGE.min
-        ? `Budget maksimal minimal ${rp(BUDGET_RANGE.min)}.`
+        ? `Budget paling sedikit ${rp(BUDGET_RANGE.min)}.`
         : budget[0] >= budget[1]
-          ? 'Budget maksimal harus lebih besar dari budget minimal.'
+          ? 'Batas atas harus lebih besar dari batas bawah.'
           : null,
     5: jenis ? null : 'Pilih jenis kos.',
     6: null,
@@ -103,15 +103,16 @@ export default function CariWizard() {
         onBack={kembali}
         footer={
           <Button block iconRight={step < TOTAL ? 'arrowr' : undefined} onClick={lanjut}>
-            {step < TOTAL ? 'Lanjut' : 'Lihat Rekomendasi'}
+            {step < TOTAL ? 'Lanjut' : 'Lihat rekomendasi'}
           </Button>
         }
       >
         {step === 1 && (
           <>
-            <Question judul="Kamu mencari kos untuk?" sub="Kami sesuaikan rekomendasinya." />
+            <Question judul="Kamu cari kos sebagai?" />
             <Options
               label="Mencari kos untuk"
+              kolom={2}
               value={persona}
               options={OPSI_PERSONA}
               onChange={(id) => {
@@ -124,7 +125,7 @@ export default function CariWizard() {
 
         {step === 2 && (
           <>
-            <Question judul="Ingin dekat dengan apa?" sub="Boleh pilih lebih dari satu." />
+            <Question judul="Mau dekat dengan apa?" sub="Boleh pilih lebih dari satu." />
             <Tiles
               label="Dekat dengan"
               values={dekat}
@@ -139,17 +140,17 @@ export default function CariWizard() {
 
         {step === 3 && (
           <>
-            <Question judul="Di mana tujuanmu?" sub="Kampus, kantor, rumah sakit, atau area yang sering kamu datangi." />
+            <Question judul="Tujuan harianmu di mana?" />
             <label className={`field lg ${err ? 'is-err' : ''}`}>
               <Icon name="search" size={20} />
-              <input value={cariTeks} onChange={(e) => setCariTeks(e.target.value)} placeholder="Cari tempat atau area" aria-label="Cari lokasi tujuan" autoComplete="off" data-noauto="" />
+              <input value={cariTeks} onChange={(e) => setCariTeks(e.target.value)} placeholder="Contoh: ITS atau RSUD Dr. Soetomo" aria-label="Cari lokasi tujuan" autoComplete="off" data-noauto="" />
             </label>
             {tujuan && !cariTeks && (
               <p className="picked">
                 <Icon name="checkc" size={16} /> Dipilih: <b>{tujuan.nama}</b>
               </p>
             )}
-            <p className="sec-label">{cariTeks ? 'Hasil pencarian' : 'Saran untukmu'}</p>
+            <p className="sec-label">{cariTeks ? 'Hasil pencarian' : 'Saran tujuan'}</p>
             <ul className="pick-rows" role="radiogroup" aria-label="Lokasi tujuan">
               {saran.map((s) => (
                 <li key={s.id}>
@@ -172,14 +173,14 @@ export default function CariWizard() {
                   </button>
                 </li>
               ))}
-              {saran.length === 0 && <li className="muted small">Tidak ditemukan. Coba kata lain.</li>}
+              {saran.length === 0 && <li className="muted small">Tidak ketemu. Coba kata lain.</li>}
             </ul>
           </>
         )}
 
         {step === 4 && (
           <>
-            <Question judul="Berapa budget per bulan?" sub="Geser untuk mengatur batas bawah dan atas." />
+            <Question judul="Budget per bulan berapa?" />
             <p className="budget-show" aria-live="polite">
               <b>{rp(budget[0])}</b>
               <span>–</span>
@@ -189,7 +190,7 @@ export default function CariWizard() {
             <div className="budget-inputs">
               <LineInput
                 id="budget-min"
-                label="Minimal"
+                label="Dari"
                 prefix="Rp"
                 inputMode="numeric"
                 value={budget[0] ? budget[0].toLocaleString('id-ID') : ''}
@@ -200,7 +201,7 @@ export default function CariWizard() {
               />
               <LineInput
                 id="budget-max"
-                label="Maksimal"
+                label="Sampai"
                 prefix="Rp"
                 inputMode="numeric"
                 value={budget[1] ? budget[1].toLocaleString('id-ID') : ''}
@@ -222,14 +223,14 @@ export default function CariWizard() {
 
         {step === 5 && (
           <>
-            <Question judul="Jenis kos yang kamu cari?" />
-            <Options label="Jenis kos" value={jenis} onChange={setJenis} options={OPSI_JENIS_CARI} />
+            <Question judul="Cari kos jenis apa?" />
+            <Options label="Jenis kos" kolom={2} value={jenis} onChange={setJenis} options={OPSI_JENIS_CARI} />
           </>
         )}
 
         {step === 6 && (
           <>
-            <Question judul="Ada kebutuhan tambahan?" sub="Pilih fasilitas yang wajib ada. Boleh dilewati." />
+            <Question judul="Fasilitas yang wajib ada?" sub="Boleh dilewati." />
             <Tiles label="Fasilitas" values={fasilitas} options={FASILITAS} onToggle={(id) => setFasilitas((a) => (a.includes(id) ? a.filter((x) => x !== id) : [...a, id]))} />
             <div className="access-card">
               <span className="ic-circle">
@@ -238,8 +239,8 @@ export default function CariWizard() {
               <Switch
                 checked={disabilitas}
                 onChange={setDisabilitas}
-                label="Butuh kos ramah disabilitas"
-                sub="Data akses kursi roda belum ada di sumber kami. Kalau dinyalakan, KOZY mengecek langsung ke pemilik."
+                label="Butuh kos ramah kursi roda"
+                sub="Iklan kos belum mencantumkan akses ini. Tanyakan langsung ke pemilik sebelum sewa."
               />
             </div>
           </>
@@ -252,7 +253,7 @@ export default function CariWizard() {
         )}
       </Wizard>
 
-      <ProcessSheet open={proses.open} title="Mencari area terbaik…" steps={LANGKAH_CARI} active={proses.active} />
+      <ProcessSheet open={proses.open} title="Mencari area yang cocok…" steps={LANGKAH_CARI} active={proses.active} />
     </>
   );
 }

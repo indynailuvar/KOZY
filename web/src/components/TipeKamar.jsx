@@ -12,7 +12,7 @@ import Kamar360, { SISI, jumlahSisi } from './Kamar360.jsx';
 import { AmountInput, Button, LineInput, Sheet, Tiles } from './ui.jsx';
 import { FASILITAS } from '../data/surabaya.js';
 import { siapkanFoto } from '../lib/foto.js';
-import { rp } from '../lib/format.js';
+import { rpSingkat } from '../lib/format.js';
 
 export const tipeBaru = (n = 0) => ({
   id: `t${Date.now().toString(36)}${n}`,
@@ -26,7 +26,7 @@ export const tipeBaru = (n = 0) => ({
 
 export const galatTipe = (t) => {
   if (!t.nama.trim()) return 'Beri nama tipe kamarnya.';
-  if (t.harga < 100_000) return 'Harga minimal Rp 100.000.';
+  if (t.harga < 100_000) return 'Harga minimal Rp100.000.';
   if (t.kamar < 1) return 'Jumlah kamar minimal 1.';
   if (t.sisa > t.kamar) return 'Kamar kosong tidak boleh lebih banyak daripada jumlah kamar.';
   return null;
@@ -183,7 +183,7 @@ export function DaftarTipe({ tipe, onUbah, onTambah, batas = 8 }) {
             <span className="tipe-t">
               <b>{t.nama}</b>
               <small>
-                {t.harga ? rp(t.harga) : 'Harga belum diisi'} · {t.sisa}/{t.kamar} kamar kosong · {n}/4 foto
+                {t.harga ? rpSingkat(t.harga) : 'Harga belum diisi'} · {t.sisa} dari {t.kamar} kosong{n > 0 && n < 4 ? ` · ${n}/4 foto` : ''}
               </small>
             </span>
             <Icon name="right" size={18} />

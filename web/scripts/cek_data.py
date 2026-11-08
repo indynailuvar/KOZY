@@ -8,7 +8,7 @@
 # Jalankan:  python scripts/cek_data.py
 # Keluarannya: daftar pemeriksaan (OK / BEDA) lalu rekap total keseluruhan.
 # =============================================================================
-import csv, io, json, math, os, re
+import csv, io, json, os, re
 
 WEB = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 AKAR = os.path.dirname(WEB)
@@ -77,16 +77,26 @@ hargaOlx = sorted(r["price"]["value"]["raw"] for r in olxm)
 cek("OLX harga terendah (rupiah)", int(hargaOlx[0]), 1_200_000_000)
 cek("OLX harga tertinggi (rupiah)", int(hargaOlx[-1]), 7_500_000_000)
 
-# 4. model dihitung ulang dari koefisien
-M = pasar["model"]
+# 4. pembanding harga dihitung ulang dari daftar iklan
+def kuantil(v, q):
+    v = sorted(v)
+    h = (len(v) - 1) * q
+    lo = int(h)
+    hi = min(lo + 1, len(v) - 1)
+    return v[lo] + (v[hi] - v[lo]) * (h - lo)
+
+
 salah = 0
-for k in pasar["kos"]:
-    t = math.exp(M["intercept"] + M["kec"][k["kec"]] + sum(M["fasilitas"][f] for f in k["fasilitas"]) + M["jenis"][k["jenis"]])
-    if not (50_000 < t < 20_000_000):
-        salah += 1
-cek("Tebakan model masuk akal untuk semua iklan", salah, 0)
-cek("Efek kecamatan sudah dipusatkan (rata-rata tertimbang ~0)",
-    round(sum(M["kec"][k] * pasar["kecamatan"][k]["n"] for k in M["kec"]) / pasar["meta"]["n"], 9), 0.0)
+for kec, st in pasar["kecamatan"].items():
+    for jenis, b in st["benchmark"].items():
+        hs = [k["harga"] for k in pasar["kos"] if k["kec"] == kec and (jenis == "semua" or k["jenis"] == jenis)]
+        hitung = (len(hs), round(kuantil(hs, 0.5)), round(kuantil(hs, 0.25)), round(kuantil(hs, 0.75)), min(hs), max(hs))
+        if hitung != (b["n"], b["median"], b["q1"], b["q3"], b["min"], b["max"]) or b["iqr"] != b["q3"] - b["q1"]:
+            salah += 1
+cek("Median & kuartil tiap kelompok pembanding cocok dengan daftar iklan", salah, 0)
+cek("Iklan di semua kelompok jenis == total iklan",
+    sum(b["n"] for st in pasar["kecamatan"].values() for j, b in st["benchmark"].items() if j != "semua"), pasar["meta"]["n"])
+cek("Data pasar tidak lagi membawa koefisien regresi", "model" in pasar, False)
 
 # 5. kawasan
 cek("Semua kawasan punya kecamatan", sum(1 for x in kaw["kawasan"] if x["kec"]), len(kaw["kawasan"]))
@@ -120,26 +130,6 @@ if os.path.exists(cs):
     cek("Ekspor CSV: tidak ada fasilitas yang kosong total", sum(1 for f in ["km","ac","wifi","kasur"] if not any(r["fas_"+f]=="1" for r in rows)), 0)
     cek("Ekspor CSV: jenis tetap 3 kategori", len({r["jenis"] for r in rows}), 3)
 
-bm = os.path.join(WEB, "analysis", "benchmark_model.json")
-if os.path.exists(bm):
-    b = json.load(io.open(bm, encoding="utf-8"))
-    cek("Benchmark: model produksi adalah Ridge", b["model_produksi"], "Ridge log-linear")
-    cek("Benchmark: jarak antar model di bawah 1 poin MAPE", b["jarak_mape_terbaik_terburuk"] < 1.0, True)
-
-pk = os.path.join(WEB, "analysis", "kozy_model.pkl")
-if os.path.exists(pk):
-    import pickle as _pk, math as _m
-    bd = _pk.load(open(pk, "rb"))
-    M = pasar["model"]
-    kec, fas, jen = bd["kategori"]["kecamatan"], bd["kategori"]["fasilitas"], bd["kategori"]["jenis"]
-    contoh = ("Sukolilo", "putri", ["km", "ac", "wifi", "kasur"])
-    x = [1.0 if k == contoh[0] else 0.0 for k in kec] + [1.0 if f in contoh[2] else 0.0 for f in fas] + [1.0 if j == contoh[1] else 0.0 for j in jen]
-    dari_pkl = _m.exp(bd["intercept"] + sum(a_ * b_ for a_, b_ in zip(x, bd["koefisien"])))
-    dari_json = _m.exp(M["intercept"] + M["kec"][contoh[0]] + M["jenis"][contoh[1]] + sum(M["fasilitas"][f] for f in contoh[2]))
-    cek("Model .pkl: tebakan sama dengan pasar.json", round(dari_pkl, 4), round(dari_json, 4))
-    cek("Model .pkl: jumlah koefisien sesuai", len(bd["koefisien"]), len(M["kec"]) + len(M["fasilitas"]) + len(M["jenis"]))
-    cek("Model .pkl: bisa dipakai tanpa sklearn", bd["koefisien"] is not None and bd["intercept"] is not None, True)
-
 print("=== PEMERIKSAAN ===")
 for x in ok:
     print("  OK   " + x)
@@ -151,10 +141,11 @@ print("%d cocok, %d beda" % (len(ok), len(gagal)))
 print()
 print("=== TOTAL AKHIR ===")
 print("Iklan sewa berharga asli : %d  (%d Mamikos + %d Papikost) di %d kecamatan" % (pasar["meta"]["n"], pasar["meta"]["n_sumber"]["Mamikos"], pasar["meta"]["n_sumber"]["Papikost"], pasar["meta"]["kecamatan"]))
-print("Titik lokasi Google Maps : %d dari %d (harga = perkiraan model)" % (gmaps["meta"]["n"], gmaps["meta"]["n_mentah"]))
+print("Titik lokasi Google Maps : %d dari %d (harga = kisaran kos sejenis sekecamatan)" % (gmaps["meta"]["n"], gmaps["meta"]["n_mentah"]))
 print("  - wilayah dari geocoding: %d, dari titik terdekat: %d" % (gmaps["meta"]["n"] - gmaps["meta"]["n_wilayah_tetangga"], gmaps["meta"]["n_wilayah_tetangga"]))
 print("Iklan rumah kos dijual   : %d (dashboard internal saja)" % olx["meta"]["n"])
 kosUnik = pasar["meta"]["n"] + gmaps["meta"]["n"] - gmaps["meta"]["n_harga_asli"]
 print("Kos unik di aplikasi     : %d  (%d berharga asli + %d hanya lokasi, %d kembar dibuang)" % (kosUnik, pasar["meta"]["n"], gmaps["meta"]["n"] - gmaps["meta"]["n_harga_asli"], gmaps["meta"]["n_harga_asli"]))
 print("Kawasan bisa dipilih     : %d kelurahan di %d kecamatan" % (kaw["meta"]["n"], kaw["meta"]["kecamatan"]))
-print("Ketelitian model         : meleset +-Rp %s (%.1f%%), R2 log %.3f" % (format(pasar["meta"]["mae"], ","), pasar["meta"]["mape"], pasar["meta"]["r2_log"]))
+prioritas = [b for st in pasar["kecamatan"].values() for j, b in st["benchmark"].items() if j != "semua" and b["n"] >= pasar["meta"]["min_pembanding"]]
+print("Pembanding harga         : %d kelompok kecamatan x jenis dengan >= %d iklan, mencakup %d iklan" % (len(prioritas), pasar["meta"]["min_pembanding"], sum(b["n"] for b in prioritas)))

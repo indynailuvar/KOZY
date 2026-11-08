@@ -13,7 +13,7 @@
 // gambaran kalangan pencari adalah persona (mahasiswa / pekerja / tenaga
 // kesehatan / guru), budget yang mereka pasang, tujuan terdekat, dan jenis kos
 // yang dicari. Semuanya terekam saat pengguna menyelesaikan pencarian.
-import { FASILITAS, JENIS_KOS, PASAR, PERSONA } from '../data/surabaya.js';
+import { FASILITAS, JENIS_KOS, PERSONA } from '../data/surabaya.js';
 import { GMAPS, kosKec, statKec } from './kozy.js';
 import { hitungPer, semua } from '../lib/jejak.js';
 
@@ -34,9 +34,10 @@ export function persaingan(kec, jenis = null) {
   // sengaja TIDAK ikut menyaring: tidak ada satu pun kos di data ini yang
   // fasilitasnya persis sama dengan sebuah tipe kamar, dan saringan "minimal
   // selengkap punyamu" justru menyisakan kos yang jauh lebih lengkap sehingga
-  // harganya memang pantas lebih mahal. Perbandingan yang menahan fasilitas
-  // tetap sama dilakukan lewat harga wajar dari model, bukan di sini.
-  const sejenis = jenis ? kos.filter((k) => k.jenis === jenis) : kos;
+  // harganya memang pantas lebih mahal. Fasilitas juga tidak dipakai menghitung
+  // posisi harga di tempat lain: di iklan ia hanya tercatat ada/tidak.
+  // kuartilnya diambil dari benchmark pasar.json supaya sama persis dengan Cek Harga
+  const sejenis = jenis ? stat.benchmark[jenis] : stat.benchmark.semua;
 
   return {
     kec,
@@ -50,8 +51,8 @@ export function persaingan(kec, jenis = null) {
     keyakinan: stat.keyakinan,
     sumber: stat.sumber,
     jenis,
-    nSejenis: sejenis.length,
-    hargaSejenis: sejenis.length ? { p25: persen(sejenis.map((k) => k.harga), 25), p50: persen(sejenis.map((k) => k.harga), 50), p75: persen(sejenis.map((k) => k.harga), 75) } : null,
+    nSejenis: sejenis?.n ?? 0,
+    hargaSejenis: sejenis ? { p25: sejenis.q1, p50: sejenis.median, p75: sejenis.q3 } : null,
   };
 }
 
@@ -61,7 +62,7 @@ export function fasilitasTertinggal(kec, tipe = [], ambang = 50) {
   if (!stat || !tipe.length) return [];
   const punyaSemua = FASILITAS.filter((f) => tipe.every((t) => t.fasilitas.includes(f.id))).map((f) => f.id);
   return FASILITAS.filter((f) => !punyaSemua.includes(f.id) && stat.fasilitas[f.id] >= ambang)
-    .map((f) => ({ id: f.id, label: f.label, icon: f.icon, pasar: stat.fasilitas[f.id], efek: Math.round((Math.exp(PASAR.model.fasilitas[f.id] || 0) - 1) * 100) }))
+    .map((f) => ({ id: f.id, label: f.label, icon: f.icon, pasar: stat.fasilitas[f.id] }))
     .sort((a, b) => b.pasar - a.pasar);
 }
 
@@ -90,17 +91,9 @@ export function pencari(kec = null) {
   };
 }
 
-// Variabel yang diminta tetapi memang tidak pernah dikumpulkan. Dipakai untuk
-// menjelaskan apa adanya di dashboard, bukan disembunyikan.
-export const TIDAK_DIKUMPULKAN = [
-  { label: 'Umur penyewa', sebab: 'tidak pernah ditanyakan di aplikasi' },
-  { label: 'Gaji / penghasilan', sebab: 'tidak pernah ditanyakan; budget yang dipasang adalah gambaran terdekat yang ada' },
-  { label: 'Jumlah kendaraan', sebab: 'tidak pernah ditanyakan' },
-];
-
 // ────────────────────────────────────────────── 3. Saran penargetan
 // `semua` adalah tiap tipe kamar lengkap dengan hasil analisisPemilik-nya,
-// supaya saran harga memakai harga wajar yang sama dengan sisa dashboard.
+// supaya saran harga memakai pembanding yang sama dengan sisa dashboard.
 export function saranTarget(kec, tipe = [], jenis = null, semua = []) {
   const p = persaingan(kec, jenis);
   if (!p) return [];
@@ -112,34 +105,24 @@ export function saranTarget(kec, tipe = [], jenis = null, semua = []) {
     saran.push({
       icon: 'users',
       judul: `${dominan[1]}% kos di sini kos ${dominan[0]}`,
-      isi: `Pasar di Kec. ${kec} didominasi kos ${dominan[0]}. Kalau tipe kamarmu berbeda, itu bisa jadi celah — tapi pastikan memang ada peminatnya.`,
+      isi: jenis === dominan[0] ? 'Pesaingmu banyak, jadi harga dan fasilitas paling menentukan.' : 'Jenis kosmu jarang di sini. Ini bisa jadi keunggulan.',
     });
   }
 
-  const tertinggal = fasilitasTertinggal(kec, tipe);
-  if (tertinggal.length) {
-    const t = tertinggal[0];
-    saran.push({
-      icon: t.icon,
-      judul: `${t.pasar}% pesaing punya ${t.label}, kamu belum`,
-      isi: `Menambahkannya menaikkan harga wajar sekitar ${t.efek > 0 ? '+' : ''}${t.efek}%. Pertimbangkan kalau mau menaikkan harga.`,
-    });
-  }
-
-  // tipe yang harganya paling jauh di bawah harga wajar: ruang naik yang
-  // belum diambil, dan itu kebalikan dari peringatan kemahalan di lembar awal
-  const murah = semua.filter((x) => x.a && x.a.selisih_persen <= -15).sort((x, y) => x.a.selisih_persen - y.a.selisih_persen);
+  // tipe yang harganya di bawah kuartil 1 pesaingnya: ruang naik yang belum
+  // diambil, dan itu kebalikan dari peringatan kemahalan di lembar awal
+  const murah = semua.filter((x) => x.a?.status === 'MURAH').sort((x, y) => x.a.selisih_persen - y.a.selisih_persen);
   if (murah.length) {
     const m = murah[0];
     saran.push({
       icon: 'trendup',
-      judul: `${m.nama} dipasang ${Math.abs(Math.round(m.a.selisih_persen))}% di bawah harga wajarnya`,
-      isi: `Harga wajarnya ${Math.round(m.a.harga_wajar / 1000)} rb. Kalau kamarnya selalu penuh, harganya memang bisa dinaikkan tanpa kehilangan peminat.`,
+      judul: `Harga ${m.nama} masih bisa naik`,
+      isi: `Kisaran wajarnya ${Math.round(m.a.kisaran[0] / 1000)}–${Math.round(m.a.kisaran[1] / 1000)} rb per bulan.`,
     });
   }
 
   if (u.butuhAkses > 0) {
-    saran.push({ icon: 'access', judul: `${u.butuhAkses} pencari butuh akses disabilitas`, isi: 'Belum banyak kos yang menyediakannya, jadi ini pasar yang sepi pesaing.' });
+    saran.push({ icon: 'access', judul: `${u.butuhAkses} pencari butuh akses kursi roda`, isi: 'Kos yang menyediakannya masih jarang.' });
   }
   return saran;
 }

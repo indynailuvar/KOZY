@@ -89,6 +89,8 @@ const P = {
   arrowup: <><path d="M12 19V5" /><path d="m6 11 6-6 6 6" /></>,
   trendup: <><path d="M12 19V5" /><path d="m6 11 6-6 6 6" /></>,
   trenddown: <><path d="M12 5v14" /><path d="m6 13 6 6 6-6" /></>,
+  arrowl: <><path d="M20 12H5" /><path d="m11 6-6 6 6 6" /></>,
+  mic: <><rect x="9" y="2.5" width="6" height="12" rx="3" /><path d="M18.5 11a6.5 6.5 0 0 1-13 0" /><path d="M12 17.5V21" /></>,
 };
 
 export default function Icon({ name, size = 20, className = '', strokeWidth = 2, ...rest }) {
