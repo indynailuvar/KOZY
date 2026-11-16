@@ -36,36 +36,41 @@ export default function Home() {
 
   return (
     <div className="home">
-      <section className="home-hero" aria-labelledby="home-judul">
-        <h1 id="home-judul">Sewa kos tanpa kemahalan</h1>
-        <p>Mulai dari kondisimu sekarang.</p>
-      </section>
+      {/* Layar pertama di HP: judul, dua kartu, dan menu mengisi tinggi layar
+          sampai tepat di atas nav bawah. Banner pemilik baru terlihat setelah digulir. */}
+      <div className="home-layar">
+        <section className="home-hero" aria-labelledby="home-judul">
+          <h1 id="home-judul">Sewa kos tanpa kemahalan</h1>
+          <p>Mulai dari kondisimu sekarang.</p>
+        </section>
 
-      <nav className="home-pintu" aria-label="Mulai">
-        {PINTU.map((p) => (
-          <a key={p.href} href={p.href} className={`pintu pintu-${p.warna}`}>
-            <span className="pintu-ic">
-              <Icon name={p.icon} size={22} />
-            </span>
-            <span className="pintu-t">
-              <small>{p.kondisi}</small>
-              <b>{p.aksi}</b>
-            </span>
-            <Icon name="arrowr" size={20} className="pintu-go" />
-          </a>
-        ))}
-      </nav>
+        <nav className="home-pintu" aria-label="Mulai">
+          {PINTU.map((p) => (
+            <a key={p.href} href={p.href} className={`pintu pintu-${p.warna}`}>
+              <Icon name={p.icon} size={120} className="pintu-bg" aria-hidden="true" />
+              <span className="pintu-ic">
+                <Icon name={p.icon} size={24} />
+              </span>
+              <span className="pintu-t">
+                <small>{p.kondisi}</small>
+                <b>{p.aksi}</b>
+              </span>
+              <Icon name="arrowr" size={20} className="pintu-go" />
+            </a>
+          ))}
+        </nav>
 
-      <nav className="home-menu" aria-label="Fitur lain">
-        {MENU.map((m) => (
-          <a key={m.href} href={m.href} className="menu-item">
-            <span className="menu-ic">
-              <Icon name={m.icon} size={24} />
-            </span>
-            <span className="menu-t">{m.label}</span>
-          </a>
-        ))}
-      </nav>
+        <nav className="home-menu" aria-label="Fitur lain">
+          {MENU.map((m) => (
+            <a key={m.href} href={m.href} className="menu-item">
+              <span className="menu-ic">
+                <Icon name={m.icon} size={24} />
+              </span>
+              <span className="menu-t">{m.label}</span>
+            </a>
+          ))}
+        </nav>
+      </div>
 
       <a className="home-owner" href="#/pemilik">
         <span className="home-owner-t">

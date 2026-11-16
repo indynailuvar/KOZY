@@ -80,6 +80,64 @@
   top: var(--s-4);
   right: var(--s-4);
 }
+.pintu {
+  overflow: hidden;
+  isolation: isolate;
+}
+/* ikon besar samar di pojok kartu, hanya hiasan */
+.pintu-bg {
+  position: absolute;
+  right: -18px;
+  bottom: -18px;
+  z-index: -1;
+  color: #fff;
+  opacity: 0.12;
+}
+
+/* HP: layar pertama = judul + dua kartu + menu, setinggi layar sampai tepat
+   di atas nav bawah. Kartu yang membesar mengisi sisa ruang; banner pemilik
+   dan harga pasaran baru terlihat setelah digulir. */
+.home-layar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+  /* setinggi layar di bawah app bar; padding bawah = ruang nav melayang,
+     jadi menu berhenti di atas nav dan banner pemilik mulai di tepi bawah layar */
+  min-height: calc(100dvh - var(--top) - var(--s-5) - var(--s-5));
+  padding-bottom: calc(var(--bnav) + 28px + var(--safe-b));
+}
+.home-layar .home-pintu {
+  flex: 1 1 auto;
+  max-height: 340px;
+}
+.home-layar .pintu {
+  min-height: 168px;
+  padding: var(--s-5) var(--s-4);
+}
+.home-layar .pintu-ic {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+}
+.home-layar .pintu-t small {
+  font-size: var(--fs-sm);
+}
+.home-layar .pintu-t b {
+  font-size: var(--fs-lg);
+}
+.home-layar .home-menu {
+  margin-top: auto;
+}
+@media (min-width: 960px) {
+  /* desktop memakai grid beranda, bungkus layar pertama tidak ikut menata */
+  .home-layar {
+    display: contents;
+    padding: 0;
+  }
+  .home-layar .home-pintu {
+    max-height: none;
+  }
+}
 /* deret ikon menu ala Gojek: ikon di petak berwarna, label di bawahnya */
 .home-menu {
   display: grid;
