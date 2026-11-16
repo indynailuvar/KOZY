@@ -239,7 +239,7 @@ export default function Hasil() {
                       </span>
                       {clusterInfo.data && (
                         <InfoTip label="Tentang kelompok harga">
-                          Kelompok dibentuk dengan K-Prototypes dari fasilitas, kecamatan, dan jenis kos. Ini hanya label; wajar atau tidaknya tetap dari harga kos sejenis.
+                          Kelompok dibentuk dengan K-Prototypes dari harga, kecamatan, dan jenis kos. Ini hanya label; wajar atau tidaknya tetap dari harga kos sejenis.
                         </InfoTip>
                       )}
                     </section>

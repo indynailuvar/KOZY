@@ -17,6 +17,10 @@ import { GMAPS, KAWASAN_TERCAKUP, OLX, nilaiHarga, pembanding } from '../api/koz
 import { rp, tanggal } from '../lib/format.js';
 import { go } from '../router.js';
 import { deretHarian, hapus as hapusJejak, hitungPer, jumlah, semua } from '../lib/jejak.js';
+import { forecastOmzet } from '../api/modeling.js';
+
+// sama dengan PEMBELI_AWAL di scripts/build_model_statis.py
+const PEMBELI_AWAL = [3, 6, 10, 20, 50, 100, 250, 500, 1000];
 
 const M = PASAR.meta;
 const median = (xs) => {
@@ -58,14 +62,7 @@ export default function Admin({ query = {}, prefix = '/internal' }) {
     setOmzetLoading(true);
     setOmzetError('');
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || '/api'}/forecast/omzet-paket`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(params),
-      });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.detail || 'Forecast omzet gagal dimuat.');
-      setOmzetData(data);
+      setOmzetData(await forecastOmzet(params));
     } catch (error) {
       setOmzetError(error.message || 'Forecast omzet gagal dimuat.');
       setOmzetData(null);
@@ -754,7 +751,9 @@ export default function Admin({ query = {}, prefix = '/internal' }) {
                 <form className="admin-omzet-form" onSubmit={(event) => { event.preventDefault(); muatOmzet(); }}>
                   <label>
                     Pembeli pada bulan awal
-                    <input type="number" min="0" max="5000" value={omzetParams.pembeli_awal} onChange={(event) => setOmzetParams((p) => ({ ...p, pembeli_awal: Number(event.target.value) }))} />
+                    <select value={omzetParams.pembeli_awal} onChange={(event) => setOmzetParams((p) => ({ ...p, pembeli_awal: Number(event.target.value) }))}>
+                      {PEMBELI_AWAL.map((n) => <option key={n} value={n}>{n.toLocaleString('id-ID')} pembeli</option>)}
+                    </select>
                   </label>
                   <label>
                     Pertumbuhan asumsi per bulan
@@ -769,7 +768,7 @@ export default function Admin({ query = {}, prefix = '/internal' }) {
                   <Button type="submit" icon="refresh" disabled={omzetLoading}>{omzetLoading ? 'Menghitung…' : 'Hitung ulang'}</Button>
                 </form>
 
-                {omzetLoading && <p className="model-notice" role="status">Chronos-2 sedang menghitung forecast…</p>}
+                {omzetLoading && <p className="model-notice" role="status">Memuat hasil Chronos-2…</p>}
                 {omzetError && <p className="admin-omzet-error" role="alert">{omzetError}</p>}
                 {omzetData && (
                   <>
@@ -777,7 +776,7 @@ export default function Admin({ query = {}, prefix = '/internal' }) {
                       { nilai: rp(omzetData.ringkasan.omzet_p50_total), label: 'proyeksi omzet median', sub: `total ${omzetData.forecast.length} bulan` },
                       { nilai: omzetData.ringkasan.pembeli_p50_total.toLocaleString('id-ID'), label: 'pembeli median', sub: 'total pada horizon forecast' },
                       { nilai: rp(omzetData.harga_paket), label: 'harga paket', sub: 'sekali bayar per akses' },
-                      { nilai: omzetData.device === 'cuda' ? 'GPU' : 'CPU', label: 'runtime Chronos-2', sub: `histori dummy ${omzetData.histori.length} bulan` },
+                      { nilai: new Date(`${omzetData.dihitung}T00:00:00`).toLocaleDateString('id-ID', { month: 'short', year: 'numeric' }), label: 'Chronos-2 dihitung', sub: `histori dummy ${omzetData.histori.length} bulan` },
                     ]} />
                     <Kartu
                       judul="Rentang proyeksi omzet per bulan"

@@ -300,7 +300,25 @@
   outline-offset: -4px;
 }
 body.has-bnav .main {
-  padding-bottom: calc(var(--bnav) + 28px + var(--safe-b));
+  padding-bottom: calc(var(--bnav) + 40px + var(--safe-b));
+}
+/* pudar di atas nav: isi halaman yang lewat di belakangnya menghilang pelan
+   dan tidak bertabrakan dengan ikon dan label nav */
+body.has-bnav::after {
+  content: '';
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 855;
+  height: calc(var(--bnav) + 36px + var(--safe-b));
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(232, 243, 248, 0.95) 35%, rgba(232, 243, 248, 0));
+}
+@media (min-width: 960px) {
+  body.has-bnav::after {
+    display: none;
+  }
 }
 body.has-bnav .toast {
   bottom: calc(var(--bnav) + 24px + var(--safe-b));
