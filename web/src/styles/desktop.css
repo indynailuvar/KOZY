@@ -1,0 +1,229 @@
+/* =========================================================
+   Desktop besar (laptop & monitor)
+   Semua ukuran di KOZY dirancang dari HP. Di layar >= 1200px, file ini
+   membesarkan huruf, kontrol, dan lebar halaman supaya tidak terlihat
+   seperti tampilan HP yang ditaruh di tengah layar besar.
+   Dimuat paling akhir; tampilan HP (< 1200px) tidak berubah.
+   ========================================================= */
+@media (min-width: 1200px) {
+  :root {
+    --fs-cap: 14px;
+    --fs-sm: 15px;
+    --fs-base: 16px;
+    --fs-md: 18px;
+    --fs-lg: 21px;
+    --fs-xl: 30px;
+    --fs-2xl: 32px;
+    --fs-hero: 46px;
+
+    --s-5: 24px;
+    --s-6: 28px;
+    --s-8: 40px;
+    --s-10: 56px;
+
+    --h-ctrl: 52px;
+    --gutter: 40px;
+    --top: 72px;
+    --r-lg: 18px;
+  }
+
+  /* lebar halaman */
+  .page,
+  .home,
+  .result,
+  .topbar-in,
+  .footer-in {
+    max-width: 1280px;
+  }
+  .page.narrow {
+    max-width: 760px;
+  }
+
+  /* bar atas */
+  .logo {
+    font-size: 24px;
+  }
+  .logo-mark {
+    width: 36px;
+    height: 36px;
+  }
+  .nav-desk a {
+    font-size: var(--fs-base);
+  }
+  .ai-btn {
+    height: 44px;
+    font-size: var(--fs-base);
+  }
+  .avatar {
+    width: 44px;
+    height: 44px;
+  }
+
+  /* ---------- beranda ---------- */
+  .home {
+    grid-template-columns: minmax(0, 1fr) 400px;
+    column-gap: var(--s-8);
+    row-gap: var(--s-6);
+    padding-top: 64px;
+  }
+  .home-hero h1 {
+    font-size: 52px;
+    letter-spacing: -0.02em;
+  }
+  .home-hero p {
+    margin-top: var(--s-2);
+    font-size: 20px;
+  }
+  /* dua kartu utama memenuhi lebar halaman */
+  .home-pintu {
+    max-width: none;
+    gap: var(--s-5);
+  }
+  .home-layar .pintu {
+    min-height: 236px;
+    padding: var(--s-8);
+    border-radius: 24px;
+  }
+  .home-layar .pintu-ic {
+    width: 68px;
+    height: 68px;
+    border-radius: 18px;
+  }
+  .home-layar .pintu-ic svg {
+    width: 32px;
+    height: 32px;
+  }
+  .home-layar .pintu-t small {
+    font-size: var(--fs-md);
+  }
+  .home-layar .pintu-t b {
+    margin-top: var(--s-2);
+    font-size: 32px;
+  }
+  .pintu-go {
+    top: var(--s-8);
+    right: var(--s-8);
+    width: 28px;
+    height: 28px;
+  }
+  .pintu-bg {
+    width: 200px;
+    height: 200px;
+    right: -28px;
+    bottom: -28px;
+  }
+  .pintu:hover {
+    transform: translateY(-3px);
+  }
+
+  /* menu jadi tiga kartu mendatar: ikon di kiri, nama di kanan */
+  .home-menu {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--s-5);
+    padding: 0;
+  }
+  .menu-item {
+    display: flex;
+    align-items: center;
+    justify-items: start;
+    gap: var(--s-4);
+    padding: var(--s-4) var(--s-5);
+    border-radius: var(--r-lg);
+    background: #fff;
+    box-shadow: var(--shadow-sm);
+    text-align: left;
+    transition: box-shadow 0.15s, transform 0.15s;
+  }
+  .menu-item:hover {
+    box-shadow: var(--shadow);
+    transform: translateY(-2px);
+  }
+  .menu-ic {
+    width: 56px;
+    height: 56px;
+    flex: none;
+    box-shadow: inset 0 0 0 1px var(--brand-100);
+    background: var(--brand-50);
+  }
+  .menu-t {
+    font-size: var(--fs-md);
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  /* harga pasaran & banner pemilik */
+  .home-pasar .sec-label {
+    font-size: var(--fs-lg);
+  }
+  .pasar-row {
+    min-height: 72px;
+    padding: var(--s-3) var(--s-4) var(--s-3) var(--s-5);
+  }
+  .pasar-t b,
+  .pasar-h b {
+    font-size: var(--fs-md);
+  }
+  .home-owner {
+    padding: var(--s-5);
+  }
+  .home-owner-btn {
+    min-height: 44px;
+    padding: 0 var(--s-4);
+  }
+
+  /* ---------- wizard (Cek Harga, Cari Kos, dll.) ---------- */
+  .wz-card {
+    max-width: 760px;
+    padding: var(--s-6) 56px 56px;
+    border-radius: 24px;
+  }
+  .wz-brand {
+    margin-bottom: var(--s-6);
+  }
+  .wz-title b {
+    font-size: var(--fs-lg);
+  }
+  .wz-q h1 {
+    font-size: 36px;
+  }
+  .opt {
+    min-height: 64px;
+  }
+  .opts-grid .opt {
+    min-height: 132px;
+    gap: var(--s-3);
+  }
+  .opts-grid .ic-circle {
+    width: 56px;
+    height: 56px;
+  }
+  .opts-grid .opt-t b {
+    font-size: var(--fs-base);
+  }
+
+  /* judul halaman lain */
+  .page-head {
+    min-height: 64px;
+  }
+}
+
+/* monitor lebar: sedikit lebih besar lagi */
+@media (min-width: 1600px) {
+  :root {
+    --fs-base: 17px;
+    --fs-md: 19px;
+    --fs-lg: 22px;
+    --fs-xl: 32px;
+    --fs-hero: 50px;
+  }
+  .page,
+  .home,
+  .result,
+  .topbar-in,
+  .footer-in {
+    max-width: 1400px;
+  }
+  .home-hero h1 {
+    font-size: 58px;
+  }
+}
